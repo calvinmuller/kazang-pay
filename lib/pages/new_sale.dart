@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold;
 import 'package:go_router/go_router.dart';
 import '../common/widgets/widgets.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, SizedBox, Center, Text, AppBar, CrossAxisAlignment, Theme, FontWeight, Column, MainAxisAlignment, Row, Container, CircularProgressIndicator, Padding, ListView, RefreshIndicator, NestedScrollView, Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../common/providers/transaction.provider.dart'
     show settlementDetailsProvider;
@@ -20,8 +20,7 @@ class SettlementDetails extends ConsumerWidget {
     final df = DateFormat('dd/MM/yyyy');
     final l10n = AppLocalizations.of(context)!;
     Settlement settlement = GoRouterState.of(context).extra as Settlement;
-    final settlementDetails =
-        ref.watch(settlementDetailsProvider(settlement.date));
+    final settlementDetails = ref.watch(settlementDetailsProvider(settlement.date));
 
     return Scaffold(
       appBar: AppBar(

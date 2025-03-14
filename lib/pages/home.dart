@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, BorderRadius, Color, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, Border, Radius, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';

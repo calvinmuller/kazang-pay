@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter/material.dart' show TickerProviderStateMixin, AnimationController, BuildContext, Widget, Padding, EdgeInsets, Icon, Divider, Color, AnimationStatus, BorderRadius, MainAxisAlignment, CrossAxisAlignment, Theme, TextAlign, Text, IconAlignment, Icons, Navigator, Column, Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/widgets/animated_borders.dart';

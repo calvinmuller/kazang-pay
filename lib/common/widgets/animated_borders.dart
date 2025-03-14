@@ -1,6 +1,29 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        StatelessWidget,
+        BuildContext,
+        Color,
+        BorderRadiusGeometry,
+        Widget,
+        StatefulWidget,
+        Axis,
+        AnimationController,
+        State,
+        SingleTickerProviderStateMixin,
+        Animation,
+        EdgeInsets,
+        GradientRotation,
+        SweepGradient,
+        BoxDecoration,
+        Container,
+        Tween,
+        Clip,
+        Alignment,
+        Positioned,
+        SizedBox,
+        Stack;
 
 class AnimatedGradientContainer extends StatelessWidget {
   const AnimatedGradientContainer({
@@ -17,13 +40,16 @@ class AnimatedGradientContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            borderRadius: borderRadius,
-            gradient: SweepGradient(
-                colors: [...gradientColors, ...gradientColors.reversed],
-                stops: _generateColorStops(
-                    [...gradientColors, ...gradientColors.reversed]),
-                transform: GradientRotation(gradientAngle))));
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        gradient: SweepGradient(
+          colors: [...gradientColors, ...gradientColors.reversed],
+          stops: _generateColorStops(
+              [...gradientColors, ...gradientColors.reversed]),
+          transform: GradientRotation(gradientAngle),
+        ),
+      ),
+    );
   }
 
   List<double> _generateColorStops(List<dynamic> colors) {
@@ -81,12 +107,15 @@ class AnimatedGradientState extends State<AnimatedGradientBorder>
   @override
   void initState() {
     super.initState();
-    _controller = (widget.controller != null) ? widget.controller!: AnimationController(
-      vsync: this,
-      duration: Duration(seconds: widget.animationTime ?? 2),
-    );
+    _controller = (widget.controller != null)
+        ? widget.controller!
+        : AnimationController(
+            vsync: this,
+            duration: Duration(seconds: widget.animationTime ?? 2),
+          );
     _controller.addListener(() => setState(() {}));
-    _angleAnimation = Tween<double>(begin: 0.1, end: 2 * math.pi).animate(_controller);
+    _angleAnimation =
+        Tween<double>(begin: 0.1, end: 2 * math.pi).animate(_controller);
   }
 
   @override

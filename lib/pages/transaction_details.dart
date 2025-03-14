@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, BoxDecoration, Icon, Spacer, Divider, TextStyle, Text, AppBar, Hero, TabBarView, Colors, BorderRadius, Radius, Container, CrossAxisAlignment, Column, Theme, Row, FontWeight, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+import 'package:flutter_svg/svg.dart' show SvgPicture;
+
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/widgets/receipt.dart';

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:flutter/material.dart' show BuildContext, Scaffold, Widget, Colors;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget;
 
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/receipt.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show NavigatorState, BuildContext, GlobalKey;
+import 'package:flutter/material.dart' show BuildContext;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:go_router/go_router.dart' show GoRouter, GoRoute, GoRouterState, RouteBase;
 
@@ -8,8 +8,6 @@ import 'common/widgets/widgets.dart';
 import 'models/transaction.dart';
 import 'models/transaction_result.dart';
 import 'pages/pages.dart';
-
-final pinNavigatorKey = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
   final isSetup =
