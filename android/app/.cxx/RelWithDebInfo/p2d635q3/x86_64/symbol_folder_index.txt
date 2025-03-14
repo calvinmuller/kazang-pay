@@ -1,1 +1,0 @@
-/Users/calvinmuller/Mobile/kazangpay/build/app/intermediates/cxx/RelWithDebInfo/p2d635q3/obj/x86_64

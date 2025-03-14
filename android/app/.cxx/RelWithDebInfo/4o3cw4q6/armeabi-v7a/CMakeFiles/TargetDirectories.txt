@@ -1,2 +1,0 @@
-/Users/calvinmuller/Mobile/kazangpay/android/app/.cxx/RelWithDebInfo/4o3cw4q6/armeabi-v7a/CMakeFiles/edit_cache.dir
-/Users/calvinmuller/Mobile/kazangpay/android/app/.cxx/RelWithDebInfo/4o3cw4q6/armeabi-v7a/CMakeFiles/rebuild_cache.dir
