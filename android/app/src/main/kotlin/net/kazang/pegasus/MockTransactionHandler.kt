@@ -3,7 +3,6 @@ package net.kazang.pegasus
 import android.content.Context
 import android.os.Build
 import android.os.Handler
-
 import android.os.Looper
 import android.util.Log
 import com.google.gson.Gson
@@ -18,19 +17,20 @@ import com.prism.core.domain.TransactionClientResponse
 import com.prism.core.enums.CurrencyTypeEnum
 import com.prism.core.enums.RoutingSwitchEnum
 import com.prism.core.enums.ServiceConfigurationEnum
+import com.prism.core.enums.TransactionClientActionEnum
 import com.prism.core.enums.TransactionTypesEnum
 import com.prism.core.helpers.FactoryTransactionBuilder
 import com.prism.core.interfaces.FactoryActivityEvents
 import com.prism.factory.BuildConfig
 import com.prism.factory.datarepos.TransactionRepository
-import com.prism.factory.factory.TransactionFactory
+import com.prism.factory.factory.MockTransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 
 
-class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
+class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
 
-    private var factory: TransactionFactory? = null
+    private var factory: MockTransactionFactory? = null
     private var factoryconstructor: FactoryConstructorData? = null
     private var connected = false
     private var factorybb = FactoryTransactionBuilder()
@@ -104,7 +104,7 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
             }
         }
         factoryconstructor!!.posFactorySetup!!.enabledTransactions = enabledTransactions
-        factory = TransactionFactory(factoryconstructor!!, this)
+        factory = MockTransactionFactory(factoryconstructor!!, this)
         factory!!.initialize()
         repo = TransactionRepository(context)
     }
@@ -348,16 +348,13 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
 
     fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
         val gson = Gson()
-        factory = TransactionFactory(context)
+        factory = MockTransactionFactory(context)
         val serial = factory!!.getDeviceSerial()
         val apiVersion = factory!!.getApiVersion()
         val hasOnboardPrinter = factory!!.hasOnboardPrinter()
         val build = gson.toJson(factory!!.getBuildAndSENumber())
         val manufacturer: String = Build.MANUFACTURER
         val model: String = Build.MODEL
-
-        factory!!.dispose()
-        factory = null
         result.success(
             mapOf(
                 "serial" to serial,
@@ -378,7 +375,16 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
     }
 
     fun abortTransaction() {
-        factory!!.abortTransaction()
+        val response = TransactionClientResponse()
+        response.responseCode = "91"
+        response.declinedReason = "Transaction Aborted"
+        response.message = "Transaction Aborted"
+        response.isCancelled = true
+        response.isSuccessful = false
+        response.isSupervisor = false
+        response.transactionAmount = 0
+        response.transactionClientAction = TransactionClientActionEnum.TRANSACTION_DECLINED
+        onTransactionCompletedEvent(response)
     }
 
     fun connect() {

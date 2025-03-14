@@ -127,26 +127,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           ],
         ),
         GoRoute(
-          redirect: (context, state) {
-            final to = state.pathParameters['to'];
-            final hasPin =
-                ref.read(appNotifierProvider.select((state) => state.hasPin));
-            return hasPin ? null : '/home/set-pin/$to';
-          },
-          name: 'pin',
-          path: 'pin/:to',
-          pageBuilder: (context, state) {
-            return const BottomSheetPage(child: PinDialog());
-          },
-        ),
-        GoRoute(
-          name: 'set-pin',
-          path: 'set-pin/:to',
-          pageBuilder: (BuildContext context, GoRouterState state) {
-            return const BottomSheetPage(child: SetPinDialog());
-          },
-        ),
-        GoRoute(
           path: 'accounts',
           name: 'accounts',
           builder: (context, state) => const AccountsPage(),
@@ -155,8 +135,12 @@ final routerProvider = Provider<GoRouter>((ref) {
     ),
   ];
 
-  return GoRouter(
+  final router = GoRouter(
     routes: (isSetup) ? authRoutes : onboardingRoutes,
     initialLocation: '/',
   );
+
+  ref.onDispose(router.dispose);
+
+  return router;
 });

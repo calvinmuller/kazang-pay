@@ -1,5 +1,34 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, BorderRadius, Color, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, Border, Radius, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, Scaffold;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        BoxDecoration,
+        Icon,
+        EdgeInsets,
+        BorderRadius,
+        Color,
+        TextStyle,
+        Theme,
+        Colors,
+        Icons,
+        IconButton,
+        AppBar,
+        MainAxisSize,
+        Border,
+        Radius,
+        TextAlign,
+        Text,
+        Container,
+        FontWeight,
+        Column,
+        CrossAxisAlignment,
+        Padding,
+        MainAxisAlignment,
+        Row,
+        Expanded,
+        Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
@@ -21,7 +50,6 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -44,11 +72,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             leading: IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                showPinDialog(context: context, callback: () => context.goNamed('settings'));
-              }
-            ),
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  showPinDialog(
+                      context: context,
+                      callback: () => context.goNamed('settings'));
+                }),
             title: const LogoWidget(),
           ),
           body: Column(
@@ -56,9 +85,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             children: [
               Container(
                 margin:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 padding:
-                const EdgeInsets.symmetric(horizontal: 25, vertical: 90),
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 90),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.white,
@@ -127,7 +156,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                   size: 24,
                                 ),
                                 onPressed: () {
-                                  showPinDialog(context: context, callback: () => context.goNamed('transaction-history'));
+                                  showPinDialog(
+                                    title: l10n.enterPin,
+                                    context: context,
+                                    callback: () =>
+                                        context.goNamed('transaction-history'),
+                                  );
                                 },
                                 child: Text(
                                   l10n.transactionHistory,

@@ -31,10 +31,10 @@ class TransactionResult with _$TransactionResult {
     String? ourReferenceNumber,
     String? pan,
     required String responseCode,
-    required String responseMessage,
+    required String? responseMessage,
     String? terminalId,
     required int transactionAmount,
-    required TransactionClientAction transactionClientAction,
+    required TransactionClientAction? transactionClientAction,
     String? transactionDate,
   }) = _TransactionResult;
 

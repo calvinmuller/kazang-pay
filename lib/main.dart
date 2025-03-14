@@ -20,6 +20,7 @@ Future<void> main() async {
         appNotifierProvider.overrideWith(() => AppNotifier(appState: appState)),
       ],
       child: DeviceInfoProvider(
+        appState: appState,
         deviceInfo: deviceInfo,
         child: const MyApp(),
       ),

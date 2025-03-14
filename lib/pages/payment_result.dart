@@ -87,7 +87,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
               ),
               if (!widget.result.isSuccessful)
                 Text(
-                  widget.result.responseMessage,
+                  widget.result.responseMessage ?? "",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),

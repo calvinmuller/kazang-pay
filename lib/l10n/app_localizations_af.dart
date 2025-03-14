@@ -357,4 +357,22 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get profileInformation => 'Profile Information';
+
+  @override
+  String get serialNumberLengthMax => 'Ensure this field has no more than 14 characters.';
+
+  @override
+  String get serialNumberLengthMin => 'Ensure this field has at least 13 characters.';
+
+  @override
+  String get required => 'This field is required.';
+
+  @override
+  String get pinTooShort => 'PIN must be at least 4 digits long';
+
+  @override
+  String get manufacturer => 'Manufacturer:';
+
+  @override
+  String get model => 'Model:';
 }

@@ -18,6 +18,7 @@ import 'package:flutter/material.dart'
         Column,
         DefaultTextStyle,
         Container;
+import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -162,7 +163,7 @@ class ReceiptState extends ConsumerState<Receipt>
                   if (!transactionResult.isSuccessful)
                     KeyValueWidget(
                         title: l10n.reason,
-                        value: transactionResult.responseMessage),
+                        value: transactionResult.responseMessage ?? ""),
                   KeyValueWidget(
                     title: l10n.total,
                     value: CurrencyHelper.formatCurrency(
@@ -174,7 +175,12 @@ class ReceiptState extends ConsumerState<Receipt>
           ),
         ],
       ),
-      error: (e, _) => Text('Error generating receipt $e'),
+      error: (e, _) => const Center(
+        child: Text(
+          'Error generating receipt.',
+          textAlign: TextAlign.center,
+        ),
+      ),
       loading: () => const Loader(),
     );
   }

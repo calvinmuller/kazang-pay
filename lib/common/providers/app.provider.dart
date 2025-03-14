@@ -44,6 +44,3 @@ class AppNotifier extends _$AppNotifier {
     TransactionHelper.saveJson(key, next.toJson());
   }
 }
-
-@riverpod
-Future<DeviceInfo> getDeviceInfo(Ref ref) async => await TransactionHelper.getDeviceInfo();

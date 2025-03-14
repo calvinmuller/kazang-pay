@@ -181,6 +181,19 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                             borderRadius: borderRadiusSmall,
                           ),
                         ),
+                        maxLength: 14,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return l10n.required;
+                          }
+                          if (value.length > 14) {
+                            return l10n.serialNumberLengthMax;
+                          }
+                          if (value.length < 13) {
+                            return l10n.serialNumberLengthMin;
+                          }
+                          return null;
+                        },
                         onSaved: (value) {
                           loginRequest.serialNumber = value;
                         },
@@ -218,6 +231,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                     ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
                   }
                   else if (response.status == StatusResult.Failed) {
+                    print(response);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: CustomColours.red,
@@ -228,6 +242,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   }
                 } catch (e) {
                   if (context.mounted) {
+                    print(e);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: CustomColours.red,

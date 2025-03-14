@@ -441,7 +441,7 @@ abstract class AppLocalizations {
   /// No description provided for @settlementStatus.
   ///
   /// In en, this message translates to:
-  /// **'Status'**
+  /// **'Status:'**
   String get settlementStatus;
 
   /// No description provided for @settled.
@@ -779,6 +779,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile Information'**
   String get profileInformation;
+
+  /// No description provided for @serialNumberLengthMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Ensure this field has no more than 14 characters.'**
+  String get serialNumberLengthMax;
+
+  /// No description provided for @serialNumberLengthMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Ensure this field has at least 13 characters.'**
+  String get serialNumberLengthMin;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required.'**
+  String get required;
+
+  /// No description provided for @pinTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN must be at least 4 digits long'**
+  String get pinTooShort;
+
+  /// No description provided for @manufacturer.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer:'**
+  String get manufacturer;
+
+  /// No description provided for @model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model:'**
+  String get model;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

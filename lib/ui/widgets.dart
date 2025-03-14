@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding;
+import 'package:flutter/material.dart' show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding, Image;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
 

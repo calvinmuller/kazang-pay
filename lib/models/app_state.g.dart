@@ -11,6 +11,8 @@ DeviceInfo _$DeviceInfoFromJson(Map json) => DeviceInfo(
       hasOnboardPrinter: json['hasOnboardPrinter'] as bool?,
       apiVersion: json['apiVersion'] as String?,
       build: json['build'],
+      model: json['model'] as String?,
+      manufacturer: json['manufacturer'] as String?,
     );
 
 Map<String, dynamic> _$DeviceInfoToJson(DeviceInfo instance) =>
@@ -19,6 +21,8 @@ Map<String, dynamic> _$DeviceInfoToJson(DeviceInfo instance) =>
       'hasOnboardPrinter': instance.hasOnboardPrinter,
       'apiVersion': instance.apiVersion,
       'build': instance.build,
+      'model': instance.model,
+      'manufacturer': instance.manufacturer,
     };
 
 TerminalProfile _$TerminalProfileFromJson(Map json) => TerminalProfile(
@@ -186,7 +190,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
           ? null
           : TerminalProfile.fromJson(
               Map<String, dynamic>.from(json['profile'] as Map)),
-      pin: json['pin'] as String?,
+      pin: json['pin'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>

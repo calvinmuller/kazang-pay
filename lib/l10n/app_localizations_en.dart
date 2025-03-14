@@ -184,7 +184,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get refunded => 'Refunded';
 
   @override
-  String get settlementStatus => 'Status';
+  String get settlementStatus => 'Status:';
 
   @override
   String get settled => 'Settled';
@@ -357,6 +357,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileInformation => 'Profile Information';
+
+  @override
+  String get serialNumberLengthMax => 'Ensure this field has no more than 14 characters.';
+
+  @override
+  String get serialNumberLengthMin => 'Ensure this field has at least 13 characters.';
+
+  @override
+  String get required => 'This field is required.';
+
+  @override
+  String get pinTooShort => 'PIN must be at least 4 digits long';
+
+  @override
+  String get manufacturer => 'Manufacturer:';
+
+  @override
+  String get model => 'Model:';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).
@@ -539,7 +557,7 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   String get refunded => 'Refunded';
 
   @override
-  String get settlementStatus => 'Settlement Status';
+  String get settlementStatus => 'Status:';
 
   @override
   String get settled => 'Settled';
@@ -615,4 +633,113 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get voidTransaction => 'Void Transaction';
+
+  @override
+  String get settlements => 'Settlements';
+
+  @override
+  String get totalSettlementAmount => 'Total Settlement Amount';
+
+  @override
+  String get viewMore => 'View More';
+
+  @override
+  String get noOfTransaction => 'Number of Transactions';
+
+  @override
+  String get noOfSettlements => 'Number of Settlements';
+
+  @override
+  String settlementSummaryFor(Object date) {
+    return 'Settlement Summary for $date';
+  }
+
+  @override
+  String get totalPurchaseFees => 'Total Purchase Fees:';
+
+  @override
+  String get totalPurchaseAmount => 'Total Purchase Amount:';
+
+  @override
+  String get totalCashbackAmount => 'Total Cashback Amount:';
+
+  @override
+  String get totalAmountProcessed => 'Total Amount Processed:';
+
+  @override
+  String get totalCashbackFees => 'Total Cashback Fees:';
+
+  @override
+  String get totalFees => 'Total Fees:';
+
+  @override
+  String settlementHistoryFor(Object date) {
+    return 'Settlement History for $date';
+  }
+
+  @override
+  String get totalSettlementAmountCalc => '* Total Settlement Amount = Total Amount Processed - Total Settlements completed - Fees';
+
+  @override
+  String get proxySettings => 'Proxy Settings';
+
+  @override
+  String get sendDeviceLogs => 'Send Device Logs';
+
+  @override
+  String get connectPos => 'Connect POS';
+
+  @override
+  String get supervisorPinTitle => 'Supervisor PIN';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get settlementDetails => 'Settlement Details';
+
+  @override
+  String get timeColumn => 'Time:';
+
+  @override
+  String get amount => 'Amount:';
+
+  @override
+  String get printReceipt => 'Print Receipt';
+
+  @override
+  String get printing => 'Printing';
+
+  @override
+  String get username => 'Username:';
+
+  @override
+  String get deviceSerial => 'Device Serial:';
+
+  @override
+  String get version => 'Version:';
+
+  @override
+  String get terminalIdTitle => 'Terminal ID:';
+
+  @override
+  String get loadingSettlements => 'Loading Settlements';
+
+  @override
+  String get profileInformation => 'Profile Information';
+
+  @override
+  String get serialNumberLengthMax => 'Ensure this field has no more than 14 characters.';
+
+  @override
+  String get serialNumberLengthMin => 'Ensure this field has at least 13 characters.';
+
+  @override
+  String get required => 'This field is required.';
+
+  @override
+  String get pinTooShort => 'PIN must be at least 4 digits long';
 }

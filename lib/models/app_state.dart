@@ -33,12 +33,16 @@ class DeviceInfo {
   final bool? hasOnboardPrinter;
   final String? apiVersion;
   final dynamic build;
+  final String? model;
+  final String? manufacturer;
 
   DeviceInfo({
     required this.serial,
     required this.hasOnboardPrinter,
     required this.apiVersion,
     this.build,
+    this.model,
+    this.manufacturer,
   });
 
   factory DeviceInfo.fromJson(Map<String, dynamic> json) =>

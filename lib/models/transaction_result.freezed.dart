@@ -38,10 +38,10 @@ mixin _$TransactionResult {
   String? get ourReferenceNumber => throw _privateConstructorUsedError;
   String? get pan => throw _privateConstructorUsedError;
   String get responseCode => throw _privateConstructorUsedError;
-  String get responseMessage => throw _privateConstructorUsedError;
+  String? get responseMessage => throw _privateConstructorUsedError;
   String? get terminalId => throw _privateConstructorUsedError;
   int get transactionAmount => throw _privateConstructorUsedError;
-  TransactionClientAction get transactionClientAction =>
+  TransactionClientAction? get transactionClientAction =>
       throw _privateConstructorUsedError;
   String? get transactionDate => throw _privateConstructorUsedError;
 
@@ -78,10 +78,10 @@ abstract class $TransactionResultCopyWith<$Res> {
       String? ourReferenceNumber,
       String? pan,
       String responseCode,
-      String responseMessage,
+      String? responseMessage,
       String? terminalId,
       int transactionAmount,
-      TransactionClientAction transactionClientAction,
+      TransactionClientAction? transactionClientAction,
       String? transactionDate});
 }
 
@@ -116,10 +116,10 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
     Object? ourReferenceNumber = freezed,
     Object? pan = freezed,
     Object? responseCode = null,
-    Object? responseMessage = null,
+    Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
-    Object? transactionClientAction = null,
+    Object? transactionClientAction = freezed,
     Object? transactionDate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -187,10 +187,10 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
           ? _value.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
               as String,
-      responseMessage: null == responseMessage
+      responseMessage: freezed == responseMessage
           ? _value.responseMessage
           : responseMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       terminalId: freezed == terminalId
           ? _value.terminalId
           : terminalId // ignore: cast_nullable_to_non_nullable
@@ -199,10 +199,10 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
           ? _value.transactionAmount
           : transactionAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      transactionClientAction: null == transactionClientAction
+      transactionClientAction: freezed == transactionClientAction
           ? _value.transactionClientAction
           : transactionClientAction // ignore: cast_nullable_to_non_nullable
-              as TransactionClientAction,
+              as TransactionClientAction?,
       transactionDate: freezed == transactionDate
           ? _value.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable
@@ -236,10 +236,10 @@ abstract class _$$TransactionResultImplCopyWith<$Res>
       String? ourReferenceNumber,
       String? pan,
       String responseCode,
-      String responseMessage,
+      String? responseMessage,
       String? terminalId,
       int transactionAmount,
-      TransactionClientAction transactionClientAction,
+      TransactionClientAction? transactionClientAction,
       String? transactionDate});
 }
 
@@ -272,10 +272,10 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
     Object? ourReferenceNumber = freezed,
     Object? pan = freezed,
     Object? responseCode = null,
-    Object? responseMessage = null,
+    Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
-    Object? transactionClientAction = null,
+    Object? transactionClientAction = freezed,
     Object? transactionDate = freezed,
   }) {
     return _then(_$TransactionResultImpl(
@@ -343,10 +343,10 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
           ? _value.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
               as String,
-      responseMessage: null == responseMessage
+      responseMessage: freezed == responseMessage
           ? _value.responseMessage
           : responseMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       terminalId: freezed == terminalId
           ? _value.terminalId
           : terminalId // ignore: cast_nullable_to_non_nullable
@@ -355,10 +355,10 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
           ? _value.transactionAmount
           : transactionAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      transactionClientAction: null == transactionClientAction
+      transactionClientAction: freezed == transactionClientAction
           ? _value.transactionClientAction
           : transactionClientAction // ignore: cast_nullable_to_non_nullable
-              as TransactionClientAction,
+              as TransactionClientAction?,
       transactionDate: freezed == transactionDate
           ? _value.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable
@@ -451,13 +451,13 @@ class _$TransactionResultImpl extends _TransactionResult {
   @override
   final String responseCode;
   @override
-  final String responseMessage;
+  final String? responseMessage;
   @override
   final String? terminalId;
   @override
   final int transactionAmount;
   @override
-  final TransactionClientAction transactionClientAction;
+  final TransactionClientAction? transactionClientAction;
   @override
   final String? transactionDate;
 
@@ -576,10 +576,10 @@ abstract class _TransactionResult extends TransactionResult {
       final String? ourReferenceNumber,
       final String? pan,
       required final String responseCode,
-      required final String responseMessage,
+      required final String? responseMessage,
       final String? terminalId,
       required final int transactionAmount,
-      required final TransactionClientAction transactionClientAction,
+      required final TransactionClientAction? transactionClientAction,
       final String? transactionDate}) = _$TransactionResultImpl;
   const _TransactionResult._() : super._();
 
@@ -620,13 +620,13 @@ abstract class _TransactionResult extends TransactionResult {
   @override
   String get responseCode;
   @override
-  String get responseMessage;
+  String? get responseMessage;
   @override
   String? get terminalId;
   @override
   int get transactionAmount;
   @override
-  TransactionClientAction get transactionClientAction;
+  TransactionClientAction? get transactionClientAction;
   @override
   String? get transactionDate;
 

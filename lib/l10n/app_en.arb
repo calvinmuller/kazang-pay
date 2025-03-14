@@ -56,7 +56,7 @@
   "pending": "Pending",
   "cancelled": "Cancelled",
   "refunded": "Refunded",
-  "settlementStatus": "Status",
+  "settlementStatus": "Status:",
   "settled": "Settled",
   "onboardingWelcome": "Welcome to Kazang Pay!",
   "onboardingRegister": "Congratulations, you are at the final step of setting up your Kazang Pay Card Reader.",
@@ -114,5 +114,11 @@
   "version": "Version:",
   "terminalIdTitle": "Terminal ID:",
   "loadingSettlements": "Loading Settlements",
-  "profileInformation": "Profile Information"
+  "profileInformation": "Profile Information",
+  "serialNumberLengthMax": "Ensure this field has no more than 14 characters.",
+  "serialNumberLengthMin": "Ensure this field has at least 13 characters.",
+  "required": "This field is required.",
+  "pinTooShort": "PIN must be at least 4 digits long",
+  "manufacturer": "Manufacturer:",
+    "model": "Model:"
 }

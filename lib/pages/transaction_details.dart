@@ -1,5 +1,37 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, BoxDecoration, Icon, Spacer, Divider, TextStyle, Text, AppBar, Hero, TabBarView, Colors, BorderRadius, Radius, Container, CrossAxisAlignment, Column, Theme, Row, FontWeight, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        Icon,
+        Spacer,
+        Divider,
+        TextStyle,
+        Text,
+        AppBar,
+        Hero,
+        TabBarView,
+        Colors,
+        BorderRadius,
+        Radius,
+        Container,
+        CrossAxisAlignment,
+        Column,
+        Theme,
+        Row,
+        FontWeight,
+        Padding,
+        Card,
+        TabBarIndicatorSize,
+        Tab,
+        TabBar,
+        SliverToBoxAdapter,
+        NestedScrollView,
+        Scaffold,
+        DefaultTabController;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 
 import '../common/common.dart';
@@ -23,6 +55,7 @@ class TransactionDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final merchantConfig = ref.watch(appNotifierProvider).profile!.merchantConfig;
 
     return DefaultTabController(
       length: 2,
@@ -121,11 +154,13 @@ class TransactionDetails extends ConsumerWidget {
                                     showPinDialog(
                                       context: context,
                                       child: PaymentPage(
-                                          payment: Payment(
-                                              amount: transaction.amount,
-                                              type: PaymentType.voidTransaction,
-                                              rrn: transaction
-                                                  .retrievalReferenceNumber)),
+                                        payment: Payment(
+                                          amount: transaction.amount,
+                                          type: PaymentType.voidTransaction,
+                                          rrn: transaction
+                                              .retrievalReferenceNumber,
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),
@@ -165,30 +200,18 @@ class TransactionDetails extends ConsumerWidget {
           },
           body: TabBarView(
             children: [
-              Hero(
-                tag: ReceiptSectionEnum.MERCHANT.name,
-                child: Receipt(
+              Receipt(
                   autoClose: false,
-                    type: ReceiptSectionEnum.MERCHANT,
-                    transactionResult: transaction.toTransactionResult(
-                      merchantConfig: ref
-                          .watch(appNotifierProvider)
-                          .profile!
-                          .merchantConfig,
-                    )),
-              ),
-              Hero(
-                tag: ReceiptSectionEnum.CUSTOMER.name,
-                child: Receipt(
-                    autoClose: false,
-                    type: ReceiptSectionEnum.CUSTOMER,
-                    transactionResult: transaction.toTransactionResult(
-                      merchantConfig: ref
-                          .watch(appNotifierProvider)
-                          .profile!
-                          .merchantConfig,
-                    )),
-              ),
+                  type: ReceiptSectionEnum.MERCHANT,
+                  transactionResult: transaction.toTransactionResult(
+                    merchantConfig: merchantConfig,
+                  )),
+              Receipt(
+                  autoClose: false,
+                  type: ReceiptSectionEnum.CUSTOMER,
+                  transactionResult: transaction.toTransactionResult(
+                    merchantConfig: merchantConfig,
+                  )),
             ],
           ),
         ),

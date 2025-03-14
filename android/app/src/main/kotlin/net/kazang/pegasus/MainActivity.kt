@@ -26,14 +26,15 @@ class MainActivity : FlutterActivity() {
     private val PRINT_CHANNEL = "kazangpay_print"
     private var mediaPlayer: MediaPlayer? = null
     private val eventChannel = "factoryEventHandler"
-    private var transactionHandler: TransactionHandler = TransactionHandler()
+//    private var transactionHandler: TransactionHandler = TransactionHandler()
+    private var transactionHandler: MockTransactionHandler = MockTransactionHandler()
     private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
     private val gson = Gson()
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL).setMethodCallHandler(PrinterHandler(transactionHandler))
+//        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL).setMethodCallHandler(PrinterHandler(transactionHandler))
 
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
@@ -112,14 +113,13 @@ class MainActivity : FlutterActivity() {
                 val value = call.argument<HashMap<Any, Any>>("value")!!
                 runBlocking {
                     dataStoreSetString(key, value)
-                    result.success(true)
                 }
+                result.success(true)
             } else if (call.method == "load") {
                 try {
                     val key = call.argument<String>("key")!!
                     val value = getJson(key)
                     result.success(value)
-
                 } catch (e: Exception) {
                     result.error("Error", e.message, e)
                 }
@@ -127,7 +127,6 @@ class MainActivity : FlutterActivity() {
                 transactionHandler.connect()
                 result.success(true)
             } else {
-
                 result.notImplemented()
             }
         }

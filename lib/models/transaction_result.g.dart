@@ -29,10 +29,10 @@ _$TransactionResultImpl _$$TransactionResultImplFromJson(Map json) =>
       ourReferenceNumber: json['ourReferenceNumber'] as String?,
       pan: json['pan'] as String?,
       responseCode: json['responseCode'] as String,
-      responseMessage: json['responseMessage'] as String,
+      responseMessage: json['responseMessage'] as String?,
       terminalId: json['terminalId'] as String?,
       transactionAmount: (json['transactionAmount'] as num).toInt(),
-      transactionClientAction: $enumDecode(
+      transactionClientAction: $enumDecodeNullable(
           _$TransactionClientActionEnumMap, json['transactionClientAction']),
       transactionDate: json['transactionDate'] as String?,
     );
@@ -61,7 +61,7 @@ Map<String, dynamic> _$$TransactionResultImplToJson(
       'terminalId': instance.terminalId,
       'transactionAmount': instance.transactionAmount,
       'transactionClientAction':
-          _$TransactionClientActionEnumMap[instance.transactionClientAction]!,
+          _$TransactionClientActionEnumMap[instance.transactionClientAction],
       'transactionDate': instance.transactionDate,
     };
 
