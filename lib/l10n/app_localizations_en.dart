@@ -184,7 +184,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get refunded => 'Refunded';
 
   @override
-  String get settlementStatus => 'Settlement Status';
+  String get settlementStatus => 'Status';
 
   @override
   String get settled => 'Settled';

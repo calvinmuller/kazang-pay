@@ -441,7 +441,7 @@ abstract class AppLocalizations {
   /// No description provided for @settlementStatus.
   ///
   /// In en, this message translates to:
-  /// **'Settlement Status'**
+  /// **'Status'**
   String get settlementStatus;
 
   /// No description provided for @settled.
