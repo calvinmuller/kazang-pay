@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
-import '../../common/providers/device_info.dart';
 import '../../common/widgets/widgets.dart' show Button, Label;
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
