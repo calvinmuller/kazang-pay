@@ -1,8 +1,6 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode;
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show MethodChannel, EventChannel;
 
 import '../common/interfaces/factory.events.dart'
     show
@@ -146,7 +144,6 @@ class TransactionHelper {
   static void printReceipt() async {
     var trx = await getHistoryData();
     final id = trx.last.retrievalReferenceNumber;
-    debugPrint(jsonEncode(id), wrapWidth: 200);
     return await _instance.methodChannel
         .invokeMethod('print', {"responseId": id});
   }

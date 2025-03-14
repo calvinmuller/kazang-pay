@@ -1,23 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BorderRadius,
-        BuildContext,
-        Colors,
-        Column,
-        CrossAxisAlignment,
-        Dialog,
-        EdgeInsets,
-        ListTile,
-        Padding,
-        Radio,
-        RoundedRectangleBorder,
-        State,
-        StatefulWidget,
-        Text,
-        TextAlign,
-        Theme,
-        Widget;
+    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, Dialog, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Navigator;
 
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';

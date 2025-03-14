@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show Localizations;
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show NumberFormat;
 
 class CurrencyHelper {
   static String formatCurrency(context, int amount) {

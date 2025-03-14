@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show LinearGradient, Color, Alignment, BorderRadius, Radius, Colors, Offset, BoxShadow, BoxDecoration;
 
 const headerGradient = LinearGradient(
   colors: <Color>[

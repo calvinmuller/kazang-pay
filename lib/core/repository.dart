@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' show Dio, DioException;
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../models/crm.dart' show CrmGenericResponse;

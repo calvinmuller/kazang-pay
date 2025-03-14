@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show BuildContext, showDialog;
 import 'package:flutter/services.dart' show MethodChannel, PlatformException;
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../common/dialogs/print_dialog.dart' show PrintDialog;
 import '../models/app_state.dart';

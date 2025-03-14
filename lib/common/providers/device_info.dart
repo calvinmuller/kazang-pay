@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show InheritedWidget, BuildContext;
+
 import '../../models/app_state.dart' show DeviceInfo;
 
 class DeviceInfoProvider extends InheritedWidget {

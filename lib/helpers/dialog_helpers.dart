@@ -1,13 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        AlertDialog,
-        Navigator,
-        Text,
-        TextButton,
-        Widget,
-        showDialog,
-        showModalBottomSheet;
+    show AlertDialog, Navigator, Text, TextButton, Widget, showDialog, showModalBottomSheet, Clip, BuildContext;
 
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/button.dart' show Button;

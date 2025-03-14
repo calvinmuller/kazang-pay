@@ -1,15 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        StatelessWidget,
-        BuildContext,
-        Widget,
-        DecoratedBox,
-        BoxDecoration,
-        BorderRadius,
-        BadgeTheme,
-        BadgeThemeData,
-        Theme;
+    show StatelessWidget, BuildContext, Widget, DecoratedBox, BoxDecoration, BorderRadius, BadgeTheme, BadgeThemeData, Theme, Color, EdgeInsets, DefaultTextStyle, Padding;
 
 class CustomBadge extends StatelessWidget {
   const CustomBadge({required this.child, required this.colour, super.key, this.textColour, this.dense = false});
