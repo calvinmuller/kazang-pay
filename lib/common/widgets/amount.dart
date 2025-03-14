@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show BuildContext, InkWell, Widget, Text;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+
 import '../../helpers/currency_helpers.dart';
 import '../../models/payment.dart' show PaymentType;
 

@@ -1,4 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/dialog_helpers.dart' show showErrorDialog, showListDialog;

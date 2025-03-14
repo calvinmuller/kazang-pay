@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, Navigator;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
 
 import '../../helpers/print_helper.dart';
 import '../../helpers/transaction_helper.dart';
@@ -22,8 +22,7 @@ class PrintDialog extends ConsumerStatefulWidget {
   PrintDialogState createState() => PrintDialogState();
 }
 
-class PrintDialogState extends ConsumerState<PrintDialog>
-    with TransactionHandlersMixin {
+class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandlersMixin {
 
   @override
 

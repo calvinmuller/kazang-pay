@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart' show BaseOptions, Dio;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/repository.dart';
@@ -75,18 +76,6 @@ Future<TerminalProfile> fetchProfile(Ref ref) async {
 
   return profile;
 }
-
-// @riverpod
-// Future<bool> isActive(Ref ref) async {
-//   // final api = ref.read(crRepositoryProvider);
-//   //
-//   // final response = await api.authDevice(accountInfo!);
-//   //
-//   // final profile = TerminalProfile.fromJson(response);
-//   // appState.setProfile(profile);
-//   //
-//   // return profile;
-// }
 
 @riverpod
 class PinNotifier extends _$PinNotifier {

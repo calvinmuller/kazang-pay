@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
+import 'package:flutter/material.dart' show GlobalKey, FormState, BuildContext, Widget, EdgeInsets, BoxDecoration, TextSpan, TextStyle, InputDecoration, Padding, Hero, Theme, Text, Column, Container, MainAxisSize, BorderSide, Border, FontWeight, RichText, CrossAxisAlignment, TextInputType, TextInputAction, OutlineInputBorder, TextFormField, Form, Card, primaryFocus, UnfocusDisposition, ScaffoldMessenger, SnackBar, ListView, Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerState, ConsumerStatefulWidget;
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../common/providers/api.provider.dart';
@@ -27,8 +29,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
     final l10n = AppLocalizations.of(context)!;
     final api = ref.read(crmRepositoryProvider);
     final deviceInfo = DeviceInfoProvider.of(context)!.deviceInfo;
-    //
-    // kazangApi.getLocale().then(print);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

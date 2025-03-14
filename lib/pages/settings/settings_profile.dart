@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BuildContext, Scaffold, Widget, EdgeInsets, Text, AppBar, MainAxisSize, CrossAxisAlignment, Theme, TextAlign, Column, Container;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/providers/app.provider.dart';

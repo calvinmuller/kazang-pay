@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:flutter/material.dart' show StatelessWidget, Widget, BuildContext, EdgeInsets, CrossAxisAlignment, MainAxisAlignment, Theme, TextAlign, Text, Column, Container;
+import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 
 class ConfirmDialog extends StatelessWidget {
   const ConfirmDialog(

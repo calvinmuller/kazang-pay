@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
+import 'package:flutter/material.dart' show BuildContext, Container, Widget, EdgeInsets, Offset, BorderRadius, FittedBox, SizedBox, Colors, BoxShadow, Radius, BoxDecoration, MainAxisSize, Theme, Text, BoxFit, Column;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+
 import '../../l10n/app_localizations.dart';
 import '../../models/payment.dart';
 import 'amount.dart';

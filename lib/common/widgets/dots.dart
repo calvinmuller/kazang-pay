@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+
+
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, MainAxisAlignment, Colors, CircleAvatar, Row;
 
 import '../../core/constants.dart';
 

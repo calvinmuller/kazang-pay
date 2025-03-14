@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
+import 'package:flutter/material.dart' show BuildContext, CrossAxisAlignment, Widget, EdgeInsets, MainAxisAlignment, MainAxisSize, BorderRadius, BoxDecoration, Theme, Text, Column, Container, TextAlign, Colors, SizedBox;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants.dart';

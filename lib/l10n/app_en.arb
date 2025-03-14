@@ -56,7 +56,7 @@
   "pending": "Pending",
   "cancelled": "Cancelled",
   "refunded": "Refunded",
-  "settlementStatus": "Settlement Status",
+  "settlementStatus": "Status",
   "settled": "Settled",
   "onboardingWelcome": "Welcome to Kazang Pay!",
   "onboardingRegister": "Congratulations, you are at the final step of setting up your Kazang Pay Card Reader.",

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show TextStyle, BuildContext, Widget, EdgeInsets, FontWeight, MainAxisAlignment, Text, Expanded, Row, Column, Padding;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants.dart';

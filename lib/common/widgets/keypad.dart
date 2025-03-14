@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
+import 'package:flutter/material.dart' show Widget, VoidCallback, BuildContext, Icon, Color, StatelessWidget, MainAxisSize, MainAxisAlignment, CrossAxisAlignment, Row, Expanded, Icons, Column, required, Colors, BorderRadius, Border, BoxDecoration, Alignment, Text, Container, Feedback, InkWell;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+
 import '../../theme.dart';
 import '../providers/payment.provider.dart';
 

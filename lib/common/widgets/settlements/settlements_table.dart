@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, TextStyle, DataColumn, CrossAxisAlignment, Theme, Text, Padding, FontWeight, Expanded, DataCell, DataRow, DataTable, Column;
 import 'package:intl/intl.dart';
 
 import '../../../core/constants.dart';

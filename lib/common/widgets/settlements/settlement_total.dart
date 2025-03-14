@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+
+
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, BoxDecoration, TextSpan, DefaultTextStyle, Theme, FontWeight, RichText, Container;
 
 import '../../../core/constants.dart' show CustomColours, borderRadiusSmall;
 import '../../../helpers/currency_helpers.dart' show CurrencyHelper;

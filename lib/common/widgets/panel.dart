@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+
+
+import 'package:flutter/material.dart' show StatelessWidget, Widget, BuildContext, EdgeInsets, BorderRadius, CrossAxisAlignment, Colors, BoxShadow, Radius, BoxDecoration, Container, Expanded, Column, SafeArea;
 
 class Panel extends StatelessWidget {
   const Panel({super.key, required this.child, this.footer});

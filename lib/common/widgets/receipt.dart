@@ -1,4 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        AutomaticKeepAliveClientMixin,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Icon,
+        TextStyle,
+        MainAxisSize,
+        Text,
+        showDialog,
+        Padding,
+        BorderRadius,
+        BoxDecoration,
+        Theme,
+        FontWeight,
+        BoxFit,
+        Column,
+        DefaultTextStyle,
+        Container;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +32,7 @@ import '../dialogs/print_dialog.dart';
 import '../providers/app.provider.dart';
 import '../providers/transaction.provider.dart';
 import 'button.dart';
+import 'key_value.dart';
 import 'loader.dart';
 
 class Receipt extends ConsumerStatefulWidget {
@@ -39,6 +59,7 @@ class ReceiptState extends ConsumerState<Receipt>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final transactionResult = widget.transactionResult;
 
     final dateParser = DateFormat('MMM d, yyyy h:mm:ss a');
@@ -113,86 +134,39 @@ class ReceiptState extends ConsumerState<Receipt>
                         merchantConfig.tradingName,
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.merchantId),
-                      Text(transactionResult.merchantId!),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.terminalId),
-                      Text(transactionResult.terminalId!),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.date),
-                      Text(dateFormatter.format(transactionDate)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.time),
-                      Text(timeFormatter.format(transactionDate)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.aid),
-                      Text(transactionResult.applicationIdentifier ?? ""),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.pan),
-                      Text(transactionResult.pan ?? '-'),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.transseqNo),
-                      Text(transactionResult.cardSequenceNumber!),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.appType),
-                      Text(transactionResult.cardDataInputMode!.name),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.purchase),
-                      Text(transactionResult.message),
-                    ],
-                  ),
+                  KeyValueWidget(
+                      title: l10n.merchantId,
+                      value: transactionResult.merchantId!),
+                  KeyValueWidget(
+                      title: l10n.terminalId,
+                      value: transactionResult.terminalId!),
+                  KeyValueWidget(
+                      title: l10n.date,
+                      value: dateFormatter.format(transactionDate)),
+                  KeyValueWidget(
+                      title: l10n.time,
+                      value: timeFormatter.format(transactionDate)),
+                  KeyValueWidget(
+                      title: l10n.aid,
+                      value: transactionResult.applicationIdentifier ?? ""),
+                  KeyValueWidget(
+                      title: l10n.pan, value: transactionResult.pan ?? ""),
+                  KeyValueWidget(
+                      title: l10n.transseqNo,
+                      value: transactionResult.cardSequenceNumber ?? ""),
+                  KeyValueWidget(
+                      title: l10n.appType,
+                      value: transactionResult.cardDataInputMode!.name),
+                  KeyValueWidget(
+                      title: l10n.purchase, value: transactionResult.message),
                   if (!transactionResult.isSuccessful)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(l10n.reason),
-                        Text(transactionResult.responseMessage),
-                      ],
-                    ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(l10n.total),
-                      Text(
-                        CurrencyHelper.formatCurrency(
-                            context, transactionResult.transactionAmount),
-                      ),
-                    ],
+                    KeyValueWidget(
+                        title: l10n.reason,
+                        value: transactionResult.responseMessage),
+                  KeyValueWidget(
+                    title: l10n.total,
+                    value: CurrencyHelper.formatCurrency(
+                        context, transactionResult.transactionAmount),
                   ),
                 ],
               ),

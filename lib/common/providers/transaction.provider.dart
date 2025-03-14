@@ -1,5 +1,4 @@
-
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show DateTimeRange;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref, StateProvider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../helpers/date_helpers.dart';

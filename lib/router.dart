@@ -60,15 +60,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           builder: (BuildContext context, GoRouterState state) {
             return const NewSalePage();
           },
-          routes: [
-            GoRoute(
-              name: 'loader',
-              path: 'loader',
-              pageBuilder: (BuildContext context, GoRouterState state) {
-                return DialogPage(builder: (_) => const Loader());
-              },
-            )
-          ],
         ),
         GoRoute(
             name: 'settings',

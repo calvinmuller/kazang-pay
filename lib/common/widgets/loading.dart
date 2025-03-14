@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, SizedBox, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, CircularProgressIndicator, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants.dart';
@@ -12,7 +12,6 @@ import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
 import '../providers/api.provider.dart';
 import '../providers/app.provider.dart';
 
-final initializedProvider = StateProvider<bool>((ref) => false);
 
 class LoadingWidget extends ConsumerStatefulWidget {
   const LoadingWidget({super.key});
@@ -21,8 +20,7 @@ class LoadingWidget extends ConsumerStatefulWidget {
   ConsumerState<LoadingWidget> createState() => _LoadingWidgetState();
 }
 
-class _LoadingWidgetState extends ConsumerState<LoadingWidget>
-    with TickerProviderStateMixin, TransactionHandlersMixin {
+class _LoadingWidgetState extends ConsumerState<LoadingWidget> with TickerProviderStateMixin, TransactionHandlersMixin {
 
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 5),

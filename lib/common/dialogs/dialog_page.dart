@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+
+
+import 'package:flutter/material.dart' show Page, Offset, Color, CapturedThemes, WidgetBuilder, BuildContext, Route, Widget, Colors, DialogRoute, Theme, ModalRoute, ModalBottomSheetRoute;
 
 /// A dialog page with Material entrance and exit animations, modal barrier color,
 /// and modal barrier behavior (dialog is dismissible with a tap on the barrier).
