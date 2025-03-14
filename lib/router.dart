@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:go_router/go_router.dart' show GoRouter, GoRoute, GoRouterState, RouteBase;
 
 import 'common/common.dart';
-import 'common/dialogs/dialog_page.dart' show DialogPage;
 import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
 import 'models/transaction.dart';
