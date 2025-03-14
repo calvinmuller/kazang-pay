@@ -1,0 +1,10 @@
+targets:
+  $default:
+    builders:
+      build_web_compilers|entrypoint:
+        options:
+          tree_shake: true
+      json_serializable:
+        options:
+          explicit_to_json: true
+          any_map: true

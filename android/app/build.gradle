@@ -1,0 +1,79 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "net.kazang.pegasus"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "net.kazang.pegasus"
+        minSdk = 26
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions += "default"
+
+    productFlavors {
+        uat {
+            dimension "default"
+            resValue "string", "app_name", "Pegasus UAT"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix "-uat"
+        }
+        prod {
+            dimension "default"
+            resValue "string", "app_name", "Pegasus"
+            applicationIdSuffix = ""
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    implementation files('libs/prismcore-debug-1.0.2.aar')
+    implementation files('libs/prismfactory-debug-1.0.5.aar')
+    implementation files('libs/prismiso8583-debug-1.0.4.aar')
+    implementation files('libs/prismdevice-debug-1.0.5.aar')
+
+    implementation("com.squareup.retrofit2:retrofit:2.6.2")
+    implementation("com.squareup.retrofit2:converter-gson:2.6.2")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.2")
+    implementation("com.squareup.retrofit2:converter-scalars:2.6.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation "androidx.datastore:datastore-preferences:1.1.0"
+    implementation "androidx.datastore:datastore-preferences-core:1.1.0"
+    implementation "com.google.code.gson:gson:2.3.1"
+    implementation ("com.sunmi:printerx:1.0.17")
+    implementation("androidx.work:work-runtime:2.7.1")
+
+}

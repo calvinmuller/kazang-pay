@@ -1,0 +1,12 @@
+{
+  "env": "qa",
+  "kazangApiUrl": "https://cpsv2-uat.kazang.net/",
+  "crApiUrl": "https://cr-test.kazang.net/devicemanager/",
+  "crUsername": "kpisApiTransactionInformer",
+  "crPassword": "Kp1sUat?2022#Mp0s!",
+  "crmApiUrl": "https://soniccrm-uat.kazang.net/",
+  "sonicUsername": "SonicCRMUatDeviceApiUser",
+  "sonicPassword": "C3hp2fTuN7m9M9@6Q7fK",
+  "cpsUsername": "ApiUser",
+  "cpsPassword": "Ap1T3stEr!"
+}

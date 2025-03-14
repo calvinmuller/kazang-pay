@@ -1,0 +1,2 @@
+/Users/calvinmuller/Mobile/kazangpay/android/app/.cxx/RelWithDebInfo/4o3cw4q6/x86_64/CMakeFiles/edit_cache.dir
+/Users/calvinmuller/Mobile/kazangpay/android/app/.cxx/RelWithDebInfo/4o3cw4q6/x86_64/CMakeFiles/rebuild_cache.dir
