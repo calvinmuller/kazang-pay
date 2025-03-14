@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/core.dart' show panelDecoration;
-import '../../../helpers/currency_helpers.dart' show CurrencyHelper;
 import '../../../l10n/app_localizations.dart';
 import '../../providers/transaction.provider.dart';
 import '../widgets.dart' show Button;

@@ -64,7 +64,6 @@ class KazangRepository {
       "to_datetime": df.format(toDateTime),
       "locale": locale
     });
-    print(response);
     return TransactionHistoryDetails.fromJson(response.data);
   }
 }
@@ -125,7 +124,7 @@ class CrmRepository {
         throw Exception(response.data);
       }
       return CrmGenericResponse.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioException {
       rethrow;
     }
   }

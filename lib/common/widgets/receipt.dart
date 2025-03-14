@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import '../../core/constants.dart';
 import '../../core/core.dart';
 import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
@@ -146,7 +145,7 @@ class ReceiptState extends ConsumerState<Receipt>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(l10n.aid),
-                      Text(transactionResult.applicationIdentifier! ?? ""),
+                      Text(transactionResult.applicationIdentifier ?? ""),
                     ],
                   ),
                   Row(
@@ -202,7 +201,7 @@ class ReceiptState extends ConsumerState<Receipt>
         ],
       ),
       error: (e, _) => Text('Error generating receipt $e'),
-      loading: () => Loader(),
+      loading: () => const Loader(),
     );
   }
 

@@ -35,7 +35,7 @@ class TransactionHelper {
   }
 
   static Future<void> doTransaction(Payment payment) async {
-    final amount = CurrencyHelper.formatForTransaction(payment.amount!);
+    final amount = CurrencyHelper.formatForTransaction(payment.amount);
     final cashbackAmount =
         CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
 

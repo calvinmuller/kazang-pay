@@ -1,9 +1,12 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'app.dart';
-import 'common/providers/app.provider.dart';
+
+import 'package:flutter/material.dart' show WidgetsFlutterBinding;
+import 'package:flutter/widgets.dart' show runApp;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
+
+import 'app.dart' show MyApp;
+import 'common/providers/app.provider.dart' show appNotifierProvider, AppNotifier;
+import 'common/providers/device_info.dart' show DeviceInfoProvider;
 import 'helpers/transaction_helper.dart';
-import 'common/providers/device_info.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

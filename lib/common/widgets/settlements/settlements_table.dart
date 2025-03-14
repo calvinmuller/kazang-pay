@@ -15,7 +15,6 @@ class SettlementsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(data.transactionDetails);
     final df = DateFormat('dd/MM/yyyy');
     final tf = DateFormat('HH:mm:ss');
     final l10n = AppLocalizations.of(context)!;

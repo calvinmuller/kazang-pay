@@ -61,7 +61,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onReturnPrinterResultEvent(PrinterResultEvent event) {
-    print(event.value);
+
   }
 
   @override

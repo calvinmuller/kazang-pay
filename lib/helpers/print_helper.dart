@@ -1,23 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart' show BuildContext, showDialog;
+import 'package:flutter/services.dart' show MethodChannel, PlatformException;
 import 'package:intl/intl.dart';
 
 import '../common/dialogs/print_dialog.dart' show PrintDialog;
-import '../common/interfaces/factory.events.dart'
-    show
-        FactoryEventHandler,
-        PlatformEvent,
-        PrinterResultEvent,
-        TransactionCompletedEvent,
-        UserApplicationSelectionRequired,
-        UserBudgetSelectionRequiredEvent;
-import '../common/widgets/transaction_item.dart';
 import '../models/app_state.dart';
-import '../models/payment.dart';
 import '../models/printer.dart';
 import '../models/transaction.dart';
 import '../models/transaction_result.dart';
@@ -30,17 +16,14 @@ class PrintHelper {
 
   final MethodChannel methodChannel = const MethodChannel('kazangpay_print');
 
-  /**
-   * 0 - Merchant
-   * 1 - Customer
-   */
+  /// 0 - Merchant
+  /// 1 - Customer
   static Future<String> setReceiptType(int type) async {
     try {
       final String result = await _instance.methodChannel
           .invokeMethod('setReceiptType', {'receiptType': type});
       return result;
-    } on PlatformException catch (e) {
-      print('Failed to set receipt type: ${e.message}');
+    } on PlatformException {
       rethrow;
     }
   }
@@ -52,8 +35,7 @@ class PrintHelper {
           'addDoubleTextPrintCommand',
           {'leftValue': leftValue, 'rightValue': rightValue});
       return result;
-    } on PlatformException catch (e) {
-      print('Failed to set receipt type: ${e.message}');
+    } on PlatformException {
       rethrow;
     }
   }
@@ -63,8 +45,7 @@ class PrintHelper {
       final String result = await _instance.methodChannel
           .invokeMethod('print', {'data': data.toJson()});
       return result;
-    } on PlatformException catch (e) {
-      print('Failed to set receipt type: ${e.message}');
+    } on PlatformException {
       rethrow;
     }
   }
@@ -86,7 +67,7 @@ class PrintHelper {
       normalFontSize: 24,
       imageXpos: 50,
       imageWidth: 200,
-      heading: merchantConfig!.tradingName ?? "",
+      heading: merchantConfig!.tradingName,
     );
     var singleText = SingleTextPrintCommand(fontSize: 25);
     singleText.value = (receiptType == ReceiptSectionEnum.MERCHANT)

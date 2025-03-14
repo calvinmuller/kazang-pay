@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, MaterialApp;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+
 import 'l10n/app_localizations.dart' show AppLocalizations;
 import 'router.dart';
 import 'theme.dart';

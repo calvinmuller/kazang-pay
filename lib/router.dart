@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart' show NavigatorState, BuildContext, GlobalKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
-import 'package:go_router/go_router.dart';
-import 'common/common.dart' show BottomSheetPage, DialogPage, PinDialog;
-import 'common/dialogs/pin_dialog.dart';
-import 'common/providers/app.provider.dart';
-import 'common/widgets/loader.dart';
-import 'common/widgets/loading.dart';
-import 'models/transaction.dart' show Transaction;
+import 'package:go_router/go_router.dart' show GoRouter, GoRoute, GoRouterState, RouteBase;
+
+import 'common/common.dart';
+import 'common/dialogs/dialog_page.dart' show DialogPage;
+import 'common/providers/app.provider.dart' show appNotifierProvider;
+import 'common/widgets/widgets.dart';
+import 'models/transaction.dart';
 import 'models/transaction_result.dart';
-import 'pages/onboarding/onboarding.dart';
 import 'pages/pages.dart';
 
 final pinNavigatorKey = GlobalKey<NavigatorState>();
@@ -169,7 +167,6 @@ final routerProvider = Provider<GoRouter>((ref) {
     ),
   ];
 
-  print("-------- ROUTER --------");
   return GoRouter(
     routes: (isSetup) ? authRoutes : onboardingRoutes,
     initialLocation: '/',

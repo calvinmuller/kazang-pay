@@ -9,7 +9,7 @@ class KeyValueWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: Theme.of(context).textTheme!.bodyMedium!,
+      style: Theme.of(context).textTheme.bodyMedium!,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -48,29 +48,6 @@ enum ReceiptSectionEnum {
   CUSTOMER,
 }
 
-/**
- * public open class BasePrintCommand public constructor() {
-    public final var alignment: com.prism.core.enums.AlignmentEnum? /* compiled code */
-    public final get
-    public final set(value: com.prism.core.enums.AlignmentEnum?) {/* compiled code */ }
-
-    public final var lineSpacingAfterPrinting: kotlin.Int /* compiled code */
-    public final get
-    public final set(value: kotlin.Int) {/* compiled code */ }
-
-    public final var printLineFormat: com.prism.core.enums.PrintLineFormatEnum? /* compiled code */
-    public final get
-    public final set(value: com.prism.core.enums.PrintLineFormatEnum?) {/* compiled code */ }
-
-    public final var xPosition: kotlin.Int /* compiled code */
-    public final get
-    public final set(value: kotlin.Int) {/* compiled code */ }
-
-    public final var yPosition: kotlin.Int /* compiled code */
-    public final get
-    public final set(value: kotlin.Int) {/* compiled code */ }
-    }
- */
 class BasePrintCommand {
   AlignmentEnum alignment;
   int lineSpacingAfterPrinting;

@@ -31,7 +31,7 @@ class CustomBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: Padding(
-        padding: (dense) ? EdgeInsets.symmetric(vertical: 2.0, horizontal: 6): const EdgeInsets.all(8.0),
+        padding: (dense) ? const EdgeInsets.symmetric(vertical: 2.0, horizontal: 6): const EdgeInsets.all(8.0),
         child: DefaultTextStyle(
           style: (badgeTheme.textStyle ?? defaultBadgeTheme!).copyWith(
             color: textColour ?? badgeTheme.textColor ?? theme.colorScheme.onError,

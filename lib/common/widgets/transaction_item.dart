@@ -6,10 +6,8 @@ import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
-import '../../models/transaction.dart';
 import '../../theme.dart';
 import '../providers/transaction.provider.dart' show currentTransactionItem;
-import 'widgets.dart';
 
 class TransactionItem extends ConsumerWidget {
   const TransactionItem({super.key});
@@ -22,7 +20,6 @@ class TransactionItem extends ConsumerWidget {
     final format = NumberFormat.simpleCurrency(locale: locale.toString());
     final df = DateFormat('yyyy-MM-dd HH:mm:ss');
 
-    print(item);
     return Container(
       decoration: panelDecoration,
       child: InkWell(
@@ -52,7 +49,7 @@ class TransactionItem extends ConsumerWidget {
                         style: CustomTheme.graphikSemiBold,
                       ),
                       Text(
-                        format.format(item.amount! / 100),
+                        format.format(item.amount / 100),
                         style: CustomTheme.graphikSemiBold,
                       ),
                     ],

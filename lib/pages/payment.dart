@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show BuildContext, Widget, SizedBox, Padding, EdgeInsets, Icon, CrossAxisAlignment, MainAxisAlignment, Theme, Text, Column, Scaffold, TextAlign;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
 
 import '../common/interfaces/factory.events.dart';
@@ -114,7 +114,6 @@ class PaymentPageState extends ConsumerState<PaymentPage>
 
   @override
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
-    print(value.value);
     final result = TransactionResult.fromJson(value.value);
     ref.read(transactionResultNotifierProvider.notifier).set(result);
     context.goNamed('payment-result', extra: result);

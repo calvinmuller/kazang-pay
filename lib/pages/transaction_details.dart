@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
-import '../common/providers/payment.provider.dart' show paymentNotifierProvider;
 import '../common/widgets/receipt.dart';
 import '../common/widgets/widgets.dart' show Button;
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
-import '../helpers/print_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/payment.dart' show Payment, PaymentType;
 import '../models/printer.dart';
@@ -225,18 +222,5 @@ extension on Transaction {
         ),
       ),
     );
-  }
-}
-
-extension on TransactionStatus {
-  String toLocalizedString(AppLocalizations l10n) {
-    switch (this) {
-      case TransactionStatus.approved:
-        return l10n.approved;
-      case TransactionStatus.declined:
-        return l10n.declined;
-      case TransactionStatus.refunded:
-        return l10n.refunded;
-    }
   }
 }

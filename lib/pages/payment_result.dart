@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
-import 'package:go_router/go_router.dart';
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/widgets/animated_borders.dart';

@@ -51,7 +51,9 @@ class PrintDialogState extends ConsumerState<PrintDialog>
   @override
   void onReturnPrinterResultEvent(PrinterResultEvent event) {
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Navigator.of(context).pop();
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
     });
   }
 
