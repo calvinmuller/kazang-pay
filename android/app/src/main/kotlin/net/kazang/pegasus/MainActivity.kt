@@ -26,21 +26,32 @@ class MainActivity : FlutterActivity() {
     private val PRINT_CHANNEL = "kazangpay_print"
     private var mediaPlayer: MediaPlayer? = null
     private val eventChannel = "factoryEventHandler"
-//    private var transactionHandler: TransactionHandler = TransactionHandler()
-    private var transactionHandler: MockTransactionHandler = MockTransactionHandler()
+    private var transactionHandler: TransactionInterface = TransactionHandler()
     private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
     private val gson = Gson()
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-//        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL).setMethodCallHandler(PrinterHandler(transactionHandler))
+        if (android.os.Build.MODEL.contains("sdk_gphone64_arm64")) {
+            transactionHandler = MockTransactionHandler();
+            EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
+                transactionHandler as MockTransactionHandler
+            )
+        } else {
+            MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL).setMethodCallHandler(PrinterHandler(
+                transactionHandler
+            ))
+
+            EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
+                transactionHandler
+            )
+        }
 
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL
         ).setMethodCallHandler { call, result ->
-            Log.d(call.method, call.arguments?.toString() ?: "No arguments");
             if (call.method == "connect") {
                 val config = call.argument<HashMap<Any, Any>>("config")!!
                 val json = gson.toJson(config)
@@ -130,9 +141,6 @@ class MainActivity : FlutterActivity() {
                 result.notImplemented()
             }
         }
-        EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
-            transactionHandler
-        )
     }
 
     private fun play() {
@@ -144,7 +152,6 @@ class MainActivity : FlutterActivity() {
     private suspend fun dataStoreSetString(key: String, value: HashMap<Any, Any>) {
         val stringKey = stringPreferencesKey(key)
         val string = gson.toJson(value)
-        Log.d(stringKey.toString(), string)
         context.sharedPreferencesDataStore.edit { preferences -> preferences[stringKey] = string }
     }
 

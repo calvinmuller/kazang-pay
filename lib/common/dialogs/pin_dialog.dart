@@ -26,7 +26,8 @@ import 'package:flutter/material.dart'
         Padding,
         Navigator,
         MaterialPageRoute,
-        showModalBottomSheet;
+        showModalBottomSheet,
+        Colors;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget;
 import 'package:go_router/go_router.dart';
@@ -37,17 +38,20 @@ import '../providers/app.provider.dart';
 import '../widgets/button.dart';
 
 class PinDialog extends ConsumerStatefulWidget {
-  const PinDialog(
-      {super.key,
-      this.title,
-      this.message,
-      this.action,
-      this.iconData = CustomIcons.lock});
+  const PinDialog({
+    super.key,
+    this.title,
+    this.message,
+    this.action,
+    this.iconData = CustomIcons.lock,
+    this.actionButtonColour,
+  });
 
   final String? title;
   final String? message;
   final VoidCallback? action;
   final IconData iconData;
+  final Color? actionButtonColour;
 
   @override
   ConsumerState<PinDialog> createState() => _PinDialogState();
@@ -135,6 +139,9 @@ class _PinDialogState extends ConsumerState<PinDialog> {
               ),
             ),
             Button.main(
+              colour: widget.actionButtonColour,
+              textColour:
+                  (widget.actionButtonColour != null) ? Colors.white : null,
               onLongPress: () =>
                   ref.read(appNotifierProvider.notifier).setPin(null),
               onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
@@ -180,20 +187,23 @@ class _PinDialogState extends ConsumerState<PinDialog> {
   }
 }
 
-showPinDialog(
-    {Widget? child,
-    String? title,
-    required BuildContext context,
-    VoidCallback? callback}) async {
+showPinDialog({
+  Widget? child,
+  String? title,
+  Color? actionButtonColour,
+  required BuildContext context,
+  VoidCallback? callback,
+}) async {
   final result = await showModalBottomSheet(
     isScrollControlled: true,
     showDragHandle: true,
     context: context,
     builder: (context) => PinDialog(
       title: title,
+      actionButtonColour: actionButtonColour,
     ),
   );
-  if (result && context.mounted) {
+  if (result != null && result && context.mounted) {
     if (callback != null) {
       callback();
     } else {

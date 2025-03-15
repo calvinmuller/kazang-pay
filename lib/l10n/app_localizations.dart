@@ -815,6 +815,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Model:'**
   String get model;
+
+  /// No description provided for @voidConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'You are about to Void this transaction'**
+  String get voidConfirm;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,10 +1,7 @@
-
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-
 import '../../helpers/transaction_helper.dart';
-import '../../models/app_state.dart' show AppState, DeviceInfo, TerminalProfile;
+import '../../models/app_state.dart' show AppState, TerminalProfile;
 import '../../models/kazang.dart';
 
 part 'app.provider.g.dart';

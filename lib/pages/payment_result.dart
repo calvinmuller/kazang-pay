@@ -30,7 +30,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2))
+        AnimationController(vsync: this, duration: const Duration(seconds: 1, milliseconds: 500))
           ..forward();
 
     _borderAnimationController =

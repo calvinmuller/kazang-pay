@@ -27,8 +27,26 @@ import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 
+// create abstract class of the following below
+interface TransactionInterface: EventChannel.StreamHandler {
 
-class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
+    fun initialize(context: Context, config: TerminalConfig)
+    fun createPurchase(amount: String, description: String)
+    fun voidTransaction(retrievalReferenceNumberBuilder: String)
+    fun continueTransaction(pos: Int, value: String)
+    fun continueTransactionBudget(value: Int)
+    fun createCashback(amount: String, cashbackAmount: String)
+    fun createCashWithdrawal(cashbackAmount: String)
+    fun getHistoryData(limit: Int = 0, responseCode: String = ""): List<String>
+    fun getByReferenceData(responseId: String): TransactionItem?
+    fun getDeviceInfo(context: Context, result: MethodChannel.Result)
+    fun printReceipt(data: PrintRequest)
+    fun abortTransaction()
+    fun connect()
+
+}
+
+class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: TransactionFactory? = null
     private var factoryconstructor: FactoryConstructorData? = null
@@ -39,7 +57,7 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
     private var eventSink: EventChannel.EventSink? = null
     var repo: TransactionRepository? = null
 
-    fun initialize(context: Context, config: TerminalConfig) {
+    override fun initialize(context: Context, config: TerminalConfig) {
         if (factory != null) {
             factory!!.disconnect();
             factory!!.dispose()
@@ -288,19 +306,19 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
         }
     }
 
-    fun createPurchase(amount: String, description: String) {
+    override fun createPurchase(amount: String, description: String) {
         Log.d("createPurchase", "amount: $amount, description: $description")
         factorybb = factorybb.createPurchase(amount, "0.00", "", true)
         factory!!.startTransaction(factorybb)
     }
 
-    fun voidTransaction(retrievalReferenceNumberBuilder: String) {
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
         val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder);
         factorybb = factorybb.createVoid("", item!!)
         factory!!.startTransaction(factorybb)
     }
 
-    fun continueTransaction(pos: Int, value: String) {
+    override fun continueTransaction(pos: Int, value: String) {
         handler.post {
             factory!!.continueTransactionApplication(
                 pos,
@@ -309,13 +327,13 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
         }
     }
 
-    fun continueTransactionBudget(value: Int) {
+    override fun continueTransactionBudget(value: Int) {
         factory!!.continueTransactionBudget(
             value
         )
     }
 
-    fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String) {
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -323,7 +341,7 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
         )
     }
 
-    fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String) {
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -331,7 +349,7 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
         )
     }
 
-    fun getHistoryData(limit: Int = 0, responseCode: String = ""): List<String> {
+    override fun getHistoryData(limit: Int, responseCode: String): List<String> {
         val gson = Gson()
         val items = repo!!.getHistoryData(
             responseCode = responseCode,
@@ -342,11 +360,11 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
         return items;
     }
 
-    fun getByReferenceData(responseId: String): TransactionItem? {
+    override fun getByReferenceData(responseId: String): TransactionItem? {
         return repo!!.getByReferenceData(responseId);
     }
 
-    fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
+    override fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
         val gson = Gson()
         factory = TransactionFactory(context)
         val serial = factory!!.getDeviceSerial()
@@ -370,18 +388,18 @@ class TransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
         )
     }
 
-    fun printReceipt(data: PrintRequest) {
+    override fun printReceipt(data: PrintRequest) {
         data.imageXpos = 0
         data.fontName = "arial" //monospace_typewriter.ttf
         data.bitmapImageResourceId = R.drawable.receipt
         factory!!.sendPrinterData(data)
     }
 
-    fun abortTransaction() {
+    override fun abortTransaction() {
         factory!!.abortTransaction()
     }
 
-    fun connect() {
+    override fun connect() {
         factory!!.connect()
     }
 

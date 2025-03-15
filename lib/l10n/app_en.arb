@@ -120,5 +120,6 @@
   "required": "This field is required.",
   "pinTooShort": "PIN must be at least 4 digits long",
   "manufacturer": "Manufacturer:",
-    "model": "Model:"
+  "model": "Model:",
+  "voidConfirm": "You are about to Void this transaction"
 }

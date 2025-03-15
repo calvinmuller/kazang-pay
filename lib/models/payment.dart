@@ -32,4 +32,8 @@ class Payment with _$Payment {
   bool get cashWithdrawal {
     return amount == 0 && cashbackAmount > 0;
   }
+
+  bool get hasAmount {
+    return amount != 0 || cashbackAmount != 0;
+  }
 }

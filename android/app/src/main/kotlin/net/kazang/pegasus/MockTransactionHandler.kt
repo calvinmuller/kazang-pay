@@ -28,7 +28,7 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 
 
-class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents {
+class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: MockTransactionFactory? = null
     private var factoryconstructor: FactoryConstructorData? = null
@@ -39,7 +39,7 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
     private var eventSink: EventChannel.EventSink? = null
     var repo: TransactionRepository? = null
 
-    fun initialize(context: Context, config: TerminalConfig) {
+    override fun initialize(context: Context, config: TerminalConfig) {
         if (factory != null) {
             factory!!.disconnect();
             factory!!.dispose()
@@ -288,19 +288,19 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         }
     }
 
-    fun createPurchase(amount: String, description: String) {
+    override fun createPurchase(amount: String, description: String) {
         Log.d("createPurchase", "amount: $amount, description: $description")
         factorybb = factorybb.createPurchase(amount, "0.00", "", true)
         factory!!.startTransaction(factorybb)
     }
 
-    fun voidTransaction(retrievalReferenceNumberBuilder: String) {
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
         val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder);
         factorybb = factorybb.createVoid("", item!!)
         factory!!.startTransaction(factorybb)
     }
 
-    fun continueTransaction(pos: Int, value: String) {
+    override fun continueTransaction(pos: Int, value: String) {
         handler.post {
             factory!!.continueTransactionApplication(
                 pos,
@@ -309,13 +309,13 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         }
     }
 
-    fun continueTransactionBudget(value: Int) {
+    override fun continueTransactionBudget(value: Int) {
         factory!!.continueTransactionBudget(
             value
         )
     }
 
-    fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String) {
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -323,7 +323,7 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         )
     }
 
-    fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String) {
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -331,7 +331,7 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         )
     }
 
-    fun getHistoryData(limit: Int = 0, responseCode: String = ""): List<String> {
+    override fun getHistoryData(limit: Int, responseCode: String): List<String> {
         val gson = Gson()
         val items = repo!!.getHistoryData(
             responseCode = responseCode,
@@ -342,11 +342,11 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         return items;
     }
 
-    fun getByReferenceData(responseId: String): TransactionItem? {
+    override fun getByReferenceData(responseId: String): TransactionItem? {
         return repo!!.getByReferenceData(responseId);
     }
 
-    fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
+    override fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
         val gson = Gson()
         factory = MockTransactionFactory(context)
         val serial = factory!!.getDeviceSerial()
@@ -367,14 +367,14 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         )
     }
 
-    fun printReceipt(data: PrintRequest) {
+    override fun printReceipt(data: PrintRequest) {
         data.imageXpos = 0
         data.fontName = "arial" //monospace_typewriter.ttf
         data.bitmapImageResourceId = R.drawable.receipt
         factory!!.sendPrinterData(data)
     }
 
-    fun abortTransaction() {
+    override fun abortTransaction() {
         val response = TransactionClientResponse()
         response.responseCode = "91"
         response.declinedReason = "Transaction Aborted"
@@ -387,7 +387,7 @@ class MockTransactionHandler : EventChannel.StreamHandler, FactoryActivityEvents
         onTransactionCompletedEvent(response)
     }
 
-    fun connect() {
+    override fun connect() {
         factory!!.connect()
     }
 

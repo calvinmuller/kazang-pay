@@ -15,7 +15,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 
 
-class PrinterHandler(private val transactionHandler: TransactionHandler) : MethodCallHandler {
+class PrinterHandler(private val transactionHandler: TransactionInterface) : MethodCallHandler {
     val gsonBilder = GsonBuilder()
     private var gson: Gson
 

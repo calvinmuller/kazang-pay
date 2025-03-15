@@ -375,6 +375,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get model => 'Model:';
+
+  @override
+  String get voidConfirm => 'You are about to Void this transaction';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

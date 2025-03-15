@@ -375,4 +375,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get model => 'Model:';
+
+  @override
+  String get voidConfirm => 'You are about to Void this transaction';
 }

@@ -143,8 +143,7 @@ class TransactionDetails extends ConsumerWidget {
                                 transaction.badge(l10n, context)
                               ],
                             ),
-                            if (transaction.isPayment &&
-                                transaction.isUserVoidable)
+                            if (transaction.isUserVoidable)
                               Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: Button.secondary(
@@ -152,6 +151,8 @@ class TransactionDetails extends ConsumerWidget {
                                   child: Text(l10n.voidTransaction),
                                   onPressed: () async {
                                     showPinDialog(
+                                      title: l10n.voidConfirm,
+                                      actionButtonColour: CustomColours.red,
                                       context: context,
                                       child: PaymentPage(
                                         payment: Payment(

@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'payment.provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class PaymentNotifier extends _$PaymentNotifier {
   @override
   Payment build() => Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);

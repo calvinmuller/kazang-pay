@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, SizedBox, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, CircularProgressIndicator, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold;
+import 'package:flutter/material.dart' show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, SizedBox, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, CircularProgressIndicator, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold, GradientRotation;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
@@ -23,7 +23,7 @@ class LoadingWidget extends ConsumerStatefulWidget {
 class _LoadingWidgetState extends ConsumerState<LoadingWidget> with TickerProviderStateMixin, TransactionHandlersMixin {
 
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 5),
+    duration: const Duration(seconds: 2, milliseconds: 500),
     vsync: this,
   )..forward();
 

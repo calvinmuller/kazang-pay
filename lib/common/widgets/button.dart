@@ -80,7 +80,7 @@ class Button extends StatelessWidget {
       margin: margin,
       borderColour: borderColour,
       textColour: (inverse) ? Colors.white : textColour,
-      colour: (inverse) ? Colors.black : borderColour,
+      colour: (inverse) ? Colors.black : colour,
       width: width,
       rounded: false,
       onPressed: onPressed,
