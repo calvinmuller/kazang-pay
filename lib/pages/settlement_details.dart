@@ -1,4 +1,23 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, SizedBox, Center, Text, AppBar, CrossAxisAlignment, Theme, FontWeight, Column, MainAxisAlignment, Row, Container, CircularProgressIndicator, Padding, ListView, RefreshIndicator, NestedScrollView, Scaffold;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        SizedBox,
+        Center,
+        Text,
+        AppBar,
+        CrossAxisAlignment,
+        Theme,
+        FontWeight,
+        Column,
+        MainAxisAlignment,
+        Row,
+        Container,
+        ListView,
+        RefreshIndicator,
+        NestedScrollView,
+        Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:go_router/go_router.dart';
@@ -6,6 +25,7 @@ import 'package:intl/intl.dart' show DateFormat;
 
 import '../common/providers/transaction.provider.dart'
     show settlementDetailsProvider;
+import '../common/widgets/loader.dart';
 import '../common/widgets/settlements/settlements.dart'
     show SettlementsTable, SettlementTotals, SettlementTotal;
 import '../core/constants.dart' show panelDecoration;
@@ -21,7 +41,8 @@ class SettlementDetails extends ConsumerWidget {
     final df = DateFormat('dd/MM/yyyy');
     final l10n = AppLocalizations.of(context)!;
     Settlement settlement = GoRouterState.of(context).extra as Settlement;
-    final settlementDetails = ref.watch(settlementDetailsProvider(settlement.date));
+    final settlementDetails =
+        ref.watch(settlementDetailsProvider(settlement.date));
 
     return Scaffold(
       appBar: AppBar(
@@ -120,9 +141,10 @@ class SettlementDetails extends ConsumerWidget {
                     return SettlementsTable(settlement: settlement, data: data);
                   },
                   loading: () => const Center(
-                    child: Padding(
+                    child: Loader(
+                      transparent: true,
+                      message: "",
                       padding: EdgeInsets.all(8.0),
-                      child: SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2)),
                     ),
                   ),
                   error: (error, _) => Center(child: Text('Error: $error')),

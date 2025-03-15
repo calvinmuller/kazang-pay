@@ -1,13 +1,15 @@
 
 
-import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Colors, BorderRadius, BoxDecoration, MainAxisSize, CircularProgressIndicator, Theme, Text, Row, Material, Container, Center;
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Colors, BorderRadius, BoxDecoration, MainAxisSize, CircularProgressIndicator, Theme, Text, Row, Container, Center;
 
 import '../../l10n/app_localizations.dart';
 
 class Loader extends StatelessWidget {
-  const Loader({super.key, this.message});
+  const Loader({super.key, this.message, this.transparent = false, this.padding = const EdgeInsets.symmetric(vertical: 25, horizontal: 32)});
 
   final String? message;
+  final bool transparent;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -15,24 +17,21 @@ class Loader extends StatelessWidget {
 
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 32),
+        padding: padding,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: (transparent) ? null: Colors.white,
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Material(
-          color: Colors.white,
-          child: Row(
-            spacing: 20,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox.square(
-                dimension: 25,
-                child: CircularProgressIndicator(strokeWidth: 1.5),
-              ),
-              Text((message != null) ? message!: l10n.loading, style: Theme.of(context).textTheme.titleSmall),
-            ],
-          ),
+        child: Row(
+          spacing: 20,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox.square(
+              dimension: 25,
+              child: CircularProgressIndicator(strokeWidth: 1.5),
+            ),
+            Text((message != null) ? message!: l10n.loading, style: Theme.of(context).textTheme.titleSmall),
+          ],
         ),
       ),
     );

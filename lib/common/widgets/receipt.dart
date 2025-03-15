@@ -1,24 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        AutomaticKeepAliveClientMixin,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        Icon,
-        TextStyle,
-        MainAxisSize,
-        Text,
-        showDialog,
-        Padding,
-        BorderRadius,
-        BoxDecoration,
-        Theme,
-        FontWeight,
-        BoxFit,
-        Column,
-        DefaultTextStyle,
-        Container;
-import 'package:flutter/src/widgets/basic.dart';
+    show AutomaticKeepAliveClientMixin, BuildContext, Widget, EdgeInsets, Icon, TextStyle, MainAxisSize, Text, showDialog, Padding, BorderRadius, BoxDecoration, Theme, FontWeight, BoxFit, Column, DefaultTextStyle, Container, TextAlign, Center;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';

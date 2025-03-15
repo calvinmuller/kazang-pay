@@ -10,7 +10,6 @@ import 'package:flutter/material.dart'
         TextStyle,
         Text,
         AppBar,
-        Hero,
         TabBarView,
         Colors,
         BorderRadius,

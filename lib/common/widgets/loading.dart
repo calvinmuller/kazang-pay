@@ -1,5 +1,28 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, SizedBox, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, CircularProgressIndicator, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold, GradientRotation;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        TickerProviderStateMixin,
+        AnimationController,
+        Positioned,
+        EdgeInsets,
+        Alignment,
+        StackFit,
+        Padding,
+        CrossAxisAlignment,
+        MainAxisAlignment,
+        Text,
+        TextAlign,
+        Theme,
+        Row,
+        Stack,
+        LinearGradient,
+        BoxDecoration,
+        Container,
+        AnimatedBuilder,
+        Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
 
@@ -11,7 +34,7 @@ import '../interfaces/factory.events.dart';
 import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
 import '../providers/api.provider.dart';
 import '../providers/app.provider.dart';
-
+import 'loader.dart';
 
 class LoadingWidget extends ConsumerStatefulWidget {
   const LoadingWidget({super.key});
@@ -20,8 +43,8 @@ class LoadingWidget extends ConsumerStatefulWidget {
   ConsumerState<LoadingWidget> createState() => _LoadingWidgetState();
 }
 
-class _LoadingWidgetState extends ConsumerState<LoadingWidget> with TickerProviderStateMixin, TransactionHandlersMixin {
-
+class _LoadingWidgetState extends ConsumerState<LoadingWidget>
+    with TickerProviderStateMixin, TransactionHandlersMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2, milliseconds: 500),
     vsync: this,
@@ -86,7 +109,6 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget> with TickerProvid
                 ),
               ),
             ),
-            // Center(child: CircularProgressIndicator()),
             Positioned(
               right: 0,
               bottom: 0,
@@ -112,15 +134,10 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget> with TickerProvid
                         )
                       ],
                     _ => [
-                        const SizedBox.square(
-                          dimension: 25,
-                          child: CircularProgressIndicator(strokeWidth: 1.5),
-                        ),
-                        Text(
-                          l10n.loading,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+                        Loader(
+                          transparent: true,
+                          message: l10n.loading,
+                        )
                       ],
                   }),
             )
