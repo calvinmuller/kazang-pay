@@ -367,12 +367,14 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     override fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
         val gson = Gson()
         factory = TransactionFactory(context)
+        val packageManager = context.packageManager
         val serial = factory!!.getDeviceSerial()
         val apiVersion = factory!!.getApiVersion()
         val hasOnboardPrinter = factory!!.hasOnboardPrinter()
         val build = gson.toJson(factory!!.getBuildAndSENumber())
         val manufacturer: String = Build.MANUFACTURER
         val model: String = Build.MODEL
+        val info = packageManager.getPackageInfo(context.packageName, 0)
 
         factory!!.dispose()
         factory = null
@@ -383,7 +385,11 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
                 "build" to build,
                 "hasOnboardPrinter" to hasOnboardPrinter,
                 "manufacturer" to manufacturer,
-                "model" to model
+                "model" to model,
+                "version" to mapOf(
+                    "name" to info.versionName,
+                    "code" to info.versionCode
+                )
             )
         )
     }

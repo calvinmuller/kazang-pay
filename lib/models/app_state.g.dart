@@ -13,6 +13,9 @@ DeviceInfo _$DeviceInfoFromJson(Map json) => DeviceInfo(
       build: json['build'],
       model: json['model'] as String?,
       manufacturer: json['manufacturer'] as String?,
+      version: json['version'] == null
+          ? null
+          : Version.fromJson(Map<String, dynamic>.from(json['version'] as Map)),
     );
 
 Map<String, dynamic> _$DeviceInfoToJson(DeviceInfo instance) =>
@@ -23,6 +26,17 @@ Map<String, dynamic> _$DeviceInfoToJson(DeviceInfo instance) =>
       'build': instance.build,
       'model': instance.model,
       'manufacturer': instance.manufacturer,
+      'version': instance.version?.toJson(),
+    };
+
+Version _$VersionFromJson(Map json) => Version(
+      name: json['name'] as String?,
+      code: (json['code'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$VersionToJson(Version instance) => <String, dynamic>{
+      'name': instance.name,
+      'code': instance.code,
     };
 
 TerminalProfile _$TerminalProfileFromJson(Map json) => TerminalProfile(

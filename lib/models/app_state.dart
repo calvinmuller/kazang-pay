@@ -35,6 +35,7 @@ class DeviceInfo {
   final dynamic build;
   final String? model;
   final String? manufacturer;
+  final Version? version;
 
   DeviceInfo({
     required this.serial,
@@ -43,12 +44,29 @@ class DeviceInfo {
     this.build,
     this.model,
     this.manufacturer,
+    this.version
   });
 
   factory DeviceInfo.fromJson(Map<String, dynamic> json) =>
       _$DeviceInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$DeviceInfoToJson(this);
+}
+
+@JsonSerializable()
+class Version {
+  String? name;
+  int? code;
+
+  Version({
+    this.name,
+    this.code,
+  });
+
+  factory Version.fromJson(Map<String, dynamic> json) =>
+      _$VersionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$VersionToJson(this);
 }
 
 @JsonSerializable()

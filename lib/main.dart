@@ -14,6 +14,8 @@ Future<void> main() async {
   final deviceInfo = await TransactionHelper.getDeviceInfo();
   final appState = await TransactionHelper.getAppState();
 
+  print(deviceInfo.toJson());
+
   runApp(
     ProviderScope(
       overrides: [
