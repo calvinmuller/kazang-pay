@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart' show AppLocalizations;
 import '../../models/payment.dart' show Payment;
 import '../interfaces/factory.events.dart';
 import '../providers/status.provider.dart' show statusMessageProvider;
+import '../providers/transaction.provider.dart';
 
 mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> implements FactoryEventHandler {
@@ -21,6 +22,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onUserApplicationSelectionRequired(UserApplicationSelectionRequired event) async {
+    ref.read(transactionStepProvider.notifier).state = 3;
     final result = await context.pushNamed<Map>('accounts', extra: event.value);
     if (result != null) {
       TransactionHelper.continueTransaction(result['index'], result['account']);
@@ -32,6 +34,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onUserBudgetSelectionRequiredEvent(
       UserBudgetSelectionRequiredEvent event) async {
+    ref.read(transactionStepProvider.notifier).state = 2;
     final result = await showListDialog(context, event.value);
 
     if (result != null) {
@@ -51,10 +54,14 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onStatusMessageEvent(String? value) {
     ref.read(statusMessageProvider.notifier).state = value ?? '';
+    if (value == "Sending request online.") {
+      ref.read(transactionStepProvider.notifier).state = 4;
+    }
   }
 
   @override
   void onWaitingForCardEvent(bool value) {
+    ref.read(transactionStepProvider.notifier).state = 1;
     final l10n = AppLocalizations.of(context)!;
     if (value) {
       ref.read(statusMessageProvider.notifier).state = l10n.insertOrTap;
@@ -80,6 +87,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onPrintDataCancelledEvent(bool value) {
     final l10n = AppLocalizations.of(context)!;
-    showErrorDialog(context, l10n.printerError).then((_) => _);
+    showErrorDialog(context, l10n.printerError).then((_) {});
   }
 }

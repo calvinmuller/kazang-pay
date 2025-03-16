@@ -231,7 +231,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                     ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
                   }
                   else if (response.status == StatusResult.Failed) {
-                    print(response);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: CustomColours.red,
@@ -242,7 +241,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   }
                 } catch (e) {
                   if (context.mounted) {
-                    print(e);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: CustomColours.red,

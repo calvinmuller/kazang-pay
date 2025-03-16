@@ -1,15 +1,18 @@
 
 
-import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, MainAxisAlignment, Colors, CircleAvatar, Row;
+import 'package:flutter/material.dart' show BuildContext, Widget, MainAxisAlignment, Colors, CircleAvatar, Row;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants.dart';
+import '../providers/transaction.provider.dart' show transactionStepProvider;
 
-class Dots extends StatelessWidget {
+class Dots extends ConsumerWidget {
   const Dots({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Generate 4 circles of black colours in a loop
+  Widget build(BuildContext context, WidgetRef ref) {
+    final step = ref.watch(transactionStepProvider);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 48,
@@ -17,9 +20,10 @@ class Dots extends StatelessWidget {
         4,
         (index) => CircleAvatar(
           radius: 20,
-          backgroundColor: (index < 2) ? CustomColours.greenish : Colors.black,
+          backgroundColor: (index < step) ? CustomColours.greenish : Colors.black,
         ),
       ),
     );
   }
+
 }

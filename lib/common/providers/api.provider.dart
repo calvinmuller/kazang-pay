@@ -29,7 +29,8 @@ final crmRepositoryProvider = Provider<CrmRepository>((ref) {
   return CrmRepository(Dio(options));
 });
 
-final kazangRepositoryProvider = Provider<KazangRepository>((ref) {
+@riverpod
+KazangRepository kazangRepository(Ref ref) {
   const uri = String.fromEnvironment('kazangApiUrl');
 
   const username = String.fromEnvironment('cpsUsername');
@@ -45,7 +46,7 @@ final kazangRepositoryProvider = Provider<KazangRepository>((ref) {
     },
   );
   return KazangRepository(Dio(options));
-});
+}
 
 final crRepositoryProvider = Provider<CrRepository>((ref) {
   const uri = String.fromEnvironment('crApiUrl');

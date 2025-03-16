@@ -69,9 +69,10 @@ Future<TransactionHistoryDetails> settlementDetails(Ref ref, DateTime date) asyn
   return settlementDetails;
 }
 
-
-
 @riverpod
 Future<Transaction> getByReferenceData(Ref ref, String rrn) async {
   return await TransactionHelper.getByReferenceData(rrn);
 }
+
+@riverpod
+final transactionStepProvider = StateProvider.autoDispose<int>((ref) => 0);
