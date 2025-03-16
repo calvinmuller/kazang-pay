@@ -100,6 +100,7 @@ class CrmRepository {
       final response = await client.post('crm/add-terminal', data: data);
       return CrmGenericResponse.fromJson(response.data);
     } on DioException catch (e) {
+      print(e.response!);
       if (e.response!.data['status'] == 3) {
         return CrmGenericResponse.fromJson(e.response!.data);
       }

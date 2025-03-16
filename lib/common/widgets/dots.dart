@@ -15,7 +15,7 @@ class Dots extends ConsumerWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 48,
+      spacing: 32,
       children: List.generate(
         4,
         (index) => CircleAvatar(

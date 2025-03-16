@@ -1,8 +1,6 @@
-
-
 import 'package:flutter/material.dart' show GlobalKey, FormState, BuildContext, Widget, EdgeInsets, BoxDecoration, TextSpan, TextStyle, InputDecoration, Padding, Hero, Theme, Text, Column, Container, MainAxisSize, BorderSide, Border, FontWeight, RichText, CrossAxisAlignment, TextInputType, TextInputAction, OutlineInputBorder, TextFormField, Form, Card, primaryFocus, UnfocusDisposition, ScaffoldMessenger, SnackBar, ListView, Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerState, ConsumerStatefulWidget;
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
@@ -19,6 +17,9 @@ class RegistrationPage extends ConsumerStatefulWidget {
   @override
   RegistrationPageState createState() => RegistrationPageState();
 }
+
+// Username 1000630635
+// Password 1234
 
 class RegistrationPageState extends ConsumerState<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
@@ -111,7 +112,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
-                        initialValue: '1000630635',
+                        initialValue: '',
                         style: Theme
                             .of(context)
                             .textTheme
@@ -124,10 +125,17 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                             borderRadius: borderRadiusSmall,
                           ),
                         ),
+                        maxLength: 10,
                         // The validator receives the text that the user has entered.
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return l10n.usernameError;
+                          }
+                          if (value.length < 10) {
+                            return l10n.usernameMin;
+                          }
+                          if (value.length > 10) {
+                            return l10n.usernameMax;
                           }
                           return null;
                         },
@@ -139,7 +147,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         l10n.password,
                       ),
                       TextFormField(
-                        initialValue: '1234',
+                        initialValue: '',
                         style: Theme
                             .of(context)
                             .textTheme
