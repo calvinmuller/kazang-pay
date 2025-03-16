@@ -833,6 +833,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Printer error occurred, please check paper and try again.'**
   String get printerError;
+
+  /// No description provided for @usernameMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Ensure this field has at least 10 characters.'**
+  String get usernameMin;
+
+  /// No description provided for @usernameMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Ensure this field has no more than 10 characters.'**
+  String get usernameMax;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
