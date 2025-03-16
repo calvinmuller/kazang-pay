@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart'
-    show AlertDialog, Navigator, Text, TextButton, Widget, showDialog, showModalBottomSheet, Clip, BuildContext;
+    show
+        AlertDialog,
+        Navigator,
+        Text,
+        TextButton,
+        Widget,
+        showDialog,
+        showModalBottomSheet,
+        Clip,
+        BuildContext;
 
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/button.dart' show Button;
@@ -29,12 +38,14 @@ showListDialog(mainContext, List<dynamic> items) {
 
 showErrorDialog(context, String? message) {
   final l10n = AppLocalizations.of(context)!;
-  return showDialog(
+  return showDialog<bool>(
     context: context,
     barrierDismissible: false,
     builder: (context) => AlertDialog(
       icon: const LottieWidget(
-          assetName: 'assets/animations/result-failure.lottie', size: 48),
+        assetName: 'assets/animations/result-failure.lottie',
+        size: 48,
+      ),
       content: Text(message ?? l10n.unexpectedError),
       actions: [
         TextButton(

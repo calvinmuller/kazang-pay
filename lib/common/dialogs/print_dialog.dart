@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart' show BuildContext, Widget, Navigator;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter/scheduler.dart' show SchedulerBinding;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 
 import '../../helpers/print_helper.dart';
 import '../../helpers/transaction_helper.dart';
@@ -25,16 +27,16 @@ class PrintDialog extends ConsumerStatefulWidget {
 class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandlersMixin {
 
   @override
-
-  @override
   void initState() {
     TransactionHelper.initialize(this);
     final appState = ref.read(appNotifierProvider);
-    PrintHelper.printReceipt(
-      transaction: widget.transactionResult.toTransaction(),
-      receiptType: widget.type,
-       merchantConfig: appState.profile!.merchantConfig,
-    );
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      PrintHelper.printReceipt(
+        transaction: widget.transactionResult.toTransaction(),
+        receiptType: widget.type,
+        merchantConfig: appState.profile!.merchantConfig,
+      );
+    });
     super.initState();
   }
 

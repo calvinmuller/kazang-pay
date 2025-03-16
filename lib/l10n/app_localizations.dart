@@ -821,6 +821,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are about to Void this transaction'**
   String get voidConfirm;
+
+  /// No description provided for @batteryLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery is too low to transact safely. Please charge your device. {percentage}%'**
+  String batteryLow(Object percentage);
+
+  /// No description provided for @printerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer error occurred, please check paper and try again.'**
+  String get printerError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,5 +1,20 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, SizedBox, Padding, EdgeInsets, Icon, CrossAxisAlignment, MainAxisAlignment, Theme, Text, Column, Scaffold, TextAlign;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        SizedBox,
+        Padding,
+        EdgeInsets,
+        Icon,
+        CrossAxisAlignment,
+        MainAxisAlignment,
+        Theme,
+        Text,
+        Column,
+        Scaffold,
+        TextAlign;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
 
 import '../common/interfaces/factory.events.dart';
@@ -59,17 +74,11 @@ class PaymentPageState extends ConsumerState<PaymentPage>
               children: [
                 Text(
                   "${l10n.amountDue}:",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
                   CurrencyHelper.formatCurrency(context, payment.totalAmount),
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .displayLarge,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
               ],
             ),
@@ -86,9 +95,13 @@ class PaymentPageState extends ConsumerState<PaymentPage>
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Button.secondary(
                 onPressed: () async {
-                  final shouldPop = await showConfirmationDialog(context);
-                  if (shouldPop != null && shouldPop) {
-                    TransactionHelper.abortTransaction();
+                  if (error) {
+                    context.pop(false);
+                  } else {
+                    final shouldPop = await showConfirmationDialog(context);
+                    if (shouldPop != null && shouldPop) {
+                      TransactionHelper.abortTransaction();
+                    }
                   }
                 },
                 icon: const Icon(
@@ -98,8 +111,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
                 ),
                 child: Text(
                   l10n.cancel,
-                  style: Theme
-                      .of(context)
+                  style: Theme.of(context)
                       .textTheme
                       .titleMedium!
                       .copyWith(color: CustomColours.red),
@@ -120,7 +132,6 @@ class PaymentPageState extends ConsumerState<PaymentPage>
       context.goNamed('payment-result', extra: result);
     }
   }
-
 }
 
 class TransactionInformation extends ConsumerWidget {
@@ -133,18 +144,13 @@ class TransactionInformation extends ConsumerWidget {
     final widget = transactionStatus == "Sending request online."
         ? loadingWidget(transactionStatus)
         : Text(
-      maxLines: 2,
-      transactionStatus,
-      textAlign: TextAlign.center,
-      style: Theme
-          .of(context)
-          .textTheme
-          .bodyLarge,
-    );
+            maxLines: 2,
+            transactionStatus,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge,
+          );
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: widget
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget);
   }
 
   Widget loadingWidget(message) {

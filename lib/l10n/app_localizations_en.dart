@@ -378,6 +378,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voidConfirm => 'You are about to Void this transaction';
+
+  @override
+  String batteryLow(Object percentage) {
+    return 'Battery is too low to transact safely. Please charge your device. $percentage%';
+  }
+
+  @override
+  String get printerError => 'Printer error occurred, please check paper and try again.';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).
@@ -745,4 +753,21 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get pinTooShort => 'PIN must be at least 4 digits long';
+
+  @override
+  String get manufacturer => 'Manufacturer:';
+
+  @override
+  String get model => 'Model:';
+
+  @override
+  String get voidConfirm => 'You are about to Void this transaction';
+
+  @override
+  String batteryLow(Object percentage) {
+    return 'Battery is too low to transact safely. Please charge your device. $percentage%';
+  }
+
+  @override
+  String get printerError => 'Printer error occurred, please check paper and try again.';
 }

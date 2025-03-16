@@ -125,6 +125,14 @@ class TransactionHelper {
         handler.onDisConnectEvent(
           message.value as bool,
         );
+      } else if (message.event == "onBatteryStatusLowEvent") {
+        handler.onBatteryStatusLowEvent(
+          message.value as int,
+        );
+      } else if (message.event == "onPrintDataCancelledEvent") {
+        handler.onPrintDataCancelledEvent(
+          message.value as bool,
+        );
       }
     }
 

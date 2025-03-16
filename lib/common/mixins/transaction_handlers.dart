@@ -42,9 +42,10 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   }
 
   @override
-  void onErrorEvent(String? value) async {
+  void onErrorEvent(String? value) {
     error = true;
-    await showErrorDialog(context, value);
+    showErrorDialog(context, value).then((_) => context.pop(true));
+    context.pop();
   }
 
   @override
@@ -68,5 +69,17 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onDisConnectEvent(bool value) {
     TransactionHelper.reconnect();
+  }
+
+  @override
+  void onBatteryStatusLowEvent(int percentage) {
+    final l10n = AppLocalizations.of(context)!;
+    showErrorDialog(context, l10n.batteryLow(percentage)).then((_) => context.pop(true));
+  }
+
+  @override
+  void onPrintDataCancelledEvent(bool value) {
+    final l10n = AppLocalizations.of(context)!;
+    showErrorDialog(context, l10n.printerError).then((_) => _);
   }
 }

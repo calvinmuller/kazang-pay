@@ -121,5 +121,7 @@
   "pinTooShort": "PIN must be at least 4 digits long",
   "manufacturer": "Manufacturer:",
   "model": "Model:",
-  "voidConfirm": "You are about to Void this transaction"
+  "voidConfirm": "You are about to Void this transaction",
+  "batteryLow": "Battery is too low to transact safely. Please charge your device. {percentage}%",
+  "printerError": "Printer error occurred, please check paper and try again."
 }

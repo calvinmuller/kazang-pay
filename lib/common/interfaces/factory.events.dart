@@ -48,4 +48,6 @@ abstract class FactoryEventHandler {
   void onWaitingForCardEvent(bool value);
   void onReturnPrinterResultEvent(PrinterResultEvent value);
   void onDisConnectEvent(bool value);
+  void onBatteryStatusLowEvent(int percentage);
+  void onPrintDataCancelledEvent(bool value);
 }

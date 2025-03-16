@@ -118,5 +118,10 @@
   "serialNumberLengthMax": "Ensure this field has no more than 14 characters.",
   "serialNumberLengthMin": "Ensure this field has at least 13 characters.",
   "required": "This field is required.",
-  "pinTooShort": "PIN must be at least 4 digits long"
+  "pinTooShort": "PIN must be at least 4 digits long",
+  "manufacturer": "Manufacturer:",
+  "model": "Model:",
+  "voidConfirm": "You are about to Void this transaction",
+  "batteryLow": "Battery is too low to transact safely. Please charge your device. {percentage}%",
+  "printerError": "Printer error occurred, please check paper and try again."
 }
