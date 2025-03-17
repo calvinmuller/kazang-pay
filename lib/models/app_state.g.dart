@@ -204,7 +204,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
           ? null
           : TerminalProfile.fromJson(
               Map<String, dynamic>.from(json['profile'] as Map)),
-      pin: json['pin'] as String? ?? null,
+      pin: json['pin'] as String?,
       language: json['language'] as String? ?? 'en_ZA',
     );
 

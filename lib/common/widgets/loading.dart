@@ -65,7 +65,6 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
     final l10n = AppLocalizations.of(context)!;
 
     ref.listen(fetchProfileProvider, (previous, next) {
-      // TODO: Remove - If the profile API is returning an error we login with stored data
       if (next is AsyncError) {
         if (stateProfile != null) {
           TransactionHelper.connect(config: stateProfile);

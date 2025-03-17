@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -14,14 +13,10 @@ import 'package:flutter/material.dart'
         Column,
         Container,
         DropdownMenu,
-        DropdownMenuItem,
-        DropdownMenuEntry,
-        Locale;
+        DropdownMenuEntry;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/providers/app.provider.dart';
-import '../../common/providers/device_info.dart';
-import '../../common/widgets/key_value.dart';
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
 
