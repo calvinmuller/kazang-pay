@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         TickerProviderStateMixin,
@@ -22,7 +21,8 @@ import 'package:flutter/material.dart'
         Column,
         Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show ConsumerStatefulWidget, ConsumerState, AsyncData, AsyncError;
+    show ConsumerStatefulWidget, ConsumerState;
+
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/providers/transaction.provider.dart';
@@ -30,18 +30,15 @@ import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
 import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
-import '../common/widgets/widgets.dart' show Loader;
 import '../core/constants.dart' show borderGradient;
 import '../helpers/currency_helpers.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
-import '../models/transaction_result.dart';
+import '../models/transaction_result.dart' show TransactionResult;
 import '../ui/widgets.dart';
 
 class PaymentResultPage extends ConsumerStatefulWidget {
-  const PaymentResultPage({super.key, required this.result});
-
-  final TransactionResult result;
+  const PaymentResultPage({super.key});
 
   @override
   ConsumerState<PaymentResultPage> createState() => _PaymentResultPageState();
@@ -51,6 +48,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     with TransactionHandlersMixin, TickerProviderStateMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
+  late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
 
   @override
   void initState() {
@@ -65,7 +63,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _borderAnimationController.repeat();
-        if (widget.result.isSuccessful) {
+        if (result.isSuccessful) {
           TransactionHelper.paymentSuccess();
         }
       }
@@ -80,15 +78,13 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.result.ourReferenceNumber);
     final l10n = AppLocalizations.of(context)!;
-    final transaction = ref.watch(getByReferenceDataProvider(
-      widget.result.ourReferenceNumber!,
-    ));
+
+    print('printing');
 
     return AnimatedGradientBorder(
       controller: _borderAnimationController,
-      gradientColors: widget.result.isSuccessful
+      gradientColors: result.isSuccessful
           ? borderGradient['success']!
           : borderGradient['error']!,
       borderRadius: BorderRadius.zero,
@@ -105,19 +101,19 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
                 size: 150,
                 width: 150,
                 controller: _animationController,
-                assetName: (widget.result.isSuccessful)
+                assetName: (result.isSuccessful)
                     ? 'assets/animations/result-success.lottie'
                     : 'assets/animations/result-failure.lottie',
               ),
               // titleMedium
               Text(
-                widget.result.responseMessage!,
+                result.responseMessage!,
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
-              if (!widget.result.isSuccessful)
+              if (!result.isSuccessful)
                 Text(
-                  widget.result.responseMessage ?? "",
+                  result.responseMessage ?? "",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
@@ -125,11 +121,11 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
               Text(
                 CurrencyHelper.formatCurrency(
                   context,
-                  widget.result.transactionAmount,
+                  result.transactionAmount,
                 ),
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              if (!widget.result.isTap)
+              if (!result.isTap)
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
                   child: LottieWidget(
@@ -137,7 +133,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
                     assetName: 'assets/animations/remove-card.lottie',
                   ),
                 ),
-              if (!widget.result.isTap)
+              if (!result.isTap)
                 Text(
                   l10n.removeCard,
                   style: Theme.of(context).textTheme.titleLarge,
@@ -154,20 +150,10 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
                   child: Text(l10n.continueButton),
                 ),
               ),
-              if (widget.result.canPrintReceipt)
-                ...switch (transaction) {
-                  AsyncError(:final error) => [const SizedBox()],
-                  AsyncData(:final value) => [
-                      const Divider(),
-                      ReceiptTabs(transactionResult: value),
-                    ],
-                  _ => [
-                      const Loader(
-                        transparent: true,
-                        message: "",
-                      )
-                    ],
-                },
+              if (result.canPrintReceipt) ...[
+                const Divider(),
+                ReceiptTabs(transactionResult: result),
+              ]
             ],
           ),
         ),
@@ -175,6 +161,12 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     );
   }
 
+  @override
+  void didUpdateWidget(covariant PaymentResultPage oldWidget) {
+    // get the reason this rebuilt
+    super.didUpdateWidget(oldWidget);
+    print(oldWidget.hashCode == widget.hashCode);
+  }
   @override
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     // TODO: implement onTransactionCompletedEvent

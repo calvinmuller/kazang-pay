@@ -851,6 +851,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connection error occurred, please try again.'**
   String get connectionError;
+
+  /// No description provided for @transType.
+  ///
+  /// In en, this message translates to:
+  /// **'TRANTYPE:'**
+  String get transType;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

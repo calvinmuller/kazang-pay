@@ -17,9 +17,7 @@ import 'package:flutter/material.dart'
         BoxFit,
         Column,
         DefaultTextStyle,
-        Container,
-        TextAlign,
-        Center;
+        Container;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -29,24 +27,21 @@ import '../../core/core.dart';
 import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/printer.dart';
-import '../../models/transaction_result.dart';
+import '../../models/transaction.dart';
 import '../dialogs/print_dialog.dart';
-import '../providers/app.provider.dart';
-import '../providers/transaction.provider.dart';
 import 'button.dart';
 import 'key_value.dart';
-import 'loader.dart';
 
 class Receipt extends ConsumerStatefulWidget {
   const Receipt({
     super.key,
-    required this.transactionResult,
+    required this.transaction,
     this.type = ReceiptSectionEnum.CUSTOMER,
     this.autoClose = true,
     this.showPrint = true,
   });
 
-  final TransactionResult transactionResult;
+  final Transaction transaction;
   final ReceiptSectionEnum type;
   final bool showPrint;
   final bool autoClose;
@@ -57,28 +52,27 @@ class Receipt extends ConsumerStatefulWidget {
 
 class ReceiptState extends ConsumerState<Receipt>
     with AutomaticKeepAliveClientMixin {
-  double top = 0;
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    final transactionResult = widget.transactionResult;
 
-    final dateParser = DateFormat('MMM d, yyyy h:mm:ss a');
+     // final transactionProvider = ref.watch(getByReferenceDataProvider(widget.transactionResult.ourReferenceNumber!));
+    //
+    // return switch (transactionProvider) {
+    //   AsyncData(:final value) => _buildReceiptTabs(context, l10n, value),
+    //   _ => const SizedBox(),
+    // };
+    super.build(context);
+    final transactionResult = widget.transaction;
+
     final dateFormatter = DateFormat('yyyy-MM-dd');
     final timeFormatter = DateFormat('h:mm:ss a');
     final l10n = AppLocalizations.of(context)!;
-    final transactionDate = dateParser.parse(transactionResult.transactionDate!);
+    final transactionDate = transactionResult.transactionDateTime;
 
-    final transaction = ref.watch(
-      getByReferenceDataProvider(widget.transactionResult.ourReferenceNumber!),
-    );
+    final amount = transactionResult.isVoid ? -transactionResult.amount : transactionResult.amount;
 
-    final merchantConfig = ref.watch(
-        appNotifierProvider.select((value) => value.profile!.merchantConfig));
-
-    return transaction.when(
-      data: (item) => Column(
+    return Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           if (widget.showPrint)
@@ -91,7 +85,7 @@ class ReceiptState extends ConsumerState<Receipt>
                   await showDialog(
                     context: context,
                     builder: (context) => PrintDialog(
-                      transactionResult: item,
+                      transactionResult: transactionResult,
                       type: widget.type,
                     ),
                   );
@@ -130,18 +124,13 @@ class ReceiptState extends ConsumerState<Receipt>
                     fit: BoxFit.contain,
                     height: 75,
                   ),
-                  Text(
-                    transactionResult.merchantName ??
-                        merchantConfig.tradingName,
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
                   KeyValueWidget(
                     title: l10n.merchantId,
                     value: transactionResult.merchantId!,
                   ),
                   KeyValueWidget(
                     title: l10n.terminalId,
-                    value: transactionResult.terminalId!,
+                    value: transactionResult.terminalId,
                   ),
                   KeyValueWidget(
                     title: l10n.date,
@@ -153,23 +142,31 @@ class ReceiptState extends ConsumerState<Receipt>
                   ),
                   KeyValueWidget(
                     title: l10n.aid,
-                    value: item.applicationIdentifier ?? "",
+                    value: transactionResult.applicationIdentifier ?? "",
                   ),
                   KeyValueWidget(
                     title: l10n.pan,
-                    value: transactionResult.pan ?? "",
+                    value: transactionResult.maskedPan ?? "",
+                  ),
+                  KeyValueWidget(
+                    title: l10n.transType,
+                    value: transactionResult.type,
                   ),
                   KeyValueWidget(
                     title: l10n.transseqNo,
-                    value: item.sequenceNumber.toString(),
+                    value: transactionResult.sequenceNumber.toString(),
+                  ),
+                  KeyValueWidget(
+                    title: l10n.rrn,
+                    value: transactionResult.retrievalReferenceNumber,
                   ),
                   KeyValueWidget(
                     title: l10n.appType,
-                    value: item.applicationLabel!,
+                    value: transactionResult.applicationLabel!,
                   ),
                   KeyValueWidget(
                     title: l10n.purchase,
-                    value: item.responseMessage!,
+                    value: transactionResult.responseMessage!,
                   ),
                   if (!transactionResult.isSuccessful)
                     KeyValueWidget(
@@ -177,10 +174,11 @@ class ReceiptState extends ConsumerState<Receipt>
                       value: transactionResult.responseMessage ?? "",
                     ),
                   KeyValueWidget(
+                    bold: true,
                     title: l10n.total,
                     value: CurrencyHelper.formatCurrency(
                       context,
-                      transactionResult.transactionAmount,
+                      amount,
                     ),
                   ),
                 ],
@@ -188,15 +186,7 @@ class ReceiptState extends ConsumerState<Receipt>
             ),
           ),
         ],
-      ),
-      error: (e, _) => const Center(
-        child: Text(
-          'Error generating receipt.',
-          textAlign: TextAlign.center,
-        ),
-      ),
-      loading: () => const Loader(),
-    );
+      );
   }
 
   @override

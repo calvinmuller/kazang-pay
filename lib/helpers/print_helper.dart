@@ -6,7 +6,6 @@ import '../common/dialogs/print_dialog.dart' show PrintDialog;
 import '../models/app_state.dart';
 import '../models/printer.dart';
 import '../models/transaction.dart';
-import '../models/transaction_result.dart';
 import 'currency_helpers.dart';
 
 class PrintHelper {
@@ -16,8 +15,6 @@ class PrintHelper {
 
   final MethodChannel methodChannel = const MethodChannel('kazangpay_print');
 
-  /// 0 - Merchant
-  /// 1 - Customer
   static Future<String> setReceiptType(int type) async {
     try {
       final String result = await _instance.methodChannel
@@ -67,6 +64,7 @@ class PrintHelper {
       imageXpos: 50,
       imageWidth: 200,
       heading: merchantConfig!.tradingName,
+      customerTrailer: "Thank you",
     );
     var singleText = SingleTextPrintCommand(fontSize: 25);
     singleText.value = (receiptType == ReceiptSectionEnum.MERCHANT)
@@ -76,6 +74,8 @@ class PrintHelper {
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 
+    final amount = transaction!.isVoid ? -transaction.amount : transaction.amount;
+
     var text = DoubleTextPrintCommand(fontSize: 32);
     text.leftAlignedValue = "MERCHANTNO";
     text.rightAlignedValue = merchantConfig.merchantNumber;
@@ -83,7 +83,7 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "TERMINALID";
-    text.rightAlignedValue = transaction!.terminalId;
+    text.rightAlignedValue = transaction.terminalId;
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 25);
@@ -108,11 +108,7 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "TRANTYPE";
-    text.rightAlignedValue = transaction.isPayment
-        ? "PURCHASE"
-        : transaction.isCashback
-            ? "CASHBACK"
-            : "VOID";
+    text.rightAlignedValue = transaction.type;
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 25);
@@ -142,8 +138,7 @@ class PrintHelper {
     text = DoubleTextPrintCommand(fontSize: 25);
     text.bold = true;
     text.leftAlignedValue = "TOTAL";
-    text.rightAlignedValue =
-        CurrencyHelper.formatCurrency(context, transaction.amount);
+    text.rightAlignedValue = CurrencyHelper.formatCurrency(context, amount);
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 32);

@@ -112,16 +112,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           name: 'payment-result',
           path: 'result',
           builder: (BuildContext context, GoRouterState state) {
-            return PaymentResultPage(
-              result: state.extra as TransactionResult,
-            );
+            return const PaymentResultPage();
           },
           routes: [
             GoRoute(
               name: 'receipt',
               path: 'receipt',
-              pageBuilder: (context, state) => const BottomSheetPage(
-                child: ReceiptPage(),
+              pageBuilder: (context, state) => BottomSheetPage(
+                child: ReceiptPage(transaction: state.extra as Transaction),
               ),
             )
           ],

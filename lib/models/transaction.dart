@@ -8,7 +8,7 @@ part 'transaction.freezed.dart';
 
 part 'transaction.g.dart';
 
-enum TransactionType { payment, cashback, refund, paymentCashback , P, V}
+enum TransactionType { payment, cashback, refund, paymentCashback, P, V, VOID_TRANSACTION }
 
 enum TransactionStatus { approved, declined, refunded }
 
@@ -73,9 +73,17 @@ class Transaction with _$Transaction {
 
   get isSuccessful => authorised;
 
-  get isCashback =>  additionalData != null && additionalData!.contains('cashWithDrawalOnly14true');
+  get isCashback =>
+      additionalData != null &&
+      additionalData!.contains('cashWithDrawalOnly14true');
 
-  bool get isTap => true;
+  get isVoid => transactionType == TransactionType.VOID_TRANSACTION;
+
+  get type => transactionType == TransactionType.P
+      ? "PURCHASE"
+      : isCashback
+          ? "CASHBACK"
+          : "VOID";
 
   toTransactionResult({required MerchantConfig merchantConfig}) {
     return TransactionResult(
@@ -101,13 +109,14 @@ class Transaction with _$Transaction {
       transactionClientAction: authorised
           ? TransactionClientAction.TRANSACTION_SUCCESSFULL
           : TransactionClientAction.TRANSACTION_DECLINED,
-      transactionDate: DateFormat('MMM d, yyyy h:mm:ss a').format(transactionDateTime),
+      transactionDate:
+          DateFormat('MMM d, yyyy h:mm:ss a').format(transactionDateTime),
     );
   }
 }
 
 intSafeToString(number) {
-  return int.parse(number.toString()) * 100;
+  return int.parse(number.toString());
 }
 
 boolSafe(boolean) {

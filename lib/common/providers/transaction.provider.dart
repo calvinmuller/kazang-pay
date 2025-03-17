@@ -11,8 +11,7 @@ import 'app.provider.dart';
 
 part 'transaction.provider.g.dart';
 
-var currentTransactionItem =
-    Provider<Transaction>((ref) => throw UnimplementedError());
+var currentTransactionItem = Provider<Transaction>((ref) => throw UnimplementedError());
 
 var currentSettlement = Provider<Settlement>((ref) => throw UnimplementedError());
 

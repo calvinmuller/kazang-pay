@@ -395,4 +395,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get connectionError => 'Connection error occurred, please try again.';
+
+  @override
+  String get transType => 'TRANTYPE:';
 }

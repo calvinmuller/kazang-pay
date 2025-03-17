@@ -36,8 +36,7 @@ class TransactionHelper {
         CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
 
     if (payment.type == PaymentType.voidTransaction) {
-      await _instance.methodChannel
-          .invokeMethod('voidTransaction', {'rrn': payment.rrn});
+      await _instance.methodChannel.invokeMethod('voidTransaction', {'rrn': payment.rrn});
       return;
     }
 

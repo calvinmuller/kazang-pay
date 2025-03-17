@@ -72,10 +72,10 @@ flutter {
 }
 
 dependencies {
-    implementation files('libs/prismcore-debug-1.0.2.aar')
-    implementation files('libs/prismfactory-debug-1.0.5.aar')
+    implementation files('libs/prismcore-debug-1.0.6.aar')
+    implementation files('libs/prismfactory-debug-1.0.9.aar')
     implementation files('libs/prismiso8583-debug-1.0.4.aar')
-    implementation files('libs/prismdevice-debug-1.0.5.aar')
+    implementation files('libs/prismdevice-debug-1.0.9.aar')
 
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")

@@ -54,7 +54,8 @@ class TransactionDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final merchantConfig = ref.watch(appNotifierProvider).profile!.merchantConfig;
+    final merchantConfig =
+        ref.watch(appNotifierProvider).profile!.merchantConfig;
 
     return DefaultTabController(
       length: 2,
@@ -201,17 +202,15 @@ class TransactionDetails extends ConsumerWidget {
           body: TabBarView(
             children: [
               Receipt(
-                  autoClose: false,
-                  type: ReceiptSectionEnum.MERCHANT,
-                  transactionResult: transaction.toTransactionResult(
-                    merchantConfig: merchantConfig,
-                  )),
+                autoClose: false,
+                type: ReceiptSectionEnum.MERCHANT,
+                transaction: transaction,
+              ),
               Receipt(
-                  autoClose: false,
-                  type: ReceiptSectionEnum.CUSTOMER,
-                  transactionResult: transaction.toTransactionResult(
-                    merchantConfig: merchantConfig,
-                  )),
+                autoClose: false,
+                type: ReceiptSectionEnum.CUSTOMER,
+                transaction: transaction,
+              ),
             ],
           ),
         ),

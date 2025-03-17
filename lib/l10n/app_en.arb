@@ -126,5 +126,6 @@
   "printerError": "Printer error occurred, please check paper and try again.",
   "usernameMin": "Ensure this field has at least 10 characters.",
   "usernameMax": "Ensure this field has no more than 10 characters.",
-  "connectionError": "Connection error occurred, please try again."
+  "connectionError": "Connection error occurred, please try again.",
+  "transType": "TRANTYPE:"
 }

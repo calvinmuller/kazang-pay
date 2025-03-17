@@ -104,4 +104,5 @@ const _$TransactionTypeEnumMap = {
   TransactionType.paymentCashback: 'paymentCashback',
   TransactionType.P: 'P',
   TransactionType.V: 'V',
+  TransactionType.VOID_TRANSACTION: 'VOID_TRANSACTION',
 };

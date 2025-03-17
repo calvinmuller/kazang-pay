@@ -1,18 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        SizedBox,
-        Padding,
-        EdgeInsets,
-        Icon,
-        CrossAxisAlignment,
-        MainAxisAlignment,
-        Theme,
-        Text,
-        Column,
-        Scaffold,
-        TextAlign;
+    show BuildContext, Widget, SizedBox, Padding, EdgeInsets, Icon, CrossAxisAlignment, MainAxisAlignment, Theme, Text, Column, Scaffold, TextAlign, debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
@@ -128,6 +115,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     if (context.mounted) {
       final result = TransactionResult.fromJson(value.value);
+      debugPrint(result.toString(), wrapWidth: 1024);
       ref.read(transactionResultNotifierProvider.notifier).set(result);
       context.goNamed('payment-result', extra: result);
     }

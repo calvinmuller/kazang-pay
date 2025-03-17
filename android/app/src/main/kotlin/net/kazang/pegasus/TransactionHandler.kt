@@ -56,11 +56,12 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var handler = Handler(Looper.getMainLooper())
     private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
+    private var transactionType: TransactionTypesEnum? = null
 
     override fun initialize(context: Context, config: TerminalConfig) {
         if (factory != null) {
-            factory!!.disconnect();
             factory!!.dispose()
+            factory = null;
         }
         factoryconstructor = FactoryConstructorData()
         factoryconstructor!!.context = context
@@ -306,14 +307,16 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun createPurchase(amount: String, description: String) {
+        transactionType = null
         Log.d("createPurchase", "amount: $amount, description: $description")
         factorybb = factorybb.createPurchase(amount, "0.00", "", true)
         factory!!.startTransaction(factorybb)
     }
 
-    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
-        val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder);
-        factorybb = factorybb.createVoid("", item!!)
+    override fun voidTransaction(rrn: String) {
+        transactionType = TransactionTypesEnum.VOID_TRANSACTION
+        val item = repo!!.getByReferenceData(rrn)
+        factorybb = factorybb.createVoid("VOID", item!!)
         factory!!.startTransaction(factorybb)
     }
 
@@ -333,6 +336,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun createCashback(amount: String, cashbackAmount: String) {
+        transactionType = null
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -341,6 +345,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun createCashWithdrawal(cashbackAmount: String) {
+        transactionType = null
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -360,7 +365,9 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun getByReferenceData(responseId: String): TransactionItem? {
-        return repo!!.getByReferenceData(responseId);
+        val transactionItem = repo!!.getByReferenceData(responseId);
+        transactionItem?.TransactionType = transactionType?.name ?: transactionItem?.TransactionType
+        return transactionItem
     }
 
     override fun getDeviceInfo(context: Context, result: MethodChannel.Result) {

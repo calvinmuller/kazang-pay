@@ -395,6 +395,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get connectionError => 'Connection error occurred, please try again.';
+
+  @override
+  String get transType => 'TRANTYPE:';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

@@ -54,6 +54,6 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   clearAll() {
-    state = state.copyWith(amount: 0, cashbackAmount: 0);
+    state = state.copyWith(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
   }
 }
