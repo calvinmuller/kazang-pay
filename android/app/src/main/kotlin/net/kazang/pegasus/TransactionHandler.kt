@@ -49,7 +49,7 @@ interface TransactionInterface: EventChannel.StreamHandler {
 class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: TransactionFactory? = null
-    private var factoryconstructor: FactoryConstructorData? = null
+    private var factoryConstructor: FactoryConstructorData? = null
     private var connected = false
     private var factorybb = FactoryTransactionBuilder()
 
@@ -63,44 +63,43 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             factory!!.dispose()
             factory = null;
         }
-        factoryconstructor = FactoryConstructorData()
-        factoryconstructor!!.context = context
-        factoryconstructor!!.p2peEnabled = true
-        factoryconstructor!!.debugMode = BuildConfig.DEBUG
-        factoryconstructor!!.serviceConfiguration =
-            if (BuildConfig.DEBUG) ServiceConfigurationEnum.UAT else ServiceConfigurationEnum.PROD
-        factoryconstructor!!.serviceTimeout = 60000
-        factoryconstructor!!.proxyUrl = null
-        factoryconstructor!!.proxyUserName = null
-        factoryconstructor!!.proxyPassword = null
-        factoryconstructor!!.useSSLCerticates = false
+        factoryConstructor = FactoryConstructorData()
+        factoryConstructor!!.context = context
+        factoryConstructor!!.p2peEnabled = true
+        factoryConstructor!!.debugMode = BuildConfig.DEBUG
+        factoryConstructor!!.serviceConfiguration = ServiceConfigurationEnum.UAT
+        factoryConstructor!!.serviceTimeout = 60000
+        factoryConstructor!!.proxyUrl = null
+        factoryConstructor!!.proxyUserName = null
+        factoryConstructor!!.proxyPassword = null
+        factoryConstructor!!.useSSLCerticates = false
         val terminalSetup = TerminalSetup()
         terminalSetup.terminalId = config.terminal_config.terminal_id
         terminalSetup.merchantId = config.merchant_config.merchant_number
-        factoryconstructor!!.terminalSetup = terminalSetup
-        factoryconstructor!!.useExternalConfiguration = true
-        factoryconstructor!!.posFactorySetup = PosFactorySetup()
-        factoryconstructor!!.posFactorySetup!!.currencyCode =
+        factoryConstructor!!.terminalSetup = terminalSetup
+        factoryConstructor!!.useExternalConfiguration = true
+        factoryConstructor!!.posFactorySetup = PosFactorySetup()
+        factoryConstructor!!.posFactorySetup!!.currencyCode =
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
-        factoryconstructor!!.posFactorySetup!!.routingSwitch =
+        factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryconstructor!!.posFactorySetup!!.velocityCount = 0
-        factoryconstructor!!.posFactorySetup!!.velocityPeriod = 0
-        factoryconstructor!!.posFactorySetup!!.cashbackLimit = 0
-        factoryconstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
-        factoryconstructor!!.posFactorySetup!!.enableSettlements = true
-        factoryconstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
-        factoryconstructor!!.posFactorySetup!!.primaryTermappIpAddress =
+        factoryConstructor!!.posFactorySetup!!.velocityCount = 0
+        factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
+        factoryConstructor!!.posFactorySetup!!.cashbackLimit = 0
+        factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
+        factoryConstructor!!.posFactorySetup!!.enableSettlements = true
+        factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
+        factoryConstructor!!.posFactorySetup!!.primaryTermappIpAddress =
             config.termapp_config.primary_ip
-        factoryconstructor!!.posFactorySetup!!.primaryTermappPort =
+        factoryConstructor!!.posFactorySetup!!.primaryTermappPort =
             config.termapp_config.primary_port
-        factoryconstructor!!.posFactorySetup!!.secondaryTermappIpAddress =
+        factoryConstructor!!.posFactorySetup!!.secondaryTermappIpAddress =
             config.termapp_config.secondary_ip
-        factoryconstructor!!.posFactorySetup!!.secondaryTermappPort =
+        factoryConstructor!!.posFactorySetup!!.secondaryTermappPort =
             config.termapp_config.secondary_port
-        factoryconstructor!!.posFactorySetup!!.pinKSN = config.termapp_config.pin_ksn
-        factoryconstructor!!.posFactorySetup!!.dataKSN = config.termapp_config.data_ksn
-        factoryconstructor!!.posFactorySetup!!.batchNo = "001"
+        factoryConstructor!!.posFactorySetup!!.pinKSN = config.termapp_config.pin_ksn
+        factoryConstructor!!.posFactorySetup!!.dataKSN = config.termapp_config.data_ksn
+        factoryConstructor!!.posFactorySetup!!.batchNo = "001"
 
         val enabledTransactions = ArrayList<TransactionTypesEnum>()
         if (config.terminal_config.custom_parameters?.cashbacks?.allowed!!) {
@@ -121,8 +120,8 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
                 enabledTransactions.add(TransactionTypesEnum.valueOf(type))
             }
         }
-        factoryconstructor!!.posFactorySetup!!.enabledTransactions = enabledTransactions
-        factory = TransactionFactory(factoryconstructor!!, this)
+        factoryConstructor!!.posFactorySetup!!.enabledTransactions = enabledTransactions
+        factory = TransactionFactory(factoryConstructor!!, this)
         factory!!.initialize()
         repo = TransactionRepository(context)
     }

@@ -55,13 +55,6 @@ class ReceiptState extends ConsumerState<Receipt>
 
   @override
   Widget build(BuildContext context) {
-
-     // final transactionProvider = ref.watch(getByReferenceDataProvider(widget.transactionResult.ourReferenceNumber!));
-    //
-    // return switch (transactionProvider) {
-    //   AsyncData(:final value) => _buildReceiptTabs(context, l10n, value),
-    //   _ => const SizedBox(),
-    // };
     super.build(context);
     final transactionResult = widget.transaction;
 

@@ -6,7 +6,6 @@ import 'common/common.dart';
 import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
 import 'models/transaction.dart';
-import 'models/transaction_result.dart';
 import 'pages/pages.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {

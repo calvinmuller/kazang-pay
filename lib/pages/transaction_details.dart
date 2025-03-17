@@ -34,7 +34,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 
 import '../common/common.dart';
-import '../common/providers/app.provider.dart';
 import '../common/widgets/receipt.dart';
 import '../common/widgets/widgets.dart' show Button;
 import '../core/core.dart';
@@ -54,8 +53,6 @@ class TransactionDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final merchantConfig =
-        ref.watch(appNotifierProvider).profile!.merchantConfig;
 
     return DefaultTabController(
       length: 2,

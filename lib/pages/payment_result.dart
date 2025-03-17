@@ -80,8 +80,6 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    print('printing');
-
     return AnimatedGradientBorder(
       controller: _borderAnimationController,
       gradientColors: result.isSuccessful
@@ -161,12 +159,6 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     );
   }
 
-  @override
-  void didUpdateWidget(covariant PaymentResultPage oldWidget) {
-    // get the reason this rebuilt
-    super.didUpdateWidget(oldWidget);
-    print(oldWidget.hashCode == widget.hashCode);
-  }
   @override
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     // TODO: implement onTransactionCompletedEvent
