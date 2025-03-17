@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart' show BuildContext, Widget, MainAxisAlignment, Colors, CircleAvatar, Row;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,7 +1,5 @@
 import 'dart:convert' show jsonDecode;
-
 import 'package:flutter/services.dart' show MethodChannel, EventChannel;
-
 import '../common/interfaces/factory.events.dart'
     show
         FactoryEventHandler,
@@ -177,5 +175,9 @@ class TransactionHelper {
   static Future<AppState> getAppState() async {
     final appState = (await getJson('appState')).cast<String, dynamic>();
     return appState.isNotEmpty ? AppState.fromJson(appState) : AppState();
+  }
+
+  static Future getIntentInfo() async {
+    return await _instance.methodChannel.invokeMethod('getIntentInfo');
   }
 }

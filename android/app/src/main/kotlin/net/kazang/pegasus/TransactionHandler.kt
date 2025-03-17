@@ -55,7 +55,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var handler = Handler(Looper.getMainLooper())
     private var eventSink: EventChannel.EventSink? = null
-    var repo: TransactionRepository? = null
+    private var repo: TransactionRepository? = null
 
     override fun initialize(context: Context, config: TerminalConfig) {
         if (factory != null) {
@@ -85,8 +85,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
         factoryconstructor!!.posFactorySetup!!.velocityCount = 0
         factoryconstructor!!.posFactorySetup!!.velocityPeriod = 0
-        factoryconstructor!!.posFactorySetup!!.cashbackLimit =
-            config.terminal_config.custom_parameters?.cashbacks?.limit ?: 1000
+        factoryconstructor!!.posFactorySetup!!.cashbackLimit = 0
         factoryconstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryconstructor!!.posFactorySetup!!.enableSettlements = true
         factoryconstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
@@ -136,7 +135,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onBatteryStatusLowEvent(percentage: Int) {
-        Log.d("TransactionHandler - onBatteryStatusLowEvent", percentage.toString())
+        Log.d("onBatteryStatusLowEvent", percentage.toString())
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -153,7 +152,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun onDeviceInformationEvent(deviceInformation: DeviceInformation) {
         val gson = Gson()
-        Log.d("TransactionHandler - onDeviceInformationEvent", deviceInformation.toString())
+        Log.d("onDeviceInformationEvent", deviceInformation.toString())
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -165,7 +164,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onDisConnectEvent(value: Boolean) {
-        Log.d("TransactionHandler - onDisConnectEvent", value.toString())
+        Log.d("onDisConnectEvent", value.toString())
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -177,7 +176,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onErrorEvent(value: String?) {
-        Log.d("TransactionHandler - onErrorEvent", value!!)
+        Log.d("onErrorEvent", value!!)
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -189,7 +188,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onPrintDataCancelledEvent(value: Boolean) {
-        Log.d("TransactionHandler - onPrintDataCancelledEvent", value.toString())
+        Log.d("onPrintDataCancelledEvent", value.toString())
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -201,7 +200,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onPrinterOperationEndEvent(value: Boolean) {
-        Log.d("TransactionHandler - onPrinterOperationEndEvent", value.toString())
+        Log.d("onPrinterOperationEndEvent", value.toString())
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -214,7 +213,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun onReturnPrinterResultEvent(value: PrinterStatus) {
         Log.d(
-            "TransactionHandler - onReturnPrinterResultEvent",
+            "onReturnPrinterResultEvent",
             value.printerStatusResult.toString()
         )
         handler.post {
@@ -228,7 +227,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onStatusMessageEvent(value: String?) {
-        Log.d("TransactionHandler - onStatusMessageEvent", value!!)
+        Log.d("onStatusMessageEvent", value!!)
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -283,7 +282,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onUserSignatureRequiredEvent(value: Boolean) {
-        Log.d("TransactionHandler - onUserSignatureRequiredEvent", value.toString())
+        Log.d("onUserSignatureRequiredEvent", value.toString())
         handler.post {
             eventSink?.success(
                 mapOf(
@@ -295,7 +294,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onWaitingForCardEvent(value: Boolean) {
-        Log.d("TransactionHandler - onWaitingForCardEvent", value.toString())
+        Log.d("onWaitingForCardEvent", value.toString())
         handler.post {
             eventSink?.success(
                 mapOf(

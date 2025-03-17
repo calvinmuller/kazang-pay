@@ -16,39 +16,44 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 
 
 class PrinterHandler(private val transactionHandler: TransactionInterface) : MethodCallHandler {
-    val gsonBilder = GsonBuilder()
+    private val gsonBuilder = GsonBuilder()
     private var gson: Gson
 
     init {
-        gsonBilder.registerTypeAdapter(BasePrintCommand::class.java, JsonDeserializer<BasePrintCommand> {
-                json, typeOfT, context ->
-            if (json.asJsonObject.has("leftAlignedValue")) {
-                val command = DoubleTextPrintCommand()
-                command.leftAlignedValue = json.asJsonObject.get("leftAlignedValue")?.asString ?: ""
-                command.rightAlignedValue = json.asJsonObject.get("rightAlignedValue")?.asString ?: ""
-                command.xPosition = json.asJsonObject.get("xPosition").asInt
-                command.bold = json.asJsonObject.get("bold").asBoolean
-                command.italic = json.asJsonObject.get("italic").asBoolean
-                command.yPosition = json.asJsonObject.get("yPosition").asInt
-                command.alignment = AlignmentEnum.fromInt(json.asJsonObject.get("alignment").asInt)
-                command.fontSize = json.asJsonObject.get("fontSize").asInt
-                command
-            } else if (json.asJsonObject.has("value")) {
-                val command = SingleTextPrintCommand()
-                command.value = json.asJsonObject.get("value")?.asString ?: ""
-                command.xPosition = json.asJsonObject.get("xPosition").asInt
-                command.bold = json.asJsonObject.get("bold").asBoolean
-                command.italic = json.asJsonObject.get("italic").asBoolean
-                command.yPosition = json.asJsonObject.get("yPosition").asInt
-                command.alignment = AlignmentEnum.fromInt(json.asJsonObject.get("alignment").asInt)
-                command.fontSize = json.asJsonObject.get("fontSize").asInt
-                command
-            } else {
-                val command = NewLinePrintCommand()
-                command
-            }
-        })
-        gson = gsonBilder.create()
+        gsonBuilder.registerTypeAdapter(
+            BasePrintCommand::class.java,
+            JsonDeserializer<BasePrintCommand> { json, _, _ ->
+                if (json.asJsonObject.has("leftAlignedValue")) {
+                    val command = DoubleTextPrintCommand()
+                    command.leftAlignedValue =
+                        json.asJsonObject.get("leftAlignedValue")?.asString ?: ""
+                    command.rightAlignedValue =
+                        json.asJsonObject.get("rightAlignedValue")?.asString ?: ""
+                    command.xPosition = json.asJsonObject.get("xPosition").asInt
+                    command.bold = json.asJsonObject.get("bold").asBoolean
+                    command.italic = json.asJsonObject.get("italic").asBoolean
+                    command.yPosition = json.asJsonObject.get("yPosition").asInt
+                    command.alignment =
+                        AlignmentEnum.fromInt(json.asJsonObject.get("alignment").asInt)
+                    command.fontSize = json.asJsonObject.get("fontSize").asInt
+                    command
+                } else if (json.asJsonObject.has("value")) {
+                    val command = SingleTextPrintCommand()
+                    command.value = json.asJsonObject.get("value")?.asString ?: ""
+                    command.xPosition = json.asJsonObject.get("xPosition").asInt
+                    command.bold = json.asJsonObject.get("bold").asBoolean
+                    command.italic = json.asJsonObject.get("italic").asBoolean
+                    command.yPosition = json.asJsonObject.get("yPosition").asInt
+                    command.alignment =
+                        AlignmentEnum.fromInt(json.asJsonObject.get("alignment").asInt)
+                    command.fontSize = json.asJsonObject.get("fontSize").asInt
+                    command
+                } else {
+                    val command = NewLinePrintCommand()
+                    command
+                }
+            })
+        gson = gsonBuilder.create()
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {

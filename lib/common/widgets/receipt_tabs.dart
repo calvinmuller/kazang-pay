@@ -6,13 +6,14 @@ import '../../core/constants.dart';
 import '../../helpers/print_helper.dart';
 import '../../l10n/app_localizations.dart' show AppLocalizations;
 import '../../models/printer.dart';
+import '../../models/transaction.dart';
 import '../../models/transaction_result.dart';
 import 'button.dart' show Button;
 
 class ReceiptTabs extends ConsumerStatefulWidget {
   const ReceiptTabs({super.key, required this.transactionResult});
 
-  final TransactionResult transactionResult;
+  final Transaction transactionResult;
 
   @override
   ConsumerState<ReceiptTabs> createState() => _ReceiptTabsState();
@@ -44,9 +45,7 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
                   borderColour: CustomColours.black,
                   height: buttonHeight,
                   child: Text(l10n.view, style: style),
-                  onPressed: () {
-                    context.pushNamed('receipt');
-                  },
+                  onPressed: () => context.pushNamed('receipt'),
                 ),
               ),
               Expanded(

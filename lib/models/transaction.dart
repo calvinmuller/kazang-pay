@@ -70,8 +70,12 @@ class Transaction with _$Transaction {
       _$TransactionFromJson(json);
 
   get isPayment => additionalData == null;
-  
+
+  get isSuccessful => authorised;
+
   get isCashback =>  additionalData != null && additionalData!.contains('cashWithDrawalOnly14true');
+
+  bool get isTap => true;
 
   toTransactionResult({required MerchantConfig merchantConfig}) {
     return TransactionResult(
@@ -103,7 +107,7 @@ class Transaction with _$Transaction {
 }
 
 intSafeToString(number) {
-  return int.parse(number.toString());
+  return int.parse(number.toString()) * 100;
 }
 
 boolSafe(boolean) {

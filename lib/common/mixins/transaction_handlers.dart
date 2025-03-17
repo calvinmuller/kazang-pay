@@ -48,7 +48,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   void onErrorEvent(String? value) {
     error = true;
     showErrorDialog(context, value).then((_) => context.pop(true));
-    context.pop();
   }
 
   @override
@@ -69,9 +68,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   }
 
   @override
-  void onReturnPrinterResultEvent(PrinterResultEvent event) {
-
-  }
+  void onReturnPrinterResultEvent(PrinterResultEvent event) {}
 
   @override
   void onDisConnectEvent(bool value) {

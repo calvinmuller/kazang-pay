@@ -1,4 +1,14 @@
-import 'package:flutter/material.dart' show LinearGradient, Color, Alignment, BorderRadius, Radius, Colors, Offset, BoxShadow, BoxDecoration;
+import 'package:flutter/material.dart'
+    show
+        LinearGradient,
+        Color,
+        Alignment,
+        BorderRadius,
+        Radius,
+        Colors,
+        Offset,
+        BoxShadow,
+        BoxDecoration;
 
 const headerGradient = LinearGradient(
   colors: <Color>[
@@ -8,6 +18,21 @@ const headerGradient = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.center,
 );
+
+const borderGradient = {
+  'error': [
+    Color(0XFFE12727),
+    Color(0XFFFF9A14),
+    Color(0XFFE12727),
+    Color(0XFFFF9A14),
+  ],
+  'success': [
+    Color(0XFF24AA4A),
+    Color(0XFFBEC430),
+    Color(0XFF24AA4A),
+    Color(0XFFBEC430),
+  ]
+};
 
 const borderRadius = BorderRadius.all(
   Radius.circular(20),

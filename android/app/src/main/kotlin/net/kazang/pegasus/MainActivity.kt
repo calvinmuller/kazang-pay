@@ -1,6 +1,7 @@
 package net.kazang.pegasus
 
 import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -17,7 +18,7 @@ import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
-import java.lang.reflect.Type;
+import java.lang.reflect.Type
 import kotlin.concurrent.thread
 
 
@@ -29,6 +30,7 @@ class MainActivity : FlutterActivity() {
     private var transactionHandler: TransactionInterface = TransactionHandler()
     private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
     private val gson = Gson()
+    private var initialIntentMap: Map<String, Any?>? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -39,9 +41,14 @@ class MainActivity : FlutterActivity() {
                 transactionHandler as MockTransactionHandler
             )
         } else {
-            MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL).setMethodCallHandler(PrinterHandler(
-                transactionHandler
-            ))
+            MethodChannel(
+                flutterEngine.dartExecutor.binaryMessenger,
+                PRINT_CHANNEL
+            ).setMethodCallHandler(
+                PrinterHandler(
+                    transactionHandler
+                )
+            )
 
             EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
                 transactionHandler
@@ -137,6 +144,8 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "reconnect") {
                 transactionHandler.connect()
                 result.success(true)
+            } else if (call.method == "getIntentInfo") {
+                result.success(initialIntentMap)
             } else {
                 result.notImplemented()
             }
@@ -169,5 +178,24 @@ class MainActivity : FlutterActivity() {
         } else {
             return HashMap()
         }
+    }
+
+    private fun handleIntent(intent: Intent, fromPackageName: String?) {
+        print(intent.extras)
+        val intentMap = mapOf<String, Any?>(
+            "fromPackageName" to fromPackageName,
+            "action" to intent.action,
+            "data" to intent.dataString,
+            "categories" to intent.categories?.toList(),
+            "extra" to intent.extras?.let { gson.toJson(it) }
+        )
+        Log.d("onAttachedToActivity", intentMap.toString())
+        initialIntentMap = intentMap
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        Log.d("onNewIntent", intent.data.toString())
+        print(intent)
+        handleIntent(intent, activity?.callingActivity?.packageName)
     }
 }

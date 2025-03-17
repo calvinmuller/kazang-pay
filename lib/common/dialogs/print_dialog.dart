@@ -7,7 +7,7 @@ import '../../helpers/print_helper.dart';
 import '../../helpers/transaction_helper.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/printer.dart';
-import '../../models/transaction_result.dart';
+import '../../models/transaction.dart';
 import '../interfaces/factory.events.dart';
 import '../mixins/transaction_handlers.dart';
 import '../providers/app.provider.dart';
@@ -17,7 +17,7 @@ class PrintDialog extends ConsumerStatefulWidget {
   const PrintDialog(
       {super.key, required this.transactionResult, required this.type});
 
-  final TransactionResult transactionResult;
+  final Transaction transactionResult;
   final ReceiptSectionEnum type;
 
   @override
@@ -32,9 +32,10 @@ class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandle
     final appState = ref.read(appNotifierProvider);
     SchedulerBinding.instance.addPostFrameCallback((_) {
       PrintHelper.printReceipt(
-        transaction: widget.transactionResult.toTransaction(),
+        transaction: widget.transactionResult,
         receiptType: widget.type,
         merchantConfig: appState.profile!.merchantConfig,
+        context: context,
       );
     });
     super.initState();

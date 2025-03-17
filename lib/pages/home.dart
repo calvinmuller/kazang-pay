@@ -73,11 +73,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             backgroundColor: Colors.transparent,
             leading: IconButton(
                 icon: const Icon(Icons.settings),
-                onPressed: () {
-                  showPinDialog(
-                      context: context,
-                      callback: () => context.goNamed('settings'));
-                }),
+                onPressed: () => context.goNamed('settings'),
+            ),
             title: const LogoWidget(),
           ),
           body: Column(

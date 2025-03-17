@@ -392,4 +392,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get usernameMax => 'Ensure this field has no more than 10 characters.';
+
+  @override
+  String get connectionError => 'Connection error occurred, please try again.';
 }

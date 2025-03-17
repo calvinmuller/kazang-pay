@@ -12,7 +12,7 @@ _$PaymentImpl _$$PaymentImplFromJson(Map json) => _$PaymentImpl(
       type: $enumDecodeNullable(_$PaymentTypeEnumMap, json['type']) ??
           PaymentType.payment,
       cashbackOnly: json['cashbackOnly'] as bool? ?? false,
-      rrn: json['rrn'] as String? ?? null,
+      rrn: json['rrn'] as String?,
     );
 
 Map<String, dynamic> _$$PaymentImplToJson(_$PaymentImpl instance) =>

@@ -30,16 +30,16 @@ class KazangRepository {
       DateTime fromDate,
       DateTime toDate,
       String locale) async {
-
     DateFormat df = DateFormat('yyyy-MM-dd');
 
     try {
-      final response = await client.post('cps-web/api/transaction-history/summary', data: {
-      "merchant_id": merchantId,
-      "terminal_id": terminalId,
-      "from_date": df.format(fromDate),
-      "to_date": df.format(toDate),
-      "locale": locale
+      final response =
+          await client.post('cps-web/api/transaction-history/summary', data: {
+        "merchant_id": merchantId,
+        "terminal_id": terminalId,
+        "from_date": df.format(fromDate),
+        "to_date": df.format(toDate),
+        "locale": locale
       });
 
       return TransactionSummaryResponse.fromJson(response.data);
@@ -54,10 +54,10 @@ class KazangRepository {
       DateTime fromDateTime,
       DateTime toDateTime,
       String locale) async {
-
     DateFormat df = DateFormat('yyyy-MM-ddTHH:mm:ss');
 
-    final response = await client.post('cps-web/api/transaction-history/details', data: {
+    final response =
+        await client.post('cps-web/api/transaction-history/details', data: {
       "merchant_id": merchantId,
       "terminal_id": terminalId,
       "from_datetime": df.format(fromDateTime),
@@ -100,11 +100,12 @@ class CrmRepository {
       final response = await client.post('crm/add-terminal', data: data);
       return CrmGenericResponse.fromJson(response.data);
     } on DioException catch (e) {
-      print(e.response!);
-      if (e.response!.data['status'] == 3) {
-        return CrmGenericResponse.fromJson(e.response!.data);
-      }
-      throw Exception(e.response!.statusMessage);
+      return CrmGenericResponse.fromJson(e.response?.data ?? {
+        "kazang_account_number": loginRequest.accountNumber,
+        "status": 3,
+        "request_type": "0",
+        "status_description": "An error occurred connecting to the server"
+      });
     }
   }
 

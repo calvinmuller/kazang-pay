@@ -845,6 +845,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ensure this field has no more than 10 characters.'**
   String get usernameMax;
+
+  /// No description provided for @connectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection error occurred, please try again.'**
+  String get connectionError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

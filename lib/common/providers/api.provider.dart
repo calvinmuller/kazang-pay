@@ -77,14 +77,3 @@ Future<TerminalProfile> fetchProfile(Ref ref) async {
 
   return profile;
 }
-
-@riverpod
-class PinNotifier extends _$PinNotifier {
-
-  @override
-  build() => 0;
-
-  void verifyPin(String pin) {
-
-  }
-}

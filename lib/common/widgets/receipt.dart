@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart'
-    show AutomaticKeepAliveClientMixin, BuildContext, Widget, EdgeInsets, Icon, TextStyle, MainAxisSize, Text, showDialog, Padding, BorderRadius, BoxDecoration, Theme, FontWeight, BoxFit, Column, DefaultTextStyle, Container, TextAlign, Center;
+    show
+        AutomaticKeepAliveClientMixin,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Icon,
+        TextStyle,
+        MainAxisSize,
+        Text,
+        showDialog,
+        Padding,
+        BorderRadius,
+        BoxDecoration,
+        Theme,
+        FontWeight,
+        BoxFit,
+        Column,
+        DefaultTextStyle,
+        Container,
+        TextAlign,
+        Center;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -48,8 +68,7 @@ class ReceiptState extends ConsumerState<Receipt>
     final dateFormatter = DateFormat('yyyy-MM-dd');
     final timeFormatter = DateFormat('h:mm:ss a');
     final l10n = AppLocalizations.of(context)!;
-    final transactionDate =
-        dateParser.parse(transactionResult.transactionDate!);
+    final transactionDate = dateParser.parse(transactionResult.transactionDate!);
 
     final transaction = ref.watch(
       getByReferenceDataProvider(widget.transactionResult.ourReferenceNumber!),
@@ -72,7 +91,7 @@ class ReceiptState extends ConsumerState<Receipt>
                   await showDialog(
                     context: context,
                     builder: (context) => PrintDialog(
-                      transactionResult: widget.transactionResult,
+                      transactionResult: item,
                       type: widget.type,
                     ),
                   );
@@ -117,38 +136,52 @@ class ReceiptState extends ConsumerState<Receipt>
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                   KeyValueWidget(
-                      title: l10n.merchantId,
-                      value: transactionResult.merchantId!),
+                    title: l10n.merchantId,
+                    value: transactionResult.merchantId!,
+                  ),
                   KeyValueWidget(
-                      title: l10n.terminalId,
-                      value: transactionResult.terminalId!),
+                    title: l10n.terminalId,
+                    value: transactionResult.terminalId!,
+                  ),
                   KeyValueWidget(
-                      title: l10n.date,
-                      value: dateFormatter.format(transactionDate)),
+                    title: l10n.date,
+                    value: dateFormatter.format(transactionDate),
+                  ),
                   KeyValueWidget(
-                      title: l10n.time,
-                      value: timeFormatter.format(transactionDate)),
+                    title: l10n.time,
+                    value: timeFormatter.format(transactionDate),
+                  ),
                   KeyValueWidget(
-                      title: l10n.aid,
-                      value: transactionResult.applicationIdentifier ?? ""),
+                    title: l10n.aid,
+                    value: item.applicationIdentifier ?? "",
+                  ),
                   KeyValueWidget(
-                      title: l10n.pan, value: transactionResult.pan ?? ""),
+                    title: l10n.pan,
+                    value: transactionResult.pan ?? "",
+                  ),
                   KeyValueWidget(
-                      title: l10n.transseqNo,
-                      value: transactionResult.cardSequenceNumber ?? ""),
+                    title: l10n.transseqNo,
+                    value: item.sequenceNumber.toString(),
+                  ),
                   KeyValueWidget(
-                      title: l10n.appType,
-                      value: transactionResult.cardDataInputMode!.name),
+                    title: l10n.appType,
+                    value: item.applicationLabel!,
+                  ),
                   KeyValueWidget(
-                      title: l10n.purchase, value: transactionResult.message),
+                    title: l10n.purchase,
+                    value: item.responseMessage!,
+                  ),
                   if (!transactionResult.isSuccessful)
                     KeyValueWidget(
-                        title: l10n.reason,
-                        value: transactionResult.responseMessage ?? ""),
+                      title: l10n.reason,
+                      value: transactionResult.responseMessage ?? "",
+                    ),
                   KeyValueWidget(
                     title: l10n.total,
                     value: CurrencyHelper.formatCurrency(
-                        context, transactionResult.transactionAmount),
+                      context,
+                      transactionResult.transactionAmount,
+                    ),
                   ),
                 ],
               ),

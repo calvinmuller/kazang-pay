@@ -56,7 +56,6 @@ class PrintHelper {
     MerchantConfig? merchantConfig,
     ReceiptSectionEnum receiptType = ReceiptSectionEnum.CUSTOMER,
   }) async {
-
     final df = DateFormat('yyyy-MM-dd');
     final tf = DateFormat('HH:mm:ss');
 
@@ -77,7 +76,7 @@ class PrintHelper {
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 
-    var text = DoubleTextPrintCommand(fontSize: 25);
+    var text = DoubleTextPrintCommand(fontSize: 32);
     text.leftAlignedValue = "MERCHANTNO";
     text.rightAlignedValue = merchantConfig.merchantNumber;
     printRequest.printLineItems.add(text);
@@ -109,13 +108,15 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "TRANTYPE";
-    text.rightAlignedValue = transaction.transactionType == TransactionType.P
+    text.rightAlignedValue = transaction.isPayment
         ? "PURCHASE"
-        : "REFUND";
+        : transaction.isCashback
+            ? "CASHBACK"
+            : "VOID";
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 25);
-    text.leftAlignedValue = "SEQNO";
+    text.leftAlignedValue = "TRANSSEQNO";
     text.rightAlignedValue = transaction.sequenceNumber.toString();
     printRequest.printLineItems.add(text);
 
@@ -131,7 +132,23 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "SWITCH";
-    text.rightAlignedValue = merchantConfig.routingSwitch == "LESAKA" ? "PRISM": merchantConfig.routingSwitch;
+    text.rightAlignedValue = merchantConfig.routingSwitch == "LESAKA"
+        ? "PRISM"
+        : merchantConfig.routingSwitch;
+    printRequest.printLineItems.add(text);
+
+    printRequest.printLineItems.add(NewLinePrintCommand());
+
+    text = DoubleTextPrintCommand(fontSize: 25);
+    text.bold = true;
+    text.leftAlignedValue = "TOTAL";
+    text.rightAlignedValue =
+        CurrencyHelper.formatCurrency(context, transaction.amount);
+    printRequest.printLineItems.add(text);
+
+    text = DoubleTextPrintCommand(fontSize: 32);
+    text.leftAlignedValue = "RESPONSE:";
+    text.rightAlignedValue = transaction.responseMessage;
     printRequest.printLineItems.add(text);
 
     printRequest.printLineItems.add(NewLinePrintCommand());
@@ -149,32 +166,15 @@ class PrintHelper {
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 
-    var rspMsg = "PURCHASE DECLINED";
-    if (transaction.responseCode == "00") rspMsg = "PURCHASE APPROVED";
-    singleText = SingleTextPrintCommand();
-    singleText.value = rspMsg;
-    singleText.xPosition = 0;
-    singleText.alignment = AlignmentEnum.CENTER;
-    singleText.fontSize = 24;
-    singleText.bold = true;
-    singleText.italic = false;
-    printRequest.printLineItems.add(singleText);
-
-    singleText = SingleTextPrintCommand();
-    singleText.value = CurrencyHelper.formatForTransaction(transaction.amount);
-    singleText.alignment = AlignmentEnum.CENTER;
-    singleText.fontSize = 24;
-    singleText.bold = true;
-    singleText.italic = false;
-    printRequest.printLineItems.add(singleText);
-
     await startPrint(printRequest);
   }
-
 }
 
-printReceiptDialog({BuildContext? context, TransactionResult? transactionResult, ReceiptSectionEnum? type }) async {
-  return  await showDialog(
+printReceiptDialog(
+    {BuildContext? context,
+    Transaction? transactionResult,
+    ReceiptSectionEnum? type}) async {
+  return await showDialog(
     context: context!,
     builder: (context) => PrintDialog(
       transactionResult: transactionResult!,

@@ -8,6 +8,7 @@ part of 'transaction_result.dart';
 
 _$TransactionResultImpl _$$TransactionResultImplFromJson(Map json) =>
     _$TransactionResultImpl(
+      additionalData: arrayToString(json['additionalData']),
       applicationIdentifier: arrayToString(json['applicationIdentifier']),
       authorizationCode: (json['authorizationCode'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
@@ -28,6 +29,9 @@ _$TransactionResultImpl _$$TransactionResultImplFromJson(Map json) =>
       message: json['message'] as String,
       ourReferenceNumber: json['ourReferenceNumber'] as String?,
       pan: json['pan'] as String?,
+      stan: json['stan'] as String?,
+      priorityMessage: json['priorityMessage'] as String?,
+      receiptReference: json['receiptReference'] as String?,
       responseCode: json['responseCode'] as String,
       responseMessage: json['responseMessage'] as String?,
       terminalId: json['terminalId'] as String?,
@@ -35,11 +39,17 @@ _$TransactionResultImpl _$$TransactionResultImplFromJson(Map json) =>
       transactionClientAction: $enumDecodeNullable(
           _$TransactionClientActionEnumMap, json['transactionClientAction']),
       transactionDate: json['transactionDate'] as String?,
+      transactionType: $enumDecodeNullable(
+          _$TransactionTypeEnumMap, json['transactionType']),
+      cardApplications: (json['cardApplications'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$TransactionResultImplToJson(
         _$TransactionResultImpl instance) =>
     <String, dynamic>{
+      'additionalData': instance.additionalData,
       'applicationIdentifier': instance.applicationIdentifier,
       'authorizationCode': instance.authorizationCode,
       'canPrintReceipt': instance.canPrintReceipt,
@@ -56,6 +66,9 @@ Map<String, dynamic> _$$TransactionResultImplToJson(
       'message': instance.message,
       'ourReferenceNumber': instance.ourReferenceNumber,
       'pan': instance.pan,
+      'stan': instance.stan,
+      'priorityMessage': instance.priorityMessage,
+      'receiptReference': instance.receiptReference,
       'responseCode': instance.responseCode,
       'responseMessage': instance.responseMessage,
       'terminalId': instance.terminalId,
@@ -63,6 +76,8 @@ Map<String, dynamic> _$$TransactionResultImplToJson(
       'transactionClientAction':
           _$TransactionClientActionEnumMap[instance.transactionClientAction],
       'transactionDate': instance.transactionDate,
+      'transactionType': _$TransactionTypeEnumMap[instance.transactionType],
+      'cardApplications': instance.cardApplications,
     };
 
 const _$CardDataInputModeEnumMap = {
@@ -77,4 +92,16 @@ const _$CardDataInputModeEnumMap = {
 const _$TransactionClientActionEnumMap = {
   TransactionClientAction.TRANSACTION_DECLINED: 'TRANSACTION_DECLINED',
   TransactionClientAction.TRANSACTION_SUCCESSFULL: 'TRANSACTION_SUCCESSFULL',
+  TransactionClientAction.SIGNATURE_REQUIRED: 'SIGNATURE_REQUIRED',
+  TransactionClientAction.SELECT_APPLICATION: 'SELECT_APPLICATION',
+  TransactionClientAction.SELECT_BUDGET: 'SELECT_BUDGET',
+};
+
+const _$TransactionTypeEnumMap = {
+  TransactionType.payment: 'payment',
+  TransactionType.cashback: 'cashback',
+  TransactionType.refund: 'refund',
+  TransactionType.paymentCashback: 'paymentCashback',
+  TransactionType.P: 'P',
+  TransactionType.V: 'V',
 };

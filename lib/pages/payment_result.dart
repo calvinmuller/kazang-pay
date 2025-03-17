@@ -1,11 +1,37 @@
-import 'package:flutter/material.dart' show TickerProviderStateMixin, AnimationController, BuildContext, Widget, Padding, EdgeInsets, Icon, Divider, Color, AnimationStatus, BorderRadius, MainAxisAlignment, CrossAxisAlignment, Theme, TextAlign, Text, IconAlignment, Icons, Navigator, Column, Scaffold;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart'
+    show
+        TickerProviderStateMixin,
+        AnimationController,
+        BuildContext,
+        Widget,
+        Padding,
+        EdgeInsets,
+        Icon,
+        Divider,
+        AnimationStatus,
+        BorderRadius,
+        MainAxisAlignment,
+        CrossAxisAlignment,
+        Theme,
+        TextAlign,
+        Text,
+        IconAlignment,
+        Icons,
+        Navigator,
+        Column,
+        Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState, AsyncData, AsyncError;
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
+import '../common/providers/transaction.provider.dart';
 import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
 import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
+import '../common/widgets/widgets.dart' show Loader;
+import '../core/constants.dart' show borderGradient;
 import '../helpers/currency_helpers.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
@@ -29,9 +55,9 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1, milliseconds: 500))
-          ..forward();
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(seconds: 1, milliseconds: 500))
+      ..forward();
 
     _borderAnimationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 5));
@@ -54,13 +80,17 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
 
   @override
   Widget build(BuildContext context) {
+    print(widget.result.ourReferenceNumber);
     final l10n = AppLocalizations.of(context)!;
+    final transaction = ref.watch(getByReferenceDataProvider(
+      widget.result.ourReferenceNumber!,
+    ));
 
     return AnimatedGradientBorder(
       controller: _borderAnimationController,
       gradientColors: widget.result.isSuccessful
-          ? borderGradient['success']
-          : borderGradient['error'],
+          ? borderGradient['success']!
+          : borderGradient['error']!,
       borderRadius: BorderRadius.zero,
       child: Scaffold(
         extendBody: true,
@@ -81,7 +111,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
               ),
               // titleMedium
               Text(
-                widget.result.message,
+                widget.result.responseMessage!,
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
@@ -125,30 +155,25 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
                 ),
               ),
               if (widget.result.canPrintReceipt)
-                const Divider(),
-              if (widget.result.canPrintReceipt)
-                ReceiptTabs(transactionResult: widget.result),
+                ...switch (transaction) {
+                  AsyncError(:final error) => [const SizedBox()],
+                  AsyncData(:final value) => [
+                      const Divider(),
+                      ReceiptTabs(transactionResult: value),
+                    ],
+                  _ => [
+                      const Loader(
+                        transparent: true,
+                        message: "",
+                      )
+                    ],
+                },
             ],
           ),
         ),
       ),
     );
   }
-
-  get borderGradient => {
-        'error': [
-          const Color(0XFFE12727),
-          const Color(0XFFFF9A14),
-          const Color(0XFFE12727),
-          const Color(0XFFFF9A14),
-        ],
-        'success': [
-          const Color(0XFF24AA4A),
-          const Color(0XFFBEC430),
-          const Color(0XFF24AA4A),
-          const Color(0XFFBEC430),
-        ]
-      };
 
   @override
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {

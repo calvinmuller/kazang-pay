@@ -21,6 +21,8 @@ TransactionResult _$TransactionResultFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TransactionResult {
   @JsonKey(fromJson: arrayToString)
+  String? get additionalData => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: arrayToString)
   String? get applicationIdentifier => throw _privateConstructorUsedError;
   List<int>? get authorizationCode => throw _privateConstructorUsedError;
   bool get canPrintReceipt => throw _privateConstructorUsedError;
@@ -37,6 +39,9 @@ mixin _$TransactionResult {
   String get message => throw _privateConstructorUsedError;
   String? get ourReferenceNumber => throw _privateConstructorUsedError;
   String? get pan => throw _privateConstructorUsedError;
+  String? get stan => throw _privateConstructorUsedError;
+  String? get priorityMessage => throw _privateConstructorUsedError;
+  String? get receiptReference => throw _privateConstructorUsedError;
   String get responseCode => throw _privateConstructorUsedError;
   String? get responseMessage => throw _privateConstructorUsedError;
   String? get terminalId => throw _privateConstructorUsedError;
@@ -44,6 +49,8 @@ mixin _$TransactionResult {
   TransactionClientAction? get transactionClientAction =>
       throw _privateConstructorUsedError;
   String? get transactionDate => throw _privateConstructorUsedError;
+  TransactionType? get transactionType => throw _privateConstructorUsedError;
+  List<String>? get cardApplications => throw _privateConstructorUsedError;
 
   /// Serializes this TransactionResult to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +69,8 @@ abstract class $TransactionResultCopyWith<$Res> {
       _$TransactionResultCopyWithImpl<$Res, TransactionResult>;
   @useResult
   $Res call(
-      {@JsonKey(fromJson: arrayToString) String? applicationIdentifier,
+      {@JsonKey(fromJson: arrayToString) String? additionalData,
+      @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
       List<int>? authorizationCode,
       bool canPrintReceipt,
       CardDataInputMode? cardDataInputMode,
@@ -77,12 +85,17 @@ abstract class $TransactionResultCopyWith<$Res> {
       String message,
       String? ourReferenceNumber,
       String? pan,
+      String? stan,
+      String? priorityMessage,
+      String? receiptReference,
       String responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
       TransactionClientAction? transactionClientAction,
-      String? transactionDate});
+      String? transactionDate,
+      TransactionType? transactionType,
+      List<String>? cardApplications});
 }
 
 /// @nodoc
@@ -100,6 +113,7 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? additionalData = freezed,
     Object? applicationIdentifier = freezed,
     Object? authorizationCode = freezed,
     Object? canPrintReceipt = null,
@@ -115,14 +129,23 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
     Object? message = null,
     Object? ourReferenceNumber = freezed,
     Object? pan = freezed,
+    Object? stan = freezed,
+    Object? priorityMessage = freezed,
+    Object? receiptReference = freezed,
     Object? responseCode = null,
     Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
     Object? transactionClientAction = freezed,
     Object? transactionDate = freezed,
+    Object? transactionType = freezed,
+    Object? cardApplications = freezed,
   }) {
     return _then(_value.copyWith(
+      additionalData: freezed == additionalData
+          ? _value.additionalData
+          : additionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
       applicationIdentifier: freezed == applicationIdentifier
           ? _value.applicationIdentifier
           : applicationIdentifier // ignore: cast_nullable_to_non_nullable
@@ -183,6 +206,18 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
           ? _value.pan
           : pan // ignore: cast_nullable_to_non_nullable
               as String?,
+      stan: freezed == stan
+          ? _value.stan
+          : stan // ignore: cast_nullable_to_non_nullable
+              as String?,
+      priorityMessage: freezed == priorityMessage
+          ? _value.priorityMessage
+          : priorityMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receiptReference: freezed == receiptReference
+          ? _value.receiptReference
+          : receiptReference // ignore: cast_nullable_to_non_nullable
+              as String?,
       responseCode: null == responseCode
           ? _value.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
@@ -207,6 +242,14 @@ class _$TransactionResultCopyWithImpl<$Res, $Val extends TransactionResult>
           ? _value.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      transactionType: freezed == transactionType
+          ? _value.transactionType
+          : transactionType // ignore: cast_nullable_to_non_nullable
+              as TransactionType?,
+      cardApplications: freezed == cardApplications
+          ? _value.cardApplications
+          : cardApplications // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -220,7 +263,8 @@ abstract class _$$TransactionResultImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(fromJson: arrayToString) String? applicationIdentifier,
+      {@JsonKey(fromJson: arrayToString) String? additionalData,
+      @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
       List<int>? authorizationCode,
       bool canPrintReceipt,
       CardDataInputMode? cardDataInputMode,
@@ -235,12 +279,17 @@ abstract class _$$TransactionResultImplCopyWith<$Res>
       String message,
       String? ourReferenceNumber,
       String? pan,
+      String? stan,
+      String? priorityMessage,
+      String? receiptReference,
       String responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
       TransactionClientAction? transactionClientAction,
-      String? transactionDate});
+      String? transactionDate,
+      TransactionType? transactionType,
+      List<String>? cardApplications});
 }
 
 /// @nodoc
@@ -256,6 +305,7 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? additionalData = freezed,
     Object? applicationIdentifier = freezed,
     Object? authorizationCode = freezed,
     Object? canPrintReceipt = null,
@@ -271,14 +321,23 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
     Object? message = null,
     Object? ourReferenceNumber = freezed,
     Object? pan = freezed,
+    Object? stan = freezed,
+    Object? priorityMessage = freezed,
+    Object? receiptReference = freezed,
     Object? responseCode = null,
     Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
     Object? transactionClientAction = freezed,
     Object? transactionDate = freezed,
+    Object? transactionType = freezed,
+    Object? cardApplications = freezed,
   }) {
     return _then(_$TransactionResultImpl(
+      additionalData: freezed == additionalData
+          ? _value.additionalData
+          : additionalData // ignore: cast_nullable_to_non_nullable
+              as String?,
       applicationIdentifier: freezed == applicationIdentifier
           ? _value.applicationIdentifier
           : applicationIdentifier // ignore: cast_nullable_to_non_nullable
@@ -339,6 +398,18 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
           ? _value.pan
           : pan // ignore: cast_nullable_to_non_nullable
               as String?,
+      stan: freezed == stan
+          ? _value.stan
+          : stan // ignore: cast_nullable_to_non_nullable
+              as String?,
+      priorityMessage: freezed == priorityMessage
+          ? _value.priorityMessage
+          : priorityMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receiptReference: freezed == receiptReference
+          ? _value.receiptReference
+          : receiptReference // ignore: cast_nullable_to_non_nullable
+              as String?,
       responseCode: null == responseCode
           ? _value.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
@@ -363,6 +434,14 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
           ? _value.transactionDate
           : transactionDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      transactionType: freezed == transactionType
+          ? _value.transactionType
+          : transactionType // ignore: cast_nullable_to_non_nullable
+              as TransactionType?,
+      cardApplications: freezed == cardApplications
+          ? _value._cardApplications
+          : cardApplications // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -371,7 +450,8 @@ class __$$TransactionResultImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TransactionResultImpl extends _TransactionResult {
   const _$TransactionResultImpl(
-      {@JsonKey(fromJson: arrayToString) this.applicationIdentifier,
+      {@JsonKey(fromJson: arrayToString) this.additionalData,
+      @JsonKey(fromJson: arrayToString) this.applicationIdentifier,
       final List<int>? authorizationCode,
       required this.canPrintReceipt,
       this.cardDataInputMode,
@@ -386,19 +466,28 @@ class _$TransactionResultImpl extends _TransactionResult {
       required this.message,
       this.ourReferenceNumber,
       this.pan,
+      this.stan,
+      this.priorityMessage,
+      this.receiptReference,
       required this.responseCode,
       required this.responseMessage,
       this.terminalId,
       required this.transactionAmount,
       required this.transactionClientAction,
-      this.transactionDate})
+      this.transactionDate,
+      this.transactionType,
+      final List<String>? cardApplications})
       : _authorizationCode = authorizationCode,
         _cardVerificationMethod = cardVerificationMethod,
+        _cardApplications = cardApplications,
         super._();
 
   factory _$TransactionResultImpl.fromJson(Map<String, dynamic> json) =>
       _$$TransactionResultImplFromJson(json);
 
+  @override
+  @JsonKey(fromJson: arrayToString)
+  final String? additionalData;
   @override
   @JsonKey(fromJson: arrayToString)
   final String? applicationIdentifier;
@@ -449,6 +538,12 @@ class _$TransactionResultImpl extends _TransactionResult {
   @override
   final String? pan;
   @override
+  final String? stan;
+  @override
+  final String? priorityMessage;
+  @override
+  final String? receiptReference;
+  @override
   final String responseCode;
   @override
   final String? responseMessage;
@@ -460,10 +555,22 @@ class _$TransactionResultImpl extends _TransactionResult {
   final TransactionClientAction? transactionClientAction;
   @override
   final String? transactionDate;
+  @override
+  final TransactionType? transactionType;
+  final List<String>? _cardApplications;
+  @override
+  List<String>? get cardApplications {
+    final value = _cardApplications;
+    if (value == null) return null;
+    if (_cardApplications is EqualUnmodifiableListView)
+      return _cardApplications;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'TransactionResult(applicationIdentifier: $applicationIdentifier, authorizationCode: $authorizationCode, canPrintReceipt: $canPrintReceipt, cardDataInputMode: $cardDataInputMode, cardSequenceNumber: $cardSequenceNumber, cardVerificationMethod: $cardVerificationMethod, declinedReason: $declinedReason, isCancelled: $isCancelled, isSuccessful: $isSuccessful, isSupervisor: $isSupervisor, merchantId: $merchantId, merchantName: $merchantName, message: $message, ourReferenceNumber: $ourReferenceNumber, pan: $pan, responseCode: $responseCode, responseMessage: $responseMessage, terminalId: $terminalId, transactionAmount: $transactionAmount, transactionClientAction: $transactionClientAction, transactionDate: $transactionDate)';
+    return 'TransactionResult(additionalData: $additionalData, applicationIdentifier: $applicationIdentifier, authorizationCode: $authorizationCode, canPrintReceipt: $canPrintReceipt, cardDataInputMode: $cardDataInputMode, cardSequenceNumber: $cardSequenceNumber, cardVerificationMethod: $cardVerificationMethod, declinedReason: $declinedReason, isCancelled: $isCancelled, isSuccessful: $isSuccessful, isSupervisor: $isSupervisor, merchantId: $merchantId, merchantName: $merchantName, message: $message, ourReferenceNumber: $ourReferenceNumber, pan: $pan, stan: $stan, priorityMessage: $priorityMessage, receiptReference: $receiptReference, responseCode: $responseCode, responseMessage: $responseMessage, terminalId: $terminalId, transactionAmount: $transactionAmount, transactionClientAction: $transactionClientAction, transactionDate: $transactionDate, transactionType: $transactionType, cardApplications: $cardApplications)';
   }
 
   @override
@@ -471,6 +578,8 @@ class _$TransactionResultImpl extends _TransactionResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionResultImpl &&
+            (identical(other.additionalData, additionalData) ||
+                other.additionalData == additionalData) &&
             (identical(other.applicationIdentifier, applicationIdentifier) ||
                 other.applicationIdentifier == applicationIdentifier) &&
             const DeepCollectionEquality()
@@ -499,6 +608,11 @@ class _$TransactionResultImpl extends _TransactionResult {
             (identical(other.ourReferenceNumber, ourReferenceNumber) ||
                 other.ourReferenceNumber == ourReferenceNumber) &&
             (identical(other.pan, pan) || other.pan == pan) &&
+            (identical(other.stan, stan) || other.stan == stan) &&
+            (identical(other.priorityMessage, priorityMessage) ||
+                other.priorityMessage == priorityMessage) &&
+            (identical(other.receiptReference, receiptReference) ||
+                other.receiptReference == receiptReference) &&
             (identical(other.responseCode, responseCode) ||
                 other.responseCode == responseCode) &&
             (identical(other.responseMessage, responseMessage) ||
@@ -511,13 +625,18 @@ class _$TransactionResultImpl extends _TransactionResult {
                     other.transactionClientAction, transactionClientAction) ||
                 other.transactionClientAction == transactionClientAction) &&
             (identical(other.transactionDate, transactionDate) ||
-                other.transactionDate == transactionDate));
+                other.transactionDate == transactionDate) &&
+            (identical(other.transactionType, transactionType) ||
+                other.transactionType == transactionType) &&
+            const DeepCollectionEquality()
+                .equals(other._cardApplications, _cardApplications));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        additionalData,
         applicationIdentifier,
         const DeepCollectionEquality().hash(_authorizationCode),
         canPrintReceipt,
@@ -533,12 +652,17 @@ class _$TransactionResultImpl extends _TransactionResult {
         message,
         ourReferenceNumber,
         pan,
+        stan,
+        priorityMessage,
+        receiptReference,
         responseCode,
         responseMessage,
         terminalId,
         transactionAmount,
         transactionClientAction,
-        transactionDate
+        transactionDate,
+        transactionType,
+        const DeepCollectionEquality().hash(_cardApplications)
       ]);
 
   /// Create a copy of TransactionResult
@@ -560,7 +684,8 @@ class _$TransactionResultImpl extends _TransactionResult {
 
 abstract class _TransactionResult extends TransactionResult {
   const factory _TransactionResult(
-      {@JsonKey(fromJson: arrayToString) final String? applicationIdentifier,
+      {@JsonKey(fromJson: arrayToString) final String? additionalData,
+      @JsonKey(fromJson: arrayToString) final String? applicationIdentifier,
       final List<int>? authorizationCode,
       required final bool canPrintReceipt,
       final CardDataInputMode? cardDataInputMode,
@@ -575,17 +700,25 @@ abstract class _TransactionResult extends TransactionResult {
       required final String message,
       final String? ourReferenceNumber,
       final String? pan,
+      final String? stan,
+      final String? priorityMessage,
+      final String? receiptReference,
       required final String responseCode,
       required final String? responseMessage,
       final String? terminalId,
       required final int transactionAmount,
       required final TransactionClientAction? transactionClientAction,
-      final String? transactionDate}) = _$TransactionResultImpl;
+      final String? transactionDate,
+      final TransactionType? transactionType,
+      final List<String>? cardApplications}) = _$TransactionResultImpl;
   const _TransactionResult._() : super._();
 
   factory _TransactionResult.fromJson(Map<String, dynamic> json) =
       _$TransactionResultImpl.fromJson;
 
+  @override
+  @JsonKey(fromJson: arrayToString)
+  String? get additionalData;
   @override
   @JsonKey(fromJson: arrayToString)
   String? get applicationIdentifier;
@@ -618,6 +751,12 @@ abstract class _TransactionResult extends TransactionResult {
   @override
   String? get pan;
   @override
+  String? get stan;
+  @override
+  String? get priorityMessage;
+  @override
+  String? get receiptReference;
+  @override
   String get responseCode;
   @override
   String? get responseMessage;
@@ -629,6 +768,10 @@ abstract class _TransactionResult extends TransactionResult {
   TransactionClientAction? get transactionClientAction;
   @override
   String? get transactionDate;
+  @override
+  TransactionType? get transactionType;
+  @override
+  List<String>? get cardApplications;
 
   /// Create a copy of TransactionResult
   /// with the given fields replaced by the non-null parameter values.

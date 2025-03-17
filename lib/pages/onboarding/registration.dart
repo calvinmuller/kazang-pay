@@ -178,8 +178,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         initialValue: deviceInfo.serial,
                         style: Theme
                             .of(context)
-                            .textTheme
-                            .bodySmall,
+                            .textTheme.bodySmall,
                         readOnly: false,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -252,7 +251,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: CustomColours.red,
-                        content: Text(e.toString()),
+                        content: Text(l10n.connectionError),
                         duration: const Duration(seconds: 5),
                       ),
                     );
