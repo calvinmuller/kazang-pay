@@ -36,7 +36,7 @@ class SettingsProfile extends ConsumerWidget {
             KeyValueWidget(title: l10n.deviceSerial, value: appState.profile!.terminalConfig.terminalSerialNumber),
             KeyValueWidget(title: l10n.manufacturer, value: deviceInfo.manufacturer ?? ""),
             KeyValueWidget(title: l10n.model, value: deviceInfo.model ?? ""),
-            KeyValueWidget(title: l10n.version, value: deviceInfo.version?.name ?? ""),
+            KeyValueWidget(title: l10n.version, value: "${deviceInfo.version?.name}-${deviceInfo.version?.code}"),
           ],
         ),
       ),
