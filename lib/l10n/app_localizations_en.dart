@@ -782,4 +782,16 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get printerError => 'Printer error occurred, please check paper and try again.';
+
+  @override
+  String get usernameMin => 'Ensure this field has at least 10 characters.';
+
+  @override
+  String get usernameMax => 'Ensure this field has no more than 10 characters.';
+
+  @override
+  String get connectionError => 'Connection error occurred, please try again.';
+
+  @override
+  String get transType => 'TRANTYPE:';
 }
