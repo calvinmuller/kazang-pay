@@ -15,12 +15,12 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final routerConfig = ref.watch(routerProvider);
-    final appLocale = ref.watch(appNotifierProvider.select((state) => state.language));
+    final appLocale = ref.watch(appNotifierProvider.select((state) => state.language)) ?? 'en';
 
     Intl.defaultLocale = appLocale;
 
     return MaterialApp.router(
-      locale: Locale(appLocale ?? 'en_ZA'),
+      locale: Locale(appLocale),
       routerConfig: routerConfig,
       title: 'Kazang Pay',
       theme: CustomTheme.lightThemeData(context),

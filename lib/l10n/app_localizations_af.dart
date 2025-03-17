@@ -15,7 +15,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get settings => 'Instellings';
 
   @override
-  String get transactionHistory => 'Transaksiegeskiedenis';
+  String get transactionHistory => 'Transaksie Geskiedenis';
 
   @override
   String get welcome => 'Goeie Dag';
@@ -29,19 +29,19 @@ class AppLocalizationsAf extends AppLocalizations {
   String get newSale => 'Nuwe Verkoop';
 
   @override
-  String get purchaseAmount => 'Aankoopbedrag';
+  String get purchaseAmount => 'Koopbedrag';
 
   @override
   String get cashbackAmount => 'Kontantterugbedrag';
 
   @override
-  String get addCashback => 'Voeg Kontantterug by';
+  String get addCashback => 'Voeg Kontantterug By';
 
   @override
   String get pay => 'Betaal';
 
   @override
-  String get insertOrTap => 'Plaas of Tik Kaart';
+  String get insertOrTap => 'Steek in of Tik Kaart';
 
   @override
   String get amountDue => 'Verskuldigde Bedrag';
@@ -53,7 +53,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get cancel => 'Kanselleer Transaksie';
 
   @override
-  String get cancelTitle => 'Jy is op die punt om hierdie transaksie te kanselleer';
+  String get cancelTitle => 'Jy staan op die punt om hierdie transaksie te kanselleer';
 
   @override
   String get cancelMessage => 'Jou huidige transaksie sal gekanselleer word';
@@ -62,10 +62,10 @@ class AppLocalizationsAf extends AppLocalizations {
   String get checkBalance => 'Kontroleer Balans';
 
   @override
-  String get enterPin => 'Voer PIN in om transaksiegeskiedenis en vereffeninge te bekom';
+  String get enterPin => 'Voer PIN in om toegang tot transaksiegeskiedenis en verrekeninge te verkry';
 
   @override
-  String get supervisorPin => 'Verskaf asseblief jou toesighouer-PIN';
+  String get supervisorPin => 'Verskaf asseblief jou toesighouer PIN';
 
   @override
   String get continueButton => 'Gaan voort';
@@ -74,7 +74,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get back => 'Terug';
 
   @override
-  String get transactionHistoryTitle => 'Transaksiegeskiedenis en Vereffeninge';
+  String get transactionHistoryTitle => 'Transaksie Geskiedenis & Verrekeninge';
 
   @override
   String get ok => 'Ok';
@@ -89,7 +89,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get removeCard => 'Verwyder Kaart';
 
   @override
-  String get merchantReceipt => 'Handelaar Kwitansie';
+  String get merchantReceipt => 'Handelaarskwitansie';
 
   @override
   String get customerReceipt => 'Kliënt Kwitansie';
@@ -128,7 +128,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get appType => 'TOEP';
 
   @override
-  String get switchType => 'SKAKELAAR';
+  String get switchType => 'SKAKEL';
 
   @override
   String get purchase => 'AANKOOP';
@@ -137,30 +137,30 @@ class AppLocalizationsAf extends AppLocalizations {
   String get total => 'TOTAAL:';
 
   @override
-  String get transseqNo => 'TRANSSEQNO';
+  String get transseqNo => 'TRANSSEQNOMMER';
 
   @override
   String get reason => 'REDE';
 
   @override
-  String get selectAccount => 'Kies \'n Rekening om voort te gaan';
+  String get selectAccount => 'Kies ‘n Rekening om voort te gaan';
 
   @override
   String get accountBalance => 'Rekeningbalans';
 
   @override
   String accountName(Object name) {
-    return 'Rekeningnaam: $name';
+    return 'Rekening Naam: $name';
   }
 
   @override
-  String get checkAnother => 'Kontroleer \'n Ander Rekening';
+  String get checkAnother => 'Kontroleer ‘n Ander Rekening';
 
   @override
-  String get done => 'Klaar';
+  String get done => 'Gedoen';
 
   @override
-  String get sortBy => 'Sorteer Volgens';
+  String get sortBy => 'Sorteer Op';
 
   @override
   String get dateFilter => 'Datum';
@@ -172,7 +172,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get approved => 'Goedgekeur';
 
   @override
-  String get declined => 'Geweier';
+  String get declined => 'Afgekeur';
 
   @override
   String get pending => 'Hangend';
@@ -187,7 +187,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get settlementStatus => 'Status:';
 
   @override
-  String get settled => 'Vereffen';
+  String get settled => 'Verreken';
 
   @override
   String get onboardingWelcome => 'Welkom by Kazang Pay!';
@@ -196,22 +196,22 @@ class AppLocalizationsAf extends AppLocalizations {
   String get onboardingRegister => 'Baie geluk, jy is by die laaste stap van die opstel van jou Kazang Pay Kaartleser.';
 
   @override
-  String get onboardRegisterHelp => 'Laat asseblief die Kazang-verkoopsagent jou help met die laaste stap.';
+  String get onboardRegisterHelp => 'Laat die Kazang Verkoopsagent jou asseblief help met die laaste stap.';
 
   @override
   String get signIn => 'Verskaf asseblief jou aanmeldbewyse om voort te gaan:';
 
   @override
-  String get standalone => 'Selfstandige modus bespeur.';
+  String get standalone => 'Selfstandige modus opgespoor.';
 
   @override
-  String get onboard1 => 'Jy kan nou kaartbetalings vir enige verkope op jou Kazang-toestel aanvaar met jou eie Kazang Pay-toestel.';
+  String get onboard1 => 'Jy kan nou kaartbetalings aanvaar vir enige verkope op jou Kazang-toestel met jou eie Kazang Pay-toestel.';
 
   @override
-  String get onboard2 => 'Jy kan nou jou Kazang-beursie aanvul met jou Kazang Pay-toestel, geen bankbesoeke meer nie en minder risiko vir jou besigheid.';
+  String get onboard2 => 'Jy kan nou jou Kazang Beursie aanvul met jou Kazang Pay-toestel, geen bankbesoeke meer en minder risiko vir jou besigheid.';
 
   @override
-  String get onboard3 => 'Jou kaartbetalings sal direk in jou Kazang-beursie oorbetaal word.';
+  String get onboard3 => 'Jou kaartbetalings sal direk in jou Kazang Beursie oorgedra word.';
 
   @override
   String get registerDevice => 'Registreer Toestel';
@@ -223,34 +223,34 @@ class AppLocalizationsAf extends AppLocalizations {
   String get password => 'Voer Wagwoord in:';
 
   @override
-  String get enterSerialNumber => 'Voer Toestel Se Serienommer in:';
+  String get enterSerialNumber => 'Voer Toestel Serienommer in:';
 
   @override
-  String get usernameError => 'Voer asseblief \'n gebruikersnaam in.';
+  String get usernameError => 'Voer asseblief ‘n gebruikersnaam in.';
 
   @override
-  String get passwordError => 'Voer asseblief \'n wagwoord in.';
+  String get passwordError => 'Voer asseblief ‘n wagwoord in.';
 
   @override
   String get submit => 'Indien';
 
   @override
-  String get loading => 'Laai asseblief, wag \'n oomblik';
+  String get loading => 'Laai asseblief, wag...';
 
   @override
-  String get initialized => 'Geïnitialiseer';
+  String get initialized => 'Geginitialiseer';
 
   @override
   String get enterPinAccessSettings => 'Voer PIN in om toegang tot instellings te verkry';
 
   @override
-  String get pleaseProvideSupervisorPin => 'Verskaf asseblief jou toesighouer-PIN';
+  String get pleaseProvideSupervisorPin => 'Verskaf asseblief jou toesighouer PIN';
 
   @override
-  String get noPinSet => 'Geen PIN is gestel nie';
+  String get noPinSet => 'Geen PIN is opgestel nie';
 
   @override
-  String get setPinToProceed => 'Stel asseblief \'n PIN om voort te gaan';
+  String get setPinToProceed => 'Stel asseblief ‘n PIN in om voort te gaan';
 
   @override
   String get pinLengthError => 'PIN moet 4 syfers lank wees';
@@ -262,10 +262,10 @@ class AppLocalizationsAf extends AppLocalizations {
   String get voidTransaction => 'Nietigverklaar Transaksie';
 
   @override
-  String get settlements => 'Vereffeninge';
+  String get settlements => 'Verrekeninge';
 
   @override
-  String get totalSettlementAmount => 'Totale Vereffeningsbedrag';
+  String get totalSettlementAmount => 'Totale Verrekeningsbedrag';
 
   @override
   String get viewMore => 'Bekyk Meer';
@@ -274,15 +274,15 @@ class AppLocalizationsAf extends AppLocalizations {
   String get noOfTransaction => 'Aantal Transaksies';
 
   @override
-  String get noOfSettlements => 'Aantal Vereffeninge';
+  String get noOfSettlements => 'Aantal Verrekeninge';
 
   @override
   String settlementSummaryFor(Object date) {
-    return 'Vereffeningsopsomming vir $date';
+    return 'Verrekeningsopsomming vir $date';
   }
 
   @override
-  String get totalPurchaseFees => 'Totale Aankoopsfooie:';
+  String get totalPurchaseFees => 'Totale Aankoopfooie:';
 
   @override
   String get totalPurchaseAmount => 'Totale Aankoopbedrag:';
@@ -301,14 +301,14 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String settlementHistoryFor(Object date) {
-    return 'Vereffeningsgeskiedenis vir $date';
+    return 'Verrekeningsgeskiedenis vir $date';
   }
 
   @override
-  String get totalSettlementAmountCalc => '* Totale Vereffeningsbedrag = Totale Bedrag Verwerk - Totale Vereffenings voltooi - Fooie';
+  String get totalSettlementAmountCalc => '* Totale Verrekeningsbedrag = Totale Bedrag Verwerk - Totale Verrekeninge voltooi - Fooie';
 
   @override
-  String get proxySettings => 'Volmaginstellings';
+  String get proxySettings => 'Proxy Instellings';
 
   @override
   String get sendDeviceLogs => 'Stuur Toestellogs';
@@ -317,7 +317,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get connectPos => 'Koppel POS';
 
   @override
-  String get supervisorPinTitle => 'Toesighouer-PIN';
+  String get supervisorPinTitle => 'Toesighouer PIN';
 
   @override
   String get profile => 'Profiel';
@@ -326,7 +326,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get language => 'Taal';
 
   @override
-  String get settlementDetails => 'Vereffeningsbesonderhede';
+  String get settlementDetails => 'Verrekeningsbesonderhede';
 
   @override
   String get timeColumn => 'Tyd:';
@@ -338,13 +338,13 @@ class AppLocalizationsAf extends AppLocalizations {
   String get printReceipt => 'Druk Kwitansie';
 
   @override
-  String get printing => 'Besig om te druk';
+  String get printing => 'Druk tans';
 
   @override
   String get username => 'Gebruikersnaam:';
 
   @override
-  String get deviceSerial => 'Toestelserienommer:';
+  String get deviceSerial => 'Toestel Serienommer:';
 
   @override
   String get version => 'Weergawe:';
@@ -353,22 +353,22 @@ class AppLocalizationsAf extends AppLocalizations {
   String get terminalIdTitle => 'Terminaal-ID:';
 
   @override
-  String get loadingSettlements => 'Laai Vereffeninge';
+  String get loadingSettlements => 'Laai Verrekeninge';
 
   @override
   String get profileInformation => 'Profielinligting';
 
   @override
-  String get serialNumberLengthMax => 'Verseker dat hierdie veld nie meer as 14 karakters het nie.';
+  String get serialNumberLengthMax => 'Verseker dat hierdie veld nie meer as 14 karakters bevat nie.';
 
   @override
-  String get serialNumberLengthMin => 'Verseker dat hierdie veld ten minste 13 karakters het.';
+  String get serialNumberLengthMin => 'Verseker dat hierdie veld minstens 13 karakters bevat.';
 
   @override
   String get required => 'Hierdie veld is verpligtend.';
 
   @override
-  String get pinTooShort => 'PIN moet minstens 4 syfers lank wees';
+  String get pinTooShort => 'PIN moet ten minste 4 syfers lank wees';
 
   @override
   String get manufacturer => 'Vervaardiger:';
@@ -377,25 +377,25 @@ class AppLocalizationsAf extends AppLocalizations {
   String get model => 'Model:';
 
   @override
-  String get voidConfirm => 'Jy is op die punt om hierdie transaksie nietig te verklaar';
+  String get voidConfirm => 'Jy staan op die punt om hierdie transaksie nietig te verklaar';
 
   @override
   String batteryLow(Object percentage) {
-    return 'Battery is too low to transact safely. Please charge your device. $percentage%';
+    return 'Battery is te laag om veilig te transaksioneer. Laai asseblief jou toestel. $percentage%';
   }
 
   @override
-  String get printerError => 'Printer error occurred, please check paper and try again.';
+  String get printerError => 'Drukkerfout het voorgekom, kontroleer asseblief die papier en probeer weer.';
 
   @override
-  String get usernameMin => 'Ensure this field has at least 10 characters.';
+  String get usernameMin => 'Verseker dat hierdie veld minstens 10 karakters bevat.';
 
   @override
-  String get usernameMax => 'Ensure this field has no more than 10 characters.';
+  String get usernameMax => 'Verseker dat hierdie veld nie meer as 10 karakters bevat nie.';
 
   @override
-  String get connectionError => 'Connection error occurred, please try again.';
+  String get connectionError => 'Verbindingsfout het voorgekom, probeer asseblief weer.';
 
   @override
-  String get transType => 'TRANTYPE:';
+  String get transType => 'TRANSAKSIE TIPE:';
 }
