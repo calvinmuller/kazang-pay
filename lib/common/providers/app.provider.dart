@@ -37,6 +37,10 @@ class AppNotifier extends _$AppNotifier {
     state = state.copyWith(pin: pin);
   }
 
+  void setLocale(String? locale) {
+    state = state.copyWith(language: locale);
+  }
+
   _save(AppState next) {
     TransactionHelper.saveJson(key, next.toJson());
   }

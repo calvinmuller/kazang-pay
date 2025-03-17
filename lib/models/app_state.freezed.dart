@@ -26,6 +26,7 @@ mixin _$AppState {
   LoginRequest? get accountInfo => throw _privateConstructorUsedError;
   TerminalProfile? get profile => throw _privateConstructorUsedError;
   String? get pin => throw _privateConstructorUsedError;
+  String? get language => throw _privateConstructorUsedError;
 
   /// Serializes this AppState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +49,8 @@ abstract class $AppStateCopyWith<$Res> {
       DeviceInfo? deviceInfo,
       LoginRequest? accountInfo,
       TerminalProfile? profile,
-      String? pin});
+      String? pin,
+      String? language});
 }
 
 /// @nodoc
@@ -72,6 +74,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? accountInfo = freezed,
     Object? profile = freezed,
     Object? pin = freezed,
+    Object? language = freezed,
   }) {
     return _then(_value.copyWith(
       pinVerified: null == pinVerified
@@ -98,6 +101,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String?,
+      language: freezed == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -116,7 +123,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
       DeviceInfo? deviceInfo,
       LoginRequest? accountInfo,
       TerminalProfile? profile,
-      String? pin});
+      String? pin,
+      String? language});
 }
 
 /// @nodoc
@@ -138,6 +146,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? accountInfo = freezed,
     Object? profile = freezed,
     Object? pin = freezed,
+    Object? language = freezed,
   }) {
     return _then(_$AppStateImpl(
       pinVerified: null == pinVerified
@@ -164,6 +173,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String?,
+      language: freezed == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -177,7 +190,8 @@ class _$AppStateImpl extends _AppState {
       this.deviceInfo = null,
       this.accountInfo = null,
       this.profile = null,
-      this.pin = null})
+      this.pin = null,
+      this.language = 'en_ZA'})
       : super._();
 
   factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -201,10 +215,13 @@ class _$AppStateImpl extends _AppState {
   @override
   @JsonKey()
   final String? pin;
+  @override
+  @JsonKey()
+  final String? language;
 
   @override
   String toString() {
-    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin)';
+    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language)';
   }
 
   @override
@@ -221,13 +238,15 @@ class _$AppStateImpl extends _AppState {
             (identical(other.accountInfo, accountInfo) ||
                 other.accountInfo == accountInfo) &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.pin, pin) || other.pin == pin));
+            (identical(other.pin, pin) || other.pin == pin) &&
+            (identical(other.language, language) ||
+                other.language == language));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured,
-      deviceInfo, accountInfo, profile, pin);
+      deviceInfo, accountInfo, profile, pin, language);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -252,7 +271,8 @@ abstract class _AppState extends AppState {
       final DeviceInfo? deviceInfo,
       final LoginRequest? accountInfo,
       final TerminalProfile? profile,
-      final String? pin}) = _$AppStateImpl;
+      final String? pin,
+      final String? language}) = _$AppStateImpl;
   _AppState._() : super._();
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
@@ -270,6 +290,8 @@ abstract class _AppState extends AppState {
   TerminalProfile? get profile;
   @override
   String? get pin;
+  @override
+  String? get language;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.

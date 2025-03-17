@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart' show BuildContext;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
-import 'package:go_router/go_router.dart' show GoRouter, GoRoute, GoRouterState, RouteBase;
+import 'package:go_router/go_router.dart'
+    show GoRouter, GoRoute, GoRouterState, RouteBase;
 
 import 'common/common.dart';
 import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
 import 'models/transaction.dart';
 import 'pages/pages.dart';
+import 'pages/settings/settings_language.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final isSetup =
@@ -72,6 +74,12 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: 'profile',
                 builder: (BuildContext context, GoRouterState state) =>
                     const SettingsProfile(),
+              ),
+              GoRoute(
+                name: 'language',
+                path: 'language',
+                builder: (BuildContext context, GoRouterState state) =>
+                    const SettingsLanguage(),
               )
             ]),
         GoRoute(

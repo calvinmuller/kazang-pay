@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart'
-    show TextStyle, BuildContext, Widget, EdgeInsets, FontWeight, MainAxisAlignment, Text, Expanded, Row, Column, Padding, SizedBox;
+    show
+        TextStyle,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        FontWeight,
+        MainAxisAlignment,
+        Text,
+        Expanded,
+        Row,
+        Column,
+        Padding,
+        SizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, AsyncData, AsyncError;
 import 'package:go_router/go_router.dart';
@@ -52,10 +64,14 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: spacing,
+            spacing: 5,
             children: [
-              Text(l10n.merchantReceipt,
-                  style: style.copyWith(fontWeight: FontWeight.bold)),
+              Expanded(
+                child: Text(
+                  l10n.merchantReceipt,
+                  style: style.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
               Expanded(
                 child: Button.secondary(
                   borderColour: CustomColours.black,
@@ -84,9 +100,9 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: spacing,
+            spacing: 5,
             children: [
-              Text(l10n.customerReceipt, style: style),
+              Expanded(child: Text(l10n.customerReceipt, style: style)),
               Expanded(
                 child: Button.secondary(
                   borderColour: CustomColours.black,

@@ -52,7 +52,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              onTap: () => {},
+              onTap: () => context.pushNamed('language'),
               title: Text(l10n.language),
               trailing: const Icon(Icons.chevron_right),
             ),

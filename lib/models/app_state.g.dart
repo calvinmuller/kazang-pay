@@ -204,7 +204,8 @@ _$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
           ? null
           : TerminalProfile.fromJson(
               Map<String, dynamic>.from(json['profile'] as Map)),
-      pin: json['pin'] as String?,
+      pin: json['pin'] as String? ?? null,
+      language: json['language'] as String? ?? 'en_ZA',
     );
 
 Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
@@ -215,4 +216,5 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'accountInfo': instance.accountInfo?.toJson(),
       'profile': instance.profile?.toJson(),
       'pin': instance.pin,
+      'language': instance.language,
     };

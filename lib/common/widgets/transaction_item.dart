@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
 import '../../core/core.dart';
+import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme.dart';
 import '../providers/transaction.provider.dart' show currentTransactionItem;
@@ -15,10 +16,8 @@ class TransactionItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final locale = Localizations.localeOf(context);
     final l10n = AppLocalizations.of(context)!;
     final item = ref.watch(currentTransactionItem);
-    final format = NumberFormat.simpleCurrency(locale: locale.toString());
     final df = DateFormat('yyyy-MM-dd HH:mm:ss');
 
     return Container(
@@ -50,7 +49,7 @@ class TransactionItem extends ConsumerWidget {
                         style: CustomTheme.graphikSemiBold,
                       ),
                       Text(
-                        format.format(item.amount / 100),
+                        CurrencyHelper.formatCurrency(context, item.amount),
                         style: CustomTheme.graphikSemiBold,
                       ),
                     ],

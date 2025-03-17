@@ -23,8 +23,6 @@ import 'package:flutter/material.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
-import '../common/interfaces/factory.events.dart';
-import '../common/mixins/transaction_handlers.dart';
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
@@ -44,8 +42,7 @@ class PaymentResultPage extends ConsumerStatefulWidget {
   ConsumerState<PaymentResultPage> createState() => _PaymentResultPageState();
 }
 
-class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
-    with TransactionHandlersMixin, TickerProviderStateMixin {
+class _PaymentResultPageState extends ConsumerState<PaymentResultPage> with TickerProviderStateMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
@@ -157,10 +154,5 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         ),
       ),
     );
-  }
-
-  @override
-  void onTransactionCompletedEvent(TransactionCompletedEvent value) {
-    // TODO: implement onTransactionCompletedEvent
   }
 }

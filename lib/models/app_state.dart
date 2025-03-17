@@ -17,6 +17,7 @@ class AppState with _$AppState {
     @Default(null) LoginRequest? accountInfo,
     @Default(null) TerminalProfile? profile,
     @Default(null) String? pin,
+    @Default('en_ZA') String? language,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
