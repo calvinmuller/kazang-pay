@@ -1,7 +1,13 @@
 // ignore_for_file: constant_identifier_names
+import 'package:flutter/material.dart'
+    show Container, BoxDecoration, Icon, BorderRadius, Radius, BoxFit;
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
+import '../core/constants.dart' show CustomColours;
+import '../core/core.dart' show CustomIcons;
 import 'app_state.dart' show MerchantConfig;
 import 'transaction_result.dart';
 
@@ -9,7 +15,15 @@ part 'transaction.freezed.dart';
 
 part 'transaction.g.dart';
 
-enum TransactionType { payment, cashback, refund, paymentCashback, P, V, VOID_TRANSACTION }
+enum TransactionType {
+  payment,
+  cashback,
+  refund,
+  paymentCashback,
+  P,
+  V,
+  VOID_TRANSACTION
+}
 
 enum TransactionStatus { approved, declined, refunded }
 
@@ -70,7 +84,8 @@ class Transaction with _$Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) =>
       _$TransactionFromJson(json);
 
-  get isPayment => additionalData == null && transactionType == TransactionType.P;
+  get isPayment =>
+      additionalData == null && transactionType == TransactionType.P;
 
   get isSuccessful => authorised;
 
@@ -78,13 +93,43 @@ class Transaction with _$Transaction {
       additionalData != null &&
       additionalData!.contains('cashWithDrawalOnly14true');
 
+  get isPaymentWithCashback =>
+      additionalData != null &&
+      additionalData!.contains('cashWithDrawalOnly15false');
+
   get isVoid => transactionType == TransactionType.VOID_TRANSACTION;
 
   get type => isCashback
       ? "CASHBACK"
       : isPayment
           ? "PURCHASE"
-          : "VOID";
+          : isPaymentWithCashback
+              ? "PURCHASE/CASHBACK"
+              : "VOID";
+
+  get icon => Container(
+        width: 50,
+        height: 50,
+        decoration: const BoxDecoration(
+          color: CustomColours.lime,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: (isPayment)
+            ? const Icon(CustomIcons.card)
+            : (isCashback)
+                ? Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SvgPicture.asset(
+                      'assets/cashback.svg',
+                      width: 24,
+                    ),
+                )
+                : SvgPicture.asset(
+                    'assets/purchase_cashback.svg',
+                    fit: BoxFit.contain,
+                    height: 50,
+                  ),
+      );
 
   toTransactionResult({required MerchantConfig merchantConfig}) {
     return TransactionResult(

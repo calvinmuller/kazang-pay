@@ -59,8 +59,7 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(fetchProfileProvider);
-    final stateProfile =
-        ref.watch(appNotifierProvider.select((value) => value.profile));
+    final stateProfile = ref.watch(appNotifierProvider.select((value) => value.profile));
 
     final l10n = AppLocalizations.of(context)!;
 

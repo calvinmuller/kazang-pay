@@ -1,9 +1,10 @@
 
 
 
-import 'package:flutter/material.dart' show BuildContext, AutomaticKeepAliveClientMixin, Widget, EdgeInsets, SizedBox, Center, ErrorWidget, ListView, RefreshIndicator, CircularProgressIndicator;
+import 'package:flutter/material.dart' show BuildContext, AutomaticKeepAliveClientMixin, Widget, EdgeInsets, SizedBox, Center, ErrorWidget, ListView, RefreshIndicator, CircularProgressIndicator, Text;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData, ProviderScope;
 
+import '../../l10n/app_localizations.dart' show AppLocalizations;
 import '../providers/transaction.provider.dart';
 import 'widgets.dart' show TransactionItem;
 
@@ -17,6 +18,7 @@ class TransactionsList extends ConsumerStatefulWidget {
 class TransactionsListState extends ConsumerState<TransactionsList> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     super.build(context);
     final transactions = ref.watch(transactionHistoryProvider);
 
@@ -26,7 +28,7 @@ class TransactionsListState extends ConsumerState<TransactionsList> with Automat
           RefreshIndicator(
             onRefresh: () async =>
             await ref.refresh(transactionHistoryProvider.future),
-            child: ListView.separated(
+            child: (value.isNotEmpty) ? ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: value.length,
               itemBuilder: (context, index) {
@@ -42,7 +44,7 @@ class TransactionsListState extends ConsumerState<TransactionsList> with Automat
                   height: 10,
                 );
               },
-            ),
+            ): Center(child: Text(l10n.noTransactionsFound)),
           ),
       _ => const Center(child: CircularProgressIndicator()),
     };

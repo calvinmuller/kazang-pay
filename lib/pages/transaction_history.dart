@@ -1,17 +1,49 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, Spacer, Icon, TabBarView, Text, AppBar, Theme, Colors, TabBarIndicatorSize, BorderRadius, BoxDecoration, Tab, TabBar, Padding, Card, SliverToBoxAdapter, MainAxisAlignment, showDateRangePicker, Row, NestedScrollView, Scaffold, DefaultTabController;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Spacer,
+        Icon,
+        TabBarView,
+        Text,
+        AppBar,
+        Theme,
+        Colors,
+        TabBarIndicatorSize,
+        BorderRadius,
+        BoxDecoration,
+        Tab,
+        TabBar,
+        Padding,
+        Card,
+        SliverToBoxAdapter,
+        MainAxisAlignment,
+        showDateRangePicker,
+        Row,
+        NestedScrollView,
+        Scaffold,
+        DefaultTabController;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 
-import '../common/providers/transaction.provider.dart' show dateTimeFilterProvider;
+import '../common/providers/transaction.provider.dart'
+    show dateTimeFilterProvider;
 import '../common/widgets/widgets.dart';
 import '../core/constants.dart';
 import '../core/icons.dart';
 import '../l10n/app_localizations.dart';
 
-class TransactionHistory extends ConsumerWidget {
+class TransactionHistory extends ConsumerStatefulWidget {
   const TransactionHistory({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TransactionHistory> createState() => _TransactionHistoryState();
+}
+
+class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return DefaultTabController(
@@ -33,9 +65,9 @@ class TransactionHistory extends ConsumerWidget {
                     padding: const EdgeInsets.all(4.0),
                     child: TabBar(
                       labelStyle:
-                      Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.black,
-                      ),
+                          Theme.of(context).textTheme.bodySmall!.copyWith(
+                                color: Colors.black,
+                              ),
                       dividerHeight: 0,
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
@@ -68,12 +100,13 @@ class TransactionHistory extends ConsumerWidget {
                             initialDateRange: ref.read(dateTimeFilterProvider),
                             context: context,
                             firstDate: DateTime.now().subtract(
-                              const Duration(days: 31),
+                              const Duration(days: 90),
                             ),
                             lastDate: DateTime.now(),
                           );
                           if (date != null) {
-                            ref.read(dateTimeFilterProvider.notifier).state = date;
+                            ref.read(dateTimeFilterProvider.notifier).state =
+                                date;
                           }
                         },
                         colour: CustomColours.purple,
@@ -91,10 +124,7 @@ class TransactionHistory extends ConsumerWidget {
             ];
           },
           body: const TabBarView(
-            children: [
-              TransactionsList(),
-              SettlementsList()
-            ],
+            children: [TransactionsList(), SettlementsList()],
           ),
         ),
       ),

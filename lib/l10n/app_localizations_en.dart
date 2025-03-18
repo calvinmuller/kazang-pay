@@ -398,6 +398,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transType => 'TRANTYPE:';
+
+  @override
+  String get noTransactionsFound => 'No transactions found';
+
+  @override
+  String get noSettlementsFound => 'No settlements found';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

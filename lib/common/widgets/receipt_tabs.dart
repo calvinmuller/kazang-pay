@@ -102,7 +102,12 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             spacing: 5,
             children: [
-              Expanded(child: Text(l10n.customerReceipt, style: style)),
+              Expanded(
+                child: Text(
+                  l10n.customerReceipt,
+                  style: style.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
               Expanded(
                 child: Button.secondary(
                   borderColour: CustomColours.black,

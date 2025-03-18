@@ -398,4 +398,10 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get transType => 'TRANSAKSIE TIPE:';
+
+  @override
+  String get noTransactionsFound => 'No transactions found';
+
+  @override
+  String get noSettlementsFound => 'No settlements found';
 }

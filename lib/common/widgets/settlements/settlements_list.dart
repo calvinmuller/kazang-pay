@@ -47,7 +47,7 @@ class SettlementsListState extends ConsumerState<SettlementsList> with Automatic
           },
         ),
       )
-          : const Center(child: Text('No settlements found')),
+          : Center(child: Text(l10n.noSettlementsFound)),
       _ => Center(child: Loader(message: l10n.loadingSettlements)),
     };
   }

@@ -7,7 +7,7 @@ part of 'transaction.provider.dart';
 // **************************************************************************
 
 String _$transactionHistoryHash() =>
-    r'8269d7f73fc0c6c2198570ff35cd4ba7ba600ac7';
+    r'cfdbaf7f25894788518c09aed9890c220c85c4d0';
 
 /// API Section
 ///
