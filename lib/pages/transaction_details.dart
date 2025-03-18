@@ -1,35 +1,7 @@
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        BoxDecoration,
-        Icon,
-        Spacer,
-        Divider,
-        Text,
-        AppBar,
-        TabBarView,
-        Colors,
-        BorderRadius,
-        Radius,
-        Container,
-        CrossAxisAlignment,
-        Column,
-        Theme,
-        Row,
-        Padding,
-        Card,
-        TabBarIndicatorSize,
-        Tab,
-        TabBar,
-        SliverToBoxAdapter,
-        NestedScrollView,
-        Scaffold,
-        DefaultTabController;
+    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Divider, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
-import 'package:flutter_svg/svg.dart' show SvgPicture;
 
 import '../common/common.dart';
 import '../common/widgets/receipt.dart';
@@ -76,22 +48,7 @@ class TransactionDetails extends ConsumerWidget {
                             Row(
                               spacing: 12,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: const BoxDecoration(
-                                    color: CustomColours.lime,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                  ),
-                                  child: (transaction.isPayment)
-                                      ? const Icon(CustomIcons.card)
-                                      : (transaction.isCashback)
-                                          ? SvgPicture.asset(
-                                              'assets/cashback.svg',
-                                              width: 24,
-                                            )
-                                          : const Icon(CustomIcons.lock),
-                                ),
+                                transaction.icon,
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

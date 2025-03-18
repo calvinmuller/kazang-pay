@@ -1,4 +1,24 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, BoxDecoration, Icon, Spacer, Divider, BorderRadius, Radius, Container, CrossAxisAlignment, Text, Column, Icons, Row, MainAxisAlignment, Padding, InkWell;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        Icon,
+        Spacer,
+        Divider,
+        BorderRadius,
+        Radius,
+        Container,
+        CrossAxisAlignment,
+        Text,
+        Column,
+        Icons,
+        Row,
+        MainAxisAlignment,
+        Padding,
+        InkWell;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
@@ -31,17 +51,17 @@ class TransactionItem extends ConsumerWidget {
                 spacing: 12,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    width: 50,
+                    height: 50,
                     decoration: const BoxDecoration(
                       color: CustomColours.lime,
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    child: (item.isPayment)
-                        ? const Icon(CustomIcons.card)
-                        : (item.isCashback) ? SvgPicture.asset('assets/cashback.svg', width: 24,) : const Icon(CustomIcons.lock),
+                    child: item.icon
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 5,
                     children: [
                       Text(
                         item.maskedPan ?? '',
@@ -56,7 +76,7 @@ class TransactionItem extends ConsumerWidget {
                   const Spacer(),
                   Container(
                     decoration: const BoxDecoration(
-                      color:CustomColours.greenish,
+                      color: CustomColours.greenish,
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                     child: const Icon(Icons.chevron_right, size: 32),

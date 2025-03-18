@@ -74,16 +74,22 @@ class PrintHelper {
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 
-    final amount = transaction!.isVoid ? -transaction.amount : transaction.amount;
+    final amount =
+        transaction!.isVoid ? -transaction.amount : transaction.amount;
 
     var text = DoubleTextPrintCommand(fontSize: 32);
     text.leftAlignedValue = "MERCHANTNO";
-    text.rightAlignedValue = merchantConfig.merchantNumber;
+    // only show last 4 digits of merchant number only if receiptType === ReceiptSectionEnum.Customer
+    text.rightAlignedValue = merchantConfig.merchantNumber.substring(
+      (receiptType == ReceiptSectionEnum.CUSTOMER) ? merchantConfig.merchantNumber.length - 4 : 0,
+    );
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "TERMINALID";
-    text.rightAlignedValue = transaction.terminalId;
+    text.rightAlignedValue = transaction.terminalId.substring(
+      (receiptType == ReceiptSectionEnum.CUSTOMER) ? transaction.terminalId.length - 4 : 0,
+    );
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 25);
@@ -98,7 +104,9 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "AID";
-    text.rightAlignedValue = transaction.applicationIdentifier;
+    text.rightAlignedValue = transaction.applicationIdentifier?.substring(
+      (receiptType == ReceiptSectionEnum.CUSTOMER) ? transaction.applicationIdentifier!.length - 4 : 0,
+    ) ?? "";
     printRequest.printLineItems.add(text);
 
     text = DoubleTextPrintCommand(fontSize: 25);
@@ -135,15 +143,15 @@ class PrintHelper {
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 
+    text = DoubleTextPrintCommand(fontSize: 32);
+    text.leftAlignedValue = "RESPONSE:";
+    text.rightAlignedValue = transaction.responseMessage;
+    printRequest.printLineItems.add(text);
+
     text = DoubleTextPrintCommand(fontSize: 25);
     text.bold = true;
     text.leftAlignedValue = "TOTAL";
     text.rightAlignedValue = CurrencyHelper.formatCurrency(context, amount);
-    printRequest.printLineItems.add(text);
-
-    text = DoubleTextPrintCommand(fontSize: 32);
-    text.leftAlignedValue = "RESPONSE:";
-    text.rightAlignedValue = transaction.responseMessage;
     printRequest.printLineItems.add(text);
 
     printRequest.printLineItems.add(NewLinePrintCommand());

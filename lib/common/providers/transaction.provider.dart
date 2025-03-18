@@ -35,7 +35,13 @@ class TransactionResultNotifier extends _$TransactionResultNotifier {
 /// API Section
 @riverpod
 Future<List<Transaction>> transactionHistory(Ref ref) async {
-  return await TransactionHelper.getHistoryData();
+  final dateRange = ref.watch(dateTimeFilterProvider);
+  final transactions = await TransactionHelper.getHistoryData();
+
+  final startOfDate = startOfDay(dateRange.start);
+  final endOfDate = endOfDay(dateRange.end);
+
+  return transactions.where((transaction) => transaction.transactionDateTime.isAfter(startOfDate) && transaction.transactionDateTime.isBefore(endOfDate)).toList();
 }
 
 @riverpod

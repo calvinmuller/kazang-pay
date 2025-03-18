@@ -857,6 +857,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'TRANTYPE:'**
   String get transType;
+
+  /// No description provided for @noTransactionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions found'**
+  String get noTransactionsFound;
+
+  /// No description provided for @noSettlementsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No settlements found'**
+  String get noSettlementsFound;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

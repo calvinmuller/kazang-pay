@@ -127,5 +127,7 @@
   "usernameMin": "Ensure this field has at least 10 characters.",
   "usernameMax": "Ensure this field has no more than 10 characters.",
   "connectionError": "Connection error occurred, please try again.",
-  "transType": "TRANTYPE:"
+  "transType": "TRANTYPE:",
+  "noTransactionsFound": "No transactions found",
+  "noSettlementsFound": "No settlements found"
 }
