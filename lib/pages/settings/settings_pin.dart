@@ -30,7 +30,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 
 import '../../common/common.dart';
 import '../../common/providers/api.provider.dart';
-import '../../common/providers/app.provider.dart';
 import '../../common/providers/device_info.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;
 import '../../core/constants.dart';
@@ -94,6 +93,7 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                         if (value == null || value.isEmpty) {
                           return l10n.usernameError;
                         }
+                        return null;
                       }),
                   Label(
                     l10n.password,
@@ -133,7 +133,7 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                           try {
                             final response =
                                 await crApi.authDevice(loginRequest);
-                            if (response.responseCode == 0) {
+                            if (response.responseCode == 0 && context.mounted) {
                               await showPinDialog(
                                 context: context,
                                 callback: () {
@@ -150,12 +150,14 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                               throw Exception(response.responseMessage);
                             }
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: CustomColours.red,
-                                content: Text(e.toString()),
-                              ),
-                            );
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: CustomColours.red,
+                                  content: Text(e.toString()),
+                                ),
+                              );
+                            }
                           }
                         }
                       },

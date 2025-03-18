@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart'
-    show Container, BoxDecoration, Icon, BorderRadius, Radius, BoxFit;
-import 'package:flutter/src/widgets/basic.dart';
+    show Container, BoxDecoration, Icon, BorderRadius, Radius, BoxFit, Padding, EdgeInsets;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';

@@ -1,5 +1,40 @@
-import 'package:flutter/material.dart' show GlobalKey, FormState, BuildContext, Widget, EdgeInsets, BoxDecoration, TextSpan, TextStyle, InputDecoration, Padding, Hero, Theme, Text, Column, Container, MainAxisSize, BorderSide, Border, FontWeight, RichText, CrossAxisAlignment, TextInputType, TextInputAction, OutlineInputBorder, TextFormField, Form, Card, primaryFocus, UnfocusDisposition, ScaffoldMessenger, SnackBar, ListView, Scaffold;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerState, ConsumerStatefulWidget;
+import 'package:flutter/material.dart'
+    show
+        GlobalKey,
+        FormState,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        TextSpan,
+        TextStyle,
+        InputDecoration,
+        Padding,
+        Hero,
+        Theme,
+        Text,
+        Column,
+        Container,
+        MainAxisSize,
+        BorderSide,
+        Border,
+        FontWeight,
+        RichText,
+        CrossAxisAlignment,
+        TextInputType,
+        TextInputAction,
+        OutlineInputBorder,
+        TextFormField,
+        Form,
+        Card,
+        primaryFocus,
+        UnfocusDisposition,
+        ScaffoldMessenger,
+        SnackBar,
+        ListView,
+        Scaffold;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerState, ConsumerStatefulWidget;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
 import '../../common/providers/api.provider.dart';
@@ -49,17 +84,11 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
             children: [
               Text(
                 l10n.onboardingRegister,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleLarge,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 l10n.onboardRegisterHelp,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelSmall,
+                style: Theme.of(context).textTheme.labelSmall,
               ),
             ],
           ),
@@ -83,10 +112,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   padding: const EdgeInsets.all(12),
                   child: RichText(
                     text: TextSpan(
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                       children: <TextSpan>[
                         TextSpan(
                           text: l10n.standalone,
@@ -113,10 +139,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         initialValue: '',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodySmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -148,10 +171,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       TextFormField(
                         initialValue: '',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodySmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -176,9 +196,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       TextFormField(
                         initialValue: deviceInfo.serial,
-                        style: Theme
-                            .of(context)
-                            .textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                         readOnly: false,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -234,17 +252,22 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                     loginResponse.requestType,
                   );
 
-                  if ((response.status == StatusResult.Failed && response.isLinked) || response.status == StatusResult.Success) {
-                    ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
-                  }
-                  else if (response.status == StatusResult.Failed) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: CustomColours.red,
-                        content: Text(response.statusDescription),
-                        duration: const Duration(seconds: 5),
-                      ),
-                    );
+                  if ((response.status == StatusResult.Failed &&
+                          response.isLinked) ||
+                      response.status == StatusResult.Success) {
+                    ref
+                        .read(appNotifierProvider.notifier)
+                        .setConfigured(loginRequest);
+                  } else if (response.status == StatusResult.Failed) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: CustomColours.red,
+                          content: Text(response.statusDescription),
+                          duration: const Duration(seconds: 5),
+                        ),
+                      );
+                    }
                   }
                 } catch (e) {
                   if (context.mounted) {
@@ -259,7 +282,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                 } finally {
                   if (context.mounted) {
                     context.pop();
-                    }
+                  }
                 }
               }
             },
