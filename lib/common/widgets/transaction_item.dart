@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart' show BuildContext, Widget, EdgeInsets, BoxDecoration, Icon, Spacer, Divider, BorderRadius, Radius, Container, CrossAxisAlignment, Text, Column, Icons, Row, MainAxisAlignment, Padding, InkWell;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget;
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 

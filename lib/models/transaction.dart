@@ -70,7 +70,7 @@ class Transaction with _$Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) =>
       _$TransactionFromJson(json);
 
-  get isPayment => additionalData == null;
+  get isPayment => additionalData == null && transactionType == TransactionType.P;
 
   get isSuccessful => authorised;
 
@@ -80,10 +80,10 @@ class Transaction with _$Transaction {
 
   get isVoid => transactionType == TransactionType.VOID_TRANSACTION;
 
-  get type => transactionType == TransactionType.P
-      ? "PURCHASE"
-      : isCashback
-          ? "CASHBACK"
+  get type => isCashback
+      ? "CASHBACK"
+      : isPayment
+          ? "PURCHASE"
           : "VOID";
 
   toTransactionResult({required MerchantConfig merchantConfig}) {

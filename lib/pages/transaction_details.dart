@@ -7,7 +7,6 @@ import 'package:flutter/material.dart'
         Icon,
         Spacer,
         Divider,
-        TextStyle,
         Text,
         AppBar,
         TabBarView,
@@ -19,7 +18,6 @@ import 'package:flutter/material.dart'
         Column,
         Theme,
         Row,
-        FontWeight,
         Padding,
         Card,
         TabBarIndicatorSize,
@@ -131,15 +129,6 @@ class TransactionDetails extends ConsumerWidget {
                               thickness: 0.5,
                               height: 30,
                             ),
-                            Row(
-                              children: [
-                                Text(l10n.settlementStatus,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600)),
-                                const Spacer(),
-                                transaction.badge(l10n, context)
-                              ],
-                            ),
                             if (transaction.isUserVoidable)
                               Padding(
                                 padding: const EdgeInsets.only(top: 24),
@@ -210,35 +199,6 @@ class TransactionDetails extends ConsumerWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-extension on Transaction {
-  String toLocalizedString(AppLocalizations l10n) {
-    return settled ? l10n.settled : l10n.pending;
-  }
-
-  Widget badge(l10n, context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 0,
-      color: settled ? CustomColours.green : CustomColours.orange,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-        child: Row(
-          spacing: 10,
-          children: [
-            Text(
-              toLocalizedString(l10n),
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: CustomColours.white,
-                  ),
-            ),
-            const Icon(CustomIcons.done, color: CustomColours.white),
-          ],
         ),
       ),
     );
