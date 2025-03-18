@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show BuildContext, showDialog;
 import 'package:flutter/services.dart' show MethodChannel, PlatformException;
 import 'package:intl/intl.dart' show DateFormat;
@@ -51,10 +52,13 @@ class PrintHelper {
     Transaction? transaction,
     BuildContext? context,
     MerchantConfig? merchantConfig,
+    TerminalConfig? terminalConfig,
     ReceiptSectionEnum receiptType = ReceiptSectionEnum.CUSTOMER,
   }) async {
     final df = DateFormat('yyyy-MM-dd');
     final tf = DateFormat('HH:mm:ss');
+
+    debugPrint(transaction.toString(), wrapWidth: 1024);
 
     final printRequest = PrintRequest(
       receiptSection: receiptType,
@@ -63,8 +67,8 @@ class PrintHelper {
       normalFontSize: 24,
       imageXpos: 50,
       imageWidth: 200,
-      heading: merchantConfig!.tradingName,
-      customerTrailer: "Thank you",
+      heading: terminalConfig?.slipHeader,
+      customerTrailer: terminalConfig?.slipTrailer,
     );
     var singleText = SingleTextPrintCommand(fontSize: 25);
     singleText.value = (receiptType == ReceiptSectionEnum.MERCHANT)
@@ -80,7 +84,7 @@ class PrintHelper {
     var text = DoubleTextPrintCommand(fontSize: 32);
     text.leftAlignedValue = "MERCHANTNO";
     // only show last 4 digits of merchant number only if receiptType === ReceiptSectionEnum.Customer
-    text.rightAlignedValue = merchantConfig.merchantNumber.substring(
+    text.rightAlignedValue = merchantConfig?.merchantNumber.substring(
       (receiptType == ReceiptSectionEnum.CUSTOMER) ? merchantConfig.merchantNumber.length - 4 : 0,
     );
     printRequest.printLineItems.add(text);
@@ -136,9 +140,9 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "SWITCH";
-    text.rightAlignedValue = merchantConfig.routingSwitch == "LESAKA"
+    text.rightAlignedValue = merchantConfig?.routingSwitch == "LESAKA"
         ? "PRISM"
-        : merchantConfig.routingSwitch;
+        : merchantConfig?.routingSwitch;
     printRequest.printLineItems.add(text);
 
     printRequest.printLineItems.add(NewLinePrintCommand());

@@ -27,12 +27,12 @@ showBottomSheet(context, Widget dialog) async {
   );
 }
 
-showListDialog(mainContext, List<dynamic> items) {
+showListDialog(mainContext, List<dynamic> items, { String? title} ) {
   return showDialog(
     context: mainContext,
     barrierDismissible: false,
     useRootNavigator: true,
-    builder: (context) => ListDialog(items: items, mainContext: context),
+    builder: (context) => ListDialog(items: items, mainContext: context, title: title),
   );
 }
 

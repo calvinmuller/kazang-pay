@@ -8,7 +8,6 @@ import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
 import 'models/transaction.dart';
 import 'pages/pages.dart';
-import 'pages/settings/settings_language.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final isSetup =
@@ -63,25 +62,32 @@ final routerProvider = Provider<GoRouter>((ref) {
           },
         ),
         GoRoute(
-            name: 'settings',
-            path: 'settings',
-            builder: (BuildContext context, GoRouterState state) {
-              return const SettingsPage();
-            },
-            routes: [
-              GoRoute(
-                name: 'profile',
-                path: 'profile',
-                builder: (BuildContext context, GoRouterState state) =>
-                    const SettingsProfile(),
-              ),
-              GoRoute(
-                name: 'language',
-                path: 'language',
-                builder: (BuildContext context, GoRouterState state) =>
-                    const SettingsLanguage(),
-              )
-            ]),
+          name: 'settings',
+          path: 'settings',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SettingsPage();
+          },
+          routes: [
+            GoRoute(
+              name: 'profile',
+              path: 'profile',
+              builder: (BuildContext context, GoRouterState state) =>
+                  const SettingsProfile(),
+            ),
+            GoRoute(
+              name: 'language',
+              path: 'language',
+              builder: (BuildContext context, GoRouterState state) =>
+                  const SettingsLanguage(),
+            ),
+            GoRoute(
+              name: 'pin',
+              path: 'pin',
+              builder: (BuildContext context, GoRouterState state) =>
+                  const SettingsPin(),
+            )
+          ],
+        ),
         GoRoute(
           name: 'transaction-history',
           path: 'transaction-history',

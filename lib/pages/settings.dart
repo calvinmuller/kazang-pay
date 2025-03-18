@@ -21,26 +21,26 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // ListTile(
+            //   onTap: () => {},
+            //   title: Text(l10n.proxySettings),
+            //   trailing: const Icon(Icons.chevron_right),
+            // ),
+            // const Divider(),
+            // ListTile(
+            //   onTap: () => {},
+            //   title: Text(l10n.sendDeviceLogs),
+            //   trailing: const Icon(Icons.chevron_right),
+            // ),
+            // const Divider(),
+            // ListTile(
+            //   onTap: () => {},
+            //   title: Text(l10n.connectPos),
+            //   trailing: const Icon(Icons.chevron_right),
+            // ),
+            // const Divider(),
             ListTile(
-              onTap: () => {},
-              title: Text(l10n.proxySettings),
-              trailing: const Icon(Icons.chevron_right),
-            ),
-            const Divider(),
-            ListTile(
-              onTap: () => {},
-              title: Text(l10n.sendDeviceLogs),
-              trailing: const Icon(Icons.chevron_right),
-            ),
-            const Divider(),
-            ListTile(
-              onTap: () => {},
-              title: Text(l10n.connectPos),
-              trailing: const Icon(Icons.chevron_right),
-            ),
-            const Divider(),
-            ListTile(
-              onTap: () => {},
+              onTap: () => context.pushNamed('pin'),
               title: Text(l10n.supervisorPinTitle),
               trailing: const Icon(Icons.chevron_right),
             ),

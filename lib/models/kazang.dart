@@ -170,15 +170,18 @@ class LoginResponse {
     required this.accountNumber,
     required this.companyName,
     required this.responseCode,
+    this.responseMessage
   });
 
   final String accountNumber;
   final String companyName;
   final int responseCode;
+  final String? responseMessage;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
         accountNumber: json["account_number"],
         companyName: json["company_name"],
         responseCode: json["response_code"],
+        responseMessage: json["response_message"] ?? "",
       );
 }

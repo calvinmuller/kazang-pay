@@ -146,6 +146,9 @@ class AppLocalizationsAf extends AppLocalizations {
   String get selectAccount => 'Kies ‘n Rekening om voort te gaan';
 
   @override
+  String get budgetTerm => 'Select a budget term to continue';
+
+  @override
   String get accountBalance => 'Rekeningbalans';
 
   @override
@@ -404,4 +407,10 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get noSettlementsFound => 'No settlements found';
+
+  @override
+  String get resetPin => 'Reset PIN';
+
+  @override
+  String get pinResetSuccess => 'Supervisor PIN reset successfully';
 }
