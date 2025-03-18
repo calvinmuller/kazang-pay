@@ -35,6 +35,7 @@ class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandle
         transaction: widget.transactionResult,
         receiptType: widget.type,
         merchantConfig: appState.profile!.merchantConfig,
+        terminalConfig: appState.profile!.terminalConfig,
         context: context,
       );
     });

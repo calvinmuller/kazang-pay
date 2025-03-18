@@ -363,8 +363,14 @@ abstract class AppLocalizations {
   /// No description provided for @selectAccount.
   ///
   /// In en, this message translates to:
-  /// **'Select An Account To Continue'**
+  /// **'Select an account to continue'**
   String get selectAccount;
+
+  /// No description provided for @budgetTerm.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a budget term to continue'**
+  String get budgetTerm;
 
   /// No description provided for @accountBalance.
   ///
@@ -869,6 +875,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No settlements found'**
   String get noSettlementsFound;
+
+  /// No description provided for @resetPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset PIN'**
+  String get resetPin;
+
+  /// No description provided for @pinResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Supervisor PIN reset successfully'**
+  String get pinResetSuccess;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

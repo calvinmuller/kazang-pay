@@ -6,10 +6,11 @@ import '../../l10n/app_localizations.dart';
 import 'widgets.dart' show Button;
 
 class ListDialog extends StatefulWidget {
-  const ListDialog({super.key, required this.items, this.mainContext});
+  const ListDialog({super.key, required this.items, this.mainContext, this.title});
 
   final List<dynamic> items;
   final BuildContext? mainContext;
+  final String? title;
 
   @override
   State<ListDialog> createState() => _ListDialogState();
@@ -35,7 +36,7 @@ class _ListDialogState extends State<ListDialog> {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               textAlign: TextAlign.center,
-              l10n.selectAccount,
+              widget.title ?? l10n.selectAccount,
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),

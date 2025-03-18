@@ -43,7 +43,8 @@
   "total": "TOTAL:",
   "transseqNo": "TRANSSEQNO",
   "reason": "REASON",
-  "selectAccount": "Select An Account To Continue",
+  "selectAccount": "Select an account to continue",
+  "budgetTerm": "Select a budget term to continue",
   "accountBalance": "Account Balance",
   "accountName": "Account Name: {name}",
   "checkAnother": "Check Another Account",
@@ -129,5 +130,7 @@
   "connectionError": "Connection error occurred, please try again.",
   "transType": "TRANTYPE:",
   "noTransactionsFound": "No transactions found",
-  "noSettlementsFound": "No settlements found"
+  "noSettlementsFound": "No settlements found",
+  "resetPin": "Reset PIN",
+  "pinResetSuccess": "Supervisor PIN reset successfully"
 }

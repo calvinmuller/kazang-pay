@@ -45,6 +45,7 @@ class PinDialog extends ConsumerStatefulWidget {
     this.action,
     this.iconData = CustomIcons.lock,
     this.actionButtonColour,
+    this.reset = false
   });
 
   final String? title;
@@ -52,6 +53,7 @@ class PinDialog extends ConsumerStatefulWidget {
   final VoidCallback? action;
   final IconData iconData;
   final Color? actionButtonColour;
+  final bool reset;
 
   @override
   ConsumerState<PinDialog> createState() => _PinDialogState();
@@ -65,7 +67,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final pin = ref.watch(appNotifierProvider.select((state) => state.pin));
-    final hasPin = pin != null;
+    final hasPin = pin != null && widget.reset == false;
 
     return Padding(
       padding:
@@ -94,9 +96,20 @@ class _PinDialogState extends ConsumerState<PinDialog> {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             },
-            if (!hasPin) ...{
+            if (!hasPin && !widget.reset) ...{
               Text(
                 l10n.noPinSet,
+                style: Theme.of(context).textTheme.titleLarge,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                l10n.setPinToProceed,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            },
+            if (widget.reset) ...{
+              Text(
+                l10n.resetPin,
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
@@ -144,13 +157,14 @@ class _PinDialogState extends ConsumerState<PinDialog> {
                   (widget.actionButtonColour != null) ? Colors.white : null,
               onLongPress: () =>
                   ref.read(appNotifierProvider.notifier).setPin(null),
-              onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
+              onPressed: (hasPin || !widget.reset) ? onContinuePressed : onSetPinPressed,
               elevation: 0,
               child: Text(l10n.continueButton),
             ),
             Button.main(
               onPressed: () => Navigator.of(context).pop(false),
               elevation: 0,
+              borderColour: Colors.transparent,
               inverse: true,
               child: Text(l10n.back),
             ),
@@ -177,6 +191,9 @@ class _PinDialogState extends ConsumerState<PinDialog> {
     if (_formKey.currentState!.validate()) {
       ref.read(appNotifierProvider.notifier).setPin(pinController.value.text);
       pinController.clear();
+      if (widget.reset) {
+        Navigator.of(context).pop(true);
+      }
     }
   }
 
@@ -193,12 +210,14 @@ showPinDialog({
   Color? actionButtonColour,
   required BuildContext context,
   VoidCallback? callback,
+  bool reset = false,
 }) async {
   final result = await showModalBottomSheet(
     isScrollControlled: true,
     showDragHandle: true,
     context: context,
     builder: (context) => PinDialog(
+      reset: reset,
       title: title,
       actionButtonColour: actionButtonColour,
     ),

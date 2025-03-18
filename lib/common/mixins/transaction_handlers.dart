@@ -34,8 +34,9 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onUserBudgetSelectionRequiredEvent(
       UserBudgetSelectionRequiredEvent event) async {
+    final l10n = AppLocalizations.of(context)!;
     ref.read(transactionStepProvider.notifier).state = 2;
-    final result = await showListDialog(context, event.value);
+    final result = await showListDialog(context, event.value, title: l10n.budgetTerm);
 
     if (result != null) {
       await TransactionHelper.continueTransactionBudget(result['index']);

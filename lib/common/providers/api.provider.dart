@@ -51,15 +51,8 @@ KazangRepository kazangRepository(Ref ref) {
 final crRepositoryProvider = Provider<CrRepository>((ref) {
   const uri = String.fromEnvironment('crApiUrl');
 
-  const username = String.fromEnvironment('crUsername');
-  const password = String.fromEnvironment('crPassword');
-
   final BaseOptions options = BaseOptions(
     baseUrl: uri,
-    headers: {
-      'Authorization': 'Basic ${base64Encode(
-          utf8.encode('$username:$password'))}',
-    }
   );
   return CrRepository(Dio(options));
 });
