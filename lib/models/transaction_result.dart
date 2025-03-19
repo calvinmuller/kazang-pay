@@ -51,7 +51,7 @@ class TransactionResult with _$TransactionResult {
   get isTap => [
         CardDataInputMode.CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
         CardDataInputMode.ContactlessIntegratedCircuitCard
-      ].contains(cardDataInputMode);
+      ].contains(cardDataInputMode) && transactionType != TransactionType.VOID_TRANSACTION;
 
 }
 
