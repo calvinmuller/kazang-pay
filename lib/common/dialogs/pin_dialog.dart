@@ -157,7 +157,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
                   (widget.actionButtonColour != null) ? Colors.white : null,
               onLongPress: () =>
                   ref.read(appNotifierProvider.notifier).setPin(null),
-              onPressed: (hasPin || !widget.reset) ? onContinuePressed : onSetPinPressed,
+              onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
               elevation: 0,
               child: Text(l10n.continueButton),
             ),
