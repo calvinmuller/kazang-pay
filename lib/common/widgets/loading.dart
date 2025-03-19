@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -29,6 +30,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/constants.dart';
 import '../../helpers/transaction_helper.dart';
 import '../../l10n/app_localizations.dart';
+import '../../models/app_state.dart';
 import '../../ui/widgets.dart';
 import '../interfaces/factory.events.dart';
 import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
@@ -59,19 +61,12 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(fetchProfileProvider);
-    final stateProfile = ref.watch(appNotifierProvider.select((value) => value.profile));
+
+    final stateProfile = ref.watch(appNotifierProvider.select((state) => state.profile));
 
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(fetchProfileProvider, (previous, next) {
-      if (next is AsyncError) {
-        if (stateProfile != null) {
-          TransactionHelper.connect(config: stateProfile);
-        }
-      } else if (next is AsyncData) {
-        TransactionHelper.connect(config: next.value!);
-      }
-    });
+    TransactionHelper.connect(config: stateProfile);
 
     return Scaffold(
       body: AnimatedBuilder(
@@ -123,7 +118,12 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
                   spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: switch (profile) {
-                    AsyncError(:final error) => [Text(l10n.unexpectedError)],
+                    AsyncError(:final error) => [
+                      Loader(
+                          transparent: true,
+                          message: l10n.loading,
+                        ),
+                    ],
                     AsyncData(:final value) => [
                         Text(
                           l10n.initialized,
@@ -148,7 +148,9 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   @override
   void onStatusMessageEvent(String? value) {
     if (value == "Factory initialized.") {
-      context.goNamed('home');
+      if (context.mounted) {
+        context.goNamed('home');
+      }
     }
   }
 

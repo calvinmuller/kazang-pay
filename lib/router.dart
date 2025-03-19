@@ -6,12 +6,12 @@ import 'package:go_router/go_router.dart'
 import 'common/common.dart';
 import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
+import 'models/app_state.dart' show TerminalProfile;
 import 'models/transaction.dart';
 import 'pages/pages.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final isSetup =
-      ref.watch(appNotifierProvider.select((state) => state.isSetup));
+  final isSetup = ref.watch(appNotifierProvider.select((state) => true));
 
   final onboardingRoutes = [
     GoRoute(
@@ -43,7 +43,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     GoRoute(
       name: 'initialisation',
       path: '/',
-      builder: (context, _) => const LoadingWidget(),
+      builder: (context, _) {
+        return const LoadingWidget();
+      },
     ),
     GoRoute(
       path: '/home',
