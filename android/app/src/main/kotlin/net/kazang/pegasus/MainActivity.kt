@@ -3,6 +3,7 @@ package net.kazang.pegasus
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -30,7 +31,7 @@ class MainActivity : FlutterActivity() {
     private var transactionHandler: TransactionInterface = TransactionHandler()
     private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
     private val gson = Gson()
-    private var initialIntentMap: Map<String, Any?>? = null
+    private var initialIntentMap: Map<String, Any?>? = mapOf()
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -180,22 +181,17 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun handleIntent(intent: Intent, fromPackageName: String?) {
-        print(intent.extras)
+    private fun handleIntent(intent: Intent) {
+        val username = intent.getStringExtra("User Number") ?: intent.getStringExtra("Username")
         val intentMap = mapOf<String, Any?>(
-            "fromPackageName" to fromPackageName,
-            "action" to intent.action,
-            "data" to intent.dataString,
-            "categories" to intent.categories?.toList(),
-            "extra" to intent.extras?.let { gson.toJson(it) }
+            "username" to username,
         )
         Log.d("onAttachedToActivity", intentMap.toString())
         initialIntentMap = intentMap
     }
 
-    override fun onNewIntent(intent: Intent) {
-        Log.d("onNewIntent", intent.data.toString())
-        print(intent)
-        handleIntent(intent, activity?.callingActivity?.packageName)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleIntent(intent)
     }
 }

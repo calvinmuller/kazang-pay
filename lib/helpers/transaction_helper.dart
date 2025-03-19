@@ -176,7 +176,8 @@ class TransactionHelper {
     return appState.isNotEmpty ? AppState.fromJson(appState) : AppState();
   }
 
-  static Future getIntentInfo() async {
-    return await _instance.methodChannel.invokeMethod('getIntentInfo');
+  static Future<IntentInfo> getIntentInfo() async {
+    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo')).cast<String, dynamic>();
+    return IntentInfo.fromJson(result);
   }
 }

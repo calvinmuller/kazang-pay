@@ -163,6 +163,11 @@ class LoginRequest {
 
   Map<String, dynamic> toJson() => _$LoginRequestToJson(this);
 
+  @override
+  String toString() {
+    return 'LoginRequest(accountNumber: $accountNumber, password: $password, serialNumber: $serialNumber)';
+  }
+
 }
 
 class LoginResponse {

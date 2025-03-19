@@ -32,12 +32,12 @@ class CustomParametersData {
 
 class CashbacksData {
     var allowed: Boolean = false
-    var limit: Int = 0
+    var limit: String = "1000"
 }
 
 class RefundsData {
     var allowed: Boolean = false
-    var limit: Int = 0
+    var limit: String = "1000"
 }
 
 class TermappConfigData {

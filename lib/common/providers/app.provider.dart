@@ -44,4 +44,8 @@ class AppNotifier extends _$AppNotifier {
   _save(AppState next) {
     TransactionHelper.saveJson(key, next.toJson());
   }
+
+  void reset() {
+    state = state.copyWith(isConfigured: false, accountInfo: null, intentInfo: null, deviceInfo: null);
+  }
 }

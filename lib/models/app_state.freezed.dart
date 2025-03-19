@@ -27,6 +27,8 @@ mixin _$AppState {
   TerminalProfile? get profile => throw _privateConstructorUsedError;
   String? get pin => throw _privateConstructorUsedError;
   String? get language => throw _privateConstructorUsedError;
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  IntentInfo? get intentInfo => throw _privateConstructorUsedError;
 
   /// Serializes this AppState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +52,9 @@ abstract class $AppStateCopyWith<$Res> {
       LoginRequest? accountInfo,
       TerminalProfile? profile,
       String? pin,
-      String? language});
+      String? language,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      IntentInfo? intentInfo});
 }
 
 /// @nodoc
@@ -75,6 +79,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? profile = freezed,
     Object? pin = freezed,
     Object? language = freezed,
+    Object? intentInfo = freezed,
   }) {
     return _then(_value.copyWith(
       pinVerified: null == pinVerified
@@ -105,6 +110,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
+      intentInfo: freezed == intentInfo
+          ? _value.intentInfo
+          : intentInfo // ignore: cast_nullable_to_non_nullable
+              as IntentInfo?,
     ) as $Val);
   }
 }
@@ -124,7 +133,9 @@ abstract class _$$AppStateImplCopyWith<$Res>
       LoginRequest? accountInfo,
       TerminalProfile? profile,
       String? pin,
-      String? language});
+      String? language,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      IntentInfo? intentInfo});
 }
 
 /// @nodoc
@@ -147,6 +158,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? profile = freezed,
     Object? pin = freezed,
     Object? language = freezed,
+    Object? intentInfo = freezed,
   }) {
     return _then(_$AppStateImpl(
       pinVerified: null == pinVerified
@@ -177,6 +189,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
+      intentInfo: freezed == intentInfo
+          ? _value.intentInfo
+          : intentInfo // ignore: cast_nullable_to_non_nullable
+              as IntentInfo?,
     ));
   }
 }
@@ -191,7 +207,9 @@ class _$AppStateImpl extends _AppState {
       this.accountInfo = null,
       this.profile = null,
       this.pin = null,
-      this.language = 'en_ZA'})
+      this.language = 'en_ZA',
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      this.intentInfo = null})
       : super._();
 
   factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -218,10 +236,13 @@ class _$AppStateImpl extends _AppState {
   @override
   @JsonKey()
   final String? language;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  final IntentInfo? intentInfo;
 
   @override
   String toString() {
-    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language)';
+    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
   }
 
   @override
@@ -240,13 +261,15 @@ class _$AppStateImpl extends _AppState {
             (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.pin, pin) || other.pin == pin) &&
             (identical(other.language, language) ||
-                other.language == language));
+                other.language == language) &&
+            (identical(other.intentInfo, intentInfo) ||
+                other.intentInfo == intentInfo));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured,
-      deviceInfo, accountInfo, profile, pin, language);
+      deviceInfo, accountInfo, profile, pin, language, intentInfo);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -272,7 +295,9 @@ abstract class _AppState extends AppState {
       final LoginRequest? accountInfo,
       final TerminalProfile? profile,
       final String? pin,
-      final String? language}) = _$AppStateImpl;
+      final String? language,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      final IntentInfo? intentInfo}) = _$AppStateImpl;
   _AppState._() : super._();
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
@@ -292,6 +317,9 @@ abstract class _AppState extends AppState {
   String? get pin;
   @override
   String? get language;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  IntentInfo? get intentInfo;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
