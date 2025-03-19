@@ -19,28 +19,28 @@ class AppState with _$AppState {
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
     @JsonKey(includeToJson: false, includeFromJson: false)
-    @Default(null)
     @Default(null) IntentInfo? intentInfo,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);
 
-  get isSetup => accountInfo?.accountNumber != null || intentInfo?.username != null;
+  get isSetup =>
+      accountInfo?.accountNumber != null || intentInfo?.username != null;
 
   bool get hasPin => pin != null;
 
+  // If it's configured we don't want to override it
   AppState setIntentInfo({required IntentInfo intentInfo}) {
-    if (intentInfo.username != null) {
+    if (!isSetup && intentInfo.username != null) {
+      print('setIntentInfo');
       return copyWith(
         intentInfo: intentInfo,
-        accountInfo: (intentInfo.username != null)
-            ? LoginRequest.fromJson({
-                'accountNumber': intentInfo.username,
-                'password': "",
-                'serialNumber': deviceInfo!.serial,
-              })
-            : accountInfo,
+        accountInfo: LoginRequest.fromJson({
+          'accountNumber': intentInfo.username,
+          'password': accountInfo?.password,
+          'serialNumber': deviceInfo!.serial,
+        }),
       );
     }
     return this;
