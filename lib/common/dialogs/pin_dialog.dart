@@ -156,8 +156,6 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             colour: widget.actionButtonColour,
             textColour:
                 (widget.actionButtonColour != null) ? Colors.white : null,
-            onLongPress: () =>
-                ref.read(appNotifierProvider.notifier).setPin(null),
             onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
             elevation: 0,
             child: Text(l10n.continueButton),
