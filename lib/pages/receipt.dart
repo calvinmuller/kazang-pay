@@ -12,6 +12,7 @@ class ReceiptPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       body: Receipt(transaction: transaction),
     );

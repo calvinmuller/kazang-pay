@@ -61,14 +61,10 @@ class PinDialog extends ConsumerStatefulWidget {
 class _PinDialogState extends ConsumerState<PinDialog> {
   final _formKey = GlobalKey<FormState>();
   final pinController = TextEditingController();
-  final focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      focusNode.requestFocus();
-    });
   }
 
   @override
@@ -128,7 +124,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  focusNode: focusNode,
+                  autofocus: true,
                   obscureText: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
@@ -211,7 +207,6 @@ class _PinDialogState extends ConsumerState<PinDialog> {
   @override
   void dispose() {
     pinController.dispose();
-    focusNode.dispose();
     super.dispose();
   }
 }
@@ -233,6 +228,7 @@ showPinDialog({
       title: title,
       actionButtonColour: actionButtonColour,
     ),
+    sheetAnimationStyle: AnimationStyle.noAnimation,
   );
   if (result != null && result && context.mounted) {
     if (callback != null) {

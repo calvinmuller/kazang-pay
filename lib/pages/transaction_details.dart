@@ -27,6 +27,7 @@ class TransactionDetails extends ConsumerWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(l10n.saleTransaction),
           centerTitle: false,
@@ -44,6 +45,7 @@ class TransactionDetails extends ConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
+                          spacing: 15,
                           children: [
                             Row(
                               spacing: 12,
@@ -82,32 +84,25 @@ class TransactionDetails extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            const Divider(
-                              thickness: 0.5,
-                              height: 30,
-                            ),
                             if (transaction.isUserVoidable)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 24),
-                                child: Button.secondary(
-                                  radius: 5,
-                                  child: Text(l10n.voidTransaction),
-                                  onPressed: () async {
-                                    showPinDialog(
-                                      title: l10n.voidConfirm,
-                                      actionButtonColour: CustomColours.red,
-                                      context: context,
-                                      child: PaymentPage(
-                                        payment: Payment(
-                                          amount: transaction.amount,
-                                          type: PaymentType.voidTransaction,
-                                          rrn: transaction
-                                              .retrievalReferenceNumber,
-                                        ),
+                              Button.secondary(
+                                radius: 5,
+                                child: Text(l10n.voidTransaction),
+                                onPressed: () async {
+                                  showPinDialog(
+                                    title: l10n.voidConfirm,
+                                    actionButtonColour: CustomColours.red,
+                                    context: context,
+                                    child: PaymentPage(
+                                      payment: Payment(
+                                        amount: transaction.amount,
+                                        type: PaymentType.voidTransaction,
+                                        rrn: transaction
+                                            .retrievalReferenceNumber,
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                           ],
                         ),
