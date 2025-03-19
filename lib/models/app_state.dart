@@ -33,7 +33,6 @@ class AppState with _$AppState {
   // If it's configured we don't want to override it
   AppState setIntentInfo({required IntentInfo intentInfo}) {
     if (!isSetup && intentInfo.username != null) {
-      print('setIntentInfo');
       return copyWith(
         intentInfo: intentInfo,
         accountInfo: LoginRequest.fromJson({
