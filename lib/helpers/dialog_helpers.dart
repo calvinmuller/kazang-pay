@@ -18,15 +18,6 @@ import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-showBottomSheet(context, Widget dialog) async {
-  return await showModalBottomSheet(
-    clipBehavior: Clip.none,
-    context: context,
-    showDragHandle: true,
-    builder: (context) => dialog,
-  );
-}
-
 showListDialog(mainContext, List<dynamic> items, { String? title} ) {
   return showDialog(
     context: mainContext,

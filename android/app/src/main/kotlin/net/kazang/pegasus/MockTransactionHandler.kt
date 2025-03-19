@@ -393,4 +393,9 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         factory!!.connect()
     }
 
+    override fun disconnect() {
+        factory!!.disconnect()
+        factory!!.dispose()
+    }
+
 }

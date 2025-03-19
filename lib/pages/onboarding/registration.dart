@@ -277,10 +277,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                     );
                   }
-                } finally {
-                  if (context.mounted) {
-                    context.pop();
-                  }
                 }
               }
             },

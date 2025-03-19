@@ -63,17 +63,21 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     final merchantInfo = ref.watch(
         appNotifierProvider.select((state) => state.profile!.merchantConfig));
 
+    print('home');
+
     return Container(
       decoration: const BoxDecoration(
         gradient: headerGradient,
       ),
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          extendBody: true,
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             leading: IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () => context.goNamed('settings'),
+              icon: const Icon(Icons.settings),
+              onPressed: () => context.goNamed('settings'),
             ),
             title: const LogoWidget(),
           ),

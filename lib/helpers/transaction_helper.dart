@@ -180,4 +180,8 @@ class TransactionHelper {
     final result = (await _instance.methodChannel.invokeMethod('getIntentInfo')).cast<String, dynamic>();
     return IntentInfo.fromJson(result);
   }
+
+  static Future setResultAndFinish() async {
+    return await _instance.methodChannel.invokeMethod('setResultAndFinish');
+  }
 }

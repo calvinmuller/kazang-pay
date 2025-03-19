@@ -22,6 +22,7 @@ import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Type
 import kotlin.concurrent.thread
 
+private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "kazangpay"
@@ -29,7 +30,6 @@ class MainActivity : FlutterActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private val eventChannel = "factoryEventHandler"
     private var transactionHandler: TransactionInterface = TransactionHandler()
-    private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
     private val gson = Gson()
     private var initialIntentMap: Map<String, Any?>? = mapOf()
 
@@ -147,6 +147,16 @@ class MainActivity : FlutterActivity() {
                 result.success(true)
             } else if (call.method == "getIntentInfo") {
                 result.success(initialIntentMap)
+            } else if (call.method == "setResultAndFinish") {
+                if (initialIntentMap!!.isNotEmpty()) {
+                    transactionHandler.disconnect()
+                    setResult(0)
+                    finish()
+                    result.success(true)
+                } else {
+                    result.error(
+                        "Error", "No intent data found", null)
+                }
             } else {
                 result.notImplemented()
             }

@@ -140,7 +140,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage> with Tick
                   elevation: 0,
                   height: 60,
                   width: double.infinity,
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => TransactionHelper.setResultAndFinish(),
                   icon: const Icon(Icons.arrow_forward),
                   child: Text(l10n.continueButton),
                 ),

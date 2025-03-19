@@ -43,6 +43,7 @@ interface TransactionInterface: EventChannel.StreamHandler {
     fun printReceipt(data: PrintRequest)
     fun abortTransaction()
     fun connect()
+    fun disconnect()
 
 }
 
@@ -411,6 +412,11 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun connect() {
         factory!!.connect()
+    }
+
+    override fun disconnect() {
+        factory!!.disconnect()
+        factory!!.dispose()
     }
 
 }
