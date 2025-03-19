@@ -1,27 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        TickerProviderStateMixin,
-        AnimationController,
-        Positioned,
-        EdgeInsets,
-        Alignment,
-        StackFit,
-        Padding,
-        CrossAxisAlignment,
-        MainAxisAlignment,
-        Text,
-        TextAlign,
-        Theme,
-        Row,
-        Stack,
-        LinearGradient,
-        BoxDecoration,
-        Container,
-        AnimatedBuilder,
-        Scaffold;
+    show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold, FilledButton, Column, MainAxisSize;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
@@ -37,6 +15,7 @@ import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
 import '../providers/api.provider.dart';
 import '../providers/app.provider.dart';
 import 'loader.dart';
+import 'phoenix.dart';
 
 class LoadingWidget extends ConsumerStatefulWidget {
   const LoadingWidget({super.key});
@@ -61,8 +40,8 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(fetchProfileProvider);
-
-    final stateProfile = ref.watch(appNotifierProvider.select((state) => state.profile));
+    final stateProfile =
+        ref.watch(appNotifierProvider.select((value) => value.profile));
 
     final l10n = AppLocalizations.of(context)!;
 

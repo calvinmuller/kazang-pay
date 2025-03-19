@@ -45,7 +45,7 @@ class PinDialog extends ConsumerStatefulWidget {
     this.action,
     this.iconData = CustomIcons.lock,
     this.actionButtonColour,
-    this.reset = false
+    this.reset = false,
   });
 
   final String? title;
@@ -62,6 +62,15 @@ class PinDialog extends ConsumerStatefulWidget {
 class _PinDialogState extends ConsumerState<PinDialog> {
   final _formKey = GlobalKey<FormState>();
   final pinController = TextEditingController();
+  final focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      focusNode.requestFocus();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,107 +78,110 @@ class _PinDialogState extends ConsumerState<PinDialog> {
     final pin = ref.watch(appNotifierProvider.select((state) => state.pin));
     final hasPin = pin != null && widget.reset == false;
 
-    return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: Container(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          spacing: 10,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              (hasPin) ? widget.iconData : CustomIcons.close,
-              size: 72,
-              color: CustomColours.gold,
+    return Container(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        spacing: 10,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Icon(
+            (hasPin) ? widget.iconData : CustomIcons.close,
+            size: 72,
+            color: CustomColours.gold,
+          ),
+          if (hasPin) ...{
+            Text(
+              widget.title ?? l10n.enterPinAccessSettings,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
             ),
-            if (hasPin) ...{
-              Text(
-                widget.title ?? l10n.enterPinAccessSettings,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                widget.message ?? l10n.pleaseProvideSupervisorPin,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            },
-            if (!hasPin && !widget.reset) ...{
-              Text(
-                l10n.noPinSet,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                l10n.setPinToProceed,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            },
-            if (widget.reset) ...{
-              Text(
-                l10n.resetPin,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                l10n.setPinToProceed,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            },
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    autofocus: true,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CustomColours.black,
-                        ),
-                        borderRadius: borderRadiusSmall,
+            Text(
+              widget.message ?? l10n.pleaseProvideSupervisorPin,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          },
+          if (!hasPin && !widget.reset) ...{
+            Text(
+              l10n.noPinSet,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              l10n.setPinToProceed,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          },
+          if (widget.reset) ...{
+            Text(
+              l10n.resetPin,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              l10n.setPinToProceed,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          },
+          Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  focusNode: focusNode,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: CustomColours.black,
                       ),
+                      borderRadius: borderRadiusSmall,
                     ),
-                    keyboardType: TextInputType.number,
-                    controller: pinController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return l10n.enterPin;
-                      }
-                      if (value.length < 4) {
-                        return l10n.pinTooShort;
-                      }
-                      if (pin != pinController.value.text && hasPin) {
-                        return l10n.incorrectPin;
-                      }
-                      return null;
-                    },
                   ),
-                ],
+                  keyboardType: TextInputType.number,
+                  controller: pinController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return l10n.enterPin;
+                    }
+                    if (value.length < 4) {
+                      return l10n.pinTooShort;
+                    }
+                    if (pin != pinController.value.text && hasPin) {
+                      return l10n.incorrectPin;
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          Button.main(
+            colour: widget.actionButtonColour,
+            textColour:
+                (widget.actionButtonColour != null) ? Colors.white : null,
+            onLongPress: () =>
+                ref.read(appNotifierProvider.notifier).setPin(null),
+            onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
+            elevation: 0,
+            child: Text(l10n.continueButton),
+          ),
+          Button.main(
+            onPressed: () => Navigator.of(context).pop(false),
+            elevation: 0,
+            borderColour: Colors.transparent,
+            inverse: true,
+            child: Text(l10n.back),
+          ),
+          Builder(
+            builder: (context) => Container(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
             ),
-            Button.main(
-              colour: widget.actionButtonColour,
-              textColour:
-                  (widget.actionButtonColour != null) ? Colors.white : null,
-              onLongPress: () =>
-                  ref.read(appNotifierProvider.notifier).setPin(null),
-              onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
-              elevation: 0,
-              child: Text(l10n.continueButton),
-            ),
-            Button.main(
-              onPressed: () => Navigator.of(context).pop(false),
-              elevation: 0,
-              borderColour: Colors.transparent,
-              inverse: true,
-              child: Text(l10n.back),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
     // show the dialog
@@ -200,6 +212,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
   @override
   void dispose() {
     pinController.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 }

@@ -255,9 +255,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   if ((response.status == StatusResult.Failed &&
                           response.isLinked) ||
                       response.status == StatusResult.Success) {
-                    ref
-                        .read(appNotifierProvider.notifier)
-                        .setConfigured(loginRequest);
+                    ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
                   } else if (response.status == StatusResult.Failed) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(

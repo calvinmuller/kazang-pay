@@ -44,12 +44,13 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final transactionProvider = ref.watch(getByReferenceDataProvider(
-        widget.transactionResult.ourReferenceNumber!));
+    final transactionProvider = ref.watch(
+      getByReferenceDataProvider(widget.transactionResult.ourReferenceNumber!),
+    );
 
     return switch (transactionProvider) {
       AsyncData(:final value) => _buildReceiptTabs(context, l10n, value),
-      AsyncError(:final error) => Text(error.toString()),
+      AsyncError(:final error) => const SizedBox(),
       _ => const SizedBox(),
     };
   }

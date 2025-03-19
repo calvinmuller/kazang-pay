@@ -7,7 +7,7 @@ part 'payment.g.dart';
 enum PaymentType { payment, cashback, voidTransaction }
 
 @freezed
-class Payment with _$Payment {
+abstract class Payment with _$Payment {
   const Payment._();
 
   factory Payment({

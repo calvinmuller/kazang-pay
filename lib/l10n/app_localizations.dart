@@ -887,6 +887,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supervisor PIN reset successfully'**
   String get pinResetSuccess;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

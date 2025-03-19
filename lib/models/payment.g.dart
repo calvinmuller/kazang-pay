@@ -6,17 +6,16 @@ part of 'payment.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PaymentImpl _$$PaymentImplFromJson(Map json) => _$PaymentImpl(
+_Payment _$PaymentFromJson(Map json) => _Payment(
       amount: (json['amount'] as num?)?.toInt() ?? 0,
       cashbackAmount: json['cashbackAmount'] ?? 0,
       type: $enumDecodeNullable(_$PaymentTypeEnumMap, json['type']) ??
           PaymentType.payment,
       cashbackOnly: json['cashbackOnly'] as bool? ?? false,
-      rrn: json['rrn'] as String?,
+      rrn: json['rrn'] as String? ?? null,
     );
 
-Map<String, dynamic> _$$PaymentImplToJson(_$PaymentImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
       'amount': instance.amount,
       'cashbackAmount': instance.cashbackAmount,
       'type': _$PaymentTypeEnumMap[instance.type],

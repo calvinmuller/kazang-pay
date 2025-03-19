@@ -68,7 +68,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryconstructor!!.posFactorySetup!!.velocityCount = 0
         factoryconstructor!!.posFactorySetup!!.velocityPeriod = 0
         factoryconstructor!!.posFactorySetup!!.cashbackLimit =
-            config.terminal_config.custom_parameters?.cashbacks?.limit ?: 1000
+            config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
         factoryconstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryconstructor!!.posFactorySetup!!.enableSettlements = true
         factoryconstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
@@ -379,6 +379,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         val response = TransactionClientResponse()
         response.responseCode = "91"
         response.declinedReason = "Transaction Aborted"
+        response.responseMessage = "Transaction Cancelled"
         response.message = "Transaction Aborted"
         response.isCancelled = true
         response.isSuccessful = false

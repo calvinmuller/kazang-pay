@@ -29,7 +29,7 @@ enum TransactionStatus { approved, declined, refunded }
 enum SettlementStatus { pending, settled }
 
 @freezed
-class Transaction with _$Transaction {
+abstract class Transaction with _$Transaction {
   const Transaction._();
 
   @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -162,6 +162,10 @@ class Transaction with _$Transaction {
 
 intSafeToString(number) {
   return int.parse(number.toString());
+}
+
+intSafeConvert(value) {
+  return double.parse(value.toString()).toStringAsFixed(0);
 }
 
 boolSafe(boolean) {

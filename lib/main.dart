@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart' show WidgetsFlutterBinding;
 import 'package:flutter/widgets.dart' show runApp;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
 
 import 'app.dart' show MyApp;
-import 'common/providers/app.provider.dart' show appNotifierProvider, AppNotifier;
+import 'common/providers/app.provider.dart'
+    show appNotifierProvider, AppNotifier;
 import 'common/providers/device_info.dart' show DeviceInfoProvider;
 import 'helpers/transaction_helper.dart';
 import 'models/app_state.dart' show TerminalProfile;
@@ -77,20 +77,27 @@ Future<void> main() async {
 
   final deviceInfo = await TransactionHelper.getDeviceInfo();
   final appState = await TransactionHelper.getAppState();
+  final intentInfo = await TransactionHelper.getIntentInfo();
 
   final newState = appState.copyWith(
     profile: profile
   );
 
+  final newAppState = appState.copyWith(deviceInfo: deviceInfo).setIntentInfo(intentInfo: intentInfo);
+
+  // ignore: missing_provider_scope
   runApp(
-    ProviderScope(
-      overrides: [
-        appNotifierProvider.overrideWith(() => AppNotifier(appState: newState)),
-      ],
-      child: DeviceInfoProvider(
-        appState: appState,
-        deviceInfo: deviceInfo,
-        child: const MyApp(),
+    Phoenix(
+      child: ProviderScope(
+        overrides: [
+          // ignore: scoped_providers_should_specify_dependencies
+          appNotifierProvider.overrideWith(() => AppNotifier(appState: newAppState))
+        ],
+        child: DeviceInfoProvider(
+          appState: appState,
+          deviceInfo: deviceInfo,
+          child: const MyApp(),
+        ),
       ),
     ),
   );

@@ -12,7 +12,7 @@ arrayToString(value) {
 }
 
 @freezed
-class TransactionResult with _$TransactionResult {
+abstract class TransactionResult with _$TransactionResult {
   const TransactionResult._();
 
   const factory TransactionResult({
@@ -51,7 +51,7 @@ class TransactionResult with _$TransactionResult {
   get isTap => [
         CardDataInputMode.CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
         CardDataInputMode.ContactlessIntegratedCircuitCard
-      ].contains(cardDataInputMode);
+      ].contains(cardDataInputMode) && transactionType != TransactionType.VOID_TRANSACTION;
 
 }
 

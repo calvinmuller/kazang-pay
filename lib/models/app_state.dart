@@ -1,13 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'kazang.dart';
+import 'transaction.dart' show intSafeConvert;
 
 part 'app_state.freezed.dart';
 
 part 'app_state.g.dart';
 
 @freezed
-class AppState with _$AppState {
+abstract class AppState with _$AppState {
   const AppState._();
 
   factory AppState({
@@ -18,14 +19,32 @@ class AppState with _$AppState {
     @Default(null) TerminalProfile? profile,
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
+    @JsonKey(includeToJson: false, includeFromJson: false)
+    @Default(null) IntentInfo? intentInfo,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);
 
-  get isSetup => isConfigured && accountInfo != null;
+  get isSetup =>
+      accountInfo?.accountNumber != null || intentInfo?.username != null;
 
   bool get hasPin => pin != null;
+
+  // If it's configured we don't want to override it
+  AppState setIntentInfo({required IntentInfo intentInfo}) {
+    if (!isSetup && intentInfo.username != null) {
+      return copyWith(
+        intentInfo: intentInfo,
+        accountInfo: LoginRequest.fromJson({
+          'accountNumber': intentInfo.username,
+          'password': accountInfo?.password,
+          'serialNumber': deviceInfo!.serial,
+        }),
+      );
+    }
+    return this;
+  }
 }
 
 @JsonSerializable()
@@ -45,13 +64,18 @@ class DeviceInfo {
     this.build,
     this.model,
     this.manufacturer,
-    this.version
+    this.version,
   });
 
   factory DeviceInfo.fromJson(Map<String, dynamic> json) =>
       _$DeviceInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$DeviceInfoToJson(this);
+
+  @override
+  String toString() {
+    return 'DeviceInfo(serial: $serial, hasOnboardPrinter: $hasOnboardPrinter, apiVersion: $apiVersion, build: $build, model: $model, manufacturer: $manufacturer, version: $version)';
+  }
 }
 
 @JsonSerializable()
@@ -167,6 +191,7 @@ class CustomParameters {
 @JsonSerializable()
 class Cashbacks {
   final bool allowed;
+  @JsonKey(fromJson: intSafeConvert)
   final String limit;
 
   Cashbacks({
@@ -183,6 +208,7 @@ class Cashbacks {
 @JsonSerializable()
 class Refunds {
   final bool allowed;
+  @JsonKey(fromJson: intSafeConvert)
   final String limit;
 
   Refunds({
@@ -279,4 +305,23 @@ class UserConfig {
       _$UserConfigFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserConfigToJson(this);
+}
+
+@JsonSerializable()
+class IntentInfo {
+  final String? username;
+
+  IntentInfo({
+    this.username,
+  });
+
+  factory IntentInfo.fromJson(Map<String, dynamic> json) =>
+      _$IntentInfoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$IntentInfoToJson(this);
+
+  @override
+  String toString() {
+    return 'IntentInfo(username: $username)';
+  }
 }

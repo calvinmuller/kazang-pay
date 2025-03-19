@@ -111,7 +111,7 @@ Map<String, dynamic> _$CustomParametersToJson(CustomParameters instance) =>
 
 Cashbacks _$CashbacksFromJson(Map json) => Cashbacks(
       allowed: json['allowed'] as bool,
-      limit: json['limit'] as String,
+      limit: intSafeConvert(json['limit']),
     );
 
 Map<String, dynamic> _$CashbacksToJson(Cashbacks instance) => <String, dynamic>{
@@ -121,7 +121,7 @@ Map<String, dynamic> _$CashbacksToJson(Cashbacks instance) => <String, dynamic>{
 
 Refunds _$RefundsFromJson(Map json) => Refunds(
       allowed: json['allowed'] as bool,
-      limit: json['limit'] as String,
+      limit: intSafeConvert(json['limit']),
     );
 
 Map<String, dynamic> _$RefundsToJson(Refunds instance) => <String, dynamic>{
@@ -189,7 +189,16 @@ Map<String, dynamic> _$UserConfigToJson(UserConfig instance) =>
       'user': instance.user,
     };
 
-_$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
+IntentInfo _$IntentInfoFromJson(Map json) => IntentInfo(
+      username: json['username'] as String?,
+    );
+
+Map<String, dynamic> _$IntentInfoToJson(IntentInfo instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+    };
+
+_AppState _$AppStateFromJson(Map json) => _AppState(
       pinVerified: json['pinVerified'] as bool? ?? true,
       isConfigured: json['isConfigured'] as bool? ?? false,
       deviceInfo: json['deviceInfo'] == null
@@ -208,8 +217,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
       language: json['language'] as String? ?? 'en_ZA',
     );
 
-Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AppStateToJson(_AppState instance) => <String, dynamic>{
       'pinVerified': instance.pinVerified,
       'isConfigured': instance.isConfigured,
       'deviceInfo': instance.deviceInfo?.toJson(),
