@@ -23,7 +23,6 @@ import 'package:flutter/material.dart'
         TextFormField,
         Column,
         Form,
-        Padding,
         Navigator,
         MaterialPageRoute,
         showModalBottomSheet,
@@ -229,14 +228,11 @@ showPinDialog({
     isScrollControlled: true,
     showDragHandle: true,
     context: context,
-    builder: (context) {
-      print('buolding');
-      return PinDialog(
-        reset: reset,
-        title: title,
-        actionButtonColour: actionButtonColour,
-      );
-    },
+    builder: (context) => PinDialog(
+      reset: reset,
+      title: title,
+      actionButtonColour: actionButtonColour,
+    ),
   );
   if (result != null && result && context.mounted) {
     if (callback != null) {

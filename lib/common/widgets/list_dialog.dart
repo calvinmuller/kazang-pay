@@ -23,8 +23,6 @@ class _ListDialogState extends State<ListDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    print(selectedAccount);
-
     return Dialog(
       shape: const RoundedRectangleBorder(
         borderRadius: borderRadiusSmall,
