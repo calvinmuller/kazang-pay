@@ -8,7 +8,7 @@ part 'app_state.freezed.dart';
 part 'app_state.g.dart';
 
 @freezed
-class AppState with _$AppState {
+abstract class AppState with _$AppState {
   const AppState._();
 
   factory AppState({

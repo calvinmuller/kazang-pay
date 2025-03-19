@@ -198,7 +198,7 @@ Map<String, dynamic> _$IntentInfoToJson(IntentInfo instance) =>
       'username': instance.username,
     };
 
-_$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
+_AppState _$AppStateFromJson(Map json) => _AppState(
       pinVerified: json['pinVerified'] as bool? ?? true,
       isConfigured: json['isConfigured'] as bool? ?? false,
       deviceInfo: json['deviceInfo'] == null
@@ -217,8 +217,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
       language: json['language'] as String? ?? 'en_ZA',
     );
 
-Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AppStateToJson(_AppState instance) => <String, dynamic>{
       'pinVerified': instance.pinVerified,
       'isConfigured': instance.isConfigured,
       'deviceInfo': instance.deviceInfo?.toJson(),

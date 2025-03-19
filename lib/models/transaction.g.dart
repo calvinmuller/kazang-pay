@@ -6,7 +6,7 @@ part of 'transaction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TransactionImpl _$$TransactionImplFromJson(Map json) => _$TransactionImpl(
+_Transaction _$TransactionFromJson(Map json) => _Transaction(
       account: json['Account'] as String,
       amount: intSafeToString(json['Amount']),
       amountFees: json['AmountFees'] as String?,
@@ -58,7 +58,7 @@ _$TransactionImpl _$$TransactionImplFromJson(Map json) => _$TransactionImpl(
       unpredictableNumber: json['UnpredictableNumber'] as String?,
     );
 
-Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
+Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
     <String, dynamic>{
       'Account': instance.account,
       'Amount': instance.amount,

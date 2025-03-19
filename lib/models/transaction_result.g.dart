@@ -6,8 +6,7 @@ part of 'transaction_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TransactionResultImpl _$$TransactionResultImplFromJson(Map json) =>
-    _$TransactionResultImpl(
+_TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
       additionalData: arrayToString(json['additionalData']),
       applicationIdentifier: arrayToString(json['applicationIdentifier']),
       authorizationCode: (json['authorizationCode'] as List<dynamic>?)
@@ -46,8 +45,7 @@ _$TransactionResultImpl _$$TransactionResultImplFromJson(Map json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$TransactionResultImplToJson(
-        _$TransactionResultImpl instance) =>
+Map<String, dynamic> _$TransactionResultToJson(_TransactionResult instance) =>
     <String, dynamic>{
       'additionalData': instance.additionalData,
       'applicationIdentifier': instance.applicationIdentifier,

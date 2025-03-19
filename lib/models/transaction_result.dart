@@ -12,7 +12,7 @@ arrayToString(value) {
 }
 
 @freezed
-class TransactionResult with _$TransactionResult {
+abstract class TransactionResult with _$TransactionResult {
   const TransactionResult._();
 
   const factory TransactionResult({
