@@ -379,6 +379,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         val response = TransactionClientResponse()
         response.responseCode = "91"
         response.declinedReason = "Transaction Aborted"
+        response.responseMessage = "Transaction Cancelled"
         response.message = "Transaction Aborted"
         response.isCancelled = true
         response.isSuccessful = false

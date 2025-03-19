@@ -23,6 +23,8 @@ class _ListDialogState extends State<ListDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    print(selectedAccount);
+
     return Dialog(
       shape: const RoundedRectangleBorder(
         borderRadius: borderRadiusSmall,
@@ -86,11 +88,7 @@ class _ListDialogState extends State<ListDialog> {
           Button(
             elevation: 0,
             margin: const EdgeInsets.all(16),
-            onPressed: selectedAccount != {}
-                ? () {
-              Navigator.pop(context, selectedAccount);
-              // context.pop(selectedAccount);
-            } : null,
+            onPressed: (selectedAccount.isNotEmpty) ? () => Navigator.pop(context, selectedAccount): null,
             child: Text(l10n.continueButton),
           ),
         ],
