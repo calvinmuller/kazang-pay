@@ -10,8 +10,7 @@ import 'models/transaction.dart';
 import 'pages/pages.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final isSetup =
-      ref.watch(appNotifierProvider.select((state) => state.isSetup));
+  final isSetup = ref.watch(appNotifierProvider.select((state) => true));
 
   final onboardingRoutes = [
     GoRoute(
