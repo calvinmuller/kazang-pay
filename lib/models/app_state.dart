@@ -18,14 +18,33 @@ class AppState with _$AppState {
     @Default(null) TerminalProfile? profile,
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
+    @JsonKey(includeToJson: false, includeFromJson: false)
+    @Default(null)
+    @Default(null) IntentInfo? intentInfo,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);
 
-  get isSetup => isConfigured && accountInfo != null;
+  get isSetup => accountInfo?.accountNumber != null || intentInfo?.username != null;
 
   bool get hasPin => pin != null;
+
+  AppState setIntentInfo({required IntentInfo intentInfo}) {
+    if (intentInfo.username != null) {
+      return copyWith(
+        intentInfo: intentInfo,
+        accountInfo: (intentInfo.username != null)
+            ? LoginRequest.fromJson({
+                'accountNumber': intentInfo.username,
+                'password': "",
+                'serialNumber': deviceInfo!.serial,
+              })
+            : accountInfo,
+      );
+    }
+    return this;
+  }
 }
 
 @JsonSerializable()
@@ -45,13 +64,18 @@ class DeviceInfo {
     this.build,
     this.model,
     this.manufacturer,
-    this.version
+    this.version,
   });
 
   factory DeviceInfo.fromJson(Map<String, dynamic> json) =>
       _$DeviceInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$DeviceInfoToJson(this);
+
+  @override
+  String toString() {
+    return 'DeviceInfo(serial: $serial, hasOnboardPrinter: $hasOnboardPrinter, apiVersion: $apiVersion, build: $build, model: $model, manufacturer: $manufacturer, version: $version)';
+  }
 }
 
 @JsonSerializable()
@@ -279,4 +303,23 @@ class UserConfig {
       _$UserConfigFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserConfigToJson(this);
+}
+
+@JsonSerializable()
+class IntentInfo {
+  final String? username;
+
+  IntentInfo({
+    this.username,
+  });
+
+  factory IntentInfo.fromJson(Map<String, dynamic> json) =>
+      _$IntentInfoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$IntentInfoToJson(this);
+
+  @override
+  String toString() {
+    return 'IntentInfo(username: $username)';
+  }
 }

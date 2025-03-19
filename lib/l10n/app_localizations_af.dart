@@ -413,4 +413,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get pinResetSuccess => 'Supervisor PIN reset successfully';
+
+  @override
+  String get retry => 'Retry';
 }

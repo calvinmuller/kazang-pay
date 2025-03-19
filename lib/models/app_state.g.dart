@@ -189,6 +189,15 @@ Map<String, dynamic> _$UserConfigToJson(UserConfig instance) =>
       'user': instance.user,
     };
 
+IntentInfo _$IntentInfoFromJson(Map json) => IntentInfo(
+      username: json['username'] as String?,
+    );
+
+Map<String, dynamic> _$IntentInfoToJson(IntentInfo instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+    };
+
 _$AppStateImpl _$$AppStateImplFromJson(Map json) => _$AppStateImpl(
       pinVerified: json['pinVerified'] as bool? ?? true,
       isConfigured: json['isConfigured'] as bool? ?? false,

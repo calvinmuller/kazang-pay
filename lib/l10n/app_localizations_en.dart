@@ -413,6 +413,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pinResetSuccess => 'Supervisor PIN reset successfully';
+
+  @override
+  String get retry => 'Retry';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

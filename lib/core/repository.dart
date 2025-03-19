@@ -17,11 +17,15 @@ class KazangRepository {
   }
 
   Future getProfile(LoginRequest accountInfo) async {
-    final response = await client.post('cps-web/api/tacs/get-profile', data: {
-      "user": accountInfo.accountNumber,
-      "serial_number": accountInfo.serialNumber,
-    });
-    return response.data;
+    try {
+      final response = await client.post('cps-web/api/tacs/get-profile', data: {
+        "user": accountInfo.accountNumber,
+        "serial_number": accountInfo.serialNumber,
+      });
+      return response.data;
+    } on DioException catch (e) {
+      throw e.response?.data['response_message'] ?? "Error fetching profile";
+    }
   }
 
   Future<TransactionSummaryResponse?> getTransactionHistorySummary(
@@ -100,12 +104,13 @@ class CrmRepository {
       final response = await client.post('crm/add-terminal', data: data);
       return CrmGenericResponse.fromJson(response.data);
     } on DioException catch (e) {
-      return CrmGenericResponse.fromJson(e.response?.data ?? {
-        "kazang_account_number": loginRequest.accountNumber,
-        "status": 3,
-        "request_type": "0",
-        "status_description": "An error occurred connecting to the server"
-      });
+      return CrmGenericResponse.fromJson(e.response?.data ??
+          {
+            "kazang_account_number": loginRequest.accountNumber,
+            "status": 3,
+            "request_type": "0",
+            "status_description": "An error occurred connecting to the server"
+          });
     }
   }
 
