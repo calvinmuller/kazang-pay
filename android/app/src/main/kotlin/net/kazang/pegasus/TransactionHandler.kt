@@ -84,7 +84,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
         factoryConstructor!!.posFactorySetup!!.velocityCount = 0
         factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
-        factoryConstructor!!.posFactorySetup!!.cashbackLimit = config.terminal_config.custom_parameters?.cashbacks?.limit ?: 1000
+        factoryConstructor!!.posFactorySetup!!.cashbackLimit = config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true
         factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"

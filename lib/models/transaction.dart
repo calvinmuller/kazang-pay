@@ -164,6 +164,10 @@ intSafeToString(number) {
   return int.parse(number.toString());
 }
 
+intSafeConvert(value) {
+  return double.parse(value.toString()).toStringAsFixed(0);
+}
+
 boolSafe(boolean) {
   return bool.parse(boolean.toString());
 }

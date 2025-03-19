@@ -111,7 +111,7 @@ Map<String, dynamic> _$CustomParametersToJson(CustomParameters instance) =>
 
 Cashbacks _$CashbacksFromJson(Map json) => Cashbacks(
       allowed: json['allowed'] as bool,
-      limit: json['limit'] as String,
+      limit: intSafeConvert(json['limit']),
     );
 
 Map<String, dynamic> _$CashbacksToJson(Cashbacks instance) => <String, dynamic>{
@@ -121,7 +121,7 @@ Map<String, dynamic> _$CashbacksToJson(Cashbacks instance) => <String, dynamic>{
 
 Refunds _$RefundsFromJson(Map json) => Refunds(
       allowed: json['allowed'] as bool,
-      limit: json['limit'] as String,
+      limit: intSafeConvert(json['limit']),
     );
 
 Map<String, dynamic> _$RefundsToJson(Refunds instance) => <String, dynamic>{

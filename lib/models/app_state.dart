@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'kazang.dart';
+import 'transaction.dart' show intSafeConvert;
 
 part 'app_state.freezed.dart';
 
@@ -190,6 +191,7 @@ class CustomParameters {
 @JsonSerializable()
 class Cashbacks {
   final bool allowed;
+  @JsonKey(fromJson: intSafeConvert)
   final String limit;
 
   Cashbacks({
@@ -206,6 +208,7 @@ class Cashbacks {
 @JsonSerializable()
 class Refunds {
   final bool allowed;
+  @JsonKey(fromJson: intSafeConvert)
   final String limit;
 
   Refunds({
