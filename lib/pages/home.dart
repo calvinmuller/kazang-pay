@@ -153,6 +153,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               ),
                               onPressed: () {
                                 showPinDialog(
+                                  iconData: CustomIcons.lock,
                                   title: l10n.enterPin,
                                   ref: ref,
                                   callback: () =>
