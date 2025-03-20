@@ -1,33 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        GlobalKey,
-        FormState,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        BoxDecoration,
-        TextSpan,
-        TextStyle,
-        Padding,
-        Hero,
-        Theme,
-        Text,
-        Column,
-        Container,
-        MainAxisSize,
-        BorderSide,
-        Border,
-        FontWeight,
-        RichText,
-        CrossAxisAlignment,
-        Form,
-        Card,
-        primaryFocus,
-        UnfocusDisposition,
-        ScaffoldMessenger,
-        SnackBar,
-        ListView,
-        Scaffold;
+    show GlobalKey, FormState, BuildContext, Widget, EdgeInsets, BoxDecoration, TextSpan, TextStyle, Padding, Hero, Theme, Text, Column, Container, MainAxisSize, BorderSide, Border, FontWeight, RichText, CrossAxisAlignment, Form, Card, primaryFocus, UnfocusDisposition, ScaffoldMessenger, SnackBar, ListView, Scaffold, TextInputType;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
@@ -62,7 +34,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
     final deviceInfo = DeviceInfoProvider.of(context)!.deviceInfo;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: ListView(children: [
         Hero(
           tag: 'logo',
@@ -131,6 +103,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         l10n.accountNumber,
                       ),
                       FormField(
+                        textInputType: TextInputType.number,
                         maxLength: 10,
                         // The validator receives the text that the user has entered.
                         validator: (value) {

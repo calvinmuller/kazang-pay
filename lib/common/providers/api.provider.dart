@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart' show BaseOptions, Dio;
+import 'package:dio/dio.dart' show BaseOptions, Dio, DioException;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -61,12 +61,15 @@ final crRepositoryProvider = Provider<CrRepository>((ref) {
 Future<TerminalProfile> fetchProfile(Ref ref) async {
   final api = ref.read(kazangRepositoryProvider);
   final appState = ref.read(appNotifierProvider.notifier);
-  final accountInfo = ref.watch(appNotifierProvider.select((state) => state.accountInfo));
+  final accountInfo =
+  ref.watch(appNotifierProvider.select((state) => state.accountInfo));
 
-  final response = await api.getProfile(accountInfo!);
-
-  final profile = TerminalProfile.fromJson(response);
-  appState.setProfile(profile);
-
-  return profile;
+  try {
+    final response = await api.getProfile(accountInfo!);
+    final profile = TerminalProfile.fromJson(response);
+    appState.setProfile(profile);
+    return profile;
+  } on DioException catch (e) {
+    throw Exception(e.error);
+  }
 }

@@ -19,6 +19,7 @@ class TransactionHelper {
   TransactionHelper._();
 
   final MethodChannel methodChannel = const MethodChannel('kazangpay');
+  static const platform = MethodChannel('net.kazang.pegasus/bridge');
 
   final EventChannel messageChannel = const EventChannel('factoryEventHandler');
 
@@ -36,7 +37,8 @@ class TransactionHelper {
         CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
 
     if (payment.type == PaymentType.voidTransaction) {
-      await _instance.methodChannel.invokeMethod('voidTransaction', {'rrn': payment.rrn});
+      await _instance.methodChannel
+          .invokeMethod('voidTransaction', {'rrn': payment.rrn});
       return;
     }
 
@@ -86,54 +88,68 @@ class TransactionHelper {
     return Transaction.fromJson(jsonDecode(result));
   }
 
+  static dispose() {
+    platform.setMethodCallHandler(null);
+  }
+
   static initialize(FactoryEventHandler handler) async {
-    var result = TransactionHelper.messageStream;
-
-    await for (final message in result) {
-      if (message.event == "onUserApplicationSelectionRequiredEvent") {
-        handler.onUserApplicationSelectionRequired(
-          UserApplicationSelectionRequired(message.value),
-        );
-      } else if (message.event == "onUserBudgetSelectionRequiredEvent") {
-        handler.onUserBudgetSelectionRequiredEvent(
-          UserBudgetSelectionRequiredEvent(message.value),
-        );
-      } else if (message.event == "onTransactionCompletedEvent") {
-        handler.onTransactionCompletedEvent(
-          TransactionCompletedEvent(jsonDecode(message.value)),
-        );
-      } else if (message.event == "onErrorEvent") {
-        handler.onErrorEvent(
-          message.value,
-        );
-      } else if (message.event == "onStatusMessageEvent") {
-        handler.onStatusMessageEvent(
-          message.value,
-        );
-      } else if (message.event == "onWaitingForCardEvent") {
-        handler.onWaitingForCardEvent(
-          message.value as bool,
-        );
-      } else if (message.event == "onReturnPrinterResultEvent") {
-        handler.onReturnPrinterResultEvent(
-          PrinterResultEvent(message.value),
-        );
-      } else if (message.event == "onDisConnectEvent") {
-        handler.onDisConnectEvent(
-          message.value as bool,
-        );
-      } else if (message.event == "onBatteryStatusLowEvent") {
-        handler.onBatteryStatusLowEvent(
-          message.value as int,
-        );
-      } else if (message.event == "onPrintDataCancelledEvent") {
-        handler.onPrintDataCancelledEvent(
-          message.value as bool,
-        );
+    platform.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onUserApplicationSelectionRequired':
+          handler.onUserApplicationSelectionRequired(
+            UserApplicationSelectionRequired(call.arguments),
+          );
+          break;
+        case 'onUserBudgetSelectionRequiredEvent':
+          handler.onUserBudgetSelectionRequiredEvent(
+            UserBudgetSelectionRequiredEvent(call.arguments),
+          );
+          break;
+        case 'onErrorEvent':
+          handler.onErrorEvent(call.arguments);
+          break;
+        case 'onStatusMessageEvent':
+          handler.onStatusMessageEvent(call.arguments);
+          break;
+        case 'onWaitingForCardEvent':
+          handler.onWaitingForCardEvent(call.arguments);
+          break;
+        case 'onTransactionCompletedEvent':
+          final event = TransactionCompletedEvent(jsonDecode(call.arguments));
+          handler.onTransactionCompletedEvent(event);
+          break;
+        case 'onUserApplicationSelectionRequiredEvent':
+          handler.onUserApplicationSelectionRequired(
+            UserApplicationSelectionRequired(call.arguments),
+          );
+          break;
+        case 'onReturnPrinterResultEvent':
+          handler.onReturnPrinterResultEvent(
+            PrinterResultEvent(call.arguments),
+          );
+          break;
+        case 'onDisConnectEvent':
+          handler.onDisConnectEvent(call.arguments as bool);
+          break;
+        case 'onPrintDataCancelledEvent':
+          handler.onPrintDataCancelledEvent(
+            call.arguments as bool,
+          );
+          break;
+        case 'onBatteryStatusLowEvent':
+          handler.onBatteryStatusLowEvent(
+            call.arguments as int,
+          );
+          break;
+        case 'onPrinterOperationEndEvent':
+          handler.onPrinterOperationEndEvent(
+            call.arguments as bool,
+          );
+          break;
+        default:
+          throw UnimplementedError(call.method);
       }
-    }
-
-    return;
+    });
   }
 
   static void connect({TerminalProfile? config}) async {
@@ -177,7 +193,8 @@ class TransactionHelper {
   }
 
   static Future<IntentInfo> getIntentInfo() async {
-    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo')).cast<String, dynamic>();
+    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo'))
+        .cast<String, dynamic>();
     return IntentInfo.fromJson(result);
   }
 }

@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
@@ -86,5 +87,16 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   void onPrintDataCancelledEvent(bool value) {
     final l10n = AppLocalizations.of(context)!;
     showErrorDialog(context, l10n.printerError).then((_) {});
+  }
+
+  @override
+  void onPrinterOperationEndEvent(bool value) {
+    debugPrint('Printer operation end $value', wrapWidth: 1024);
+  }
+
+  @override
+  dispose() {
+    TransactionHelper.dispose();
+    super.dispose();
   }
 }

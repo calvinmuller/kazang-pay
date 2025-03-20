@@ -28,7 +28,7 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 
 // create abstract class of the following below
-interface TransactionInterface: EventChannel.StreamHandler {
+interface TransactionInterface {
 
     fun initialize(context: Context, config: TerminalConfig)
     fun createPurchase(amount: String, description: String)
@@ -46,7 +46,7 @@ interface TransactionInterface: EventChannel.StreamHandler {
 
 }
 
-class TransactionHandler : FactoryActivityEvents, TransactionInterface {
+open class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: TransactionFactory? = null
     private var factoryConstructor: FactoryConstructorData? = null
@@ -125,14 +125,6 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         repo = TransactionRepository(context)
     }
 
-    override fun onListen(p0: Any?, sink: EventChannel.EventSink) {
-        eventSink = sink
-    }
-
-    override fun onCancel(p0: Any?) {
-        eventSink = null
-    }
-
     override fun onBatteryStatusLowEvent(percentage: Int) {
         Log.d("onBatteryStatusLowEvent", percentage.toString())
         handler.post {
@@ -149,64 +141,38 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         connected = true
     }
 
-    override fun onDeviceInformationEvent(deviceInformation: DeviceInformation) {
+     override fun onDeviceInformationEvent(deviceInformation: DeviceInformation) {
         val gson = Gson()
-        Log.d("onDeviceInformationEvent", deviceInformation.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to gson.toJson(deviceInformation),
-                    "event" to "onDeviceInformationEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onDisConnectEvent", gson.toJson(deviceInformation))
         }
     }
 
     override fun onDisConnectEvent(value: Boolean) {
         Log.d("onDisConnectEvent", value.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onDisConnectEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onDisConnectEvent", value)
         }
     }
 
     override fun onErrorEvent(value: String?) {
         Log.d("onErrorEvent", value!!)
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onErrorEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onErrorEvent", value)
         }
     }
 
     override fun onPrintDataCancelledEvent(value: Boolean) {
         Log.d("onPrintDataCancelledEvent", value.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onPrintDataCancelledEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onPrintDataCancelledEvent", value)
         }
     }
 
     override fun onPrinterOperationEndEvent(value: Boolean) {
         Log.d("onPrinterOperationEndEvent", value.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onPrinterOperationEndEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onPrinterOperationEndEvent", value)
         }
     }
 
@@ -216,24 +182,13 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             value.printerStatusResult.toString()
         )
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value.printerStatusResult.toString(),
-                    "event" to "onReturnPrinterResultEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onReturnPrinterResultEvent", value.printerStatusResult.toString())
         }
     }
 
     override fun onStatusMessageEvent(value: String?) {
-        Log.d("onStatusMessageEvent", value!!)
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onStatusMessageEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onStatusMessageEvent", value)
         }
     }
 
@@ -241,24 +196,14 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         val gson = Gson()
 
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to gson.toJson(transactionClientResponse),
-                    "event" to "onTransactionCompletedEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onTransactionCompletedEvent", gson.toJson(transactionClientResponse))
         }
     }
 
     override fun onUserApplicationSelectionRequiredEvent(value: ArrayList<String?>?) {
         print("onUserApplicationSelectionRequiredEvent")
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onUserApplicationSelectionRequiredEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onUserApplicationSelectionRequiredEvent", value)
         }
     }
 
@@ -271,36 +216,21 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         budgetTypes.add("24 Months")
 
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to budgetTypes,
-                    "event" to "onUserBudgetSelectionRequiredEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onUserBudgetSelectionRequiredEvent", budgetTypes)
         }
     }
 
     override fun onUserSignatureRequiredEvent(value: Boolean) {
         Log.d("onUserSignatureRequiredEvent", value.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onUserSignatureRequiredEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onUserSignatureRequiredEvent", value)
         }
     }
 
     override fun onWaitingForCardEvent(value: Boolean) {
         Log.d("onWaitingForCardEvent", value.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onWaitingForCardEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onWaitingForCardEvent", value)
         }
     }
 

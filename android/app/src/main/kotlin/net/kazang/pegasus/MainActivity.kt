@@ -14,7 +14,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -28,20 +27,20 @@ class MainActivity : FlutterActivity() {
     private val CHANNEL = "kazangpay"
     private val PRINT_CHANNEL = "kazangpay_print"
     private var mediaPlayer: MediaPlayer? = null
-    private val eventChannel = "factoryEventHandler"
-    private var transactionHandler: TransactionInterface = TransactionHandler()
+    private lateinit var transactionHandler: TransactionInterface
     private val gson = Gson()
     private var initialIntentMap: Map<String, Any?>? = mapOf()
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
+        FlutterBridge.initialize(flutterEngine)
+
         if (android.os.Build.MODEL.contains("sdk_gphone64_arm64")) {
-            transactionHandler = MockTransactionHandler();
-            EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
-                transactionHandler as MockTransactionHandler
-            )
+            transactionHandler = MockTransactionHandler()
         } else {
+            transactionHandler = TransactionHandler()
+
             MethodChannel(
                 flutterEngine.dartExecutor.binaryMessenger,
                 PRINT_CHANNEL
@@ -49,10 +48,6 @@ class MainActivity : FlutterActivity() {
                 PrinterHandler(
                     transactionHandler
                 )
-            )
-
-            EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
-                transactionHandler
             )
         }
 

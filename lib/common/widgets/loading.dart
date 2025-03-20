@@ -49,7 +49,8 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
         if (stateProfile != null) {
           TransactionHelper.connect(config: stateProfile);
         } else {
-          ref.read(appNotifierProvider.notifier).reset();
+          print(next.error);
+          // ref.read(appNotifierProvider.notifier).reset();
         }
       } else if (next is AsyncData) {
         TransactionHelper.connect(config: next.value!);

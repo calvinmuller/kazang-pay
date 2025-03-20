@@ -78,11 +78,13 @@ class CrRepository {
   final Dio client;
 
   Future<LoginResponse> authDevice(LoginRequest loginRequest) async {
+    print(loginRequest);
     final response = await client.post('api_rest/auth_device', data: {
       "account_number": loginRequest.accountNumber,
       "password": loginRequest.password,
       "serial_number": loginRequest.serialNumber
     });
+    print(response.data);
     if (response.data['response_code'] != 0) {
       throw Exception(response.data['response_message']);
     }

@@ -119,7 +119,6 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     if (context.mounted) {
       final result = TransactionResult.fromJson(value.value);
-      debugPrint(result.toString(), wrapWidth: 1024);
       ref.read(transactionResultNotifierProvider.notifier).set(result);
       context.goNamed('payment-result', extra: result);
     }
