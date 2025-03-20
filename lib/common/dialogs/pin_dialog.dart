@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart'
     show
-        EdgeInsets,
-        Container,
         FormState,
         BuildContext,
         Widget,
-        Icon,
         InputDecoration,
         VoidCallback,
         GlobalKey,
         TextEditingController,
-        MainAxisSize,
-        CrossAxisAlignment,
-        MainAxisAlignment,
-        Theme,
         Text,
         BorderSide,
         OutlineInputBorder,
@@ -27,7 +20,6 @@ import 'package:flutter/material.dart'
         Colors,
         IconData,
         Color,
-        TextAlign,
         AnimationStyle;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget, WidgetRef;
@@ -40,6 +32,7 @@ import '../providers/app.provider.dart';
 import '../providers/pin.provider.dart';
 import '../widgets/button.dart' show Button;
 import '../widgets/keyboard_padding.dart' show KeyboardPadding;
+import 'dialog.dart';
 
 class PinDialog extends ConsumerStatefulWidget {
   const PinDialog({super.key});
@@ -59,107 +52,76 @@ class _PinDialogState extends ConsumerState<PinDialog> {
     final pin = ref.watch(appNotifierProvider.select((state) => state.pin));
     final hasPin = pin != null && pinConfig.reset == false;
 
-    return Container(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        spacing: 15,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Icon(
-            pinConfig.iconData ?? CustomIcons.close,
-            size: 72,
-            color: CustomColours.gold,
-          ),
-          if (hasPin) ...{
-            Text(
-              pinConfig.title ?? l10n.enterPinAccessSettings,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              pinConfig.message ?? l10n.pleaseProvideSupervisorPin,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          },
-          if (!hasPin && !pinConfig.reset) ...{
-            Text(
-              l10n.noPinSet,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              l10n.setPinToProceed,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          },
-          if (pinConfig.reset) ...{
-            Text(
-              l10n.resetPin,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              l10n.setPinToProceed,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          },
-          Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  autofocus: true,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: CustomColours.black,
-                      ),
-                      borderRadius: borderRadiusSmall,
+    final title = hasPin
+        ? pinConfig.title ?? l10n.enterPinAccessSettings
+        : !pinConfig.reset
+            ? l10n.noPinSet
+            : l10n.resetPin;
+    final message = hasPin
+        ? pinConfig.message ?? l10n.pleaseProvideSupervisorPin
+        : !pinConfig.reset
+            ? l10n.setPinToProceed
+            : l10n.setPinToProceed;
+
+    return Dialog(
+      title: title,
+      message: message,
+      iconData: pinConfig.iconData ?? CustomIcons.close,
+      actions: [
+        Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                autofocus: true,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: CustomColours.black,
                     ),
+                    borderRadius: borderRadiusSmall,
                   ),
-                  keyboardType: TextInputType.number,
-                  controller: pinController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return l10n.enterPin;
-                    }
-                    if (value.length < 4) {
-                      return l10n.pinTooShort;
-                    }
-                    if (pin != pinController.value.text && hasPin) {
-                      return l10n.incorrectPin;
-                    }
-                    return null;
-                  },
                 ),
-              ],
-            ),
+                keyboardType: TextInputType.number,
+                controller: pinController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return l10n.enterPin;
+                  }
+                  if (value.length < 4) {
+                    return l10n.pinTooShort;
+                  }
+                  if (pin != pinController.value.text && hasPin) {
+                    return l10n.incorrectPin;
+                  }
+                  return null;
+                },
+              ),
+            ],
           ),
-          Button.main(
-            height: 60,
-            colour: pinConfig.actionButtonColour,
-            borderColour: pinConfig.actionButtonColour,
-            textColour:
-                (pinConfig.actionButtonColour != null) ? Colors.white : null,
-            onPressed:
-                (hasPin) ? onContinuePressed : () => onSetPinPressed(pinConfig),
-            elevation: 0,
-            child: Text(l10n.continueButton),
-          ),
-          Button.main(
-            height: 60,
-            onPressed: () => Navigator.of(context).pop(false),
-            elevation: 0,
-            borderColour: Colors.black,
-            inverse: true,
-            child: Text(l10n.back),
-          ),
-          const KeyboardPadding(),
-        ],
-      ),
+        ),
+        Button.main(
+          height: 60,
+          colour: pinConfig.actionButtonColour,
+          borderColour: pinConfig.actionButtonColour,
+          textColour:
+              (pinConfig.actionButtonColour != null) ? Colors.white : null,
+          onPressed:
+              (hasPin) ? onContinuePressed : () => onSetPinPressed(pinConfig),
+          elevation: 0,
+          child: Text(l10n.continueButton),
+        ),
+        Button.main(
+          height: 60,
+          onPressed: () => Navigator.of(context).pop(false),
+          elevation: 0,
+          borderColour: Colors.black,
+          inverse: true,
+          child: Text(l10n.back),
+        ),
+        const KeyboardPadding(),
+      ],
     );
     // show the dialog
   }
