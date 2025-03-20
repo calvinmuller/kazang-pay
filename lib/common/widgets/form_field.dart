@@ -41,7 +41,6 @@ class FormField extends StatelessWidget {
       decoration: const InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 2,
             color: CustomColours.gold,
           ),
           borderRadius: borderRadiusSmall,
@@ -54,7 +53,6 @@ class FormField extends StatelessWidget {
         ),
       ),
       maxLength: maxLength,
-      // The validator receives the text that the user has entered.
       validator: validator,
       onSaved: onSaved,
     );
