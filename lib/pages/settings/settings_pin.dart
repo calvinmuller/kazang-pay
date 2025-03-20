@@ -154,4 +154,11 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+  }
 }
