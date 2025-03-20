@@ -1,33 +1,67 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart'
+    show
+        StatelessWidget,
+        Widget,
+        BuildContext,
+        EdgeInsets,
+        CrossAxisAlignment,
+        Theme,
+        TextAlign,
+        Text,
+        Column,
+        Container,
+        Icon;
+import 'package:go_router/go_router.dart';
 
-import 'package:flutter/material.dart' show StatelessWidget, Widget, BuildContext, EdgeInsets, CrossAxisAlignment, MainAxisAlignment, Theme, TextAlign, Text, Column, Container;
-import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
+import '../../core/core.dart';
+import '../../l10n/app_localizations.dart';
+import '../widgets/widgets.dart' show Button;
 
 class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog(
-      {super.key,
-      required this.title,
-      required this.message,
-      required this.actions});
-
-  final String title;
-  final String message;
-  final List<Widget> actions;
+  const ConfirmDialog({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       child: Column(
+        spacing: 15,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SvgPicture.asset(
-            'assets/warning.svg',
-            height: 140,
+          const Icon(
+            CustomIcons.attention,
+            size: 72,
+            color: CustomColours.gold,
           ),
-          Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
-          Text(message), ...actions,
+          Text(
+            l10n.cancelTitle,
+            style: Theme.of(context).textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          Text(l10n.cancelMessage),
+          Button(
+            height: 60,
+            width: double.infinity,
+            textColour: CustomColours.white,
+            colour: CustomColours.black,
+            onPressed: () => context.pop(false),
+            child: Text(l10n.returnTo),
+          ),
+          Button(
+            height: 60,
+            width: double.infinity,
+            colour: CustomColours.red,
+            textColour: CustomColours.white,
+            onPressed: () => context.pop(true),
+            child: Text(l10n.cancel),
+          ),
         ],
       ),
     );

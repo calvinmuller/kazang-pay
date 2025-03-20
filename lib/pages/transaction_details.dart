@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Divider, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController;
+    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 
@@ -92,7 +93,7 @@ class TransactionDetails extends ConsumerWidget {
                                   showPinDialog(
                                     title: l10n.voidConfirm,
                                     actionButtonColour: CustomColours.red,
-                                    context: context,
+                                    ref: ref,
                                     child: PaymentPage(
                                       payment: Payment(
                                         amount: transaction.amount,
@@ -139,15 +140,19 @@ class TransactionDetails extends ConsumerWidget {
           },
           body: TabBarView(
             children: [
-              Receipt(
-                autoClose: false,
-                type: ReceiptSectionEnum.MERCHANT,
-                transaction: transaction,
+              SingleChildScrollView(
+                child: Receipt(
+                    autoClose: false,
+                    type: ReceiptSectionEnum.MERCHANT,
+                    transaction: transaction,
+                  ),
               ),
-              Receipt(
-                autoClose: false,
-                type: ReceiptSectionEnum.CUSTOMER,
-                transaction: transaction,
+              SingleChildScrollView(
+                child: Receipt(
+                    autoClose: false,
+                    type: ReceiptSectionEnum.CUSTOMER,
+                    transaction: transaction,
+                  ),
               ),
             ],
           ),

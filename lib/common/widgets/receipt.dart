@@ -29,6 +29,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/printer.dart';
 import '../../models/transaction.dart';
 import '../dialogs/print_dialog.dart';
+import '../providers/app.provider.dart';
 import 'button.dart';
 import 'key_value.dart';
 
@@ -62,6 +63,7 @@ class ReceiptState extends ConsumerState<Receipt>
     final timeFormatter = DateFormat('h:mm:ss a');
     final l10n = AppLocalizations.of(context)!;
     final transactionDate = transactionResult.transactionDateTime;
+    final appState = ref.watch(appNotifierProvider);
 
     final amount = transactionResult.isVoid ? -transactionResult.amount : transactionResult.amount;
 
@@ -157,6 +159,11 @@ class ReceiptState extends ConsumerState<Receipt>
                     title: l10n.appType,
                     value: transactionResult.applicationLabel!,
                   ),
+                  if (appState.profile?.merchantConfig.routingSwitch != null)
+                    KeyValueWidget(
+                      title: l10n.switchType,
+                      value: appState.profile?.merchantConfig.switchName,
+                    ),
                   KeyValueWidget(
                     title: l10n.purchase,
                     value: transactionResult.responseMessage!,

@@ -84,6 +84,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage> with Tick
           : borderGradient['error']!,
       borderRadius: BorderRadius.zero,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         extendBody: true,
         body: Panel(
           child: Column(

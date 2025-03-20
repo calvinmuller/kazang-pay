@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         EdgeInsets,
@@ -11,7 +10,6 @@ import 'package:flutter/material.dart'
         VoidCallback,
         GlobalKey,
         TextEditingController,
-        MediaQuery,
         MainAxisSize,
         CrossAxisAlignment,
         MainAxisAlignment,
@@ -26,33 +24,25 @@ import 'package:flutter/material.dart'
         Navigator,
         MaterialPageRoute,
         showModalBottomSheet,
-        Colors;
+        Colors,
+        IconData,
+        Color,
+        TextAlign,
+        AnimationStyle;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show ConsumerState, ConsumerStatefulWidget;
+    show ConsumerState, ConsumerStatefulWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
+import '../../models/pin.dart' show PinDialogConfig;
 import '../providers/app.provider.dart';
-import '../widgets/button.dart';
+import '../providers/pin.provider.dart';
+import '../widgets/button.dart' show Button;
+import '../widgets/keyboard_padding.dart' show KeyboardPadding;
 
 class PinDialog extends ConsumerStatefulWidget {
-  const PinDialog({
-    super.key,
-    this.title,
-    this.message,
-    this.action,
-    this.iconData = CustomIcons.lock,
-    this.actionButtonColour,
-    this.reset = false,
-  });
-
-  final String? title;
-  final String? message;
-  final VoidCallback? action;
-  final IconData iconData;
-  final Color? actionButtonColour;
-  final bool reset;
+  const PinDialog({super.key});
 
   @override
   ConsumerState<PinDialog> createState() => _PinDialogState();
@@ -63,41 +53,37 @@ class _PinDialogState extends ConsumerState<PinDialog> {
   final pinController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final pinConfig = ref.watch(pinDialogNotifierProvider);
     final l10n = AppLocalizations.of(context)!;
     final pin = ref.watch(appNotifierProvider.select((state) => state.pin));
-    final hasPin = pin != null && widget.reset == false;
+    final hasPin = pin != null && pinConfig.reset == false;
 
     return Container(
       padding: const EdgeInsets.all(24),
       child: Column(
-        spacing: 10,
+        spacing: 15,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Icon(
-            (hasPin) ? widget.iconData : CustomIcons.close,
+            pinConfig.iconData ?? CustomIcons.close,
             size: 72,
             color: CustomColours.gold,
           ),
           if (hasPin) ...{
             Text(
-              widget.title ?? l10n.enterPinAccessSettings,
+              pinConfig.title ?? l10n.enterPinAccessSettings,
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             Text(
-              widget.message ?? l10n.pleaseProvideSupervisorPin,
+              pinConfig.message ?? l10n.pleaseProvideSupervisorPin,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           },
-          if (!hasPin && !widget.reset) ...{
+          if (!hasPin && !pinConfig.reset) ...{
             Text(
               l10n.noPinSet,
               style: Theme.of(context).textTheme.titleLarge,
@@ -108,7 +94,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           },
-          if (widget.reset) ...{
+          if (pinConfig.reset) ...{
             Text(
               l10n.resetPin,
               style: Theme.of(context).textTheme.titleLarge,
@@ -153,27 +139,25 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             ),
           ),
           Button.main(
-            colour: widget.actionButtonColour,
+            height: 60,
+            colour: pinConfig.actionButtonColour,
+            borderColour: pinConfig.actionButtonColour,
             textColour:
-                (widget.actionButtonColour != null) ? Colors.white : null,
-            onPressed: (hasPin) ? onContinuePressed : onSetPinPressed,
+                (pinConfig.actionButtonColour != null) ? Colors.white : null,
+            onPressed:
+                (hasPin) ? onContinuePressed : () => onSetPinPressed(pinConfig),
             elevation: 0,
             child: Text(l10n.continueButton),
           ),
           Button.main(
+            height: 60,
             onPressed: () => Navigator.of(context).pop(false),
             elevation: 0,
-            borderColour: Colors.transparent,
+            borderColour: Colors.black,
             inverse: true,
             child: Text(l10n.back),
           ),
-          Builder(
-            builder: (context) => Container(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-            ),
-          ),
+          const KeyboardPadding(),
         ],
       ),
     );
@@ -192,11 +176,11 @@ class _PinDialogState extends ConsumerState<PinDialog> {
     }
   }
 
-  onSetPinPressed() {
+  onSetPinPressed(PinDialogConfig config) {
     if (_formKey.currentState!.validate()) {
       ref.read(appNotifierProvider.notifier).setPin(pinController.value.text);
       pinController.clear();
-      if (widget.reset) {
+      if (config.reset) {
         Navigator.of(context).pop(true);
       }
     }
@@ -213,21 +197,25 @@ showPinDialog({
   Widget? child,
   String? title,
   Color? actionButtonColour,
-  required BuildContext context,
+  required WidgetRef ref,
   VoidCallback? callback,
   bool reset = false,
+  IconData iconData = CustomIcons.attention,
 }) async {
+  ref.read(pinDialogNotifierProvider.notifier).setState(
+        title: title,
+        actionButtonColour: actionButtonColour,
+        reset: reset,
+        iconData: iconData,
+      );
   final result = await showModalBottomSheet(
     isScrollControlled: true,
     showDragHandle: true,
-    context: context,
-    builder: (context) => PinDialog(
-      reset: reset,
-      title: title,
-      actionButtonColour: actionButtonColour,
-    ),
+    context: ref.context,
+    builder: (context) => const PinDialog(),
     sheetAnimationStyle: AnimationStyle.noAnimation,
   );
+  final context = ref.context;
   if (result != null && result && context.mounted) {
     if (callback != null) {
       callback();

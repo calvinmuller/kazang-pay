@@ -33,6 +33,7 @@ import '../../common/providers/api.provider.dart';
 import '../../common/providers/device_info.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;
 import '../../core/constants.dart';
+import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/kazang.dart';
 
@@ -135,7 +136,8 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                                 await crApi.authDevice(loginRequest);
                             if (response.responseCode == 0 && context.mounted) {
                               await showPinDialog(
-                                context: context,
+                                ref: ref,
+                                iconData: CustomIcons.lock,
                                 callback: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(

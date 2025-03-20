@@ -140,12 +140,8 @@ class PrintHelper {
 
     text = DoubleTextPrintCommand(fontSize: 25);
     text.leftAlignedValue = "SWITCH";
-    text.rightAlignedValue = merchantConfig?.routingSwitch == "LESAKA"
-        ? "PRISM"
-        : merchantConfig?.routingSwitch;
+    text.rightAlignedValue = merchantConfig?.switchName;
     printRequest.printLineItems.add(text);
-
-    printRequest.printLineItems.add(NewLinePrintCommand());
 
     text = DoubleTextPrintCommand(fontSize: 32);
     text.leftAlignedValue = "RESPONSE:";

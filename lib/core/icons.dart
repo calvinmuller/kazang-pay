@@ -18,4 +18,5 @@ class CustomIcons {
   static const IconData wallet = IconData(0xec6c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData document = IconData(0xea11, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData calendar = IconData(0xeb43, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData attention = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

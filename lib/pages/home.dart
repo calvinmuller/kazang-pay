@@ -154,7 +154,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               onPressed: () {
                                 showPinDialog(
                                   title: l10n.enterPin,
-                                  context: context,
+                                  ref: ref,
                                   callback: () =>
                                       context.goNamed('transaction-history'),
                                 );

@@ -281,6 +281,8 @@ class MerchantConfig {
     required this.merchantNumber,
   });
 
+  get switchName => routingSwitch == "LESAKA" ? "PRISM": routingSwitch;
+
   factory MerchantConfig.fromJson(Map<String, dynamic> json) =>
       _$MerchantConfigFromJson(json);
 

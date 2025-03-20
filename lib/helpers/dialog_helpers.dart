@@ -58,31 +58,9 @@ showErrorDialog(context, String? message) {
 }
 
 showConfirmationDialog(BuildContext context) {
-  final l10n = AppLocalizations.of(context)!;
-
   return showModalBottomSheet(
     context: context,
     showDragHandle: true,
-    builder: (context) => ConfirmDialog(
-      title: l10n.cancelTitle,
-      message: l10n.cancelMessage,
-      actions: [
-        Button(
-          height: 60,
-          width: double.infinity,
-          textColour: CustomColours.white,
-          colour: CustomColours.black,
-          onPressed: () => context.pop(false),
-          child: Text(l10n.returnTo),
-        ),
-        Button(
-          height: 60,
-          width: double.infinity,
-          colour: CustomColours.red,
-          onPressed: () => context.pop(true),
-          child: Text(l10n.cancel),
-        ),
-      ],
-    ),
+    builder: (context) => const ConfirmDialog(),
   );
 }
