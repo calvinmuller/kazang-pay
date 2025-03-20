@@ -85,6 +85,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage> with Tick
       borderRadius: BorderRadius.zero,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        extendBodyBehindAppBar: true,
         extendBody: true,
         body: Panel(
           child: Column(
