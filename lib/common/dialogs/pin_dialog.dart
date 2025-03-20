@@ -3,15 +3,11 @@ import 'package:flutter/material.dart'
         FormState,
         BuildContext,
         Widget,
-        InputDecoration,
         VoidCallback,
         GlobalKey,
         TextEditingController,
         Text,
-        BorderSide,
-        OutlineInputBorder,
         TextInputType,
-        TextFormField,
         Column,
         Form,
         Navigator,
@@ -31,6 +27,7 @@ import '../../models/pin.dart' show PinDialogConfig;
 import '../providers/app.provider.dart';
 import '../providers/pin.provider.dart';
 import '../widgets/button.dart' show Button;
+import '../widgets/form_field.dart';
 import '../widgets/keyboard_padding.dart' show KeyboardPadding;
 import 'dialog.dart';
 
@@ -72,18 +69,10 @@ class _PinDialogState extends ConsumerState<PinDialog> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
+              FormField(
                 autofocus: true,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: CustomColours.black,
-                    ),
-                    borderRadius: borderRadiusSmall,
-                  ),
-                ),
-                keyboardType: TextInputType.number,
+                textInputType: TextInputType.number,
                 controller: pinController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

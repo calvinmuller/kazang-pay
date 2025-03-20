@@ -893,6 +893,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// No description provided for @switchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch'**
+  String get switchTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

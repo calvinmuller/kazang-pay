@@ -34,6 +34,7 @@ class SettingsProfile extends ConsumerWidget {
             KeyValueWidget(title: l10n.merchantId, value: appState.profile!.merchantConfig.merchantNumber),
             KeyValueWidget(title: l10n.username, value: appState.profile!.userConfig.user),
             KeyValueWidget(title: l10n.deviceSerial, value: appState.profile!.terminalConfig.terminalSerialNumber),
+            KeyValueWidget(title: l10n.switchTitle, value: appState.profile?.merchantConfig.switchName ?? "-"),
             KeyValueWidget(title: l10n.manufacturer, value: deviceInfo.manufacturer ?? ""),
             KeyValueWidget(title: l10n.model, value: deviceInfo.model ?? ""),
             KeyValueWidget(title: l10n.version, value: "${deviceInfo.version?.name}-${deviceInfo.version?.code}"),

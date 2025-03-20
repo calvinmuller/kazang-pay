@@ -416,4 +416,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get retry => 'Retry';
+
+  @override
+  String get switchTitle => 'Switch';
 }

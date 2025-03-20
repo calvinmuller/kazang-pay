@@ -8,7 +8,6 @@ import 'package:flutter/material.dart'
         BoxDecoration,
         TextSpan,
         TextStyle,
-        InputDecoration,
         Padding,
         Hero,
         Theme,
@@ -21,10 +20,6 @@ import 'package:flutter/material.dart'
         FontWeight,
         RichText,
         CrossAxisAlignment,
-        TextInputType,
-        TextInputAction,
-        OutlineInputBorder,
-        TextFormField,
         Form,
         Card,
         primaryFocus,
@@ -40,7 +35,7 @@ import 'package:go_router/go_router.dart';
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
 import '../../common/providers/device_info.dart';
-import '../../common/widgets/widgets.dart' show Button, Label;
+import '../../common/widgets/widgets.dart' show Button, Label, FormField;
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/crm.dart';
@@ -135,19 +130,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       Label(
                         l10n.accountNumber,
                       ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        initialValue: '',
-                        style: Theme.of(context).textTheme.bodySmall,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: CustomColours.black,
-                            ),
-                            borderRadius: borderRadiusSmall,
-                          ),
-                        ),
+                      FormField(
                         maxLength: 10,
                         // The validator receives the text that the user has entered.
                         validator: (value) {
@@ -169,9 +152,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       Label(
                         l10n.password,
                       ),
-                      TextFormField(
-                        initialValue: '',
-                        style: Theme.of(context).textTheme.bodySmall,
+                      FormField(
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -179,14 +160,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: CustomColours.black,
-                            ),
-                            borderRadius: borderRadiusSmall,
-                          ),
-                        ),
                         onSaved: (value) {
                           loginRequest.password = value;
                         },
@@ -194,18 +167,8 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       Label(
                         l10n.enterSerialNumber,
                       ),
-                      TextFormField(
+                      FormField(
                         initialValue: deviceInfo.serial,
-                        style: Theme.of(context).textTheme.bodySmall,
-                        readOnly: false,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: CustomColours.black,
-                            ),
-                            borderRadius: borderRadiusSmall,
-                          ),
-                        ),
                         maxLength: 14,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -276,10 +239,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         duration: const Duration(seconds: 5),
                       ),
                     );
-                  }
-                } finally {
-                  if (context.mounted) {
-                    context.pop();
                   }
                 }
               }

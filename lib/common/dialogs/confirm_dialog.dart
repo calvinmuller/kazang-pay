@@ -4,14 +4,7 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Widget,
         BuildContext,
-        EdgeInsets,
-        CrossAxisAlignment,
-        Theme,
-        TextAlign,
-        Text,
-        Column,
-        Container,
-        Icon;
+        Text;
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';

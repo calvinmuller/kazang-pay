@@ -133,5 +133,6 @@
   "noSettlementsFound": "No settlements found",
   "resetPin": "Reset PIN",
   "pinResetSuccess": "Supervisor PIN reset successfully",
-  "retry": "Retry"
+  "retry": "Retry",
+  "switchTitle": "Switch"
 }

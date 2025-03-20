@@ -8,15 +8,10 @@ import 'package:flutter/material.dart'
         AppBar,
         MainAxisSize,
         CrossAxisAlignment,
-        Theme,
         Column,
         Container,
-        InputDecoration,
         TextInputType,
         TextInputAction,
-        BorderSide,
-        OutlineInputBorder,
-        TextFormField,
         Form,
         Colors,
         Padding,
@@ -31,8 +26,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 import '../../common/common.dart';
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/device_info.dart';
+import '../../common/widgets/form_field.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;
-import '../../core/constants.dart';
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/kazang.dart';
@@ -76,32 +71,23 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                   Label(
                     l10n.username,
                   ),
-                  TextFormField(
-                      controller: usernameController,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      style: Theme.of(context).textTheme.bodySmall,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: CustomColours.black,
-                          ),
-                          borderRadius: borderRadiusSmall,
-                        ),
-                      ),
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return l10n.usernameError;
-                        }
-                        return null;
-                      }),
+                  FormField(
+                    autofocus: true,
+                    textInputType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    maxLength: 10,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return l10n.usernameError;
+                      }
+                      return null;
+                    },
+                  ),
                   Label(
                     l10n.password,
                   ),
-                  TextFormField(
+                  FormField(
                     controller: passwordController,
-                    style: Theme.of(context).textTheme.bodySmall,
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -109,14 +95,6 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                       }
                       return null;
                     },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CustomColours.black,
-                        ),
-                        borderRadius: borderRadiusSmall,
-                      ),
-                    ),
                     onSaved: (value) {
                       // loginRequest.password = value;
                     },
