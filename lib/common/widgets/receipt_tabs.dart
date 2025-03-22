@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        TextStyle,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        FontWeight,
-        MainAxisAlignment,
-        Text,
-        Expanded,
-        Row,
-        Column,
-        Padding,
-        SizedBox;
+    show TextStyle, BuildContext, Widget, EdgeInsets, FontWeight, MainAxisAlignment, Text, Expanded, Row, Column, Padding, SizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, AsyncData, AsyncError;
 import 'package:go_router/go_router.dart';
@@ -48,9 +36,10 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
       getByReferenceDataProvider(widget.transactionResult.ourReferenceNumber!),
     );
 
+
     return switch (transactionProvider) {
       AsyncData(:final value) => _buildReceiptTabs(context, l10n, value),
-      AsyncError(:final error) => const SizedBox(),
+      AsyncError(:final error, :final stackTrace) => Text(stackTrace.toString()),
       _ => const SizedBox(),
     };
   }
@@ -79,7 +68,7 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
                   height: buttonHeight,
                   child: Text(l10n.view, style: style),
                   onPressed: () =>
-                      context.pushNamed('receipt', extra: transaction),
+                      context.pushNamed('receipt', extra: transaction, queryParameters: {'type': ReceiptSectionEnum.MERCHANT.toString()})
                 ),
               ),
               Expanded(
@@ -115,7 +104,7 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
                   height: buttonHeight,
                   child: Text(l10n.view, style: style),
                   onPressed: () {
-                    context.pushNamed('receipt', extra: transaction);
+                    context.pushNamed('receipt', extra: transaction, queryParameters: {'type': ReceiptSectionEnum.CUSTOMER.toString()});
                   },
                 ),
               ),

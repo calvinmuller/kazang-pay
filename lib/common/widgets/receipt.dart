@@ -37,25 +37,14 @@ import '../../core/core.dart';
 import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/printer.dart';
-import '../../models/transaction.dart';
 import '../dialogs/print_dialog.dart';
 import '../providers/app.provider.dart';
+import '../providers/receipt.provider.dart';
 import 'button.dart';
 import 'key_value.dart';
 
 class Receipt extends ConsumerStatefulWidget {
-  const Receipt({
-    super.key,
-    required this.transaction,
-    this.type = ReceiptSectionEnum.CUSTOMER,
-    this.autoClose = true,
-    this.showPrint = true,
-  });
-
-  final Transaction transaction;
-  final ReceiptSectionEnum type;
-  final bool showPrint;
-  final bool autoClose;
+  const Receipt({super.key});
 
   @override
   ReceiptState createState() => ReceiptState();
@@ -65,19 +54,33 @@ class ReceiptState extends ConsumerState<Receipt>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late final AnimationController animationController;
   late final Animation<double> animation;
+  late final bool autoClose;
 
   @override
   void initState() {
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 2, milliseconds: 500),
     );
-    animation = Tween(begin: 0.0, end: -715.0).animate(animationController);
+    autoClose = ref.read(receiptParametersProvider.select((state) => state.autoClose));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final height = View.of(context).display.size.height;
+    final devicePixelRatio = View.of(context).display.devicePixelRatio;
+
+    // height of screen minute button height
+    final receiptHeight = (height / devicePixelRatio) - 80;
+
+    animation =
+        Tween(begin: 0.0, end: -receiptHeight).animate(animationController);
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
-        if (!widget.autoClose) animationController.reset();
+        if (!autoClose) animationController.reset();
       }
     });
   }
@@ -85,7 +88,9 @@ class ReceiptState extends ConsumerState<Receipt>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final transactionResult = widget.transaction;
+
+    final receiptViewModel = ref.watch(receiptParametersProvider);
+    final transactionResult = receiptViewModel.transaction!;
 
     final dateFormatter = DateFormat('yyyy-MM-dd');
     final timeFormatter = DateFormat('h:mm:ss a');
@@ -98,10 +103,11 @@ class ReceiptState extends ConsumerState<Receipt>
         : transactionResult.amount;
 
     return ClipRect(
+      clipBehavior: Clip.hardEdge,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          if (widget.showPrint)
+          if (receiptViewModel.showPrint)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Button.main(
@@ -114,10 +120,10 @@ class ReceiptState extends ConsumerState<Receipt>
                     context: context,
                     builder: (context) => PrintDialog(
                       transactionResult: transactionResult,
-                      type: widget.type,
+                      type: receiptViewModel.type,
                     ),
                   );
-                  if (context.mounted && widget.autoClose) {
+                  if (context.mounted && receiptViewModel.autoClose) {
                     context.pop();
                   }
                 },
@@ -129,103 +135,103 @@ class ReceiptState extends ConsumerState<Receipt>
             builder: (context, child) {
               return Transform.translate(
                 offset: Offset(0.0, animation.value),
-                child: Container(
-                  margin: const EdgeInsets.all(16),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: CustomColours.grayscale,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: DefaultTextStyle(
-                    // titleSmall
-                    style: Theme.of(context).textTheme.titleSmall!,
-                    child: Column(
-                      spacing: 18,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          (ReceiptSectionEnum.MERCHANT == widget.type)
-                              ? l10n.merchantReceipt
-                              : l10n.customerReceipt,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SvgPicture.asset(
-                          'assets/receipt.svg',
-                          fit: BoxFit.contain,
-                          height: 75,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.merchantId,
-                          value: transactionResult.merchantId!,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.terminalId,
-                          value: transactionResult.terminalId,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.date,
-                          value: dateFormatter.format(transactionDate),
-                        ),
-                        KeyValueWidget(
-                          title: l10n.time,
-                          value: timeFormatter.format(transactionDate),
-                        ),
-                        KeyValueWidget(
-                          title: l10n.aid,
-                          value: transactionResult.applicationIdentifier ?? "",
-                        ),
-                        KeyValueWidget(
-                          title: l10n.pan,
-                          value: transactionResult.maskedPan ?? "",
-                        ),
-                        KeyValueWidget(
-                          title: l10n.transType,
-                          value: transactionResult.type,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.transseqNo,
-                          value: transactionResult.sequenceNumber.toString(),
-                        ),
-                        KeyValueWidget(
-                          title: l10n.rrn,
-                          value: transactionResult.retrievalReferenceNumber,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.appType,
-                          value: transactionResult.applicationLabel!,
-                        ),
-                        if (appState.profile?.merchantConfig.routingSwitch !=
-                            null)
-                          KeyValueWidget(
-                            title: l10n.switchType,
-                            value: appState.profile?.merchantConfig.switchName,
-                          ),
-                        KeyValueWidget(
-                          title: l10n.purchase,
-                          value: transactionResult.responseMessage!,
-                        ),
-                        if (!transactionResult.isSuccessful)
-                          KeyValueWidget(
-                            title: l10n.reason,
-                            value: transactionResult.responseMessage ?? "",
-                          ),
-                        KeyValueWidget(
-                          bold: true,
-                          title: l10n.total,
-                          value: CurrencyHelper.formatCurrency(
-                            context,
-                            amount,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                child: child,
               );
             },
+            child: Container(
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: CustomColours.grayscale,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: DefaultTextStyle(
+                // titleSmall
+                style: Theme.of(context).textTheme.titleSmall!,
+                child: Column(
+                  spacing: 18,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      (ReceiptSectionEnum.MERCHANT == receiptViewModel.type)
+                          ? l10n.merchantReceipt
+                          : l10n.customerReceipt,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      'assets/receipt.svg',
+                      fit: BoxFit.contain,
+                      height: 75,
+                    ),
+                    KeyValueWidget(
+                      title: l10n.merchantId,
+                      value: transactionResult.merchantId!,
+                    ),
+                    KeyValueWidget(
+                      title: l10n.terminalId,
+                      value: transactionResult.terminalId,
+                    ),
+                    KeyValueWidget(
+                      title: l10n.date,
+                      value: dateFormatter.format(transactionDate),
+                    ),
+                    KeyValueWidget(
+                      title: l10n.time,
+                      value: timeFormatter.format(transactionDate),
+                    ),
+                    KeyValueWidget(
+                      title: l10n.aid,
+                      value: transactionResult.applicationIdentifier ?? "",
+                    ),
+                    KeyValueWidget(
+                      title: l10n.pan,
+                      value: transactionResult.maskedPan ?? "",
+                    ),
+                    KeyValueWidget(
+                      title: l10n.transType,
+                      value: transactionResult.type,
+                    ),
+                    KeyValueWidget(
+                      title: l10n.transseqNo,
+                      value: transactionResult.sequenceNumber.toString(),
+                    ),
+                    KeyValueWidget(
+                      title: l10n.rrn,
+                      value: transactionResult.retrievalReferenceNumber,
+                    ),
+                    KeyValueWidget(
+                      title: l10n.appType,
+                      value: transactionResult.applicationLabel!,
+                    ),
+                    if (appState.profile?.merchantConfig.routingSwitch != null)
+                      KeyValueWidget(
+                        title: l10n.switchType,
+                        value: appState.profile?.merchantConfig.switchName,
+                      ),
+                    KeyValueWidget(
+                      title: l10n.purchase,
+                      value: transactionResult.responseMessage!,
+                    ),
+                    if (!transactionResult.isSuccessful)
+                      KeyValueWidget(
+                        title: l10n.reason,
+                        value: transactionResult.responseMessage ?? "",
+                      ),
+                    KeyValueWidget(
+                      bold: true,
+                      title: l10n.total,
+                      value: CurrencyHelper.formatCurrency(
+                        context,
+                        amount,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),

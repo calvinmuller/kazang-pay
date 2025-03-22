@@ -129,7 +129,6 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                               throw Exception(response.responseMessage);
                             }
                           } catch (e) {
-                            print(e.toString());
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

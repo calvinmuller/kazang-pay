@@ -15,11 +15,10 @@ import com.google.gson.reflect.TypeToken
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Type
-import kotlin.concurrent.thread
 
 private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
 
@@ -30,6 +29,7 @@ class MainActivity : FlutterActivity() {
     private lateinit var transactionHandler: TransactionInterface
     private val gson = Gson()
     private var initialIntentMap: Map<String, Any?>? = mapOf()
+    private var coroutine = CoroutineScope(Dispatchers.IO);
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -40,16 +40,16 @@ class MainActivity : FlutterActivity() {
             transactionHandler = MockTransactionHandler()
         } else {
             transactionHandler = TransactionHandler()
-
-            MethodChannel(
-                flutterEngine.dartExecutor.binaryMessenger,
-                PRINT_CHANNEL
-            ).setMethodCallHandler(
-                PrinterHandler(
-                    transactionHandler
-                )
-            )
         }
+
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            PRINT_CHANNEL
+        ).setMethodCallHandler(
+            PrinterHandler(
+                transactionHandler
+            )
+        )
 
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
@@ -57,16 +57,14 @@ class MainActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             if (call.method == "connect") {
                 val config = call.argument<HashMap<Any, Any>>("config")!!
-                val json = gson.toJson(config)
-
-                val terminalConfig = gson.fromJson(json, TerminalConfig::class.java)
-
-                thread {
+                coroutine.launch {
+                    val json = gson.toJson(config)
+                    val terminalConfig = gson.fromJson(json, TerminalConfig::class.java)
                     transactionHandler.initialize(context, terminalConfig)
                 }
                 result.success(true)
             } else if (call.method == "createPurchase") {
-                thread {
+                coroutine.launch {
                     transactionHandler.createPurchase(
                         amount = call.argument<String>("amount")!!,
                         description = call.argument<String>("description")!!
@@ -76,7 +74,7 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "getDeviceInfo") {
                 transactionHandler.getDeviceInfo(context, result)
             } else if (call.method == "continueTransaction") {
-                thread {
+                coroutine.launch {
                     transactionHandler.continueTransaction(
                         value = call.argument<String>("value")!!,
                         pos = call.argument<Int>("pos")!!
@@ -96,17 +94,17 @@ class MainActivity : FlutterActivity() {
                 result.success(true)
             } else if (call.method == "voidTransaction") {
                 val rrn = call.argument<String>("rrn")!!
-                thread {
+                coroutine.launch {
                     transactionHandler.voidTransaction(rrn)
                 }
                 result.success(true)
             } else if (call.method == "continueTransactionBudget") {
-                thread {
+                coroutine.launch {
                     transactionHandler.continueTransactionBudget(value = call.argument<Int>("value")!!)
                 }
                 result.success(true)
             } else if (call.method == "getHistoryData") {
-                thread {
+                coroutine.launch {
                     val transactions = transactionHandler.getHistoryData()
                     result.success(transactions)
                 }
@@ -114,7 +112,7 @@ class MainActivity : FlutterActivity() {
                 val transaction = transactionHandler.getByReferenceData(call.argument<String>("responseId")!!)
                 result.success(gson.toJson(transaction))
             } else if (call.method == "abortTransaction") {
-                thread {
+                coroutine.launch {
                     transactionHandler.abortTransaction()
                 }
                 result.success(true)

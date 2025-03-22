@@ -19,14 +19,25 @@ import com.prism.core.enums.RoutingSwitchEnum
 import com.prism.core.enums.ServiceConfigurationEnum
 import com.prism.core.enums.TransactionClientActionEnum
 import com.prism.core.enums.TransactionTypesEnum
+import com.prism.core.helpers.FactoryTransactionBuilder
+import com.prism.core.interfaces.FactoryActivityEvents
 import com.prism.factory.BuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.MockTransactionFactory
+import io.flutter.plugin.common.EventChannel
+import io.flutter.plugin.common.MethodChannel
+import java.time.LocalDateTime
 
-class MockTransactionHandler : TransactionHandler() {
+
+class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: MockTransactionFactory? = null
     private var factoryconstructor: FactoryConstructorData? = null
+    private var connected = false
+    private var factorybb = FactoryTransactionBuilder()
+
+    private var handler = Handler(Looper.getMainLooper())
+    private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
 
     override fun initialize(context: Context, config: TerminalConfig) {
@@ -99,6 +110,221 @@ class MockTransactionHandler : TransactionHandler() {
         repo = TransactionRepository(context)
     }
 
+    override fun onBatteryStatusLowEvent(percentage: Int) {
+        Log.d("onBatteryStatusLowEvent", percentage.toString())
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onDisConnectEvent", percentage)
+        }
+    }
+
+    override fun onConnectEvent(value: Boolean) {
+        connected = true
+    }
+
+    override fun onDeviceInformationEvent(deviceInformation: DeviceInformation) {
+        val gson = Gson()
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onDisConnectEvent", gson.toJson(deviceInformation))
+        }
+    }
+
+    override fun onDisConnectEvent(value: Boolean) {
+        Log.d("onDisConnectEvent", value.toString())
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onDisConnectEvent", value)
+        }
+    }
+
+    override fun onErrorEvent(value: String?) {
+        Log.d("onErrorEvent", value!!)
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onErrorEvent", value)
+        }
+    }
+
+    override fun onPrintDataCancelledEvent(value: Boolean) {
+        Log.d("onPrintDataCancelledEvent", value.toString())
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onPrintDataCancelledEvent", value)
+        }
+    }
+
+    override fun onPrinterOperationEndEvent(value: Boolean) {
+        Log.d("onPrinterOperationEndEvent", value.toString())
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onPrinterOperationEndEvent", value)
+        }
+    }
+
+    override fun onReturnPrinterResultEvent(value: PrinterStatus) {
+        Log.d(
+            "onReturnPrinterResultEvent",
+            value.printerStatusResult.toString()
+        )
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onReturnPrinterResultEvent", value.printerStatusResult.toString())
+        }
+    }
+
+    override fun onStatusMessageEvent(value: String?) {
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onStatusMessageEvent", value)
+        }
+    }
+
+    override fun onTransactionCompletedEvent(transactionClientResponse: TransactionClientResponse) {
+        val gson = Gson()
+
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onTransactionCompletedEvent", gson.toJson(transactionClientResponse))
+        }
+    }
+
+    override fun onUserApplicationSelectionRequiredEvent(value: ArrayList<String?>?) {
+        print("onUserApplicationSelectionRequiredEvent")
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onUserApplicationSelectionRequiredEvent", value)
+        }
+    }
+
+    override fun onUserBudgetSelectionRequiredEvent(value: Boolean) {
+        val budgetTypes = ArrayList<String>()
+        budgetTypes.add("Straight")
+        budgetTypes.add("3 Months")
+        budgetTypes.add("6 Months")
+        budgetTypes.add("12 Months")
+        budgetTypes.add("24 Months")
+
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onUserBudgetSelectionRequiredEvent", budgetTypes)
+        }
+    }
+
+    override fun onUserSignatureRequiredEvent(value: Boolean) {
+        Log.d("onUserSignatureRequiredEvent", value.toString())
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onUserSignatureRequiredEvent", value)
+        }
+    }
+
+    override fun onWaitingForCardEvent(value: Boolean) {
+        Log.d("onWaitingForCardEvent", value.toString())
+        handler.post {
+            FlutterBridge.sendMessageToFlutter("onWaitingForCardEvent", value)
+        }
+    }
+
+    override fun createPurchase(amount: String, description: String) {
+        Log.d("createPurchase", "amount: $amount, description: $description")
+        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
+        factory!!.startTransaction(factorybb)
+    }
+
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
+        val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder);
+        factorybb = factorybb.createVoid("", item!!)
+        factory!!.startTransaction(factorybb)
+    }
+
+    override fun continueTransaction(pos: Int, value: String) {
+        handler.post {
+            factory!!.continueTransactionApplication(
+                pos,
+                value
+            )
+        }
+    }
+
+    override fun continueTransactionBudget(value: Int) {
+        factory!!.continueTransactionBudget(
+            value
+        )
+    }
+
+    override fun createCashback(amount: String, cashbackAmount: String) {
+        Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
+        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
+        factory!!.startTransaction(
+            factorybb
+        )
+    }
+
+    override fun createCashWithdrawal(cashbackAmount: String) {
+        Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
+        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
+        factory!!.startTransaction(
+            factorybb
+        )
+    }
+
+    override fun getHistoryData(limit: Int, responseCode: String): List<String> {
+        val gson = Gson()
+        val transactionsItems = arrayOf(
+            this.getByReferenceData("1"),
+            this.getByReferenceData("2"),
+            this.getByReferenceData("3"),
+            this.getByReferenceData("4"),
+            this.getByReferenceData("5"),
+        )
+
+        return transactionsItems.map {
+            gson.toJson(it, TransactionItem::class.java)
+        }
+    }
+
+    override fun getByReferenceData(responseId: String): TransactionItem? {
+        val transactionItem = TransactionItem()
+        transactionItem.Amount = "1000"
+        transactionItem.Account = ""
+        transactionItem.CardDataInputMode = "ContactlessIntegratedCircuitCard"
+        transactionItem.RetrievalReferenceNumber = responseId
+        transactionItem.ResponseCode = "00"
+        transactionItem.TransactionType = "P"
+        transactionItem.TransactionDateTime = LocalDateTime.now().toString()
+        transactionItem.ApplicationIdentifier = "a010101010101"
+        transactionItem.ApplicationLabel = "VISA"
+        transactionItem.CardSequenceNumber = "010101010101"
+        transactionItem.MaskedPan = "123456******1234"
+        transactionItem.Authorised = "true"
+        transactionItem.IsUserVoidable = "true"
+        transactionItem.MerchantId = "123456"
+        transactionItem.TerminalId = "123456"
+        transactionItem.ResponseMessage = "Transaction Successful"
+        transactionItem.Settled = "false"
+        transactionItem.AdditionalData = null
+
+        return transactionItem ?: null
+    }
+
+    override fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
+        val gson = Gson()
+        factory = MockTransactionFactory(context)
+        val serial = factory!!.getDeviceSerial()
+        val apiVersion = factory!!.getApiVersion()
+        val hasOnboardPrinter = factory!!.hasOnboardPrinter()
+        val build = gson.toJson(factory!!.getBuildAndSENumber())
+        val manufacturer: String = Build.MANUFACTURER
+        val model: String = Build.MODEL
+        result.success(
+            mapOf(
+                "serial" to serial,
+                "info" to apiVersion,
+                "build" to build,
+                "hasOnboardPrinter" to hasOnboardPrinter,
+                "manufacturer" to manufacturer,
+                "model" to model
+            )
+        )
+    }
+
+    override fun printReceipt(data: PrintRequest) {
+        data.imageXpos = 0
+        data.fontName = "arial" //monospace_typewriter.ttf
+        data.bitmapImageResourceId = R.drawable.receipt
+        data.customerTrailer = "TESDFSDFSD";
+        factory!!.sendPrinterData(data)
+    }
+
     override fun abortTransaction() {
         val response = TransactionClientResponse()
         response.responseCode = "91"
@@ -111,6 +337,10 @@ class MockTransactionHandler : TransactionHandler() {
         response.transactionAmount = 0
         response.transactionClientAction = TransactionClientActionEnum.TRANSACTION_DECLINED
         onTransactionCompletedEvent(response)
+    }
+
+    override fun connect() {
+        factory!!.connect()
     }
 
 }

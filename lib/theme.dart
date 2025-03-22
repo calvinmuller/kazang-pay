@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show TextStyle, FontWeight, BuildContext, ThemeData, CardThemeData, AppBarTheme, Color, OutlinedBorder, BorderSide, TextTheme, EdgeInsets, BorderRadius, Radius, RoundedRectangleBorder, kToolbarHeight, WidgetStateProperty, Theme, Colors, ButtonStyle, ElevatedButtonThemeData, TextButtonThemeData;
+import 'package:flutter/material.dart' show AppBarTheme, BorderRadius, BorderSide, BuildContext, ButtonStyle, CardThemeData, Color, Colors, EdgeInsets, ElevatedButtonThemeData, FontWeight, OutlinedBorder, ProgressIndicatorThemeData, Radius, RoundedRectangleBorder, TextButtonThemeData, TextStyle, TextTheme, Theme, ThemeData, WidgetStateProperty, kToolbarHeight;
 import 'core/constants.dart';
 
 class CustomTheme {
@@ -9,6 +9,7 @@ class CustomTheme {
 
   static ThemeData lightThemeData(BuildContext context) {
     return ThemeData(
+      progressIndicatorTheme: const ProgressIndicatorThemeData(),
       fontFamily: 'Graphik',
       cardTheme: const CardThemeData(
         margin: EdgeInsets.all(10),

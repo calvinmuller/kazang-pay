@@ -64,4 +64,5 @@ class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandle
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     // TODO: implement onTransactionCompletedEvent
   }
+
 }

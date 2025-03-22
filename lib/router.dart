@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart'
 import 'common/common.dart';
 import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
-import 'models/transaction.dart';
 import 'pages/pages.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -97,8 +96,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               name: 'details',
               redirect: null,
               builder: (context, state) {
-                final transaction = state.extra as Transaction;
-                return TransactionDetails(transaction: transaction);
+                return const TransactionDetails();
               },
             ),
           ],
@@ -131,8 +129,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             GoRoute(
               name: 'receipt',
               path: 'receipt',
-              pageBuilder: (context, state) => BottomSheetPage(
-                child: ReceiptPage(transaction: state.extra as Transaction),
+              pageBuilder: (context, state) => const BottomSheetPage(
+                child: ReceiptPage(),
               ),
             )
           ],

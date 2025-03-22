@@ -46,7 +46,7 @@ interface TransactionInterface {
 
 }
 
-open class TransactionHandler : FactoryActivityEvents, TransactionInterface {
+class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: TransactionFactory? = null
     private var factoryConstructor: FactoryConstructorData? = null
