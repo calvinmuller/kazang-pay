@@ -98,13 +98,13 @@ abstract class Transaction with _$Transaction {
 
   get isVoid => transactionType == TransactionType.VOID_TRANSACTION;
 
-  get type => isCashback
-      ? "CASHBACK"
+  get type => isVoid
+      ? "VOID"
       : isPayment
           ? "PURCHASE"
           : isPaymentWithCashback
               ? "PURCHASE/CASHBACK"
-              : "VOID";
+              : "CASHBACK";
 
   get icon => Container(
         width: 50,

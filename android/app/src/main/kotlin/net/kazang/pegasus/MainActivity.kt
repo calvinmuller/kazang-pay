@@ -5,6 +5,8 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.material3.Snackbar
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -140,6 +142,8 @@ class MainActivity : FlutterActivity() {
                 result.success(true)
             } else if (call.method == "getIntentInfo") {
                 result.success(initialIntentMap)
+            }  else if (call.method == "showToast") {
+                Toast.makeText(this, call.argument<String>("message")!!, Toast.LENGTH_SHORT).show()
             } else {
                 result.notImplemented()
             }

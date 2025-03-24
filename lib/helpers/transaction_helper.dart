@@ -88,6 +88,10 @@ class TransactionHelper {
     return Transaction.fromJson(jsonDecode(result));
   }
 
+  static Future<void> showToast(String message) async {
+    await _instance.methodChannel.invokeMethod('showToast', {'message': message});
+  }
+
   static dispose() {
     platform.setMethodCallHandler(null);
   }

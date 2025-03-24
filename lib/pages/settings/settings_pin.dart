@@ -24,7 +24,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
 import '../../common/common.dart';
-import '../../common/providers/api.provider.dart';
+import '../../common/providers/api.provider.dart' show crRepositoryProvider;
 import '../../common/providers/app.provider.dart';
 import '../../common/widgets/form_field.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;

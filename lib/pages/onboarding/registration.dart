@@ -1,9 +1,39 @@
 import 'package:flutter/material.dart'
-    show GlobalKey, FormState, BuildContext, Widget, EdgeInsets, BoxDecoration, TextSpan, TextStyle, Padding, Hero, Theme, Text, Column, Container, MainAxisSize, BorderSide, Border, FontWeight, RichText, CrossAxisAlignment, Form, Card, primaryFocus, UnfocusDisposition, ScaffoldMessenger, SnackBar, ListView, Scaffold, TextInputType;
+    show
+        GlobalKey,
+        FormState,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        TextSpan,
+        TextStyle,
+        Padding,
+        Hero,
+        Theme,
+        Text,
+        Column,
+        Container,
+        MainAxisSize,
+        BorderSide,
+        Border,
+        FontWeight,
+        RichText,
+        CrossAxisAlignment,
+        Form,
+        Card,
+        primaryFocus,
+        UnfocusDisposition,
+        ScaffoldMessenger,
+        SnackBar,
+        ListView,
+        Scaffold,
+        TextInputType;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
+import '../../common/exceptions.dart' show AddDeviceException;
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
 import '../../common/providers/device_info.dart';
@@ -22,6 +52,7 @@ class RegistrationPage extends ConsumerStatefulWidget {
 
 // Username 1000630635
 // Password 1234
+// SN P30224BCJ0696
 
 class RegistrationPageState extends ConsumerState<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
@@ -34,7 +65,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
     final deviceInfo = DeviceInfoProvider.of(context)!.deviceInfo;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: ListView(children: [
         Hero(
           tag: 'logo',
@@ -188,27 +218,17 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                     loginResponse.requestType,
                   );
 
-                  if ((response.status == StatusResult.Failed &&
-                          response.isLinked) ||
-                      response.status == StatusResult.Success) {
-                    ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
-                  } else if (response.status == StatusResult.Failed) {
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: CustomColours.red,
-                          content: Text(response.statusDescription),
-                          duration: const Duration(seconds: 5),
-                        ),
-                      );
-                    }
+                  if (response.status == StatusResult.Failed) {
+                    throw AddDeviceException(response.statusDescription);
                   }
-                } catch (e) {
+                  ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
+                } on AddDeviceException catch (e) {
                   if (context.mounted) {
+                    context.pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: CustomColours.red,
-                        content: Text(l10n.connectionError),
+                        content: Text(e.message),
                         duration: const Duration(seconds: 5),
                       ),
                     );

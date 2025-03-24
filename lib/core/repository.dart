@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' show Dio, DioException;
 import 'package:intl/intl.dart' show DateFormat;
 
+import '../common/exceptions.dart';
 import '../models/crm.dart' show CrmGenericResponse;
 import '../models/kazang.dart';
 
@@ -102,15 +103,21 @@ class CrmRepository {
     };
     try {
       final response = await client.post('crm/add-terminal', data: data);
+      if (response.data['status'] == 2 &&
+          (response.data['status_description'].contains(
+                  "is already linked to ${loginRequest.accountNumber}") ||
+              response.data['status_description'] == "Success")) {
+        // It's already linked - lets continue
+      } else if (response.data['status'] != 0) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
       return CrmGenericResponse.fromJson(response.data);
     } on DioException catch (e) {
-      return CrmGenericResponse.fromJson(e.response?.data ??
-          {
-            "kazang_account_number": loginRequest.accountNumber,
-            "status": 3,
-            "request_type": "0",
-            "status_description": "An error occurred connecting to the server"
-          });
+      throw AddDeviceException(
+          e.response?.data?['status_description'] ?? e.error.toString());
     }
   }
 
@@ -126,13 +133,22 @@ class CrmRepository {
 
     try {
       final response = await client.post('crm/get-request-status', data: data);
-      if (response.data is String &&
-          !response.data.toString().contains("is linked to another")) {
-        throw Exception(response.data);
+
+      if (response.data['status'] == 2 &&
+          (response.data['status_description']
+                  .contains("is already linked to $accountNumber") ||
+              response.data['status_description'] == "Success")) {
+        // It's already linked - lets continue
+      } else if (response.data['status'] != 0) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
       }
       return CrmGenericResponse.fromJson(response.data);
-    } on DioException {
-      rethrow;
+    } on DioException catch (e) {
+      throw AddDeviceException(
+          e.response?.data?['status_description'] ?? e.error.toString());
     }
   }
 }
