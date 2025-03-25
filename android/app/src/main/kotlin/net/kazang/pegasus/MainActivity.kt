@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
 private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
@@ -34,6 +36,7 @@ class MainActivity : FlutterActivity() {
     private var initialIntentMap: Map<String, Any?>? = mapOf()
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        Locale.setDefault(Locale.US)
         super.configureFlutterEngine(flutterEngine)
 
         if (android.os.Build.MODEL.contains("sdk_gphone64_arm64")) {

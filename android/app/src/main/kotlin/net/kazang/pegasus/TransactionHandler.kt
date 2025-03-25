@@ -240,6 +240,8 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     override fun onTransactionCompletedEvent(transactionClientResponse: TransactionClientResponse) {
         val gson = Gson()
 
+        Log.d("onTransactionCompletedEvent", gson.toJson(transactionClientResponse).toString())
+
         handler.post {
             eventSink?.success(
                 mapOf(
