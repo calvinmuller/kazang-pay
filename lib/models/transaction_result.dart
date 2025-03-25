@@ -59,7 +59,8 @@ enum CardDataInputMode {
   CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
   INTEGRATED_CIRCUIT_CARD,
   IntegratedCircuitCard,
-  ContactlessIntegratedCircuitCard
+  ContactlessIntegratedCircuitCard,
+  MagneticStripeRead
 }
 
 enum TransactionClientAction {
