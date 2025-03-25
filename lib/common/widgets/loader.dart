@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Colors, BorderRadius, BoxDecoration, MainAxisSize, CircularProgressIndicator, Theme, Text, Row, Container, Center;
-
 import '../../l10n/app_localizations.dart';
 
 class Loader extends StatelessWidget {

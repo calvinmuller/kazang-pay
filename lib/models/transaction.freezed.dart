@@ -28,6 +28,7 @@ mixin _$Transaction {
   bool get authorised;
   String? get batchNo;
   String? get budgetPeriod;
+  @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
   CardDataInputMode? get cardDataInputMode;
   String? get cardSequenceNumber;
   @JsonKey(fromJson: intSafeToString)
@@ -68,6 +69,7 @@ mixin _$Transaction {
   @JsonKey(fromJson: intSafeToString)
   int get tipAmount;
   DateTime get transactionDateTime;
+  @JsonKey(unknownEnumValue: TransactionType.P)
   TransactionType? get transactionType;
   String? get unpredictableNumber;
 
@@ -235,6 +237,8 @@ abstract mixin class $TransactionCopyWith<$Res> {
       @JsonKey(fromJson: boolSafe) bool authorised,
       String? batchNo,
       String? budgetPeriod,
+      @JsonKey(
+          unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       @JsonKey(fromJson: intSafeToString) int cashBackAmount,
@@ -266,6 +270,7 @@ abstract mixin class $TransactionCopyWith<$Res> {
       String? terminalVerificationResult,
       @JsonKey(fromJson: intSafeToString) int tipAmount,
       DateTime transactionDateTime,
+      @JsonKey(unknownEnumValue: TransactionType.P)
       TransactionType? transactionType,
       String? unpredictableNumber});
 }
@@ -524,6 +529,8 @@ class _Transaction extends Transaction {
       @JsonKey(fromJson: boolSafe) required this.authorised,
       required this.batchNo,
       required this.budgetPeriod,
+      @JsonKey(
+          unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
       required this.cardDataInputMode,
       required this.cardSequenceNumber,
       @JsonKey(fromJson: intSafeToString) required this.cashBackAmount,
@@ -555,6 +562,7 @@ class _Transaction extends Transaction {
       required this.terminalVerificationResult,
       @JsonKey(fromJson: intSafeToString) required this.tipAmount,
       required this.transactionDateTime,
+      @JsonKey(unknownEnumValue: TransactionType.P)
       required this.transactionType,
       required this.unpredictableNumber})
       : super._();
@@ -586,6 +594,7 @@ class _Transaction extends Transaction {
   @override
   final String? budgetPeriod;
   @override
+  @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
   final CardDataInputMode? cardDataInputMode;
   @override
   final String? cardSequenceNumber;
@@ -657,6 +666,7 @@ class _Transaction extends Transaction {
   @override
   final DateTime transactionDateTime;
   @override
+  @JsonKey(unknownEnumValue: TransactionType.P)
   final TransactionType? transactionType;
   @override
   final String? unpredictableNumber;
@@ -832,6 +842,8 @@ abstract mixin class _$TransactionCopyWith<$Res>
       @JsonKey(fromJson: boolSafe) bool authorised,
       String? batchNo,
       String? budgetPeriod,
+      @JsonKey(
+          unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       @JsonKey(fromJson: intSafeToString) int cashBackAmount,
@@ -863,6 +875,7 @@ abstract mixin class _$TransactionCopyWith<$Res>
       String? terminalVerificationResult,
       @JsonKey(fromJson: intSafeToString) int tipAmount,
       DateTime transactionDateTime,
+      @JsonKey(unknownEnumValue: TransactionType.P)
       TransactionType? transactionType,
       String? unpredictableNumber});
 }

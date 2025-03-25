@@ -23,7 +23,7 @@ class TransactionsListState extends ConsumerState<TransactionsList> with Automat
     final transactions = ref.watch(transactionHistoryProvider);
 
     return switch (transactions) {
-      AsyncError(:final stackTrace) => ErrorWidget(stackTrace),
+      AsyncError(:final stackTrace) => Center(child: Text(l10n.unexpectedError),),
       AsyncData(:final value) =>
           RefreshIndicator(
             onRefresh: () async =>

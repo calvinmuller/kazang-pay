@@ -39,22 +39,12 @@ import '../../models/printer.dart';
 import '../../models/transaction.dart';
 import '../dialogs/print_dialog.dart';
 import '../providers/app.provider.dart';
+import '../providers/receipt.provider.dart' show receiptParametersProvider;
 import 'button.dart';
 import 'key_value.dart';
 
 class Receipt extends ConsumerStatefulWidget {
-  const Receipt({
-    super.key,
-    required this.transaction,
-    this.type = ReceiptSectionEnum.CUSTOMER,
-    this.autoClose = true,
-    this.showPrint = true,
-  });
-
-  final Transaction transaction;
-  final ReceiptSectionEnum type;
-  final bool showPrint;
-  final bool autoClose;
+  const Receipt({super.key});
 
   @override
   ReceiptState createState() => ReceiptState();
@@ -64,19 +54,22 @@ class ReceiptState extends ConsumerState<Receipt>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late final AnimationController animationController;
   late final Animation<double> animation;
+  late final bool autoClose;
 
   @override
   void initState() {
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 2, milliseconds: 500),
     );
     animation = Tween(begin: 0.0, end: -700.0).animate(animationController);
+    autoClose =
+        ref.read(receiptParametersProvider.select((state) => state.autoClose));
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
-        if (!widget.autoClose) animationController.reset();
+        if (!autoClose) animationController.reset();
       }
     });
   }
@@ -84,7 +77,8 @@ class ReceiptState extends ConsumerState<Receipt>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final transactionResult = widget.transaction;
+    final receiptViewModel = ref.watch(receiptParametersProvider);
+    final transactionResult = receiptViewModel.transaction!;
 
     final dateFormatter = DateFormat('yyyy-MM-dd');
     final timeFormatter = DateFormat('h:mm:ss a');
@@ -99,7 +93,7 @@ class ReceiptState extends ConsumerState<Receipt>
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (widget.showPrint)
+        if (receiptViewModel.showPrint)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Button.main(
@@ -112,10 +106,10 @@ class ReceiptState extends ConsumerState<Receipt>
                   context: context,
                   builder: (context) => PrintDialog(
                     transactionResult: transactionResult,
-                    type: widget.type,
+                    type: receiptViewModel.type,
                   ),
                 );
-                if (context.mounted && widget.autoClose) {
+                if (context.mounted && receiptViewModel.autoClose) {
                   context.pop();
                 }
               },
@@ -142,7 +136,7 @@ class ReceiptState extends ConsumerState<Receipt>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        (ReceiptSectionEnum.MERCHANT == widget.type)
+                        (ReceiptSectionEnum.MERCHANT == receiptViewModel.type)
                             ? l10n.merchantReceipt
                             : l10n.customerReceipt,
                         style: const TextStyle(

@@ -21,7 +21,8 @@ _Transaction _$TransactionFromJson(Map json) => _Transaction(
       batchNo: json['BatchNo'] as String?,
       budgetPeriod: json['BudgetPeriod'] as String?,
       cardDataInputMode: $enumDecodeNullable(
-          _$CardDataInputModeEnumMap, json['CardDataInputMode']),
+          _$CardDataInputModeEnumMap, json['CardDataInputMode'],
+          unknownValue: CardDataInputMode.ContactlessIntegratedCircuitCard),
       cardSequenceNumber: json['CardSequenceNumber'] as String?,
       cashBackAmount: intSafeToString(json['CashBackAmount']),
       cryptogramInformationData: json['CryptogramInformationData'] as String?,
@@ -54,7 +55,8 @@ _Transaction _$TransactionFromJson(Map json) => _Transaction(
       transactionDateTime:
           DateTime.parse(json['TransactionDateTime'] as String),
       transactionType: $enumDecodeNullable(
-          _$TransactionTypeEnumMap, json['TransactionType']),
+          _$TransactionTypeEnumMap, json['TransactionType'],
+          unknownValue: TransactionType.P),
       unpredictableNumber: json['UnpredictableNumber'] as String?,
     );
 

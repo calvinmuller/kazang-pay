@@ -1,10 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController;
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        Spacer,
+        Text,
+        AppBar,
+        TabBarView,
+        Colors,
+        BorderRadius,
+        CrossAxisAlignment,
+        Column,
+        Theme,
+        Row,
+        Padding,
+        Card,
+        TabBarIndicatorSize,
+        Tab,
+        TabBar,
+        SliverToBoxAdapter,
+        NestedScrollView,
+        Scaffold,
+        DefaultTabController;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show ConsumerWidget, WidgetRef;
+    show ConsumerWidget, ProviderScope, WidgetRef;
+import 'package:go_router/go_router.dart';
 
 import '../common/common.dart';
+import '../common/providers/receipt.provider.dart';
 import '../common/widgets/receipt.dart';
 import '../common/widgets/widgets.dart' show Button;
 import '../core/core.dart';
@@ -17,13 +42,12 @@ import '../theme.dart';
 import 'pages.dart';
 
 class TransactionDetails extends ConsumerWidget {
-  const TransactionDetails({super.key, required this.transaction});
-
-  final Transaction transaction;
+  const TransactionDetails({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final transaction = GoRouterState.of(context).extra as Transaction;
 
     return DefaultTabController(
       length: 2,
@@ -141,18 +165,43 @@ class TransactionDetails extends ConsumerWidget {
           body: TabBarView(
             children: [
               SingleChildScrollView(
-                child: Receipt(
-                    autoClose: false,
-                    type: ReceiptSectionEnum.MERCHANT,
-                    transaction: transaction,
+                child: ProviderScope(
+                  overrides: [
+                    receiptParametersProvider.overrideWithValue(
+                      ReceiptParameters(
+                        autoClose: false,
+                        transaction: transaction,
+                        type: ReceiptSectionEnum.MERCHANT,
+                      ),
+                    ),
+                  ],
+                  child: ProviderScope(
+                    overrides: [
+                      receiptParametersProvider.overrideWithValue(
+                        ReceiptParameters(
+                          autoClose: false,
+                          type: ReceiptSectionEnum.MERCHANT,
+                          transaction: transaction,
+                        ),
+                      ),
+                    ],
+                    child: const Receipt(),
                   ),
+                ),
               ),
               SingleChildScrollView(
-                child: Receipt(
-                    autoClose: false,
-                    type: ReceiptSectionEnum.CUSTOMER,
-                    transaction: transaction,
-                  ),
+                child: ProviderScope(
+                  overrides: [
+                    receiptParametersProvider.overrideWithValue(
+                      ReceiptParameters(
+                        autoClose: false,
+                        type: ReceiptSectionEnum.CUSTOMER,
+                        transaction: transaction,
+                      ),
+                    ),
+                  ],
+                  child: const Receipt(),
+                ),
               ),
             ],
           ),
