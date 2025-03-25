@@ -6,7 +6,7 @@ class KeyValueWidget extends StatelessWidget {
   const KeyValueWidget({super.key, required this.title, required this.value, this.bold = false});
 
   final String title;
-  final String value;
+  final String? value;
   final bool bold;
 
   @override
@@ -19,7 +19,7 @@ class KeyValueWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: const TextStyle(fontWeight: FontWeight.w500),),
-          Text(value),
+          Text(value ?? ''),
         ],
       ),
     );

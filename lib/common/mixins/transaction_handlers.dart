@@ -87,4 +87,9 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     final l10n = AppLocalizations.of(context)!;
     showErrorDialog(context, l10n.printerError).then((_) {});
   }
+
+  @override
+  void onPrinterOperationEndEvent(bool value) {
+
+  }
 }

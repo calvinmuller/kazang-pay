@@ -75,12 +75,14 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
               ),
               Expanded(
                 child: Button.secondary(
-                  borderColour: CustomColours.black,
-                  height: buttonHeight,
-                  child: Text(l10n.view, style: style),
-                  onPressed: () =>
-                      context.pushNamed('receipt', extra: transaction),
-                ),
+                    borderColour: CustomColours.black,
+                    height: buttonHeight,
+                    child: Text(l10n.view, style: style),
+                    onPressed: () => context.pushNamed('receipt',
+                            extra: transaction,
+                            queryParameters: {
+                              'type': ReceiptSectionEnum.MERCHANT.toString()
+                            })),
               ),
               Expanded(
                 child: Button.secondary(
@@ -111,13 +113,14 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
               ),
               Expanded(
                 child: Button.secondary(
-                  borderColour: CustomColours.black,
-                  height: buttonHeight,
-                  child: Text(l10n.view, style: style),
-                  onPressed: () {
-                    context.pushNamed('receipt', extra: transaction);
-                  },
-                ),
+                    borderColour: CustomColours.black,
+                    height: buttonHeight,
+                    child: Text(l10n.view, style: style),
+                    onPressed: () => context.pushNamed('receipt',
+                            extra: transaction,
+                            queryParameters: {
+                              'type': ReceiptSectionEnum.CUSTOMER.toString()
+                            })),
               ),
               Expanded(
                 child: Button.secondary(

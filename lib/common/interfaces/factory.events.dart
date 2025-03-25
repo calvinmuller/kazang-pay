@@ -50,4 +50,5 @@ abstract class FactoryEventHandler {
   void onDisConnectEvent(bool value);
   void onBatteryStatusLowEvent(int percentage);
   void onPrintDataCancelledEvent(bool value);
+  void onPrinterOperationEndEvent(bool value);
 }

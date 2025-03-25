@@ -20,7 +20,7 @@ abstract class TransactionResult with _$TransactionResult {
     @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
     List<int>? authorizationCode,
     required bool canPrintReceipt,
-    CardDataInputMode? cardDataInputMode,
+    @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard) CardDataInputMode? cardDataInputMode,
     String? cardSequenceNumber,
     List<int>? cardVerificationMethod,
     required String declinedReason,
@@ -39,9 +39,9 @@ abstract class TransactionResult with _$TransactionResult {
     required String? responseMessage,
     String? terminalId,
     required int transactionAmount,
-    required TransactionClientAction? transactionClientAction,
+    @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN) required TransactionClientAction? transactionClientAction,
     String? transactionDate,
-    TransactionType? transactionType,
+    @JsonKey(unknownEnumValue: TransactionType.P) TransactionType? transactionType,
     List<String>? cardApplications,
   }) = _TransactionResult;
 
@@ -59,7 +59,8 @@ enum CardDataInputMode {
   CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
   INTEGRATED_CIRCUIT_CARD,
   IntegratedCircuitCard,
-  ContactlessIntegratedCircuitCard
+  ContactlessIntegratedCircuitCard,
+  MagneticStripeRead
 }
 
 enum TransactionClientAction {
@@ -67,5 +68,6 @@ enum TransactionClientAction {
   TRANSACTION_SUCCESSFULL,
   SIGNATURE_REQUIRED,
   SELECT_APPLICATION,
-  SELECT_BUDGET
+  SELECT_BUDGET,
+  UNKNOWN,
 }

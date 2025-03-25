@@ -14,7 +14,8 @@ _TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
           .toList(),
       canPrintReceipt: json['canPrintReceipt'] as bool,
       cardDataInputMode: $enumDecodeNullable(
-          _$CardDataInputModeEnumMap, json['cardDataInputMode']),
+          _$CardDataInputModeEnumMap, json['cardDataInputMode'],
+          unknownValue: CardDataInputMode.ContactlessIntegratedCircuitCard),
       cardSequenceNumber: json['cardSequenceNumber'] as String?,
       cardVerificationMethod: (json['cardVerificationMethod'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
@@ -36,10 +37,12 @@ _TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
       terminalId: json['terminalId'] as String?,
       transactionAmount: (json['transactionAmount'] as num).toInt(),
       transactionClientAction: $enumDecodeNullable(
-          _$TransactionClientActionEnumMap, json['transactionClientAction']),
+          _$TransactionClientActionEnumMap, json['transactionClientAction'],
+          unknownValue: TransactionClientAction.UNKNOWN),
       transactionDate: json['transactionDate'] as String?,
       transactionType: $enumDecodeNullable(
-          _$TransactionTypeEnumMap, json['transactionType']),
+          _$TransactionTypeEnumMap, json['transactionType'],
+          unknownValue: TransactionType.P),
       cardApplications: (json['cardApplications'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -93,6 +96,7 @@ const _$TransactionClientActionEnumMap = {
   TransactionClientAction.SIGNATURE_REQUIRED: 'SIGNATURE_REQUIRED',
   TransactionClientAction.SELECT_APPLICATION: 'SELECT_APPLICATION',
   TransactionClientAction.SELECT_BUDGET: 'SELECT_BUDGET',
+  TransactionClientAction.UNKNOWN: 'UNKNOWN',
 };
 
 const _$TransactionTypeEnumMap = {

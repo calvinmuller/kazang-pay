@@ -24,8 +24,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
 import '../../common/common.dart';
-import '../../common/providers/api.provider.dart';
-import '../../common/providers/device_info.dart';
+import '../../common/providers/api.provider.dart' show crRepositoryProvider;
+import '../../common/providers/app.provider.dart';
 import '../../common/widgets/form_field.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;
 import '../../core/core.dart';
@@ -47,10 +47,11 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final deviceInfo = DeviceInfoProvider.of(context)!.deviceInfo;
+    final deviceInfo = ref.watch(appNotifierProvider.select((state) => state.deviceInfo))!;
     final crApi = ref.watch(crRepositoryProvider);
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(l10n.supervisorPinTitle),
       ),
@@ -72,6 +73,7 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                     l10n.username,
                   ),
                   FormField(
+                    controller: usernameController,
                     autofocus: true,
                     textInputType: TextInputType.number,
                     textInputAction: TextInputAction.next,
@@ -94,9 +96,6 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                         return l10n.passwordError;
                       }
                       return null;
-                    },
-                    onSaved: (value) {
-                      // loginRequest.password = value;
                     },
                   ),
                   Padding(

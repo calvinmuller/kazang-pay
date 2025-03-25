@@ -23,7 +23,7 @@ final kazangRepositoryProvider = AutoDisposeProvider<KazangRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef KazangRepositoryRef = AutoDisposeProviderRef<KazangRepository>;
-String _$fetchProfileHash() => r'06df913957baa676670cd3822403bd4684ea76cb';
+String _$fetchProfileHash() => r'855677b7262e2a25242e5d121c24e088d81ed155';
 
 /// See also [fetchProfile].
 @ProviderFor(fetchProfile)

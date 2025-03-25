@@ -45,7 +45,7 @@ abstract class Transaction with _$Transaction {
     @JsonKey(fromJson: boolSafe) required bool authorised,
     required String? batchNo,
     required String? budgetPeriod,
-    required CardDataInputMode? cardDataInputMode,
+    @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard) required CardDataInputMode? cardDataInputMode,
     required String? cardSequenceNumber,
     @JsonKey(fromJson: intSafeToString) required int cashBackAmount,
     required String? cryptogramInformationData,
@@ -76,7 +76,7 @@ abstract class Transaction with _$Transaction {
     required String? terminalVerificationResult,
     @JsonKey(fromJson: intSafeToString) required int tipAmount,
     required DateTime transactionDateTime,
-    required TransactionType? transactionType,
+    @JsonKey(unknownEnumValue: TransactionType.P) required TransactionType? transactionType,
     required String? unpredictableNumber,
   }) = _Transaction;
 
@@ -98,13 +98,13 @@ abstract class Transaction with _$Transaction {
 
   get isVoid => transactionType == TransactionType.VOID_TRANSACTION;
 
-  get type => isCashback
-      ? "CASHBACK"
+  get type => isVoid
+      ? "VOID"
       : isPayment
           ? "PURCHASE"
           : isPaymentWithCashback
               ? "PURCHASE/CASHBACK"
-              : "VOID";
+              : "CASHBACK";
 
   get icon => Container(
         width: 50,
