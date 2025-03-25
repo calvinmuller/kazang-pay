@@ -21,6 +21,7 @@ mixin _$TransactionResult {
   String? get applicationIdentifier;
   List<int>? get authorizationCode;
   bool get canPrintReceipt;
+  @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
   CardDataInputMode? get cardDataInputMode;
   String? get cardSequenceNumber;
   List<int>? get cardVerificationMethod;
@@ -40,8 +41,10 @@ mixin _$TransactionResult {
   String? get responseMessage;
   String? get terminalId;
   int get transactionAmount;
+  @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
   TransactionClientAction? get transactionClientAction;
   String? get transactionDate;
+  @JsonKey(unknownEnumValue: TransactionType.P)
   TransactionType? get transactionType;
   List<String>? get cardApplications;
 
@@ -165,6 +168,8 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
       List<int>? authorizationCode,
       bool canPrintReceipt,
+      @JsonKey(
+          unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       List<int>? cardVerificationMethod,
@@ -184,8 +189,10 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
+      @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
       TransactionClientAction? transactionClientAction,
       String? transactionDate,
+      @JsonKey(unknownEnumValue: TransactionType.P)
       TransactionType? transactionType,
       List<String>? cardApplications});
 }
@@ -352,6 +359,8 @@ class _TransactionResult extends TransactionResult {
       @JsonKey(fromJson: arrayToString) this.applicationIdentifier,
       final List<int>? authorizationCode,
       required this.canPrintReceipt,
+      @JsonKey(
+          unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
       this.cardDataInputMode,
       this.cardSequenceNumber,
       final List<int>? cardVerificationMethod,
@@ -371,9 +380,10 @@ class _TransactionResult extends TransactionResult {
       required this.responseMessage,
       this.terminalId,
       required this.transactionAmount,
+      @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
       required this.transactionClientAction,
       this.transactionDate,
-      this.transactionType,
+      @JsonKey(unknownEnumValue: TransactionType.P) this.transactionType,
       final List<String>? cardApplications})
       : _authorizationCode = authorizationCode,
         _cardVerificationMethod = cardVerificationMethod,
@@ -402,6 +412,7 @@ class _TransactionResult extends TransactionResult {
   @override
   final bool canPrintReceipt;
   @override
+  @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
   final CardDataInputMode? cardDataInputMode;
   @override
   final String? cardSequenceNumber;
@@ -449,10 +460,12 @@ class _TransactionResult extends TransactionResult {
   @override
   final int transactionAmount;
   @override
+  @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
   final TransactionClientAction? transactionClientAction;
   @override
   final String? transactionDate;
   @override
+  @JsonKey(unknownEnumValue: TransactionType.P)
   final TransactionType? transactionType;
   final List<String>? _cardApplications;
   @override
@@ -591,6 +604,8 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
       List<int>? authorizationCode,
       bool canPrintReceipt,
+      @JsonKey(
+          unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       List<int>? cardVerificationMethod,
@@ -610,8 +625,10 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
+      @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
       TransactionClientAction? transactionClientAction,
       String? transactionDate,
+      @JsonKey(unknownEnumValue: TransactionType.P)
       TransactionType? transactionType,
       List<String>? cardApplications});
 }

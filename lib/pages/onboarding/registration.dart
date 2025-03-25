@@ -54,6 +54,10 @@ class RegistrationPage extends ConsumerStatefulWidget {
 // Password 1234
 // SN P30224BCJ0696
 
+// NEW
+// Username 1000635514
+// Password 14648219
+
 class RegistrationPageState extends ConsumerState<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   final loginRequest = LoginRequest();

@@ -54,7 +54,6 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var factorybb = FactoryTransactionBuilder()
 
     private var handler = Handler(Looper.getMainLooper())
-    private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
     private var transactionType: TransactionTypesEnum? = null
 
@@ -128,12 +127,7 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     override fun onBatteryStatusLowEvent(percentage: Int) {
         Log.d("onBatteryStatusLowEvent", percentage.toString())
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to percentage,
-                    "event" to "onBatteryStatusLowEvent"
-                )
-            )
+            FlutterBridge.sendMessageToFlutter("onBatteryStatusLowEvent", percentage)
         }
     }
 

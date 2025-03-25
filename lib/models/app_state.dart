@@ -26,8 +26,7 @@ abstract class AppState with _$AppState {
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);
 
-  get isSetup =>
-      accountInfo?.accountNumber != null || intentInfo?.username != null;
+  get isSetup => accountInfo?.accountNumber != null || intentInfo?.username != null;
 
   bool get hasPin => pin != null;
 

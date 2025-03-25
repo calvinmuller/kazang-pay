@@ -144,7 +144,7 @@ class MainActivity : FlutterActivity() {
                 result.success(true)
             } else if (call.method == "getIntentInfo") {
                 result.success(initialIntentMap)
-            }  else if (call.method == "showToast") {
+            } else if (call.method == "showToast") {
                 Toast.makeText(this, call.argument<String>("message")!!, Toast.LENGTH_SHORT).show()
             } else {
                 result.notImplemented()
@@ -191,6 +191,11 @@ class MainActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         handleIntent(intent)
     }
 }

@@ -67,8 +67,7 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
                   borderColour: CustomColours.black,
                   height: buttonHeight,
                   child: Text(l10n.view, style: style),
-                  onPressed: () =>
-                      context.pushNamed('receipt', extra: transaction, queryParameters: {'type': ReceiptSectionEnum.MERCHANT.toString()})
+                  onPressed: () => context.pushNamed('receipt', extra: transaction, queryParameters: {'type': ReceiptSectionEnum.MERCHANT.toString()})
                 ),
               ),
               Expanded(

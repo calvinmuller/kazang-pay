@@ -37,7 +37,6 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var factorybb = FactoryTransactionBuilder()
 
     private var handler = Handler(Looper.getMainLooper())
-    private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
 
     override fun initialize(context: Context, config: TerminalConfig) {
