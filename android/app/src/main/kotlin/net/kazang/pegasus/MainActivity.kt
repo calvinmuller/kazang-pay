@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Type
-import java.util.*
+import java.util.Locale
 import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
@@ -31,7 +31,7 @@ class MainActivity : FlutterActivity() {
     private val PRINT_CHANNEL = "kazangpay_print"
     private var mediaPlayer: MediaPlayer? = null
     private val eventChannel = "factoryEventHandler"
-    private var transactionHandler: TransactionInterface = TransactionHandler()
+    private lateinit var transactionHandler: TransactionInterface
     private val gson = Gson()
     private var initialIntentMap: Map<String, Any?>? = mapOf()
 
@@ -40,11 +40,10 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
 
         if (android.os.Build.MODEL.contains("sdk_gphone64_arm64")) {
-            transactionHandler = MockTransactionHandler();
-            EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
-                transactionHandler as MockTransactionHandler
-            )
+            transactionHandler = MockTransactionHandler()
         } else {
+            transactionHandler = TransactionHandler()
+
             MethodChannel(
                 flutterEngine.dartExecutor.binaryMessenger,
                 PRINT_CHANNEL
@@ -53,11 +52,11 @@ class MainActivity : FlutterActivity() {
                     transactionHandler
                 )
             )
-
-            EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
-                transactionHandler
-            )
         }
+
+        EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
+            transactionHandler
+        )
 
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
