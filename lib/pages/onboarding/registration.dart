@@ -223,10 +223,11 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   );
 
                   if (response.status == StatusResult.Failed) {
-                    throw AddDeviceException(response.statusDescription);
+                    throw AddDeviceException(response.statusDescription, error: response);
                   }
                   ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
                 } on AddDeviceException catch (e) {
+                  print(e.error);
                   if (context.mounted) {
                     context.pop();
                     ScaffoldMessenger.of(context).showSnackBar(

@@ -1,4 +1,5 @@
 
+import 'package:dio/dio.dart' show DioException;
 import 'package:flutter/material.dart' show BuildContext, Widget, AutomaticKeepAliveClientMixin, SizedBox, Center, Text, RefreshIndicator, ListView;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerState, ConsumerStatefulWidget, AsyncError, AsyncData, ProviderScope;
 
@@ -23,7 +24,7 @@ class SettlementsListState extends ConsumerState<SettlementsList> with Automatic
     super.build(context);
     final settlements = ref.watch(settlementsProvider);
     return switch (settlements) {
-      AsyncError(:final error) => Text('Error: $error'),
+      AsyncError(:final DioException error) => Text('Error: ${error.message}'),
       AsyncData(:final value) =>
       (value.transactionSummary.isNotEmpty)
           ? RefreshIndicator.adaptive(

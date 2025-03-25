@@ -1,5 +1,6 @@
 class AddDeviceException implements Exception {
   final String message;
+  final dynamic error;
 
-  AddDeviceException(this.message);
+  AddDeviceException(this.message, {this.error});
 }

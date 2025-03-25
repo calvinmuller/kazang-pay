@@ -117,7 +117,9 @@ class CrmRepository {
       return CrmGenericResponse.fromJson(response.data);
     } on DioException catch (e) {
       throw AddDeviceException(
-          e.response?.data?['status_description'] ?? e.error.toString());
+        e.response?.data?['status_description'] ?? e.error.toString(),
+        error: e.response
+      );
     }
   }
 
@@ -148,7 +150,8 @@ class CrmRepository {
       return CrmGenericResponse.fromJson(response.data);
     } on DioException catch (e) {
       throw AddDeviceException(
-          e.response?.data?['status_description'] ?? e.error.toString());
+          e.response?.data?['status_description'] ?? e.error.toString(),
+          error: e.response);
     }
   }
 }
