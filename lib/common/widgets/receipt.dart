@@ -59,13 +59,13 @@ class ReceiptState extends ConsumerState<Receipt>
   @override
   void initState() {
     super.initState();
+    autoClose = ref.read(receiptParametersProvider.select((state) => state.autoClose));
+
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2, milliseconds: 500),
     );
-    animation = Tween(begin: 0.0, end: -700.0).animate(animationController);
-    autoClose =
-        ref.read(receiptParametersProvider.select((state) => state.autoClose));
+    animation = Tween(begin: 0.0, end: -800.0).animate(animationController);
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
@@ -151,7 +151,7 @@ class ReceiptState extends ConsumerState<Receipt>
                       ),
                       KeyValueWidget(
                         title: l10n.merchantId,
-                        value: transactionResult.merchantId!,
+                        value: transactionResult.merchantId,
                       ),
                       KeyValueWidget(
                         title: l10n.terminalId,
@@ -167,11 +167,11 @@ class ReceiptState extends ConsumerState<Receipt>
                       ),
                       KeyValueWidget(
                         title: l10n.aid,
-                        value: transactionResult.applicationIdentifier ?? "",
+                        value: transactionResult.applicationIdentifier,
                       ),
                       KeyValueWidget(
                         title: l10n.pan,
-                        value: transactionResult.maskedPan ?? "",
+                        value: transactionResult.maskedPan,
                       ),
                       KeyValueWidget(
                         title: l10n.transType,
@@ -187,7 +187,7 @@ class ReceiptState extends ConsumerState<Receipt>
                       ),
                       KeyValueWidget(
                         title: l10n.appType,
-                        value: transactionResult.applicationLabel!,
+                        value: transactionResult.applicationLabel,
                       ),
                       if (appState.profile?.merchantConfig.routingSwitch !=
                           null)
@@ -197,12 +197,12 @@ class ReceiptState extends ConsumerState<Receipt>
                         ),
                       KeyValueWidget(
                         title: l10n.purchase,
-                        value: transactionResult.responseMessage!,
+                        value: transactionResult.responseMessage,
                       ),
                       if (!transactionResult.isSuccessful)
                         KeyValueWidget(
                           title: l10n.reason,
-                          value: transactionResult.responseMessage ?? "",
+                          value: transactionResult.responseMessage,
                         ),
                       KeyValueWidget(
                         bold: true,
