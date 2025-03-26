@@ -37,7 +37,7 @@ class _SettingsProxyState extends ConsumerState<SettingsProxy> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text(l10n.supervisorPinTitle),
+        title: Text(l10n.proxySettings),
       ),
       body: Container(
         margin: const EdgeInsets.all(12),
