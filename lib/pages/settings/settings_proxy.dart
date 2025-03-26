@@ -11,31 +11,15 @@ import 'package:flutter/material.dart'
         CrossAxisAlignment,
         Column,
         Container,
-        TextInputType,
-        TextInputAction,
-        Form,
-        Colors,
-        Padding,
-        GlobalKey,
-        FormState,
-        TextEditingController,
-        ScaffoldMessenger,
-        SnackBar,
         Switch,
-        Color,
-        WidgetStatePropertyAll,
         Row;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
-import '../../common/common.dart';
-import '../../common/providers/api.provider.dart' show crRepositoryProvider;
 import '../../common/providers/app.provider.dart';
-import '../../common/widgets/form_field.dart';
-import '../../common/widgets/widgets.dart' show Label, Button;
+import '../../common/widgets/widgets.dart' show Label;
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
-import '../../models/kazang.dart';
 
 class SettingsProxy extends ConsumerStatefulWidget {
   const SettingsProxy({super.key});

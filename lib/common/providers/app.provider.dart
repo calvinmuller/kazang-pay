@@ -17,7 +17,6 @@ class AppNotifier extends _$AppNotifier {
   AppState build() {
     listenSelf((prev, next) {
       _save(next);
-      print(next.toString());
     });
     return appState ?? AppState();
   }

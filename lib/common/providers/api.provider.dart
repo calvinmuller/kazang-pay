@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' show HttpClient, X509Certificate;
 import 'package:dio/io.dart';
 
 import 'package:dio/dio.dart' show BaseOptions, Dio, DioException;
@@ -24,8 +24,7 @@ Dio dioClient(Ref ref) {
         client.findProxy = (uri) {
           return 'PROXY proxy.kazang.net:30720';
         };
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
         return client;
       },
     );
