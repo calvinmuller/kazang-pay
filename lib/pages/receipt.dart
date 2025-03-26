@@ -19,6 +19,7 @@ class ReceiptPage extends ConsumerWidget {
         : ReceiptSectionEnum.MERCHANT;
     return ProviderScope(
       overrides: [
+        // ignore: scoped_providers_should_specify_dependencies
         receiptParametersProvider.overrideWithValue(
           ReceiptParameters(
             transaction: transaction,

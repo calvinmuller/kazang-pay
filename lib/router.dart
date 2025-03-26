@@ -84,6 +84,12 @@ final routerProvider = Provider<GoRouter>((ref) {
               path: 'pin',
               builder: (BuildContext context, GoRouterState state) =>
                   const SettingsPin(),
+            ),
+            GoRoute(
+              name: 'proxy',
+              path: 'proxy',
+              builder: (BuildContext context, GoRouterState state) =>
+                  const SettingsProxy(),
             )
           ],
         ),

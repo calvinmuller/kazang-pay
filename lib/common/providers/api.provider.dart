@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io' show HttpClient, X509Certificate;
+import 'package:dio/io.dart';
 
 import 'package:dio/dio.dart' show BaseOptions, Dio, DioException;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
@@ -11,7 +13,28 @@ import 'app.provider.dart';
 
 part 'api.provider.g.dart';
 
-final crmRepositoryProvider = Provider<CrmRepository>((ref) {
+@riverpod
+Dio dioClient(Ref ref) {
+  final proxy = ref.read(appNotifierProvider.select((state) => state.proxy));
+  final dio = Dio();
+  if (proxy) {
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        final client = HttpClient();
+        client.findProxy = (uri) {
+          return 'PROXY proxy.kazang.net:30720';
+        };
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+        return client;
+      },
+    );
+  }
+  return dio;
+}
+
+@riverpod
+CrmRepository crmRepository(Ref ref) {
+  final dio = ref.watch(dioClientProvider);
   const uri = String.fromEnvironment('crmApiUrl');
 
   const username = String.fromEnvironment('sonicUsername');
@@ -26,11 +49,12 @@ final crmRepositoryProvider = Provider<CrmRepository>((ref) {
       'Authorization': basicAuth,
     },
   );
-  return CrmRepository(Dio(options));
-});
+  return CrmRepository(dio..options = options);
+}
 
 @riverpod
 KazangRepository kazangRepository(Ref ref) {
+  final dio = ref.watch(dioClientProvider);
   const uri = String.fromEnvironment('kazangApiUrl');
 
   const username = String.fromEnvironment('cpsUsername');
@@ -45,17 +69,19 @@ KazangRepository kazangRepository(Ref ref) {
       'Authorization': basicAuth,
     },
   );
-  return KazangRepository(Dio(options));
+  return KazangRepository(dio..options = options);
 }
 
-final crRepositoryProvider = Provider<CrRepository>((ref) {
+@riverpod
+CrRepository crRepository(Ref ref) {
+  final dio = ref.watch(dioClientProvider);
   const uri = String.fromEnvironment('crApiUrl');
 
   final BaseOptions options = BaseOptions(
     baseUrl: uri,
   );
-  return CrRepository(Dio(options));
-});
+  return CrRepository(dio..options = options);
+}
 
 @riverpod
 Future<TerminalProfile> fetchProfile(Ref ref) async {

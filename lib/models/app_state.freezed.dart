@@ -17,6 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$AppState {
   bool get pinVerified;
   bool get isConfigured;
+  bool get proxy;
   DeviceInfo? get deviceInfo;
   LoginRequest? get accountInfo;
   TerminalProfile? get profile;
@@ -44,6 +45,7 @@ mixin _$AppState {
                 other.pinVerified == pinVerified) &&
             (identical(other.isConfigured, isConfigured) ||
                 other.isConfigured == isConfigured) &&
+            (identical(other.proxy, proxy) || other.proxy == proxy) &&
             (identical(other.deviceInfo, deviceInfo) ||
                 other.deviceInfo == deviceInfo) &&
             (identical(other.accountInfo, accountInfo) ||
@@ -58,12 +60,12 @@ mixin _$AppState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured,
+  int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured, proxy,
       deviceInfo, accountInfo, profile, pin, language, intentInfo);
 
   @override
   String toString() {
-    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
+    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, proxy: $proxy, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
   }
 }
 
@@ -75,6 +77,7 @@ abstract mixin class $AppStateCopyWith<$Res> {
   $Res call(
       {bool pinVerified,
       bool isConfigured,
+      bool proxy,
       DeviceInfo? deviceInfo,
       LoginRequest? accountInfo,
       TerminalProfile? profile,
@@ -98,6 +101,7 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
   $Res call({
     Object? pinVerified = null,
     Object? isConfigured = null,
+    Object? proxy = null,
     Object? deviceInfo = freezed,
     Object? accountInfo = freezed,
     Object? profile = freezed,
@@ -113,6 +117,10 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
       isConfigured: null == isConfigured
           ? _self.isConfigured
           : isConfigured // ignore: cast_nullable_to_non_nullable
+              as bool,
+      proxy: null == proxy
+          ? _self.proxy
+          : proxy // ignore: cast_nullable_to_non_nullable
               as bool,
       deviceInfo: freezed == deviceInfo
           ? _self.deviceInfo
@@ -148,6 +156,7 @@ class _AppState extends AppState {
   _AppState(
       {this.pinVerified = true,
       this.isConfigured = false,
+      this.proxy = false,
       this.deviceInfo = null,
       this.accountInfo = null,
       this.profile = null,
@@ -165,6 +174,9 @@ class _AppState extends AppState {
   @override
   @JsonKey()
   final bool isConfigured;
+  @override
+  @JsonKey()
+  final bool proxy;
   @override
   @JsonKey()
   final DeviceInfo? deviceInfo;
@@ -208,6 +220,7 @@ class _AppState extends AppState {
                 other.pinVerified == pinVerified) &&
             (identical(other.isConfigured, isConfigured) ||
                 other.isConfigured == isConfigured) &&
+            (identical(other.proxy, proxy) || other.proxy == proxy) &&
             (identical(other.deviceInfo, deviceInfo) ||
                 other.deviceInfo == deviceInfo) &&
             (identical(other.accountInfo, accountInfo) ||
@@ -222,12 +235,12 @@ class _AppState extends AppState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured,
+  int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured, proxy,
       deviceInfo, accountInfo, profile, pin, language, intentInfo);
 
   @override
   String toString() {
-    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
+    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, proxy: $proxy, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
   }
 }
 
@@ -241,6 +254,7 @@ abstract mixin class _$AppStateCopyWith<$Res>
   $Res call(
       {bool pinVerified,
       bool isConfigured,
+      bool proxy,
       DeviceInfo? deviceInfo,
       LoginRequest? accountInfo,
       TerminalProfile? profile,
@@ -264,6 +278,7 @@ class __$AppStateCopyWithImpl<$Res> implements _$AppStateCopyWith<$Res> {
   $Res call({
     Object? pinVerified = null,
     Object? isConfigured = null,
+    Object? proxy = null,
     Object? deviceInfo = freezed,
     Object? accountInfo = freezed,
     Object? profile = freezed,
@@ -279,6 +294,10 @@ class __$AppStateCopyWithImpl<$Res> implements _$AppStateCopyWith<$Res> {
       isConfigured: null == isConfigured
           ? _self.isConfigured
           : isConfigured // ignore: cast_nullable_to_non_nullable
+              as bool,
+      proxy: null == proxy
+          ? _self.proxy
+          : proxy // ignore: cast_nullable_to_non_nullable
               as bool,
       deviceInfo: freezed == deviceInfo
           ? _self.deviceInfo

@@ -36,7 +36,6 @@ import '../../core/core.dart';
 import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/printer.dart';
-import '../../models/transaction.dart';
 import '../dialogs/print_dialog.dart';
 import '../providers/app.provider.dart';
 import '../providers/receipt.provider.dart' show receiptParametersProvider;

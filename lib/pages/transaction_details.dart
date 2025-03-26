@@ -167,6 +167,7 @@ class TransactionDetails extends ConsumerWidget {
               SingleChildScrollView(
                 child: ProviderScope(
                   overrides: [
+                    // ignore: scoped_providers_should_specify_dependencies
                     receiptParametersProvider.overrideWithValue(
                       ReceiptParameters(
                         autoClose: false,
@@ -175,23 +176,13 @@ class TransactionDetails extends ConsumerWidget {
                       ),
                     ),
                   ],
-                  child: ProviderScope(
-                    overrides: [
-                      receiptParametersProvider.overrideWithValue(
-                        ReceiptParameters(
-                          autoClose: false,
-                          type: ReceiptSectionEnum.MERCHANT,
-                          transaction: transaction,
-                        ),
-                      ),
-                    ],
-                    child: const Receipt(),
-                  ),
+                  child: const Receipt(),
                 ),
               ),
               SingleChildScrollView(
                 child: ProviderScope(
                   overrides: [
+                    // ignore: scoped_providers_should_specify_dependencies
                     receiptParametersProvider.overrideWithValue(
                       ReceiptParameters(
                         autoClose: false,

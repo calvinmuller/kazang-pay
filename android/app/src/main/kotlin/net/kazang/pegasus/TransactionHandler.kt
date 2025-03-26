@@ -28,9 +28,9 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 
 // create abstract class of the following below
-interface TransactionInterface: EventChannel.StreamHandler {
+interface TransactionInterface : EventChannel.StreamHandler {
 
-    fun initialize(context: Context, config: TerminalConfig)
+    fun initialize(context: Context, config: TerminalConfig, proxy: Boolean = false)
     fun createPurchase(amount: String, description: String)
     fun voidTransaction(retrievalReferenceNumberBuilder: String)
     fun continueTransaction(pos: Int, value: String)
@@ -43,7 +43,6 @@ interface TransactionInterface: EventChannel.StreamHandler {
     fun printReceipt(data: PrintRequest)
     fun abortTransaction()
     fun connect()
-
 }
 
 class TransactionHandler : FactoryActivityEvents, TransactionInterface {
@@ -58,10 +57,10 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var repo: TransactionRepository? = null
     private var transactionType: TransactionTypesEnum? = null
 
-    override fun initialize(context: Context, config: TerminalConfig) {
-        if (factory != null) {
+    override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
+        if (connected) {
+            factory!!.disconnect()
             factory!!.dispose()
-            factory = null;
         }
         factoryConstructor = FactoryConstructorData()
         factoryConstructor!!.context = context
@@ -69,7 +68,8 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryConstructor!!.debugMode = BuildConfig.DEBUG
         factoryConstructor!!.serviceConfiguration = ServiceConfigurationEnum.UAT
         factoryConstructor!!.serviceTimeout = 60000
-        factoryConstructor!!.proxyUrl = null
+        factoryConstructor!!.proxyUrl = if (proxy) "proxy.kazang.net:30720" else null
+        Log.d("Proxy", factoryConstructor!!.proxyUrl ?: "none")
         factoryConstructor!!.proxyUserName = null
         factoryConstructor!!.proxyPassword = null
         factoryConstructor!!.useSSLCerticates = false
@@ -79,12 +79,14 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryConstructor!!.terminalSetup = terminalSetup
         factoryConstructor!!.useExternalConfiguration = true
         factoryConstructor!!.posFactorySetup = PosFactorySetup()
-        factoryConstructor!!.posFactorySetup!!.currencyCode = CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
+        factoryConstructor!!.posFactorySetup!!.currencyCode =
+            CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryConstructor!!.posFactorySetup!!.velocityCount = 0
-        factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
-        factoryConstructor!!.posFactorySetup!!.cashbackLimit = config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
+        factoryConstructor!!.posFactorySetup!!.velocityCount = 10
+        factoryConstructor!!.posFactorySetup!!.velocityPeriod = 5
+        factoryConstructor!!.posFactorySetup!!.cashbackLimit =
+            config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true
         factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
@@ -108,15 +110,22 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             enabledTransactions.add(TransactionTypesEnum.REFUND)
         }
         config.merchant_config.transaction_types.forEach {
-            val type = it.uppercase()
-            if (type == "VOID") {
-                enabledTransactions.add(TransactionTypesEnum.VOID_TRANSACTION)
-            } else if (type == "CASH_WITHDRAWAL") {
-                enabledTransactions.add(TransactionTypesEnum.CASH_WITH_DRAWAL)
-            } else if (type == "PURCHASE_WITH_CASHBACK") {
-                enabledTransactions.add(TransactionTypesEnum.PURCHASE_TIP)
-            } else {
-                enabledTransactions.add(TransactionTypesEnum.valueOf(type))
+            when (val type = it.uppercase()) {
+                "VOID" -> {
+                    enabledTransactions.add(TransactionTypesEnum.VOID_TRANSACTION)
+                }
+
+                "CASH_WITHDRAWAL" -> {
+                    enabledTransactions.add(TransactionTypesEnum.CASH_WITH_DRAWAL)
+                }
+
+                "PURCHASE_WITH_CASHBACK" -> {
+                    enabledTransactions.add(TransactionTypesEnum.PURCHASE_TIP)
+                }
+
+                else -> {
+                    enabledTransactions.add(TransactionTypesEnum.valueOf(type))
+                }
             }
         }
         factoryConstructor!!.posFactorySetup!!.enabledTransactions = enabledTransactions
@@ -412,7 +421,8 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun connect() {
-        factory!!.connect()
+        if (!connected)
+            factory!!.connect()
     }
 
 }

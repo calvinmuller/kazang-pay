@@ -47,8 +47,8 @@ Future<List<Transaction>> transactionHistory(Ref ref) async {
 @riverpod
 Future<TransactionSummaryResponse> settlements(Ref ref) async {
   final dateRange = ref.watch(dateTimeFilterProvider);
-  final api = ref.read(kazangRepositoryProvider);
-  final appState = ref.read(appNotifierProvider);
+  final api = ref.watch(kazangRepositoryProvider);
+  final appState = ref.watch(appNotifierProvider);
   final merchantId = appState.profile!.merchantConfig.merchantNumber;
   final terminalId = appState.profile!.terminalConfig.terminalId;
   final fromDate = dateRange.start;

@@ -1,5 +1,5 @@
-
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/dialog_helpers.dart' show showErrorDialog, showListDialog;
@@ -21,7 +21,8 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   }
 
   @override
-  void onUserApplicationSelectionRequired(UserApplicationSelectionRequired event) async {
+  void onUserApplicationSelectionRequired(
+      UserApplicationSelectionRequired event) async {
     ref.read(transactionStepProvider.notifier).state = 3;
     final result = await context.pushNamed<Map>('accounts', extra: event.value);
     if (result != null) {
@@ -36,7 +37,8 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       UserBudgetSelectionRequiredEvent event) async {
     final l10n = AppLocalizations.of(context)!;
     ref.read(transactionStepProvider.notifier).state = 2;
-    final result = await showListDialog(context, event.value, title: l10n.budgetTerm);
+    final result =
+        await showListDialog(context, event.value, title: l10n.budgetTerm);
 
     if (result != null) {
       await TransactionHelper.continueTransactionBudget(result['index']);
@@ -53,9 +55,11 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onStatusMessageEvent(String? value) {
-    ref.read(statusMessageProvider.notifier).state = value ?? '';
-    if (value == "Sending request online.") {
-      ref.read(transactionStepProvider.notifier).state = 4;
+    if (mounted) {
+      ref.read(statusMessageProvider.notifier).state = value ?? '';
+      if (value == "Sending request online.") {
+        ref.read(transactionStepProvider.notifier).state = 4;
+      }
     }
   }
 
@@ -72,14 +76,13 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   void onReturnPrinterResultEvent(PrinterResultEvent event) {}
 
   @override
-  void onDisConnectEvent(bool value) {
-    TransactionHelper.reconnect();
-  }
+  void onDisConnectEvent(bool value) {}
 
   @override
   void onBatteryStatusLowEvent(int percentage) {
     final l10n = AppLocalizations.of(context)!;
-    showErrorDialog(context, l10n.batteryLow(percentage)).then((_) => context.pop(true));
+    showErrorDialog(context, l10n.batteryLow(percentage))
+        .then((_) => context.pop(true));
   }
 
   @override
@@ -89,7 +92,5 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   }
 
   @override
-  void onPrinterOperationEndEvent(bool value) {
-
-  }
+  void onPrinterOperationEndEvent(bool value) {}
 }

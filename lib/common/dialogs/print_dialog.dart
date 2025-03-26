@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart' show BuildContext, Widget, Navigator;
+import 'package:flutter/material.dart' show BuildContext, Widget;
 import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/print_helper.dart';
 import '../../helpers/transaction_helper.dart';
@@ -54,8 +55,8 @@ class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandle
   @override
   void onReturnPrinterResultEvent(PrinterResultEvent event) {
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      if (context.mounted) {
-        Navigator.of(context).pop();
+      if (mounted) {
+        context.pop(context);
       }
     });
   }
