@@ -82,8 +82,8 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryConstructor!!.posFactorySetup!!.currencyCode = CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryConstructor!!.posFactorySetup!!.velocityCount = 0
-        factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
+        factoryConstructor!!.posFactorySetup!!.velocityCount = 10
+        factoryConstructor!!.posFactorySetup!!.velocityPeriod = 5
         factoryConstructor!!.posFactorySetup!!.cashbackLimit = config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true

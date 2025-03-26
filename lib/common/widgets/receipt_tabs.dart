@@ -50,7 +50,7 @@ class _ReceiptTabsState extends ConsumerState<ReceiptTabs> {
 
     return switch (transactionProvider) {
       AsyncData(:final value) => _buildReceiptTabs(context, l10n, value),
-      AsyncError(:final error) => const SizedBox(),
+      AsyncError() => const SizedBox(),
       _ => const SizedBox(),
     };
   }

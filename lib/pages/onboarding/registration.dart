@@ -227,7 +227,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   }
                   ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
                 } on AddDeviceException catch (e) {
-                  print(e.error);
                   if (context.mounted) {
                     context.pop();
                     ScaffoldMessenger.of(context).showSnackBar(

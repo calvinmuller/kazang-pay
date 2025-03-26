@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart' show WidgetsFlutterBinding;
-import 'package:flutter/widgets.dart' show runApp;
+import 'package:flutter/material.dart' show WidgetsFlutterBinding, runApp;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
 
 import 'app.dart' show MyApp;

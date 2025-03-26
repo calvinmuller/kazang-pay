@@ -88,6 +88,7 @@ const _$CardDataInputModeEnumMap = {
   CardDataInputMode.IntegratedCircuitCard: 'IntegratedCircuitCard',
   CardDataInputMode.ContactlessIntegratedCircuitCard:
       'ContactlessIntegratedCircuitCard',
+  CardDataInputMode.MagneticStripeRead: 'MagneticStripeRead',
 };
 
 const _$TransactionClientActionEnumMap = {

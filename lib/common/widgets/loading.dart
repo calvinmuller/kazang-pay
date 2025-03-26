@@ -124,7 +124,7 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
                           ],
                         ),
                       ],
-                    AsyncData(:final value) => [
+                    AsyncData() => [
                         Text(
                           l10n.initialized,
                           textAlign: TextAlign.center,

@@ -1,7 +1,7 @@
 
 
 
-import 'package:flutter/material.dart' show BuildContext, AutomaticKeepAliveClientMixin, Widget, EdgeInsets, SizedBox, Center, ErrorWidget, ListView, RefreshIndicator, CircularProgressIndicator, Text;
+import 'package:flutter/material.dart' show BuildContext, AutomaticKeepAliveClientMixin, Widget, EdgeInsets, SizedBox, Center, ListView, RefreshIndicator, CircularProgressIndicator, Text;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData, ProviderScope;
 
 import '../../l10n/app_localizations.dart' show AppLocalizations;
@@ -23,7 +23,7 @@ class TransactionsListState extends ConsumerState<TransactionsList> with Automat
     final transactions = ref.watch(transactionHistoryProvider);
 
     return switch (transactions) {
-      AsyncError(:final stackTrace) => Center(child: Text(l10n.unexpectedError),),
+      AsyncError() => Center(child: Text(l10n.unexpectedError),),
       AsyncData(:final value) =>
           RefreshIndicator(
             onRefresh: () async =>
