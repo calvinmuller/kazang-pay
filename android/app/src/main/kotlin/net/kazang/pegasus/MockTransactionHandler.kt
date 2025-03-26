@@ -39,7 +39,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
 
-    override fun initialize(context: Context, config: TerminalConfig) {
+    override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
         if (factory != null) {
             factory!!.disconnect();
             factory!!.dispose()

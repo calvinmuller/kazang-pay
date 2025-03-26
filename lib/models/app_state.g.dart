@@ -201,6 +201,7 @@ Map<String, dynamic> _$IntentInfoToJson(IntentInfo instance) =>
 _AppState _$AppStateFromJson(Map json) => _AppState(
       pinVerified: json['pinVerified'] as bool? ?? true,
       isConfigured: json['isConfigured'] as bool? ?? false,
+      proxy: json['proxy'] as bool? ?? false,
       deviceInfo: json['deviceInfo'] == null
           ? null
           : DeviceInfo.fromJson(
@@ -220,6 +221,7 @@ _AppState _$AppStateFromJson(Map json) => _AppState(
 Map<String, dynamic> _$AppStateToJson(_AppState instance) => <String, dynamic>{
       'pinVerified': instance.pinVerified,
       'isConfigured': instance.isConfigured,
+      'proxy': instance.proxy,
       'deviceInfo': instance.deviceInfo?.toJson(),
       'accountInfo': instance.accountInfo?.toJson(),
       'profile': instance.profile?.toJson(),

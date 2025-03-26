@@ -17,6 +17,7 @@ class AppNotifier extends _$AppNotifier {
   AppState build() {
     listenSelf((prev, next) {
       _save(next);
+      print(next.toString());
     });
     return appState ?? AppState();
   }
@@ -47,5 +48,12 @@ class AppNotifier extends _$AppNotifier {
 
   void reset() {
     state = state.copyWith(isConfigured: false, accountInfo: null, intentInfo: null, deviceInfo: null);
+  }
+
+  void setProxy(bool value) {
+    state = state.copyWith(
+      proxy: value
+    );
+    TransactionHelper.connect(config: state.profile, proxy: value);
   }
 }

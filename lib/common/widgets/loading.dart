@@ -45,14 +45,15 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
     final l10n = AppLocalizations.of(context)!;
 
     ref.listen(fetchProfileProvider, (previous, next) {
+      final proxy = ref.read(appNotifierProvider.select((state) => state.proxy));
       if (next is AsyncError) {
         if (stateProfile != null) {
-          TransactionHelper.connect(config: stateProfile);
+          TransactionHelper.connect(config: stateProfile, proxy: proxy);
         } else {
           ref.read(appNotifierProvider.notifier).reset();
         }
       } else if (next is AsyncData) {
-        TransactionHelper.connect(config: next.value!);
+        TransactionHelper.connect(config: next.value!, proxy: proxy);
       }
     });
 

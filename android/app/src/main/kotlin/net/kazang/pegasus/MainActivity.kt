@@ -64,12 +64,12 @@ class MainActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             if (call.method == "connect") {
                 val config = call.argument<HashMap<Any, Any>>("config")!!
+                val proxy = call.argument<Boolean>("proxy")!!
                 val json = gson.toJson(config)
-
                 val terminalConfig = gson.fromJson(json, TerminalConfig::class.java)
 
                 thread {
-                    transactionHandler.initialize(context, terminalConfig)
+                    transactionHandler.initialize(context, terminalConfig, proxy)
                 }
                 result.success(true)
             } else if (call.method == "createPurchase") {

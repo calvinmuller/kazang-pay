@@ -21,12 +21,12 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // ListTile(
-            //   onTap: () => {},
-            //   title: Text(l10n.proxySettings),
-            //   trailing: const Icon(Icons.chevron_right),
-            // ),
-            // const Divider(),
+            ListTile(
+              onTap: () => context.pushNamed('proxy'),
+              title: Text(l10n.proxySettings),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+            const Divider(),
             // ListTile(
             //   onTap: () => {},
             //   title: Text(l10n.sendDeviceLogs),

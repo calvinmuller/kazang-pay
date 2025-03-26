@@ -27,7 +27,7 @@ final transactionHistoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef TransactionHistoryRef = AutoDisposeFutureProviderRef<List<Transaction>>;
-String _$settlementsHash() => r'578dbba7507089b1607045df3983a4f34c844087';
+String _$settlementsHash() => r'938e44b9a385f6bb2af1d62e2b37958910796158';
 
 /// See also [settlements].
 @ProviderFor(settlements)
