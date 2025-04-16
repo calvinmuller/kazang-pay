@@ -146,7 +146,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get selectAccount => 'Kies ‘n Rekening om voort te gaan';
 
   @override
-  String get budgetTerm => 'Select a budget term to continue';
+  String get budgetTerm => 'Kies \'n begrotingsterm om voort te gaan';
 
   @override
   String get accountBalance => 'Rekeningbalans';
@@ -403,20 +403,20 @@ class AppLocalizationsAf extends AppLocalizations {
   String get transType => 'TRANSAKSIE TIPE:';
 
   @override
-  String get noTransactionsFound => 'No transactions found';
+  String get noTransactionsFound => 'Geen transaksies gevind nie';
 
   @override
-  String get noSettlementsFound => 'No settlements found';
+  String get noSettlementsFound => 'Geen skikkings gevind nie';
 
   @override
-  String get resetPin => 'Reset PIN';
+  String get resetPin => 'Herstel PIN';
 
   @override
-  String get pinResetSuccess => 'Supervisor PIN reset successfully';
+  String get pinResetSuccess => 'Toesighouer PIN met sukses herstel';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Probeer weer';
 
   @override
-  String get switchTitle => 'Switch';
+  String get switchTitle => 'Skakelaar';
 }

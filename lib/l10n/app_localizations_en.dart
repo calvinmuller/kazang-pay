@@ -560,7 +560,10 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   String get reason => 'REASON';
 
   @override
-  String get selectAccount => 'Select An Account To Continue';
+  String get selectAccount => 'Select an account to continue';
+
+  @override
+  String get budgetTerm => 'Select a budget term to continue';
 
   @override
   String get accountBalance => 'Account Balance';
@@ -815,4 +818,22 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get transType => 'TRANTYPE:';
+
+  @override
+  String get noTransactionsFound => 'No transactions found';
+
+  @override
+  String get noSettlementsFound => 'No settlements found';
+
+  @override
+  String get resetPin => 'Reset PIN';
+
+  @override
+  String get pinResetSuccess => 'Supervisor PIN reset successfully';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get switchTitle => 'Switch';
 }
