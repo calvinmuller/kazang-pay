@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, Container, EdgeInsets, Icon, MainAxisSize, CrossAxisAlignment, Theme, TextAlign, Text, Column;
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, Container, EdgeInsets, Icon, MainAxisSize, CrossAxisAlignment, Theme, TextAlign, Text, Column, IconData;
 
 import '../../core/core.dart' show CustomIcons, CustomColours;
 

@@ -68,6 +68,10 @@ class SettingsLanguage extends ConsumerWidget {
         return 'English (South Africa)';
       case 'en':
         return 'English';
+      case 'am':
+        return 'Amharic';
+      case 'so':
+        return 'Somali';
       default:
         return '';
     }

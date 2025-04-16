@@ -1,29 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        BoxDecoration,
-        Spacer,
-        Text,
-        AppBar,
-        TabBarView,
-        Colors,
-        BorderRadius,
-        CrossAxisAlignment,
-        Column,
-        Theme,
-        Row,
-        Padding,
-        Card,
-        TabBarIndicatorSize,
-        Tab,
-        TabBar,
-        SliverToBoxAdapter,
-        NestedScrollView,
-        Scaffold,
-        DefaultTabController;
+    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController, SingleChildScrollView;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, ProviderScope, WidgetRef;
 import 'package:go_router/go_router.dart';

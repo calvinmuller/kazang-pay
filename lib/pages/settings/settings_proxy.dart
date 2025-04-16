@@ -1,18 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Scaffold,
-        Widget,
-        EdgeInsets,
-        Text,
-        AppBar,
-        MainAxisSize,
-        CrossAxisAlignment,
-        Column,
-        Container,
-        Switch,
-        Row;
+    show BuildContext, Scaffold, Widget, EdgeInsets, Text, AppBar, MainAxisSize, CrossAxisAlignment, Column, Container, Switch, Row, MainAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
