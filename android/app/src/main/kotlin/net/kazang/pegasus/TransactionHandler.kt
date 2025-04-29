@@ -21,7 +21,7 @@ import com.prism.core.enums.ServiceConfigurationEnum
 import com.prism.core.enums.TransactionTypesEnum
 import com.prism.core.helpers.FactoryTransactionBuilder
 import com.prism.core.interfaces.FactoryActivityEvents
-import com.prism.factory.BuildConfig
+import com.prism.factory.BuildConfig as FactoryBuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
@@ -65,8 +65,11 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryConstructor = FactoryConstructorData()
         factoryConstructor!!.context = context
         factoryConstructor!!.p2peEnabled = true
-        factoryConstructor!!.debugMode = BuildConfig.DEBUG
-        factoryConstructor!!.serviceConfiguration = ServiceConfigurationEnum.UAT
+        factoryConstructor!!.debugMode = FactoryBuildConfig.DEBUG
+        factoryConstructor!!.serviceConfiguration = when (BuildConfig.FLAVOR) {
+            "prod" -> ServiceConfigurationEnum.PROD
+            else -> ServiceConfigurationEnum.UAT
+        }
         factoryConstructor!!.serviceTimeout = 60000
         factoryConstructor!!.proxyUrl = if (proxy) "proxy.kazang.net:30720" else null
         Log.d("Proxy", factoryConstructor!!.proxyUrl ?: "none")
