@@ -26,6 +26,7 @@ import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
+import net.kazang.pegasus.BuildConfig
 
 // create abstract class of the following below
 interface TransactionInterface : EventChannel.StreamHandler {
@@ -66,9 +67,10 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryConstructor!!.context = context
         factoryConstructor!!.p2peEnabled = true
         factoryConstructor!!.debugMode = FactoryBuildConfig.DEBUG
-        factoryConstructor!!.serviceConfiguration = when (BuildConfig.FLAVOR) {
-            "prod" -> ServiceConfigurationEnum.PROD
-            else -> ServiceConfigurationEnum.UAT
+        factoryConstructor!!.serviceConfiguration = if (BuildConfig.FLAVOR == "prod") {
+            ServiceConfigurationEnum.PROD
+        } else {
+            ServiceConfigurationEnum.UAT
         }
         factoryConstructor!!.serviceTimeout = 60000
         factoryConstructor!!.proxyUrl = if (proxy) "proxy.kazang.net:30720" else null
