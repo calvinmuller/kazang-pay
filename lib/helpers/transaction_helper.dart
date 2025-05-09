@@ -36,7 +36,8 @@ class TransactionHelper {
         CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
 
     if (payment.type == PaymentType.voidTransaction) {
-      await _instance.methodChannel.invokeMethod('voidTransaction', {'rrn': payment.rrn});
+      await _instance.methodChannel
+          .invokeMethod('voidTransaction', {'rrn': payment.rrn});
       return;
     }
 
@@ -136,7 +137,8 @@ class TransactionHelper {
     return;
   }
 
-  static Future<void> connect({TerminalProfile? config, bool proxy = false}) async {
+  static Future<void> connect(
+      {TerminalProfile? config, bool proxy = false}) async {
     return await _instance.methodChannel.invokeMethod('connect', {
       "config": config!.toJson(),
       "proxy": proxy,
@@ -178,7 +180,12 @@ class TransactionHelper {
   }
 
   static Future<IntentInfo> getIntentInfo() async {
-    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo')).cast<String, dynamic>();
+    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo'))
+        .cast<String, dynamic>();
     return IntentInfo.fromJson(result);
+  }
+
+  static void performRemoteKmsUpdate() async {
+    await _instance.methodChannel.invokeMethod('performRemoteKmsUpdate');
   }
 }

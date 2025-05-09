@@ -35,7 +35,7 @@ abstract class TransactionResult with _$TransactionResult {
     String? stan,
     String? priorityMessage,
     String? receiptReference,
-    required String responseCode,
+    required String? responseCode,
     required String? responseMessage,
     String? terminalId,
     required int transactionAmount,

@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -26,13 +29,16 @@ import 'package:flutter/material.dart'
         MainAxisAlignment,
         Row,
         Expanded,
-        Scaffold;
+        Scaffold,
+        TextScaler,
+        MediaQuery;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/widgets/button.dart';
+import '../core/core.dart';
 import '../core/icons.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
@@ -81,36 +87,41 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 90),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white,
-                  width: 1.5,
+            FractionallySizedBox(
+              widthFactor: 0.95,
+              child: Container(
+                height: context.dynamicSize(250, 150),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                // padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 90),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  ),
                 ),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  bottomRight: Radius.circular(25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 10,
+                  children: [
+                    Text(
+                      l10n.welcome,
+                      style: theme.textTheme.headlineLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      l10n.companyWelcome(merchantInfo.tradingName),
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    l10n.welcome,
-                    style: theme.textTheme.headlineLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(
-                    height: 12,
-                  ),
-                  Text(
-                    l10n.companyWelcome(merchantInfo.tradingName),
-                    style: theme.textTheme.bodyLarge!
-                        .copyWith(fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
               ),
             ),
             Expanded(
@@ -126,7 +137,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       child: Button(
                         colour: CustomColours.greenish,
                         textColour: CustomColours.black,
-                        height: 90,
+                        height: context.dynamicSize(90, 72),
                         onPressed: () => context.pushNamed('new-sale'),
                         icon: const Icon(
                           CustomIcons.card,

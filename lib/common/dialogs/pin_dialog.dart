@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' hide FormField;
 import 'package:flutter/material.dart'
     show
         FormState,
@@ -60,6 +61,8 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             ? l10n.setPinToProceed
             : l10n.setPinToProceed;
 
+    final buttonSize = context.dynamicSize(60, 50);
+
     return Dialog(
       title: title,
       message: message,
@@ -91,7 +94,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
           ),
         ),
         Button.main(
-          height: 60,
+          height: buttonSize,
           colour: pinConfig.actionButtonColour,
           borderColour: pinConfig.actionButtonColour,
           textColour:
@@ -102,7 +105,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
           child: Text(l10n.continueButton),
         ),
         Button.main(
-          height: 60,
+          height: buttonSize,
           onPressed: () => Navigator.of(context).pop(false),
           elevation: 0,
           borderColour: Colors.black,

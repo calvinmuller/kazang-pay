@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' show BuildContext, Widget, MainAxisAlignm
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants.dart';
+import '../../core/core.dart';
 import '../providers/transaction.provider.dart' show transactionStepProvider;
 
 class Dots extends ConsumerWidget {
@@ -13,11 +14,11 @@ class Dots extends ConsumerWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 32,
+      spacing: context.dynamicSize(32, 28),
       children: List.generate(
         4,
         (index) => CircleAvatar(
-          radius: 20,
+          radius: context.dynamicSize(20, 18),
           backgroundColor: (index < step) ? CustomColours.greenish : Colors.black,
         ),
       ),

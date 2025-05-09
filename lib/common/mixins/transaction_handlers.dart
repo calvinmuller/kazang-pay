@@ -2,9 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
-import '../../helpers/dialog_helpers.dart' show showErrorDialog, showListDialog;
+import '../../helpers/dialog_helpers.dart'
+    show showErrorDialog, showListDialog, showSuccessDialog;
 import '../../helpers/transaction_helper.dart' show TransactionHelper;
 import '../../l10n/app_localizations.dart' show AppLocalizations;
+import '../../models/payment.dart' show Payment;
 import '../../models/payment.dart' show Payment;
 import '../interfaces/factory.events.dart';
 import '../providers/status.provider.dart' show statusMessageProvider;
@@ -49,8 +51,11 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onErrorEvent(String? value) {
-    error = true;
-    showErrorDialog(context, value).then((_) => context.pop(true));
+    // We need to handle the keys separately
+    if (!value!.contains("KSN keys are not injected")) {
+      error = true;
+      showErrorDialog(context, value).then((_) => context.pop(true));
+    }
   }
 
   @override
@@ -59,6 +64,16 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       ref.read(statusMessageProvider.notifier).state = value ?? '';
       if (value == "Sending request online.") {
         ref.read(transactionStepProvider.notifier).state = 4;
+      }
+      if (value == "Perform remote KMS update") {
+        error = true;
+        TransactionHelper.performRemoteKmsUpdate();
+      }
+      if (value == "Key Downloaded Successfully!") {
+        showSuccessDialog(context, value).then((_) {
+          ref.read(transactionStepProvider.notifier).state = 4;
+          context.pop(true);
+        });
       }
     }
   }

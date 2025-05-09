@@ -1,5 +1,4 @@
-
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show BuildContext, Container, Widget, EdgeInsets, Offset, BorderRadius, FittedBox, SizedBox, Colors, BoxShadow, Radius, BoxDecoration, MainAxisSize, Theme, Text, BoxFit, Column;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
 
@@ -15,7 +14,7 @@ class TotalsWidget extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -32,6 +31,7 @@ class TotalsWidget extends ConsumerWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             "${l10n.purchaseAmount}:",
@@ -40,7 +40,6 @@ class TotalsWidget extends ConsumerWidget {
           const FittedBox(fit: BoxFit.fitWidth, child: AmountWidget(
             type: PaymentType.payment,
           )),
-          const SizedBox(height: 20),
           Text(
             "${l10n.cashbackAmount}:",
             style: Theme.of(context).textTheme.titleMedium,
