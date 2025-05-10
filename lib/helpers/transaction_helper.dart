@@ -131,6 +131,12 @@ class TransactionHelper {
         handler.onPrintDataCancelledEvent(
           message.value as bool,
         );
+      } else if (message.event == "onKmsUpdateRequired") {
+        handler.onKmsUpdateRequired();
+      } else if (message.event == "onKmsUpdateResult") {
+        final status = message.value['status'];
+        final msg = message.value['message'];
+        handler.onKmsUpdateResult(status, msg);
       }
     }
 

@@ -289,9 +289,10 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun createPurchase(amount: String, description: String) {
-        Log.d("createPurchase", "amount: $amount, description: $description")
-        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
-        factory!!.startTransaction(factorybb)
+        onKmsUpdateRequired()
+//        Log.d("createPurchase", "amount: $amount, description: $description")
+//        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
+//        factory!!.startTransaction(factorybb)
     }
 
     override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
@@ -394,7 +395,36 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun loadKeys() {
-        TODO("Not yet implemented")
+        val (message, status) = if ((0..1).random() == 0)
+            "Keys loaded successfully" to "0"
+        else
+            "Failed to load keys" to "-1"
+        onKmsUpdateResult(status, message)
+    }
+
+    override fun onKmsUpdateRequired() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onKmsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun onKmsUpdateResult(status: String, message: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "status" to status,
+                        "message" to message
+                    ),
+                    "event" to "onKmsUpdateResult"
+                )
+            )
+        }
     }
 
 }

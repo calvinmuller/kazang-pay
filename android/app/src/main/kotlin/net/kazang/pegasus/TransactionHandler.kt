@@ -49,6 +49,8 @@ interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEven
     fun abortTransaction()
     fun connect()
     fun loadKeys()
+    fun onKmsUpdateRequired()
+    fun onKmsUpdateResult(status: String, message: String)
 }
 
 class TransactionHandler : TransactionInterface {
@@ -275,12 +277,16 @@ class TransactionHandler : TransactionInterface {
     override fun onStatusMessageEvent(value: String?) {
         Log.d("onStatusMessageEvent", value!!)
         handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onStatusMessageEvent"
+            if (value == "Perform remote KMS update") {
+                onKmsUpdateRequired()
+            } else {
+                eventSink?.success(
+                    mapOf(
+                        "value" to value,
+                        "event" to "onStatusMessageEvent"
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -348,6 +354,31 @@ class TransactionHandler : TransactionInterface {
                 mapOf(
                     "value" to value,
                     "event" to "onWaitingForCardEvent"
+                )
+            )
+        }
+    }
+
+    override fun onKmsUpdateRequired() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onKmsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun onKmsUpdateResult(status: String, message: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "status" to status,
+                        "message" to message
+                    ),
+                    "event" to "onKmsUpdateResult"
                 )
             )
         }

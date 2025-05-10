@@ -232,7 +232,7 @@ class MainActivity : FlutterActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PrismCodes.KEY_INJECTION_REQUEST_CODE) {
-            var message = "Error loading keys, please try again"
+            var message = "Error loading keys."
             var status = "-1"
             Log.d("onActivityResult", "onActivityResult: $requestCode $resultCode $data")
             try {
@@ -240,13 +240,14 @@ class MainActivity : FlutterActivity() {
                     if (data.hasExtra("message")) {
                         message = data.getStringExtra("message") + ""
                     }
-                    transactionHandler.onStatusMessageEvent(message)
-                } else {
-                    transactionHandler.onErrorEvent(message)
+                    if (data.hasExtra("status")) {
+                        status = java.lang.String.valueOf(data.getIntExtra("status", -1))
+                    }
+                    transactionHandler.onKmsUpdateResult(status, message)
                 }
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                transactionHandler.onErrorEvent(message)
+                transactionHandler.onKmsUpdateResult(status, message)
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && requestCode != PrismCodes.KEY_INJECTION_REQUEST_CODE) {
