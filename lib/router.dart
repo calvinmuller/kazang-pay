@@ -21,13 +21,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       },
     ),
     GoRoute(
-      path: '/os-update',
-      name: 'os-update',
-      builder: (BuildContext context, GoRouterState state) {
-        return const WelcomePage();
-      },
-    ),
-    GoRoute(
       path: '/register',
       name: 'register',
       builder: (BuildContext context, GoRouterState state) {

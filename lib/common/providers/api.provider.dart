@@ -99,6 +99,3 @@ Future<TerminalProfile> fetchProfile(Ref ref) async {
     throw Exception(e.error);
   }
 }
-
-// Urovo crap device
-// adb: failed to install /Users/calvinmuller/Mobile/kazangpay/build/app/outputs/flutter-apk/app-urovouat-release.apk: Failure [INSTALL_FAILED_INVALID_APK: Package couldn't be installed in /data/app/net.kazang.pegasus.dev-HjPd5LudV2uhyFsqs03m-g==: Verify signature can't pass]

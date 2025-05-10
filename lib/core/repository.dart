@@ -18,8 +18,6 @@ class KazangRepository {
   }
 
   Future getProfile(LoginRequest accountInfo) async {
-    print(accountInfo.serialNumber);
-    print(accountInfo.accountNumber);
     try {
       final response = await client.post('cps-web/api/tacs/get-profile', data: {
         "user": accountInfo.accountNumber,
