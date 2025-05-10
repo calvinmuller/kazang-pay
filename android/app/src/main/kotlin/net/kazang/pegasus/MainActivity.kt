@@ -1,10 +1,7 @@
 package net.kazang.pegasus
 
-import android.app.Activity
-import android.app.ComponentCaller
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
@@ -12,7 +9,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -28,7 +24,6 @@ import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.reflect.Type
 import java.util.Locale
 import kotlin.collections.HashMap
@@ -158,7 +153,6 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "getIntentInfo") {
                 result.success(initialIntentMap)
             } else if (call.method == "performRemoteKmsUpdate") {
-                transactionHandler.onStatusMessageEvent("Performing Remote KMS Update")
                 thread {
                     transactionHandler.loadKeys()
                 }
