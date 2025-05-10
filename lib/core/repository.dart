@@ -25,7 +25,6 @@ class KazangRepository {
       });
       return response.data;
     } on DioException catch (e) {
-      print(e.response);
       throw e.response?.data['response_message'] ?? "Error fetching profile";
     }
   }
