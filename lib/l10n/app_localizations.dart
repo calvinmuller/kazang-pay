@@ -903,6 +903,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch'**
   String get switchTitle;
+
+  /// No description provided for @updateKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating Keys...'**
+  String get updateKeys;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

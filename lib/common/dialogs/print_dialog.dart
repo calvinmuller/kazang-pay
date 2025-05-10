@@ -54,7 +54,7 @@ class PrintDialogState extends ConsumerState<PrintDialog> with TransactionHandle
 
   @override
   void onReturnPrinterResultEvent(PrinterResultEvent event) {
-    Future.delayed(const Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 1, milliseconds: 500)).then((value) {
       if (mounted) {
         context.pop(context);
       }

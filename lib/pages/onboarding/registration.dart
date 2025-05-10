@@ -137,6 +137,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         l10n.accountNumber,
                       ),
                       FormField(
+                        initialValue: '1009105080',
                         textInputType: TextInputType.number,
                         maxLength: 10,
                         // The validator receives the text that the user has entered.

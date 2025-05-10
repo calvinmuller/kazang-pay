@@ -26,7 +26,7 @@ class ConfirmDialog extends StatelessWidget {
       message: l10n.cancelMessage,
       actions: [
         Button(
-          height: 60,
+          height: 50,
           width: double.infinity,
           textColour: CustomColours.white,
           colour: CustomColours.black,
@@ -34,7 +34,7 @@ class ConfirmDialog extends StatelessWidget {
           child: Text(l10n.returnTo),
         ),
         Button(
-          height: 60,
+          height: 50,
           width: double.infinity,
           colour: CustomColours.red,
           textColour: CustomColours.white,

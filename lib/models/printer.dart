@@ -137,6 +137,8 @@ class SingleTextPrintCommand extends BasePrintCommand {
   bool? isTrailer;
   bool italic;
   String? value;
+  @override
+  AlignmentEnum alignment;
 
   SingleTextPrintCommand({
     this.bold = false,
@@ -145,11 +147,12 @@ class SingleTextPrintCommand extends BasePrintCommand {
     this.isTrailer,
     this.italic = false,
     this.value,
+    this.alignment = AlignmentEnum.LEFT,
   }) : super(
     lineSpacingAfterPrinting: 0,
     xPosition: 20,
     yPosition: 0,
-    alignment: AlignmentEnum.LEFT,
+    alignment: alignment,
   );
 
   @override

@@ -419,6 +419,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get switchTitle => 'Switch';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

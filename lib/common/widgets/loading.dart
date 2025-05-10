@@ -148,6 +148,7 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
 
   @override
   void onStatusMessageEvent(String? value) {
+    print(value);
     if (value == "Factory initialized.") {
       context.goNamed('home');
     }

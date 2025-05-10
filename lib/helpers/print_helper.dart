@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' show BuildContext, showDialog, debugPrint;
+import 'package:flutter/material.dart'
+    show BuildContext, showDialog, debugPrint;
 import 'package:flutter/services.dart' show MethodChannel, PlatformException;
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -57,19 +58,21 @@ class PrintHelper {
     final df = DateFormat('yyyy-MM-dd');
     final tf = DateFormat('HH:mm:ss');
 
-    debugPrint(transaction.toString(), wrapWidth: 1024);
+    const itemFontSize = 20;
 
     final printRequest = PrintRequest(
-      receiptSection: receiptType,
-      headingFontSize: 40,
-      trailerFontSize: 28,
-      normalFontSize: 24,
-      imageXpos: 50,
-      imageWidth: 200,
-      heading: terminalConfig?.slipHeader,
-      customerTrailer: terminalConfig?.slipTrailer,
-    );
-    var singleText = SingleTextPrintCommand(fontSize: 25);
+        receiptSection: receiptType,
+        headingFontSize: 28,
+        trailerFontSize: 28,
+        normalFontSize: itemFontSize,
+        imageXpos: 0,
+        imageWidth: 348,
+        pageWidth: 400,
+        heading: terminalConfig?.slipHeader,
+        customerTrailer: terminalConfig?.slipTrailer,
+        fontName: 'arial');
+    var singleText =
+        SingleTextPrintCommand(fontSize: 25, alignment: AlignmentEnum.CENTER);
     singleText.value = (receiptType == ReceiptSectionEnum.MERCHANT)
         ? "MERCHANT COPY"
         : "CUSTOMER COPY";
@@ -80,74 +83,81 @@ class PrintHelper {
     final amount =
         transaction!.isVoid ? -transaction.amount : transaction.amount;
 
-    var text = DoubleTextPrintCommand(fontSize: 32);
+    var text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "MERCHANTNO";
     // only show last 4 digits of merchant number only if receiptType === ReceiptSectionEnum.Customer
     text.rightAlignedValue = merchantConfig?.merchantNumber.substring(
-      (receiptType == ReceiptSectionEnum.CUSTOMER) ? merchantConfig.merchantNumber.length - 4 : 0,
+      (receiptType == ReceiptSectionEnum.CUSTOMER)
+          ? merchantConfig.merchantNumber.length - 4
+          : 0,
     );
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "TERMINALID";
     text.rightAlignedValue = transaction.terminalId.substring(
-      (receiptType == ReceiptSectionEnum.CUSTOMER) ? transaction.terminalId.length - 4 : 0,
+      (receiptType == ReceiptSectionEnum.CUSTOMER)
+          ? transaction.terminalId.length - 4
+          : 0,
     );
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "DATE";
     text.rightAlignedValue = df.format(transaction.transactionDateTime);
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "TIME";
     text.rightAlignedValue = tf.format(transaction.transactionDateTime);
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "AID";
     text.rightAlignedValue = transaction.applicationIdentifier?.substring(
-      (receiptType == ReceiptSectionEnum.CUSTOMER) ? transaction.applicationIdentifier!.length - 4 : 0,
-    ) ?? "";
+          (receiptType == ReceiptSectionEnum.CUSTOMER)
+              ? transaction.applicationIdentifier!.length - 4
+              : 0,
+        ) ??
+        "";
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "PAN";
     text.rightAlignedValue = transaction.maskedPan;
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "TRANTYPE";
     text.rightAlignedValue = transaction.type;
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "TRANSSEQNO";
     text.rightAlignedValue = transaction.sequenceNumber.toString();
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "RRN";
     text.rightAlignedValue = transaction.retrievalReferenceNumber;
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "APP";
     text.rightAlignedValue = transaction.applicationLabel;
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "SWITCH";
     text.rightAlignedValue = merchantConfig?.switchName;
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 32);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.leftAlignedValue = "RESPONSE:";
     text.rightAlignedValue = transaction.responseMessage;
     printRequest.printLineItems.add(text);
 
-    text = DoubleTextPrintCommand(fontSize: 25);
+    text = DoubleTextPrintCommand(fontSize: itemFontSize);
     text.bold = true;
     text.leftAlignedValue = "TOTAL";
     text.rightAlignedValue = CurrencyHelper.formatCurrency(context, amount);
@@ -155,7 +165,8 @@ class PrintHelper {
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 
-    singleText = SingleTextPrintCommand();
+    singleText = SingleTextPrintCommand(
+        fontSize: itemFontSize, alignment: AlignmentEnum.CENTER);
     singleText.value = "DESCRIPTION:";
     singleText.bold = true;
     singleText.italic = false;
@@ -163,8 +174,12 @@ class PrintHelper {
     singleText.isTrailer = false;
     printRequest.printLineItems.add(singleText);
 
-    printRequest.printLineItems
-        .add(SingleTextPrintCommand(value: transaction.responseMessage));
+    printRequest.printLineItems.add(SingleTextPrintCommand(
+      value: transaction.responseMessage,
+      bold: true,
+      fontSize: itemFontSize,
+      alignment: AlignmentEnum.CENTER,
+    ));
 
     printRequest.printLineItems.add(NewLinePrintCommand());
 

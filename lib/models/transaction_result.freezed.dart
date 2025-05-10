@@ -37,7 +37,7 @@ mixin _$TransactionResult {
   String? get stan;
   String? get priorityMessage;
   String? get receiptReference;
-  String get responseCode;
+  String? get responseCode;
   String? get responseMessage;
   String? get terminalId;
   int get transactionAmount;
@@ -185,7 +185,7 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       String? stan,
       String? priorityMessage,
       String? receiptReference,
-      String responseCode,
+      String? responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
@@ -229,7 +229,7 @@ class _$TransactionResultCopyWithImpl<$Res>
     Object? stan = freezed,
     Object? priorityMessage = freezed,
     Object? receiptReference = freezed,
-    Object? responseCode = null,
+    Object? responseCode = freezed,
     Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
@@ -315,10 +315,10 @@ class _$TransactionResultCopyWithImpl<$Res>
           ? _self.receiptReference
           : receiptReference // ignore: cast_nullable_to_non_nullable
               as String?,
-      responseCode: null == responseCode
+      responseCode: freezed == responseCode
           ? _self.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       responseMessage: freezed == responseMessage
           ? _self.responseMessage
           : responseMessage // ignore: cast_nullable_to_non_nullable
@@ -452,7 +452,7 @@ class _TransactionResult extends TransactionResult {
   @override
   final String? receiptReference;
   @override
-  final String responseCode;
+  final String? responseCode;
   @override
   final String? responseMessage;
   @override
@@ -621,7 +621,7 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       String? stan,
       String? priorityMessage,
       String? receiptReference,
-      String responseCode,
+      String? responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
@@ -665,7 +665,7 @@ class __$TransactionResultCopyWithImpl<$Res>
     Object? stan = freezed,
     Object? priorityMessage = freezed,
     Object? receiptReference = freezed,
-    Object? responseCode = null,
+    Object? responseCode = freezed,
     Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
@@ -751,10 +751,10 @@ class __$TransactionResultCopyWithImpl<$Res>
           ? _self.receiptReference
           : receiptReference // ignore: cast_nullable_to_non_nullable
               as String?,
-      responseCode: null == responseCode
+      responseCode: freezed == responseCode
           ? _self.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       responseMessage: freezed == responseMessage
           ? _self.responseMessage
           : responseMessage // ignore: cast_nullable_to_non_nullable

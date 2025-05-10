@@ -1,4 +1,27 @@
-import 'package:flutter/material.dart' show TextStyle, FontWeight, BuildContext, ThemeData, CardThemeData, AppBarTheme, Color, OutlinedBorder, BorderSide, TextTheme, EdgeInsets, BorderRadius, Radius, RoundedRectangleBorder, kToolbarHeight, WidgetStateProperty, Theme, Colors, ButtonStyle, ElevatedButtonThemeData, TextButtonThemeData;
+import 'package:flutter/material.dart'
+    show
+        TextStyle,
+        FontWeight,
+        BuildContext,
+        ThemeData,
+        CardThemeData,
+        AppBarTheme,
+        Color,
+        OutlinedBorder,
+        BorderSide,
+        TextTheme,
+        EdgeInsets,
+        BorderRadius,
+        Radius,
+        RoundedRectangleBorder,
+        kToolbarHeight,
+        WidgetStateProperty,
+        Theme,
+        Colors,
+        ButtonStyle,
+        ElevatedButtonThemeData,
+        TextButtonThemeData,
+        MediaQuery;
 import 'core/constants.dart';
 
 class CustomTheme {
@@ -49,7 +72,8 @@ class CustomTheme {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          backgroundColor: WidgetStateProperty.all<Color>(CustomColours.greenish),
+          backgroundColor:
+              WidgetStateProperty.all<Color>(CustomColours.greenish),
         ),
       ),
       textButtonTheme: TextButtonThemeData(

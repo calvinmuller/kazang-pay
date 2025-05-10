@@ -419,4 +419,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get switchTitle => 'Skakelaar';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
 }
