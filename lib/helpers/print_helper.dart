@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart'
     show BuildContext, showDialog, debugPrint;
 import 'package:flutter/services.dart' show MethodChannel, PlatformException;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../common/dialogs/print_dialog.dart' show PrintDialog;
+import '../common/providers/app.provider.dart' show appNotifierProvider;
+import '../common/providers/transaction.provider.dart'
+    show getByReferenceDataProvider;
 import '../models/app_state.dart';
 import '../models/printer.dart';
 import '../models/transaction.dart';
@@ -67,7 +71,7 @@ class PrintHelper {
         normalFontSize: itemFontSize,
         imageXpos: 0,
         imageWidth: 348,
-        pageWidth: 400,
+        pageWidth: 352,
         heading: terminalConfig?.slipHeader,
         customerTrailer: terminalConfig?.slipTrailer,
         fontName: 'arial');
@@ -184,6 +188,23 @@ class PrintHelper {
     printRequest.printLineItems.add(NewLinePrintCommand());
 
     await startPrint(printRequest);
+  }
+
+  static void printMerchantReceipt(context, WidgetRef ref, String rrn) {
+    final transactionProvider = ref.read(
+      getByReferenceDataProvider(rrn),
+    );
+
+    transactionProvider.whenData((result) {
+      final appState = ref.read(appNotifierProvider);
+      PrintHelper.printReceipt(
+        transaction: result,
+        receiptType: ReceiptSectionEnum.MERCHANT,
+        merchantConfig: appState.profile!.merchantConfig,
+        terminalConfig: appState.profile!.terminalConfig,
+        context: context,
+      );
+    });
   }
 }
 

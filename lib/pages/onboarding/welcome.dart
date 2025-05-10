@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, Spacer, Padding, Hero, Theme, Text, Container, Flexible, Row, Card, Column, Scaffold, MainAxisSize, TextAlign, ListView, Expanded;
+    show
+        StatelessWidget,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Spacer,
+        Padding,
+        Hero,
+        Theme,
+        Text,
+        Container,
+        Flexible,
+        Row,
+        Card,
+        Column,
+        Scaffold,
+        MainAxisSize,
+        TextAlign,
+        ListView,
+        Expanded;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,7 +35,6 @@ class WelcomePage extends StatelessWidget {
 
     return Scaffold(
       body: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Hero(
             tag: 'logo',
@@ -28,7 +46,6 @@ class WelcomePage extends StatelessWidget {
           Expanded(
             child: ListView(
               shrinkWrap: true,
-              // spacing: 0,
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 12),
@@ -92,7 +109,6 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Spacer(),
               ],
             ),
           ),

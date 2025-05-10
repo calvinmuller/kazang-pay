@@ -125,8 +125,8 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       ref.read(transactionStepProvider.notifier).state = 4;
       if (status == "0") {
         context.pop();
-        showSuccessDialog(context, message).then((_) {
-          context.pop(true);
+        showSuccessDialog(context, message).then((_) async {
+          await TransactionHelper.doTransaction(payment);
         });
       } else {
         context.pop();

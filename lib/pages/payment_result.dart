@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart'
-    show TickerProviderStateMixin, AnimationController, BuildContext, Widget, Padding, EdgeInsets, Icon, Divider, AnimationStatus, BorderRadius, MainAxisAlignment, CrossAxisAlignment, Theme, TextAlign, Text, IconAlignment, Icons, Navigator, Column, Scaffold, ListView;
+    show
+        TickerProviderStateMixin,
+        AnimationController,
+        BuildContext,
+        Widget,
+        Padding,
+        EdgeInsets,
+        Icon,
+        Divider,
+        AnimationStatus,
+        BorderRadius,
+        MainAxisAlignment,
+        CrossAxisAlignment,
+        Theme,
+        TextAlign,
+        Text,
+        IconAlignment,
+        Icons,
+        Navigator,
+        Column,
+        Scaffold,
+        ListView;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
@@ -10,6 +31,7 @@ import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
 import '../core/constants.dart' show borderGradient;
 import '../helpers/currency_helpers.dart';
+import '../helpers/print_helper.dart' show PrintHelper;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/transaction_result.dart' show TransactionResult;
@@ -32,6 +54,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   @override
   void initState() {
     super.initState();
+
     _animationController = AnimationController(
         vsync: this, duration: const Duration(seconds: 1, milliseconds: 500))
       ..forward();
@@ -44,6 +67,8 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         _borderAnimationController.repeat();
         if (result.isSuccessful) {
           TransactionHelper.paymentSuccess();
+          // Automatically print the merchant receipt.
+          PrintHelper.printMerchantReceipt(context, ref, result.ourReferenceNumber!);
         }
       }
     });
