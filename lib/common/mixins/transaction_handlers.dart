@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
@@ -7,7 +7,6 @@ import '../../helpers/dialog_helpers.dart'
     show showErrorDialog, showListDialog, showSuccessDialog;
 import '../../helpers/transaction_helper.dart' show TransactionHelper;
 import '../../l10n/app_localizations.dart' show AppLocalizations;
-import '../../models/payment.dart' show Payment;
 import '../../models/payment.dart' show Payment;
 import '../interfaces/factory.events.dart';
 import '../providers/status.provider.dart' show statusMessageProvider;
@@ -66,13 +65,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       ref.read(statusMessageProvider.notifier).state = value ?? '';
       if (value == "Sending request online.") {
         ref.read(transactionStepProvider.notifier).state = 4;
-      }
-      if (value == "Key Downloaded Successfully!") {
-        context.pop();
-        showSuccessDialog(context, value).then((_) {
-          ref.read(transactionStepProvider.notifier).state = 4;
-          context.pop(true);
-        });
       }
     }
   }

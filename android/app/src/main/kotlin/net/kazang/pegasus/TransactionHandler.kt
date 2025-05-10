@@ -276,10 +276,10 @@ class TransactionHandler : TransactionInterface {
 
     override fun onStatusMessageEvent(value: String?) {
         Log.d("onStatusMessageEvent", value!!)
-        handler.post {
-            if (value == "Perform remote KMS update") {
-                onKmsUpdateRequired()
-            } else {
+        if (value == "Perform remote KMS update") {
+            onKmsUpdateRequired()
+        } else {
+            handler.post {
                 eventSink?.success(
                     mapOf(
                         "value" to value,
