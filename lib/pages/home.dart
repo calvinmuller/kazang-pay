@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
@@ -29,22 +27,18 @@ import 'package:flutter/material.dart'
         MainAxisAlignment,
         Row,
         Expanded,
-        Scaffold,
-        TextScaler,
-        MediaQuery;
+        Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
+
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/widgets/button.dart';
 import '../core/core.dart';
-import '../core/icons.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
-
-import '../core/constants.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});

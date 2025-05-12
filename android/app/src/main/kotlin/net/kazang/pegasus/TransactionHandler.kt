@@ -51,6 +51,9 @@ interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEven
     fun loadKeys()
     fun onKmsUpdateRequired()
     fun onKmsUpdateResult(status: String, message: String)
+    fun onFactoryInitialized()
+    fun onOsUpdateRequired(build: String, seNumber: String)
+    fun performOsUpdate()
 }
 
 class TransactionHandler : TransactionInterface {
@@ -80,18 +83,7 @@ class TransactionHandler : TransactionInterface {
         factory!!.dispose()
 
         if (result.requiredUpdate) {
-            try {
-                val intent = Intent()
-                intent.setClassName(
-                    DeviceManagement.KMS_PACKAGENAME,
-                    DeviceManagement.CLASSNAME_OSUPDATE
-                )
-                intent.putExtra("IP_OTA", DeviceManagement.OTA_IP_ADDRESS)
-                intent.putExtra("PORT_OTA", DeviceManagement.PORT)
-                activity!!.startActivity(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
         } else {
             setupFactory(context, config, proxy)
         }
@@ -276,16 +268,24 @@ class TransactionHandler : TransactionInterface {
 
     override fun onStatusMessageEvent(value: String?) {
         Log.d("onStatusMessageEvent", value!!)
-        if (value == "Perform remote KMS update") {
-            onKmsUpdateRequired()
-        } else {
-            handler.post {
-                eventSink?.success(
-                    mapOf(
-                        "value" to value,
-                        "event" to "onStatusMessageEvent"
+        when (value) {
+            "Perform remote KMS update" -> {
+                onKmsUpdateRequired()
+            }
+
+            "Factory initialized." -> {
+                onFactoryInitialized()
+            }
+
+            else -> {
+                handler.post {
+                    eventSink?.success(
+                        mapOf(
+                            "value" to value,
+                            "event" to "onStatusMessageEvent"
+                        )
                     )
-                )
+                }
             }
         }
     }
@@ -367,6 +367,46 @@ class TransactionHandler : TransactionInterface {
                     "event" to "onKmsUpdateRequired"
                 )
             )
+        }
+    }
+
+    override fun onFactoryInitialized() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onFactoryInitialized"
+                )
+            )
+        }
+    }
+
+    override fun onOsUpdateRequired(build: String, seNumber: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "build" to build,
+                        "seNumber" to seNumber
+                    ),
+                    "event" to "onOsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun performOsUpdate() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.CLASSNAME_OSUPDATE
+            )
+            intent.putExtra("IP_OTA", DeviceManagement.OTA_IP_ADDRESS)
+            intent.putExtra("PORT_OTA", DeviceManagement.PORT)
+            activity!!.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

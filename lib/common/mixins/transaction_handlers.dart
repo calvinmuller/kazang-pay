@@ -136,4 +136,14 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       }
     }
   }
+
+  @override
+  void onFactoryInitialized() {
+    // TODO: implement onFactoryInitialized
+  }
+
+  @override
+  void onOsUpdateRequired(String build, String seNumber) {
+    // TODO: implement onOsUpdateRequired
+  }
 }

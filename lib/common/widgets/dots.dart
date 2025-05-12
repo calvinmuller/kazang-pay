@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' show BuildContext, Widget, MainAxisAlignment, Colors, CircleAvatar, Row;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/constants.dart';
 import '../../core/core.dart';
 import '../providers/transaction.provider.dart' show transactionStepProvider;
 

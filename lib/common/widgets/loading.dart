@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold, FilledButton, Column, MainAxisSize;
+    show
+        BuildContext,
+        Widget,
+        TickerProviderStateMixin,
+        AnimationController,
+        Positioned,
+        EdgeInsets,
+        Alignment,
+        StackFit,
+        Padding,
+        CrossAxisAlignment,
+        MainAxisAlignment,
+        Text,
+        TextAlign,
+        Theme,
+        Row,
+        Stack,
+        LinearGradient,
+        BoxDecoration,
+        Container,
+        AnimatedBuilder,
+        Scaffold,
+        FilledButton,
+        Column,
+        MainAxisSize,
+        showDialog;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
@@ -45,7 +70,8 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
     final l10n = AppLocalizations.of(context)!;
 
     ref.listen(fetchProfileProvider, (previous, next) {
-      final proxy = ref.read(appNotifierProvider.select((state) => state.proxy));
+      final proxy =
+          ref.read(appNotifierProvider.select((state) => state.proxy));
       if (next is AsyncError) {
         if (stateProfile != null) {
           TransactionHelper.connect(config: stateProfile, proxy: proxy);
@@ -147,10 +173,26 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   }
 
   @override
-  void onStatusMessageEvent(String? value) {
-    if (value == "Factory initialized.") {
-      context.goNamed('home');
-    }
+  void onFactoryInitialized() {
+    context.goNamed('home');
+  }
+
+  @override
+  void onOsUpdateRequired(String build, String seNumber) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Loader(
+          showLoader: false,
+          message: l10n.osUpdateRequired,
+        );
+      },
+    );
+    Future.delayed(const Duration(seconds: 1)).then((_) {
+      TransactionHelper.performOsUpdate();
+    });
   }
 
   @override

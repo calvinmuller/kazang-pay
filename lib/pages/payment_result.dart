@@ -129,7 +129,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       ),
       if (!result.isSuccessful)
         Text(
-          result.declinedReason ?? "",
+          result.declinedReason,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge,
         ),

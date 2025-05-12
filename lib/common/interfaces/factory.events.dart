@@ -53,4 +53,6 @@ abstract class FactoryEventHandler {
   void onPrinterOperationEndEvent(bool value);
   void onKmsUpdateRequired();
   void onKmsUpdateResult(String value, String message);
+  void onFactoryInitialized();
+  void onOsUpdateRequired(String build, String seNumber);
 }

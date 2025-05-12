@@ -133,6 +133,12 @@ class TransactionHelper {
         );
       } else if (message.event == "onKmsUpdateRequired") {
         handler.onKmsUpdateRequired();
+      } else if (message.event == "onOsUpdateRequired") {
+        final build = message.value['build'];
+        final seNumber = message.value['seNumber'];
+        handler.onOsUpdateRequired(build, seNumber);
+      } else if (message.event == "onFactoryInitialized") {
+        handler.onFactoryInitialized();
       } else if (message.event == "onKmsUpdateResult") {
         final status = message.value['status'];
         final msg = message.value['message'];
@@ -193,5 +199,9 @@ class TransactionHelper {
 
   static void performRemoteKmsUpdate() async {
     await _instance.methodChannel.invokeMethod('performRemoteKmsUpdate');
+  }
+
+  static void performOsUpdate() async {
+    await _instance.methodChannel.invokeMethod('performOsUpdate');
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../common/providers/payment.provider.dart';
 import '../common/widgets/widgets.dart';
 import '../core/core.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show BuildContext, showDialog, debugPrint;
+    show BuildContext, showDialog;
 import 'package:flutter/services.dart' show MethodChannel, PlatformException;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -208,10 +208,11 @@ class PrintHelper {
   }
 }
 
-printReceiptDialog(
-    {BuildContext? context,
-    Transaction? transactionResult,
-    ReceiptSectionEnum? type}) async {
+printReceiptDialog({
+  BuildContext? context,
+  Transaction? transactionResult,
+  ReceiptSectionEnum? type,
+}) async {
   return await showDialog(
     context: context!,
     builder: (context) => PrintDialog(

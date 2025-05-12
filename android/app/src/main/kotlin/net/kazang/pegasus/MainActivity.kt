@@ -156,6 +156,10 @@ class MainActivity : FlutterActivity() {
                 thread {
                     transactionHandler.loadKeys()
                 }
+            } else if (call.method == "performOsUpdate") {
+                thread {
+                    transactionHandler.performOsUpdate()
+                }
             } else {
                 result.notImplemented()
             }

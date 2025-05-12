@@ -20,8 +20,7 @@ import 'package:flutter/material.dart'
         Colors,
         ButtonStyle,
         ElevatedButtonThemeData,
-        TextButtonThemeData,
-        MediaQuery;
+        TextButtonThemeData;
 import 'core/constants.dart';
 
 class CustomTheme {
