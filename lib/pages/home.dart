@@ -1,33 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        BoxDecoration,
-        Icon,
-        EdgeInsets,
-        BorderRadius,
-        Color,
-        TextStyle,
-        Theme,
-        Colors,
-        Icons,
-        IconButton,
-        AppBar,
-        MainAxisSize,
-        Border,
-        Radius,
-        TextAlign,
-        Text,
-        Container,
-        FontWeight,
-        Column,
-        CrossAxisAlignment,
-        Padding,
-        MainAxisAlignment,
-        Row,
-        Expanded,
-        Scaffold;
+    show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, BorderRadius, Color, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, Border, Radius, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, Scaffold, FractionallySizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
@@ -76,7 +48,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             icon: const Icon(Icons.settings),
             onPressed: () => context.goNamed('settings'),
           ),
-          title: const LogoWidget(),
+          title: const LogoWidget(widthFactor: 0.8),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,

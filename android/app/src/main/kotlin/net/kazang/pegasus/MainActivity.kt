@@ -28,7 +28,6 @@ import java.lang.reflect.Type
 import java.util.Locale
 import kotlin.collections.HashMap
 import kotlin.concurrent.thread
-import net.kazang.pegasus.BuildConfig
 
 private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
 

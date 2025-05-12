@@ -113,58 +113,59 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 32.0),
                 child: LogoWidget(
-                  width: 300,
+                  widthFactor: 0.8,
                 ),
               ),
             ),
             Positioned(
               right: 0,
+              left: 0,
               bottom: 0,
               top: 0,
               child: SvgPicture.asset(
                 "assets/k.svg",
-                width: 400,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: switch (profile) {
-                    AsyncError(:final error) => [
-                        Column(
-                          spacing: 10,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              error.toString(),
-                              textAlign: TextAlign.center,
-                            ),
-                            FilledButton(
-                              onPressed: () {
-                                Phoenix.rebirth(context);
-                              },
-                              child: Text(l10n.retry),
-                            )
-                          ],
-                        ),
-                      ],
-                    AsyncData() => [
-                        Text(
-                          l10n.initialized,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        )
-                      ],
-                    _ => [
-                        Loader(
-                          transparent: true,
-                          message: l10n.loading,
-                        )
-                      ],
-                  }),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: switch (profile) {
+                  AsyncError(:final error) => [
+                      Column(
+                        spacing: 10,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            error.toString(),
+                            textAlign: TextAlign.center,
+                          ),
+                          FilledButton(
+                            onPressed: () {
+                              Phoenix.rebirth(context);
+                            },
+                            child: Text(l10n.retry),
+                          )
+                        ],
+                      ),
+                    ],
+                  AsyncData() => [
+                      Text(
+                        l10n.initialized,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      )
+                    ],
+                  _ => [
+                      Loader(
+                        transparent: true,
+                        message: l10n.loading,
+                      )
+                    ],
+                },
+              ),
             )
           ],
         ),
@@ -197,7 +198,7 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
 
   @override
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
-    // TODO: implement onTransactionCompletedEvent
+    // We don't use this on this screen.
   }
 
   @override
