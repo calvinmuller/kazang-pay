@@ -134,5 +134,7 @@
   "resetPin": "Reset PIN",
   "pinResetSuccess": "Supervisor PIN reset successfully",
   "retry": "Retry",
-  "switchTitle": "Switch"
+  "switchTitle": "Switch",
+  "updateKeys": "Updating Keys...",
+  "osUpdateRequired": "OS Update Required"
 }

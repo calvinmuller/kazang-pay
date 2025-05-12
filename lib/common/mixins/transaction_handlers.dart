@@ -1,14 +1,17 @@
+import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
-import '../../helpers/dialog_helpers.dart' show showErrorDialog, showListDialog;
+import '../../helpers/dialog_helpers.dart'
+    show showErrorDialog, showListDialog, showSuccessDialog;
 import '../../helpers/transaction_helper.dart' show TransactionHelper;
 import '../../l10n/app_localizations.dart' show AppLocalizations;
 import '../../models/payment.dart' show Payment;
 import '../interfaces/factory.events.dart';
 import '../providers/status.provider.dart' show statusMessageProvider;
 import '../providers/transaction.provider.dart';
+import '../widgets/loader.dart';
 
 mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> implements FactoryEventHandler {
@@ -49,8 +52,11 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onErrorEvent(String? value) {
-    error = true;
-    showErrorDialog(context, value).then((_) => context.pop(true));
+    // We dont want to popup an error if keys need to be injected
+    if (!value!.contains("KSN keys are not injected")) {
+      error = true;
+      showErrorDialog(context, value).then((_) => context.pop(true));
+    }
   }
 
   @override
@@ -93,4 +99,51 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onPrinterOperationEndEvent(bool value) {}
+
+  @override
+  void onKmsUpdateRequired() {
+    final l10n = AppLocalizations.of(context)!;
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Loader(
+            message: l10n.updateKeys,
+          );
+        },
+      );
+      Future.delayed(const Duration(seconds: 1)).then((_) {
+        TransactionHelper.performRemoteKmsUpdate();
+      });
+    }
+  }
+
+  @override
+  void onKmsUpdateResult(String status, String message) {
+    if (context.mounted) {
+      ref.read(transactionStepProvider.notifier).state = 4;
+      if (status == "0") {
+        context.pop();
+        showSuccessDialog(context, message).then((_) async {
+          await TransactionHelper.doTransaction(payment);
+        });
+      } else {
+        context.pop();
+        showErrorDialog(context, message).then((_) {
+          context.pop(true);
+        });
+      }
+    }
+  }
+
+  @override
+  void onFactoryInitialized() {
+    // TODO: implement onFactoryInitialized
+  }
+
+  @override
+  void onOsUpdateRequired(String build, String seNumber) {
+    // TODO: implement onOsUpdateRequired
+  }
 }

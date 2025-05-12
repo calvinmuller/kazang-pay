@@ -145,11 +145,11 @@ class SingleTextPrintCommand extends BasePrintCommand {
     this.isTrailer,
     this.italic = false,
     this.value,
+    super.alignment = AlignmentEnum.LEFT,
   }) : super(
     lineSpacingAfterPrinting: 0,
     xPosition: 20,
-    yPosition: 0,
-    alignment: AlignmentEnum.LEFT,
+    yPosition: 0
   );
 
   @override

@@ -1,6 +1,8 @@
 package net.kazang.pegasus
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Handler
 
@@ -21,14 +23,17 @@ import com.prism.core.enums.ServiceConfigurationEnum
 import com.prism.core.enums.TransactionTypesEnum
 import com.prism.core.helpers.FactoryTransactionBuilder
 import com.prism.core.interfaces.FactoryActivityEvents
-import com.prism.factory.BuildConfig
+import com.prism.core.static.PrismCodes
+import com.prism.device.management.DeviceManagement
+import com.prism.factory.BuildConfig as FactoryBuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
+import net.kazang.pegasus.BuildConfig
+import kotlin.concurrent.thread
 
-// create abstract class of the following below
-interface TransactionInterface : EventChannel.StreamHandler {
+interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
 
     fun initialize(context: Context, config: TerminalConfig, proxy: Boolean = false)
     fun createPurchase(amount: String, description: String)
@@ -43,9 +48,15 @@ interface TransactionInterface : EventChannel.StreamHandler {
     fun printReceipt(data: PrintRequest)
     fun abortTransaction()
     fun connect()
+    fun loadKeys()
+    fun onKmsUpdateRequired()
+    fun onKmsUpdateResult(status: String, message: String)
+    fun onFactoryInitialized()
+    fun onOsUpdateRequired(build: String, seNumber: String)
+    fun performOsUpdate()
 }
 
-class TransactionHandler : FactoryActivityEvents, TransactionInterface {
+class TransactionHandler : TransactionInterface {
 
     private var factory: TransactionFactory? = null
     private var factoryConstructor: FactoryConstructorData? = null
@@ -56,17 +67,38 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
     private var transactionType: TransactionTypesEnum? = null
+    private var activity: Activity? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
-        if (connected) {
+        if (connected && factory != null) {
             factory!!.disconnect()
             factory!!.dispose()
+            factory = null
         }
+        activity = context as Activity
+        if (factory == null) {
+            factory = TransactionFactory(context)
+        }
+        val result = factory!!.getBuildAndSENumber()
+        factory!!.dispose()
+
+        if (result.requiredUpdate) {
+            onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
+        } else {
+            setupFactory(context, config, proxy)
+        }
+    }
+
+    private fun setupFactory(context: Activity, config: TerminalConfig, proxy: Boolean) {
         factoryConstructor = FactoryConstructorData()
         factoryConstructor!!.context = context
         factoryConstructor!!.p2peEnabled = true
-        factoryConstructor!!.debugMode = BuildConfig.DEBUG
-        factoryConstructor!!.serviceConfiguration = ServiceConfigurationEnum.UAT
+        factoryConstructor!!.debugMode = FactoryBuildConfig.DEBUG
+        factoryConstructor!!.serviceConfiguration = if (BuildConfig.FLAVOR == "prod") {
+            ServiceConfigurationEnum.PROD
+        } else {
+            ServiceConfigurationEnum.UAT
+        }
         factoryConstructor!!.serviceTimeout = 60000
         factoryConstructor!!.proxyUrl = if (proxy) "proxy.kazang.net:30720" else null
         Log.d("Proxy", factoryConstructor!!.proxyUrl ?: "none")
@@ -236,13 +268,25 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun onStatusMessageEvent(value: String?) {
         Log.d("onStatusMessageEvent", value!!)
-        handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onStatusMessageEvent"
-                )
-            )
+        when (value) {
+            "Perform remote KMS update" -> {
+                onKmsUpdateRequired()
+            }
+
+            "Factory initialized." -> {
+                onFactoryInitialized()
+            }
+
+            else -> {
+                handler.post {
+                    eventSink?.success(
+                        mapOf(
+                            "value" to value,
+                            "event" to "onStatusMessageEvent"
+                        )
+                    )
+                }
+            }
         }
     }
 
@@ -310,6 +354,71 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
                 mapOf(
                     "value" to value,
                     "event" to "onWaitingForCardEvent"
+                )
+            )
+        }
+    }
+
+    override fun onKmsUpdateRequired() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onKmsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun onFactoryInitialized() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onFactoryInitialized"
+                )
+            )
+        }
+    }
+
+    override fun onOsUpdateRequired(build: String, seNumber: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "build" to build,
+                        "seNumber" to seNumber
+                    ),
+                    "event" to "onOsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun performOsUpdate() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.CLASSNAME_OSUPDATE
+            )
+            intent.putExtra("IP_OTA", DeviceManagement.OTA_IP_ADDRESS)
+            intent.putExtra("PORT_OTA", DeviceManagement.PORT)
+            activity!!.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onKmsUpdateResult(status: String, message: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "status" to status,
+                        "message" to message
+                    ),
+                    "event" to "onKmsUpdateResult"
                 )
             )
         }
@@ -410,19 +519,41 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun printReceipt(data: PrintRequest) {
-        data.imageXpos = 0
-        data.fontName = "arial" //monospace_typewriter.ttf
-        data.bitmapImageResourceId = R.drawable.receipt
-        factory!!.sendPrinterData(data)
+        thread {
+            data.fontName = "arial" //monospace_typewriter.ttf
+            data.bitmapImageResourceId = R.drawable.receipt
+            factory!!.sendPrinterData(data)
+        }
     }
 
     override fun abortTransaction() {
+        Log.d("abortTransaction", "abort")
         factory!!.abortTransaction()
     }
 
     override fun connect() {
         if (!connected)
             factory!!.connect()
+    }
+
+    override fun loadKeys() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.KMS_CLASSNAME
+            )
+            intent.putExtra("IP_RKI", DeviceManagement.KMS_IP_ADDRESS)
+            intent.putExtra("PORT_RKI", DeviceManagement.RKI_PORT)
+            intent.putExtra("PORT_CA_RKI", DeviceManagement.CA_RKI_PORT)
+            intent.putExtra("customer", 2)
+            activity!!.startActivityForResult(
+                intent,
+                PrismCodes.KEY_INJECTION_REQUEST_CODE
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

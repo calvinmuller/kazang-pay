@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../common/providers/payment.provider.dart';
 import '../common/widgets/widgets.dart';
+import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
-import '../core/constants.dart';
 
 class NewSalePage extends StatelessWidget {
   const NewSalePage({super.key});
@@ -20,25 +21,21 @@ class NewSalePage extends StatelessWidget {
         title: Text(l10n.newSale),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 8),
         child: Column(
+          spacing: 12,
           mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(
-              width: double.infinity,
-              child: TotalsWidget(),
-            ),
+            const TotalsWidget(),
             const Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 24),
-                child: KeyPad(),
-              ),
+              child: KeyPad(),
             ),
             Consumer(
               builder: (context, ref, child) {
                 final payment = ref.watch(paymentNotifierProvider);
                 return Button(
-                  height: 90,
+                  height: context.dynamicSize(90, 72),
                   width: double.infinity,
                   colour: CustomColours.greenish,
                   onPressed: (payment.hasAmount) ? () {

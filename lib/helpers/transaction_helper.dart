@@ -36,7 +36,8 @@ class TransactionHelper {
         CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
 
     if (payment.type == PaymentType.voidTransaction) {
-      await _instance.methodChannel.invokeMethod('voidTransaction', {'rrn': payment.rrn});
+      await _instance.methodChannel
+          .invokeMethod('voidTransaction', {'rrn': payment.rrn});
       return;
     }
 
@@ -130,13 +131,26 @@ class TransactionHelper {
         handler.onPrintDataCancelledEvent(
           message.value as bool,
         );
+      } else if (message.event == "onKmsUpdateRequired") {
+        handler.onKmsUpdateRequired();
+      } else if (message.event == "onOsUpdateRequired") {
+        final build = message.value['build'];
+        final seNumber = message.value['seNumber'];
+        handler.onOsUpdateRequired(build, seNumber);
+      } else if (message.event == "onFactoryInitialized") {
+        handler.onFactoryInitialized();
+      } else if (message.event == "onKmsUpdateResult") {
+        final status = message.value['status'];
+        final msg = message.value['message'];
+        handler.onKmsUpdateResult(status, msg);
       }
     }
 
     return;
   }
 
-  static Future<void> connect({TerminalProfile? config, bool proxy = false}) async {
+  static Future<void> connect(
+      {TerminalProfile? config, bool proxy = false}) async {
     return await _instance.methodChannel.invokeMethod('connect', {
       "config": config!.toJson(),
       "proxy": proxy,
@@ -178,7 +192,16 @@ class TransactionHelper {
   }
 
   static Future<IntentInfo> getIntentInfo() async {
-    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo')).cast<String, dynamic>();
+    final result = (await _instance.methodChannel.invokeMethod('getIntentInfo'))
+        .cast<String, dynamic>();
     return IntentInfo.fromJson(result);
+  }
+
+  static void performRemoteKmsUpdate() async {
+    await _instance.methodChannel.invokeMethod('performRemoteKmsUpdate');
+  }
+
+  static void performOsUpdate() async {
+    await _instance.methodChannel.invokeMethod('performOsUpdate');
   }
 }

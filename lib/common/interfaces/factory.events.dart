@@ -51,4 +51,8 @@ abstract class FactoryEventHandler {
   void onBatteryStatusLowEvent(int percentage);
   void onPrintDataCancelledEvent(bool value);
   void onPrinterOperationEndEvent(bool value);
+  void onKmsUpdateRequired();
+  void onKmsUpdateResult(String value, String message);
+  void onFactoryInitialized();
+  void onOsUpdateRequired(String build, String seNumber);
 }

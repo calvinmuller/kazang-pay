@@ -419,4 +419,10 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get switchTitle => 'ማስተላለፍ';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
+
+  @override
+  String get osUpdateRequired => 'OS Update Required';
 }

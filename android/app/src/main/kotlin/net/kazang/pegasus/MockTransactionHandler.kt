@@ -1,6 +1,8 @@
 package net.kazang.pegasus
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -21,9 +23,11 @@ import com.prism.core.enums.TransactionClientActionEnum
 import com.prism.core.enums.TransactionTypesEnum
 import com.prism.core.helpers.FactoryTransactionBuilder
 import com.prism.core.interfaces.FactoryActivityEvents
+import com.prism.device.management.DeviceManagement
 import com.prism.factory.BuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.MockTransactionFactory
+import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 
@@ -33,6 +37,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var factory: MockTransactionFactory? = null
     private var factoryconstructor: FactoryConstructorData? = null
     private var connected = false
+    private lateinit var activity: Activity
     private var factorybb = FactoryTransactionBuilder()
 
     private var handler = Handler(Looper.getMainLooper())
@@ -40,6 +45,26 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var repo: TransactionRepository? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
+        if (connected && factory != null) {
+            factory!!.disconnect()
+            factory!!.dispose()
+            factory = null
+        }
+        activity = context as Activity
+        if (factory == null) {
+            factory = MockTransactionFactory(context)
+        }
+        val result = factory!!.getBuildAndSENumber()
+        factory!!.dispose()
+
+        if (result.requiredUpdate) {
+            onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
+        } else {
+            setupFactory(context, config, proxy)
+        }
+    }
+
+    private fun setupFactory(context: Activity, config: TerminalConfig, proxy: Boolean) {
         if (factory != null) {
             factory!!.disconnect();
             factory!!.dispose()
@@ -289,9 +314,10 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun createPurchase(amount: String, description: String) {
-        Log.d("createPurchase", "amount: $amount, description: $description")
-        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
-        factory!!.startTransaction(factorybb)
+        onKmsUpdateRequired()
+//        Log.d("createPurchase", "amount: $amount, description: $description")
+//        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
+//        factory!!.startTransaction(factorybb)
     }
 
     override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
@@ -391,6 +417,79 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun connect() {
         factory!!.connect()
+    }
+
+    override fun loadKeys() {
+        val (message, status) = if ((0..1).random() == 0)
+            "Keys loaded successfully" to "0"
+        else
+            "Failed to load keys" to "-1"
+        onKmsUpdateResult(status, message)
+    }
+
+    override fun onKmsUpdateRequired() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onKmsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun onKmsUpdateResult(status: String, message: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "status" to status,
+                        "message" to message
+                    ),
+                    "event" to "onKmsUpdateResult"
+                )
+            )
+        }
+    }
+
+    override fun onFactoryInitialized() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onFactoryInitialized"
+                )
+            )
+        }
+    }
+
+    override fun onOsUpdateRequired(build: String, seNumber: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "build" to build,
+                        "seNumber" to seNumber
+                    ),
+                    "event" to "onOsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun performOsUpdate() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.CLASSNAME_OSUPDATE
+            )
+            intent.putExtra("IP_OTA", DeviceManagement.OTA_IP_ADDRESS)
+            intent.putExtra("PORT_OTA", DeviceManagement.PORT)
+            activity!!.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

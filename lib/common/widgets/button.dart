@@ -1,30 +1,48 @@
-
-
-import 'package:flutter/material.dart' show StatelessWidget, VoidCallback, Key, Widget, Color, IconAlignment, EdgeInsets, BuildContext, OutlinedBorder, EdgeInsetsGeometry, WidgetState, Colors, ElevatedButton, WidgetStateProperty, BorderSide, BorderRadius, RoundedRectangleBorder, ButtonStyle, SizedBox, Container;
+import 'package:flutter/material.dart'
+    show
+        StatelessWidget,
+        VoidCallback,
+        Key,
+        Widget,
+        Color,
+        IconAlignment,
+        EdgeInsets,
+        BuildContext,
+        OutlinedBorder,
+        EdgeInsetsGeometry,
+        WidgetState,
+        Colors,
+        ElevatedButton,
+        WidgetStateProperty,
+        BorderSide,
+        BorderRadius,
+        RoundedRectangleBorder,
+        ButtonStyle,
+        SizedBox,
+        Container;
 
 import '../../core/constants.dart' show CustomColours;
 
 class Button extends StatelessWidget {
-  factory Button.secondary({
-    Key? key,
-    VoidCallback? onPressed,
-    required Widget child,
-    Color? colour,
-    Color? textColour,
-    Color borderColour = CustomColours.red,
-    double? height = 52.5,
-    double? width = double.infinity,
-    double? elevation,
-    double radius = 30,
-    Widget? icon,
-    bool rounded = false,
-    IconAlignment? iconAlignment
-  }) {
+  factory Button.secondary(
+      {Key? key,
+      VoidCallback? onPressed,
+      required Widget child,
+      Color? colour,
+      Color? textColour,
+      Color borderColour = CustomColours.red,
+      double? height = 52.5,
+      double? width = double.infinity,
+      double? elevation,
+      double radius = 30,
+      Widget? icon,
+      bool rounded = false,
+      IconAlignment? iconAlignment}) {
     return Button(
       iconAlignment: iconAlignment,
       elevation: 0,
-      borderColour: (colour == null) ? borderColour: Colors.white,
-      textColour: (textColour == null) ? borderColour: textColour,
+      borderColour: (colour == null) ? borderColour : Colors.white,
+      textColour: (textColour == null) ? borderColour : textColour,
       colour: colour ?? Colors.white,
       width: width,
       height: height,

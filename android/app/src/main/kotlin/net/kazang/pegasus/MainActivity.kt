@@ -3,7 +3,11 @@ package net.kazang.pegasus
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -12,6 +16,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.prism.core.static.PrismCodes
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -67,10 +72,7 @@ class MainActivity : FlutterActivity() {
                 val proxy = call.argument<Boolean>("proxy")!!
                 val json = gson.toJson(config)
                 val terminalConfig = gson.fromJson(json, TerminalConfig::class.java)
-
-                thread {
-                    transactionHandler.initialize(context, terminalConfig, proxy)
-                }
+                transactionHandler.initialize(context, terminalConfig, proxy)
                 result.success(true)
             } else if (call.method == "createPurchase") {
                 thread {
@@ -149,10 +151,19 @@ class MainActivity : FlutterActivity() {
                 result.success(true)
             } else if (call.method == "getIntentInfo") {
                 result.success(initialIntentMap)
+            } else if (call.method == "performRemoteKmsUpdate") {
+                thread {
+                    transactionHandler.loadKeys()
+                }
+            } else if (call.method == "performOsUpdate") {
+                thread {
+                    transactionHandler.performOsUpdate()
+                }
             } else {
                 result.notImplemented()
             }
         }
+        requestForStoragePermissions()
     }
 
     private fun play() {
@@ -196,4 +207,55 @@ class MainActivity : FlutterActivity() {
         super.onCreate(savedInstanceState)
         handleIntent(intent)
     }
+
+    private fun requestForStoragePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                try {
+                    val intent = Intent()
+                    intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    val uri = Uri.fromParts("package", this.packageName, null)
+                    intent.setData(uri)
+                    startActivityForResult(intent, 0)
+                } catch (e: Exception) {
+                    val intent = Intent()
+                    intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                    startActivityForResult(intent, 0)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PrismCodes.KEY_INJECTION_REQUEST_CODE) {
+            var message = "Error loading keys."
+            var status = "-1"
+            Log.d("onActivityResult", "onActivityResult: $requestCode $resultCode $data")
+            try {
+                if (data != null) {
+                    if (data.hasExtra("message")) {
+                        message = data.getStringExtra("message") + ""
+                    }
+                    if (data.hasExtra("status")) {
+                        status = java.lang.String.valueOf(data.getIntExtra("status", -1))
+                    }
+                    transactionHandler.onKmsUpdateResult(status, message)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                transactionHandler.onKmsUpdateResult(status, message)
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && requestCode != PrismCodes.KEY_INJECTION_REQUEST_CODE) {
+            //Android is 11 (R) or above
+            if (Environment.isExternalStorageManager()) {
+                //Manage External Storage Permissions Granted
+                Log.d("Permission", "onActivityResult: Manage External Storage Permissions Granted");
+            } else {
+                Log.d("Permission", "onActivityResult: Storage Permissions Denied");
+            }
+        }
+    }
+
 }
