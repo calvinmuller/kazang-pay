@@ -65,7 +65,7 @@ class ReceiptState extends ConsumerState<Receipt>
       vsync: this,
       duration: const Duration(seconds: 2, milliseconds: 500),
     );
-    animation = Tween(begin: 0.0, end: -800.0).animate(animationController);
+    animation = Tween(begin: 0.0, end: -750.0).animate(animationController);
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
@@ -92,11 +92,10 @@ class ReceiptState extends ConsumerState<Receipt>
 
     return SingleChildScrollView(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           if (receiptViewModel.showPrint)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Button.main(
                 height: 54,
                 icon: const Icon(CustomIcons.receiptText),
@@ -123,7 +122,7 @@ class ReceiptState extends ConsumerState<Receipt>
               return Transform.translate(
                 offset: Offset(0.0, animation.value),
                 child: Container(
-                  margin: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(12),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: CustomColours.grayscale,
