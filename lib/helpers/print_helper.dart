@@ -186,6 +186,7 @@ class PrintHelper {
     ));
 
     printRequest.printLineItems.add(NewLinePrintCommand());
+    printRequest.printLineItems.add(NewLinePrintCommand());
 
     await startPrint(printRequest);
   }
