@@ -258,7 +258,7 @@ class TermappConfig {
 @JsonSerializable()
 class MerchantConfig {
   @JsonKey(name: 'velocity_rules')
-  final List<String> velocityRules;
+  final List<Map<String, String>> velocityRules;
   @JsonKey(name: 'transaction_types')
   final List<String> transactionTypes;
   @JsonKey(name: 'card_set')

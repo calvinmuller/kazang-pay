@@ -51,7 +51,7 @@ class TermappConfigData {
 }
 
 class MerchantConfigData {
-    var velocity_rules: List<String> = emptyList()
+    var velocity_rules: List<Map<String, String>> = emptyList()
     var transaction_types: List<String> = emptyList()
     var card_set: List<String> = emptyList()
     var trading_name: String = ""

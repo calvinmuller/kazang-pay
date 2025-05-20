@@ -1,10 +1,10 @@
 {
   "env": "prod",
-  "kazangApiUrl": "https://cpsv2.kazang.net/",
+  "kazangApiUrl": "https://cps.kazang.net/",
   "crApiUrl": "https://api.kazang.net/devicemanager/",
   "crmApiUrl": "https://soniccrm.kazang.net/",
   "sonicUsername": "SonicEnterpriseUser",
   "sonicPassword": "yTPP8VMNua6n^r3f6DbZV",
-  "cpsUsername": "TacsEnterpriseUser",
+  "cpsUsername": "TacsEnterpriseKpAppUser",
   "cpsPassword": "W%VQW2M5CZJ7tF$$V4mPi"
 }

@@ -152,7 +152,7 @@ Map<String, dynamic> _$TermappConfigToJson(TermappConfig instance) =>
 
 MerchantConfig _$MerchantConfigFromJson(Map json) => MerchantConfig(
       velocityRules: (json['velocity_rules'] as List<dynamic>)
-          .map((e) => e as String)
+          .map((e) => Map<String, String>.from(e as Map))
           .toList(),
       transactionTypes: (json['transaction_types'] as List<dynamic>)
           .map((e) => e as String)
