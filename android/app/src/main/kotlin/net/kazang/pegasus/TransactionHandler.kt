@@ -83,9 +83,9 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["count"]?.toInt()
+        factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]?.toInt()
             ?: 10
-        factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["period"]?.toInt()
+        factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]?.toInt()
             ?: 5
         factoryConstructor!!.posFactorySetup!!.cashbackLimit =
             config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
