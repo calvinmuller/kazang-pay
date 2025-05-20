@@ -1,12 +1,18 @@
+import '../../helpers/transaction_helper.dart' show TransactionHelper;
+import '../../models/app_state.dart';
 import '../../models/payment.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../models/transaction_result.dart';
+import 'intent.provider.dart';
 
 part 'payment.provider.g.dart';
 
 @riverpod
 class PaymentNotifier extends _$PaymentNotifier {
   @override
-  Payment build() => Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+  Payment build() =>
+      Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
 
   void updatePayment(int amount) => state.copyWith(amount: amount);
 
@@ -54,6 +60,37 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   clearAll() {
-    state = state.copyWith(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+    state =
+        state.copyWith(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+  }
+}
+
+@Riverpod(keepAlive: true)
+class PaymentIntentNotifier extends _$PaymentIntentNotifier {
+  @override
+  Payment build() =>
+      Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+
+  void setFromIntentInfo(IntentInfo intentInfo) {
+    state = state.copyWith(
+      amount: 1000,
+      cashbackAmount: 0,
+      // amount: int.parse(intentInfo.amount!),
+      // cashbackAmount: int.parse(intentInfo.cashbackAmount ?? "0"),
+      type: intentInfo.transactionType! == PaymentType.Purchase
+          ? PaymentType.payment
+          : PaymentType.voidTransaction,
+      rrn: intentInfo.uniqueId,
+    );
+  }
+
+  complete({TransactionResult? transactionResult}) async {
+    ref.read(launchModeProvider.notifier).state = LaunchMode.normal;
+    state = state.copyWith(
+      amount: 0,
+      cashbackAmount: 0,
+      type: PaymentType.payment,
+    );
+    await TransactionHelper.completeTransaction(state, transactionResult);
   }
 }

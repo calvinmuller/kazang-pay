@@ -11,6 +11,7 @@ import '../common/interfaces/factory.events.dart'
 import '../models/app_state.dart';
 import '../models/payment.dart';
 import '../models/transaction.dart';
+import '../models/transaction_result.dart';
 import 'currency_helpers.dart';
 
 class TransactionHelper {
@@ -33,7 +34,7 @@ class TransactionHelper {
   static Future<void> doTransaction(Payment payment) async {
     final amount = CurrencyHelper.formatForTransaction(payment.amount);
     final cashbackAmount =
-        CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
+        CurrencyHelper.formatForTransaction(payment.cashbackAmount);
 
     if (payment.type == PaymentType.voidTransaction) {
       await _instance.methodChannel
@@ -203,5 +204,13 @@ class TransactionHelper {
 
   static void performOsUpdate() async {
     await _instance.methodChannel.invokeMethod('performOsUpdate');
+  }
+
+  static Future<void> completeTransaction(
+      Payment payment, TransactionResult? transactionResult) async {
+    await _instance.methodChannel.invokeMethod('completeTransaction', {
+      'uniqueId': payment.rrn,
+      'responseId': transactionResult?.ourReferenceNumber
+    });
   }
 }

@@ -38,6 +38,8 @@ import '../interfaces/factory.events.dart';
 import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
 import '../providers/api.provider.dart';
 import '../providers/app.provider.dart';
+import '../providers/intent.provider.dart' show launchModeProvider, LaunchMode;
+import '../providers/payment.provider.dart' show paymentIntentNotifierProvider;
 import 'loader.dart';
 import 'phoenix.dart';
 
@@ -175,7 +177,14 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
 
   @override
   void onFactoryInitialized() {
-    context.goNamed('home');
+    final intentInfo = ref.read(appNotifierProvider).intentInfo!;
+    if (true) {
+      ref.read(launchModeProvider.notifier).state = LaunchMode.intent;
+      ref.read(paymentIntentNotifierProvider.notifier).setFromIntentInfo(intentInfo);
+      context.pushReplacementNamed('intent-payment');
+    } else {
+      context.pushReplacementNamed('home');
+    }
   }
 
   @override

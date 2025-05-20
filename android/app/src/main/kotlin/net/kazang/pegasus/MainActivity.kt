@@ -1,5 +1,7 @@
 package net.kazang.pegasus
 
+import TcpServer
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -25,8 +27,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Type
-import java.util.Locale
-import kotlin.collections.HashMap
+import java.util.*
 import kotlin.concurrent.thread
 
 private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
@@ -159,11 +160,40 @@ class MainActivity : FlutterActivity() {
                 thread {
                     transactionHandler.performOsUpdate()
                 }
+            } else if (call.method == "completeTransaction") {
+                val tt = Intent()
+                val uniqueId = call.argument<String>("uniqueId")
+                thread {
+                    try {
+                        val transaction = transactionHandler.getByReferenceData(
+                            call.argument<String>("responseId")!!
+                        )!!
+                        tt.putExtra("success", if (transaction.ResponseCode == "00") "True" else "False")
+                        tt.putExtra("rspCode", transaction.ResponseCode);
+                        tt.putExtra("rspMessage", transaction.ResponseMessage);
+                        tt.putExtra("uinqueId", uniqueId);
+                        tt.putExtra("refNo", transaction.RetrievalReferenceNumber ?: "NA");
+                        tt.putExtra("bin", transaction.MaskedPan?.substring(0, 6) ?: "000000");
+                    } catch (e: Exception) {
+                        tt.putExtra("success", "False")
+                        tt.putExtra("rspCode", "06");
+                        tt.putExtra("rspMessage", "Transaction Cancelled");
+                        tt.putExtra("uinqueId", uniqueId);
+                        tt.putExtra("refNo", "NA");
+                        tt.putExtra("bin", "000000");
+                    }
+                    result.success(true)
+                    setResult(Activity.RESULT_OK, tt);
+                    finishAndRemoveTask()
+
+                }
             } else {
                 result.notImplemented()
             }
         }
         requestForStoragePermissions()
+        val server = TcpServer()
+        server.start()
     }
 
     private fun play() {
@@ -196,8 +226,20 @@ class MainActivity : FlutterActivity() {
 
     private fun handleIntent(intent: Intent) {
         val username = intent.getStringExtra("User Number") ?: intent.getStringExtra("Username")
+        val transactionType = intent.getStringExtra("TransactionType")
+        val amount = intent.getStringExtra("Amount")
+        val cashBackAmount = intent.getStringExtra("CashBackAmount")
+        val uniqueId = intent.getStringExtra("UniqueId")
+        val refNo = intent.getStringExtra("RefNo")
+        val isLocalRequest = intent.getStringExtra("IsLocalRequest")
         val intentMap = mapOf<String, Any?>(
             "username" to username,
+            "transactionType" to transactionType,
+            "amount" to amount,
+            "cashBackAmount" to cashBackAmount,
+            "uniqueId" to uniqueId,
+            "refNo" to refNo,
+            "isLocalRequest" to isLocalRequest
         )
         Log.d("onAttachedToActivity", intentMap.toString())
         initialIntentMap = intentMap
@@ -205,6 +247,11 @@ class MainActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         handleIntent(intent)
     }
 

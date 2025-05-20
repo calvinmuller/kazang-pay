@@ -8,7 +8,7 @@ part of 'payment.dart';
 
 _Payment _$PaymentFromJson(Map json) => _Payment(
       amount: (json['amount'] as num?)?.toInt() ?? 0,
-      cashbackAmount: json['cashbackAmount'] ?? 0,
+      cashbackAmount: (json['cashbackAmount'] as num?)?.toInt() ?? 0,
       type: $enumDecodeNullable(_$PaymentTypeEnumMap, json['type']) ??
           PaymentType.payment,
       cashbackOnly: json['cashbackOnly'] as bool? ?? false,
@@ -27,4 +27,8 @@ const _$PaymentTypeEnumMap = {
   PaymentType.payment: 'payment',
   PaymentType.cashback: 'cashback',
   PaymentType.voidTransaction: 'voidTransaction',
+  PaymentType.Purchase: 'Purchase',
+  PaymentType.Purchase_with_cash_back: 'Purchase_with_cash_back',
+  PaymentType.Cash_withdrawal: 'Cash_withdrawal',
+  PaymentType.Refund: 'Refund',
 };

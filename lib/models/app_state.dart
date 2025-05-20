@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'kazang.dart';
+import 'payment.dart' show PaymentType;
 import 'transaction.dart' show intSafeConvert;
 
 part 'app_state.freezed.dart';
@@ -21,7 +22,8 @@ abstract class AppState with _$AppState {
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
     @JsonKey(includeToJson: false, includeFromJson: false)
-    @Default(null) IntentInfo? intentInfo,
+    @Default(null)
+    IntentInfo? intentInfo,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
@@ -34,17 +36,14 @@ abstract class AppState with _$AppState {
 
   // If it's configured we don't want to override it
   AppState setIntentInfo({required IntentInfo intentInfo}) {
-    if (!isSetup && intentInfo.username != null) {
-      return copyWith(
-        intentInfo: intentInfo,
-        accountInfo: LoginRequest.fromJson({
-          'accountNumber': intentInfo.username,
-          'password': accountInfo?.password,
-          'serialNumber': deviceInfo!.serial,
-        }),
-      );
-    }
-    return this;
+    return copyWith(
+      intentInfo: intentInfo,
+      accountInfo: LoginRequest.fromJson({
+        'accountNumber': intentInfo.username ?? accountInfo?.accountNumber,
+        'password': accountInfo?.password,
+        'serialNumber': deviceInfo!.serial,
+      }),
+    );
   }
 }
 
@@ -282,7 +281,7 @@ class MerchantConfig {
     required this.merchantNumber,
   });
 
-  get switchName => routingSwitch == "LESAKA" ? "PRISM": routingSwitch;
+  get switchName => routingSwitch == "LESAKA" ? "PRISM" : routingSwitch;
 
   factory MerchantConfig.fromJson(Map<String, dynamic> json) =>
       _$MerchantConfigFromJson(json);
@@ -313,10 +312,28 @@ class UserConfig {
 @JsonSerializable()
 class IntentInfo {
   final String? username;
+  final PaymentType? transactionType;
+  final String? amount;
+  final String? cashbackAmount;
+  final String? uniqueId;
+  final String? refNo;
+  final String? isLocalRequest;
 
   IntentInfo({
     this.username,
+    this.transactionType = PaymentType.Purchase,
+    this.amount,
+    this.cashbackAmount,
+    this.uniqueId,
+    this.refNo,
+    this.isLocalRequest,
   });
+
+  get isIntentTransaction =>
+      transactionType == PaymentType.Purchase ||
+      transactionType == PaymentType.Purchase_with_cash_back ||
+      transactionType == PaymentType.Cash_withdrawal ||
+      transactionType == PaymentType.Refund;
 
   factory IntentInfo.fromJson(Map<String, dynamic> json) =>
       _$IntentInfoFromJson(json);
@@ -325,6 +342,6 @@ class IntentInfo {
 
   @override
   String toString() {
-    return 'IntentInfo(username: $username)';
+    return 'IntentInfo(username: $username, transactionType: $transactionType, amount: $amount, cashbackAmount: $cashbackAmount, uniqueId: $uniqueId, refNo: $refNo, isLocalRequest: $isLocalRequest)';
   }
 }

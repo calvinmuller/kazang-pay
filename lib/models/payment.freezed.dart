@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Payment {
   int get amount;
-  dynamic get cashbackAmount;
+  int get cashbackAmount;
   PaymentType? get type;
   bool? get cashbackOnly;
   String? get rrn;
@@ -37,8 +37,8 @@ mixin _$Payment {
         (other.runtimeType == runtimeType &&
             other is Payment &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            const DeepCollectionEquality()
-                .equals(other.cashbackAmount, cashbackAmount) &&
+            (identical(other.cashbackAmount, cashbackAmount) ||
+                other.cashbackAmount == cashbackAmount) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.cashbackOnly, cashbackOnly) ||
                 other.cashbackOnly == cashbackOnly) &&
@@ -47,13 +47,8 @@ mixin _$Payment {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      amount,
-      const DeepCollectionEquality().hash(cashbackAmount),
-      type,
-      cashbackOnly,
-      rrn);
+  int get hashCode =>
+      Object.hash(runtimeType, amount, cashbackAmount, type, cashbackOnly, rrn);
 
   @override
   String toString() {
@@ -68,7 +63,7 @@ abstract mixin class $PaymentCopyWith<$Res> {
   @useResult
   $Res call(
       {int amount,
-      dynamic cashbackAmount,
+      int cashbackAmount,
       PaymentType? type,
       bool? cashbackOnly,
       String? rrn});
@@ -87,7 +82,7 @@ class _$PaymentCopyWithImpl<$Res> implements $PaymentCopyWith<$Res> {
   @override
   $Res call({
     Object? amount = null,
-    Object? cashbackAmount = freezed,
+    Object? cashbackAmount = null,
     Object? type = freezed,
     Object? cashbackOnly = freezed,
     Object? rrn = freezed,
@@ -97,10 +92,10 @@ class _$PaymentCopyWithImpl<$Res> implements $PaymentCopyWith<$Res> {
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as int,
-      cashbackAmount: freezed == cashbackAmount
+      cashbackAmount: null == cashbackAmount
           ? _self.cashbackAmount
           : cashbackAmount // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int,
       type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -135,7 +130,7 @@ class _Payment extends Payment {
   final int amount;
   @override
   @JsonKey()
-  final dynamic cashbackAmount;
+  final int cashbackAmount;
   @override
   @JsonKey()
   final PaymentType? type;
@@ -167,8 +162,8 @@ class _Payment extends Payment {
         (other.runtimeType == runtimeType &&
             other is _Payment &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            const DeepCollectionEquality()
-                .equals(other.cashbackAmount, cashbackAmount) &&
+            (identical(other.cashbackAmount, cashbackAmount) ||
+                other.cashbackAmount == cashbackAmount) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.cashbackOnly, cashbackOnly) ||
                 other.cashbackOnly == cashbackOnly) &&
@@ -177,13 +172,8 @@ class _Payment extends Payment {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      amount,
-      const DeepCollectionEquality().hash(cashbackAmount),
-      type,
-      cashbackOnly,
-      rrn);
+  int get hashCode =>
+      Object.hash(runtimeType, amount, cashbackAmount, type, cashbackOnly, rrn);
 
   @override
   String toString() {
@@ -199,7 +189,7 @@ abstract mixin class _$PaymentCopyWith<$Res> implements $PaymentCopyWith<$Res> {
   @useResult
   $Res call(
       {int amount,
-      dynamic cashbackAmount,
+      int cashbackAmount,
       PaymentType? type,
       bool? cashbackOnly,
       String? rrn});
@@ -218,7 +208,7 @@ class __$PaymentCopyWithImpl<$Res> implements _$PaymentCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? amount = null,
-    Object? cashbackAmount = freezed,
+    Object? cashbackAmount = null,
     Object? type = freezed,
     Object? cashbackOnly = freezed,
     Object? rrn = freezed,
@@ -228,8 +218,10 @@ class __$PaymentCopyWithImpl<$Res> implements _$PaymentCopyWith<$Res> {
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as int,
-      cashbackAmount:
-          freezed == cashbackAmount ? _self.cashbackAmount! : cashbackAmount,
+      cashbackAmount: null == cashbackAmount
+          ? _self.cashbackAmount
+          : cashbackAmount // ignore: cast_nullable_to_non_nullable
+              as int,
       type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable

@@ -22,5 +22,22 @@ final paymentNotifierProvider =
 );
 
 typedef _$PaymentNotifier = AutoDisposeNotifier<Payment>;
+String _$paymentIntentNotifierHash() =>
+    r'dad94bc4988760f25e29406da2891e7e5ec81cb9';
+
+/// See also [PaymentIntentNotifier].
+@ProviderFor(PaymentIntentNotifier)
+final paymentIntentNotifierProvider =
+    NotifierProvider<PaymentIntentNotifier, Payment>.internal(
+  PaymentIntentNotifier.new,
+  name: r'paymentIntentNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$paymentIntentNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$PaymentIntentNotifier = Notifier<Payment>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

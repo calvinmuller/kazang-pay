@@ -91,6 +91,7 @@ Future<TerminalProfile> fetchProfile(Ref ref) async {
       ref.watch(appNotifierProvider.select((state) => state.accountInfo));
 
   try {
+
     final response = await api.getProfile(accountInfo!);
     final profile = TerminalProfile.fromJson(response);
     appState.setProfile(profile);
