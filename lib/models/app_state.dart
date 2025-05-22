@@ -321,7 +321,7 @@ class IntentInfo {
 
   IntentInfo({
     this.username,
-    this.transactionType = PaymentType.Purchase,
+    this.transactionType,
     this.amount,
     this.cashbackAmount,
     this.uniqueId,
@@ -329,11 +329,12 @@ class IntentInfo {
     this.isLocalRequest,
   });
 
-  get isIntentTransaction =>
+  bool get isIntentTransaction =>
       transactionType == PaymentType.Purchase ||
       transactionType == PaymentType.Purchase_with_cash_back ||
       transactionType == PaymentType.Cash_withdrawal ||
-      transactionType == PaymentType.Refund;
+      transactionType == PaymentType.Refund ||
+      transactionType == PaymentType.Cancel;
 
   factory IntentInfo.fromJson(Map<String, dynamic> json) =>
       _$IntentInfoFromJson(json);

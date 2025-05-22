@@ -73,15 +73,15 @@ class PaymentIntentNotifier extends _$PaymentIntentNotifier {
 
   void setFromIntentInfo(IntentInfo intentInfo) {
     state = state.copyWith(
-      amount: 1000,
-      cashbackAmount: 0,
-      // amount: int.parse(intentInfo.amount!),
-      // cashbackAmount: int.parse(intentInfo.cashbackAmount ?? "0"),
-      type: intentInfo.transactionType! == PaymentType.Purchase
-          ? PaymentType.payment
-          : PaymentType.voidTransaction,
-      rrn: intentInfo.uniqueId,
+      amount: int.parse(intentInfo.amount ?? "0"),
+      cashbackAmount: int.parse(intentInfo.cashbackAmount ?? "0"),
+      type: intentInfo.transactionType! != PaymentType.Purchase
+          ? PaymentType.voidTransaction
+          : PaymentType.payment,
+      rrn: intentInfo.refNo,
+      uniqueId: intentInfo.uniqueId,
     );
+    print(state);
   }
 
   complete({TransactionResult? transactionResult}) async {

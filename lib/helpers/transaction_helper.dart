@@ -209,7 +209,8 @@ class TransactionHelper {
   static Future<void> completeTransaction(
       Payment payment, TransactionResult? transactionResult) async {
     await _instance.methodChannel.invokeMethod('completeTransaction', {
-      'uniqueId': payment.rrn,
+      'uniqueId': payment.uniqueId,
+      'refNo': payment.rrn,
       'responseId': transactionResult?.ourReferenceNumber
     });
   }

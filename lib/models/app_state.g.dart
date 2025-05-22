@@ -192,8 +192,7 @@ Map<String, dynamic> _$UserConfigToJson(UserConfig instance) =>
 IntentInfo _$IntentInfoFromJson(Map json) => IntentInfo(
       username: json['username'] as String?,
       transactionType:
-          $enumDecodeNullable(_$PaymentTypeEnumMap, json['transactionType']) ??
-              PaymentType.Purchase,
+          $enumDecodeNullable(_$PaymentTypeEnumMap, json['transactionType']),
       amount: json['amount'] as String?,
       cashbackAmount: json['cashbackAmount'] as String?,
       uniqueId: json['uniqueId'] as String?,
@@ -220,6 +219,7 @@ const _$PaymentTypeEnumMap = {
   PaymentType.Purchase_with_cash_back: 'Purchase_with_cash_back',
   PaymentType.Cash_withdrawal: 'Cash_withdrawal',
   PaymentType.Refund: 'Refund',
+  PaymentType.Cancel: 'Cancel',
 };
 
 _AppState _$AppStateFromJson(Map json) => _AppState(

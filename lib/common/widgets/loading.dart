@@ -178,7 +178,7 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   @override
   void onFactoryInitialized() {
     final intentInfo = ref.read(appNotifierProvider).intentInfo!;
-    if (true) {
+    if (intentInfo.isIntentTransaction) {
       ref.read(launchModeProvider.notifier).state = LaunchMode.intent;
       ref.read(paymentIntentNotifierProvider.notifier).setFromIntentInfo(intentInfo);
       context.pushReplacementNamed('intent-payment');

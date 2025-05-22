@@ -42,7 +42,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final authRoutes = <RouteBase>[
     GoRoute(
       name: 'initialisation',
-      path: '/initialisation',
+      path: '/',
       builder: (context, _) => const LoadingWidget(),
     ),
     GoRoute(

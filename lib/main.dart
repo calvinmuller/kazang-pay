@@ -41,4 +41,22 @@ Future<void> main() async {
       ),
     ),
   );
+
+  // final config = await TcpServerConfig.loadConfig();
+  // print("Port: ${config.port}, Enabled: ${config.enabled}");
+  //
+  // // To update:
+  // await TcpServerConfig.saveConfig(port: 8551, enabled: true);
+  //
+  // TcpListenerPlugin.onMessageReceived((msg) {
+  //   final transaction = TcpTransaction.fromJson(json.decode(msg));
+  //   print('Received Transaction: $transaction');
+  //
+  //   Future.delayed(const Duration(seconds: 5), () {
+  //     TcpListenerPlugin.sendTransactionCompleted(transaction);
+  //     print('Transaction Completed: $transaction');
+  //   });
+  // });
+  //
+  // TcpListenerPlugin.startServer();
 }

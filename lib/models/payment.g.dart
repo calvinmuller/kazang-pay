@@ -13,6 +13,7 @@ _Payment _$PaymentFromJson(Map json) => _Payment(
           PaymentType.payment,
       cashbackOnly: json['cashbackOnly'] as bool? ?? false,
       rrn: json['rrn'] as String? ?? null,
+      uniqueId: json['uniqueId'] as String? ?? null,
     );
 
 Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
@@ -21,6 +22,7 @@ Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
       'type': _$PaymentTypeEnumMap[instance.type],
       'cashbackOnly': instance.cashbackOnly,
       'rrn': instance.rrn,
+      'uniqueId': instance.uniqueId,
     };
 
 const _$PaymentTypeEnumMap = {
@@ -31,4 +33,5 @@ const _$PaymentTypeEnumMap = {
   PaymentType.Purchase_with_cash_back: 'Purchase_with_cash_back',
   PaymentType.Cash_withdrawal: 'Cash_withdrawal',
   PaymentType.Refund: 'Refund',
+  PaymentType.Cancel: 'Cancel',
 };

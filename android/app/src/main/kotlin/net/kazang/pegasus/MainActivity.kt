@@ -1,6 +1,5 @@
 package net.kazang.pegasus
 
-import TcpServer
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -192,8 +191,6 @@ class MainActivity : FlutterActivity() {
             }
         }
         requestForStoragePermissions()
-        val server = TcpServer()
-        server.start()
     }
 
     private fun play() {

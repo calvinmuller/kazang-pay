@@ -6,7 +6,7 @@ part 'payment.freezed.dart';
 
 part 'payment.g.dart';
 
-enum PaymentType { payment, cashback, voidTransaction, Purchase, Purchase_with_cash_back, Cash_withdrawal, Refund }
+enum PaymentType { payment, cashback, voidTransaction, Purchase, Purchase_with_cash_back, Cash_withdrawal, Refund, Cancel }
 
 @freezed
 abstract class Payment with _$Payment {
@@ -18,6 +18,7 @@ abstract class Payment with _$Payment {
     @Default(PaymentType.payment) PaymentType? type,
     @Default(false) bool? cashbackOnly,
     @Default(null) String? rrn,
+    @Default(null) String? uniqueId,
   }) = _Payment;
 
   factory Payment.fromJson(Map<String, dynamic> json) =>

@@ -23,7 +23,7 @@ final paymentNotifierProvider =
 
 typedef _$PaymentNotifier = AutoDisposeNotifier<Payment>;
 String _$paymentIntentNotifierHash() =>
-    r'dad94bc4988760f25e29406da2891e7e5ec81cb9';
+    r'ca01ef8fcee69184106954dd867a3e65868b9921';
 
 /// See also [PaymentIntentNotifier].
 @ProviderFor(PaymentIntentNotifier)
