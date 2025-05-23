@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart'
 
 import 'common/common.dart';
 import 'common/providers/app.provider.dart' show appNotifierProvider;
+import 'common/providers/payment.provider.dart';
 import 'common/widgets/widgets.dart';
 import 'pages/pages.dart';
 
@@ -123,6 +124,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: 'payment',
           builder: (BuildContext context, GoRouterState state) {
             return const PaymentPage();
+          },
+        ),
+        GoRoute(
+          name: 'intent-payment',
+          path: 'intent-payment',
+          builder: (BuildContext context, GoRouterState state) {
+            final payment = ref.watch(paymentIntentNotifierProvider);
+            return PaymentPage(payment: payment);
           },
         ),
         GoRoute(
