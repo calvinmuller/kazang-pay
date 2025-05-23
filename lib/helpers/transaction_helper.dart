@@ -1,5 +1,8 @@
 import 'dart:convert' show jsonDecode;
-import 'package:flutter/services.dart' show MethodChannel, EventChannel;
+import 'dart:developer';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart'
+    show MethodChannel, EventChannel, PlatformException;
 import '../common/interfaces/factory.events.dart'
     show
         FactoryEventHandler,
@@ -208,10 +211,31 @@ class TransactionHelper {
 
   static Future<void> completeTransaction(
       Payment payment, TransactionResult? transactionResult) async {
-    await _instance.methodChannel.invokeMethod('completeTransaction', {
+    final params = {
       'uniqueId': payment.uniqueId,
       'refNo': payment.rrn,
       'responseId': transactionResult?.ourReferenceNumber
-    });
+    };
+    log('completeTransaction', params.toString());
+    await _instance.methodChannel.invokeMethod(
+      'completeTransaction',
+    );
+  }
+
+  static Future<void> log(String tag, String message,
+      {String level = 'd'}) async {
+    if (kDebugMode) {
+      print('[$tag] $message');
+    } else {
+      try {
+        await _instance.methodChannel.invokeMethod('log', {
+          'tag': tag,
+          'message': message,
+          'level': level,
+        });
+      } on PlatformException catch (e) {
+        print('Failed to log message: ${e.message}');
+      }
+    }
   }
 }

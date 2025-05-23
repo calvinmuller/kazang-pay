@@ -50,8 +50,7 @@ class MainActivity : FlutterActivity() {
             transactionHandler = TransactionHandler()
 
             MethodChannel(
-                flutterEngine.dartExecutor.binaryMessenger,
-                PRINT_CHANNEL
+                flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL
             ).setMethodCallHandler(
                 PrinterHandler(
                     transactionHandler
@@ -64,8 +63,7 @@ class MainActivity : FlutterActivity() {
         )
 
         MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            CHANNEL
+            flutterEngine.dartExecutor.binaryMessenger, CHANNEL
         ).setMethodCallHandler { call, result ->
             if (call.method == "connect") {
                 val config = call.argument<HashMap<Any, Any>>("config")!!
@@ -77,8 +75,7 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "createPurchase") {
                 thread {
                     transactionHandler.createPurchase(
-                        amount = call.argument<String>("amount")!!,
-                        description = call.argument<String>("description")!!
+                        amount = call.argument<String>("amount")!!, description = call.argument<String>("description")!!
                     )
                 }
                 result.success(true)
@@ -87,8 +84,7 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "continueTransaction") {
                 thread {
                     transactionHandler.continueTransaction(
-                        value = call.argument<String>("value")!!,
-                        pos = call.argument<Int>("pos")!!
+                        value = call.argument<String>("value")!!, pos = call.argument<Int>("pos")!!
                     )
                 }
                 result.success(true)
@@ -181,11 +177,28 @@ class MainActivity : FlutterActivity() {
                         tt.putExtra("refNo", "NA");
                         tt.putExtra("bin", "000000");
                     }
+                    Log.d("MainActivity", "completeTransaction: ${tt.extras}")
                     result.success(true)
                     setResult(Activity.RESULT_OK, tt);
                     finishAndRemoveTask()
 
                 }
+            } else if (call.method == "log") {
+                thread {
+                    val tag = call.argument<String>("tag") ?: "Flutter"
+                    val message = call.argument<String>("message") ?: ""
+                    val level = call.argument<String>("level") ?: "d"
+
+                    when (level.lowercase()) {
+                        "v" -> Log.v(tag, message)
+                        "d" -> Log.d(tag, message)
+                        "i" -> Log.i(tag, message)
+                        "w" -> Log.w(tag, message)
+                        "e" -> Log.e(tag, message)
+                        else -> Log.d(tag, message)
+                    }
+                }
+                result.success(null)
             } else {
                 result.notImplemented()
             }
@@ -209,8 +222,7 @@ class MainActivity : FlutterActivity() {
         val value: String?
         runBlocking {
             val preferencesKey = stringPreferencesKey(key)
-            val result =
-                context.sharedPreferencesDataStore.data.map { preferences -> preferences[preferencesKey] }
+            val result = context.sharedPreferencesDataStore.data.map { preferences -> preferences[preferencesKey] }
             value = result.firstOrNull()
         }
         val type: Type = object : TypeToken<HashMap<Any, Any>>() {}.type

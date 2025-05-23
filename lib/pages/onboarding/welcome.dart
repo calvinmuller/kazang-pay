@@ -91,7 +91,7 @@ class WelcomePage extends StatelessWidget {
                 ),
                 Card(
                   margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 10),
                   color: CustomColours.lightGray,
                   child: Padding(
                     padding: const EdgeInsets.all(16),

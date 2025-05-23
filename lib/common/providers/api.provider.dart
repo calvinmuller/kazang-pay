@@ -1,14 +1,26 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io' show HttpClient, X509Certificate;
 import 'package:dio/io.dart';
 
-import 'package:dio/dio.dart' show BaseOptions, Dio, DioException;
+import 'package:dio/dio.dart'
+    show
+        BaseOptions,
+        Dio,
+        DioException,
+        InterceptorsWrapper,
+        RequestOptions,
+        Response,
+        ResponseInterceptorHandler,
+        RequestInterceptorHandler,
+        ErrorInterceptorHandler;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/repository.dart';
 import '../../models/app_state.dart';
+import '../interceptors/logging.dart' show LoggingInterceptor;
 import 'app.provider.dart';
 
 part 'api.provider.g.dart';
@@ -24,11 +36,13 @@ Dio dioClient(Ref ref) {
         client.findProxy = (uri) {
           return 'PROXY proxy.kazang.net:30720';
         };
-        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
         return client;
       },
     );
   }
+  dio.interceptors.add(LoggingInterceptor());
   return dio;
 }
 
@@ -91,7 +105,6 @@ Future<TerminalProfile> fetchProfile(Ref ref) async {
       ref.watch(appNotifierProvider.select((state) => state.accountInfo));
 
   try {
-
     final response = await api.getProfile(accountInfo!);
     final profile = TerminalProfile.fromJson(response);
     appState.setProfile(profile);
