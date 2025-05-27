@@ -22,7 +22,6 @@ import 'package:go_router/go_router.dart';
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/providers/payment.controller.dart';
-import '../common/providers/payment.provider.dart';
 import '../common/providers/status.provider.dart';
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/widgets.dart';

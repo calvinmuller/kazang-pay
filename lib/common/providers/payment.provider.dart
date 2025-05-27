@@ -86,7 +86,6 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   void setFromTcpTransaction(TcpTransaction tcpTransaction) {
-    print(tcpTransaction.toString());
     state = state.copyWith(
       amount: tcpTransaction.amount,
       cashbackAmount: tcpTransaction.cashbackAmount,

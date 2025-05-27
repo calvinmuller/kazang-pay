@@ -17,7 +17,6 @@ import 'package:flutter/material.dart'
         Text,
         IconAlignment,
         Icons,
-        Navigator,
         Column,
         Scaffold,
         ListView;

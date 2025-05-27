@@ -39,8 +39,8 @@ class MethodChannelTcpReceiver extends TcpReceiverPlatform {
   }
 
   @override
-  void setMethodCallHandler(Future<Null> Function(dynamic call) handler) {
-    methodChannel.setMethodCallHandler(handler);
+  void setMethodCallHandler(Future<Null> Function(dynamic call) param0) {
+    methodChannel.setMethodCallHandler(param0);
   }
 
   @override

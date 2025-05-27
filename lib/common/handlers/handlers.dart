@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart' show BuildContext, debugPrint;
+import 'package:flutter/material.dart' show debugPrint;
 import 'package:tcp_receiver/tcp_receiver.dart';
 import 'package:tcp_receiver/transaction.dart' show TcpTransactionResponse;
 
 import '../../helpers/transaction_helper.dart';
 import '../../models/payment.dart';
-import '../../models/payment_request.dart' show TransactionHandler;
 import '../../models/transaction_result.dart' show TransactionResult;
 
 class IntentTransactionHandler extends TransactionHandler {
@@ -40,4 +39,9 @@ class KeypadTransactionHandler extends TransactionHandler {
     debugPrint("Cleaning up after Keypad transaction...");
     // Maybe reset input fields or log locally
   }
+}
+
+
+abstract class TransactionHandler {
+  Future<void> postTransaction(Payment context, TransactionResult result);
 }

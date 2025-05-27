@@ -6,7 +6,6 @@ import 'package:riverpod/riverpod.dart' show StateNotifier;
 
 import '../../core/core.dart';
 import '../../models/payment.dart' show Payment;
-import '../../models/payment_request.dart';
 import '../../models/transaction_result.dart';
 import '../handlers/handlers.dart';
 

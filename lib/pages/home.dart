@@ -192,9 +192,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   void _initializeTcpListener() async {
     final config = await tcpReceiver.loadConfig();
-    print("Port: ${config.port}, Enabled: ${config.enabled}");
-
-    // await tcpReceiver.saveConfig(port: 8551, enabled: true);
+    TransactionHelper.log("tcpReceiver", "Port: ${config.port}, Enabled: ${config.enabled}");
 
     tcpReceiver.onMessageReceived((msg) async {
       final paymentNotifier = ref.read(paymentNotifierProvider.notifier);
