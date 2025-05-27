@@ -1,9 +1,8 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../core/launch_mode.dart';
 
 part 'payment.freezed.dart';
-
 part 'payment.g.dart';
 
 enum PaymentType { payment, cashback, voidTransaction, Purchase, Purchase_with_cash_back, Cash_withdrawal, Refund, Cancel }
@@ -19,6 +18,7 @@ abstract class Payment with _$Payment {
     @Default(false) bool? cashbackOnly,
     @Default(null) String? rrn,
     @Default(null) String? uniqueId,
+    @Default(LaunchMode.normal) LaunchMode launchMode,
   }) = _Payment;
 
   factory Payment.fromJson(Map<String, dynamic> json) =>

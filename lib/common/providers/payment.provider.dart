@@ -1,10 +1,12 @@
-import '../../helpers/transaction_helper.dart' show TransactionHelper;
+// ignore_for_file: avoid_manual_providers_as_generated_provider_dependency
+import 'package:tcp_receiver/transaction.dart' show TcpTransaction;
+
+import '../../core/core.dart';
 import '../../models/app_state.dart';
 import '../../models/payment.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../models/transaction_result.dart';
-import 'intent.provider.dart';
+import 'payment.controller.dart';
 
 part 'payment.provider.g.dart';
 
@@ -60,16 +62,13 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   clearAll() {
-    state =
-        state.copyWith(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+    state = state.copyWith(
+      amount: 0,
+      cashbackAmount: 0,
+      type: PaymentType.payment,
+      launchMode: LaunchMode.normal,
+    );
   }
-}
-
-@Riverpod(keepAlive: true)
-class PaymentIntentNotifier extends _$PaymentIntentNotifier {
-  @override
-  Payment build() =>
-      Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
 
   void setFromIntentInfo(IntentInfo intentInfo) {
     state = state.copyWith(
@@ -80,17 +79,25 @@ class PaymentIntentNotifier extends _$PaymentIntentNotifier {
           : PaymentType.payment,
       rrn: intentInfo.refNo,
       uniqueId: intentInfo.uniqueId,
+      launchMode: LaunchMode.intent,
     );
-    print(state);
+
+    ref.read(paymentControllerProvider.notifier).setPayment(state);
   }
 
-  complete({TransactionResult? transactionResult}) async {
-    ref.read(launchModeProvider.notifier).state = LaunchMode.normal;
+  void setFromTcpTransaction(TcpTransaction tcpTransaction) {
+    print(tcpTransaction.toString());
     state = state.copyWith(
-      amount: 0,
-      cashbackAmount: 0,
-      type: PaymentType.payment,
+      amount: tcpTransaction.amount,
+      cashbackAmount: tcpTransaction.cashbackAmount,
+      type: tcpTransaction.isVoid
+          ? PaymentType.voidTransaction
+          : PaymentType.payment,
+      rrn: tcpTransaction.refNo,
+      uniqueId: tcpTransaction.uniqueId,
+      launchMode: LaunchMode.wifi,
     );
-    await TransactionHelper.completeTransaction(state, transactionResult);
+
+    ref.read(paymentControllerProvider.notifier).setPayment(state);
   }
 }

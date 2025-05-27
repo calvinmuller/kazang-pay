@@ -1,5 +1,4 @@
 import 'dart:convert' show jsonDecode;
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart'
     show MethodChannel, EventChannel, PlatformException;

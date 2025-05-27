@@ -55,7 +55,9 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     // We dont want to popup an error if keys need to be injected
     if (!value!.contains("KSN keys are not injected")) {
       error = true;
-      showErrorDialog(context, value).then((_) => context.pop(true));
+      showErrorDialog(context, value).then((_) {
+        context.pop(true);
+      });
     }
   }
 

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io' show HttpClient, X509Certificate;
 import 'package:dio/io.dart';
 
@@ -7,13 +6,7 @@ import 'package:dio/dio.dart'
     show
         BaseOptions,
         Dio,
-        DioException,
-        InterceptorsWrapper,
-        RequestOptions,
-        Response,
-        ResponseInterceptorHandler,
-        RequestInterceptorHandler,
-        ErrorInterceptorHandler;
+        DioException;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';

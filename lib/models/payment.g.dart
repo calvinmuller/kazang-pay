@@ -14,6 +14,9 @@ _Payment _$PaymentFromJson(Map json) => _Payment(
       cashbackOnly: json['cashbackOnly'] as bool? ?? false,
       rrn: json['rrn'] as String? ?? null,
       uniqueId: json['uniqueId'] as String? ?? null,
+      launchMode:
+          $enumDecodeNullable(_$LaunchModeEnumMap, json['launchMode']) ??
+              LaunchMode.normal,
     );
 
 Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
@@ -23,6 +26,7 @@ Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
       'cashbackOnly': instance.cashbackOnly,
       'rrn': instance.rrn,
       'uniqueId': instance.uniqueId,
+      'launchMode': _$LaunchModeEnumMap[instance.launchMode]!,
     };
 
 const _$PaymentTypeEnumMap = {
@@ -34,4 +38,10 @@ const _$PaymentTypeEnumMap = {
   PaymentType.Cash_withdrawal: 'Cash_withdrawal',
   PaymentType.Refund: 'Refund',
   PaymentType.Cancel: 'Cancel',
+};
+
+const _$LaunchModeEnumMap = {
+  LaunchMode.normal: 'normal',
+  LaunchMode.intent: 'intent',
+  LaunchMode.wifi: 'wifi',
 };

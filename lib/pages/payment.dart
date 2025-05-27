@@ -21,6 +21,7 @@ import 'package:go_router/go_router.dart';
 
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
+import '../common/providers/payment.controller.dart';
 import '../common/providers/payment.provider.dart';
 import '../common/providers/status.provider.dart';
 import '../common/providers/transaction.provider.dart';
@@ -49,7 +50,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   @override
   void initState() {
     if (widget.payment == null) {
-      payment = ref.read(paymentNotifierProvider);
+      payment = ref.read(paymentControllerProvider)!;
     } else {
       payment = widget.payment!;
     }

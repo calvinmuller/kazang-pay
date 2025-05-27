@@ -1,11 +1,43 @@
+import 'dart:convert' show json;
+
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, BorderRadius, Color, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, Border, Radius, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, Scaffold, FractionallySizedBox;
+    show
+        BuildContext,
+        Widget,
+        BoxDecoration,
+        Icon,
+        EdgeInsets,
+        BorderRadius,
+        Color,
+        TextStyle,
+        Theme,
+        Colors,
+        Icons,
+        IconButton,
+        AppBar,
+        MainAxisSize,
+        Border,
+        Radius,
+        TextAlign,
+        Text,
+        Container,
+        FontWeight,
+        Column,
+        CrossAxisAlignment,
+        Padding,
+        MainAxisAlignment,
+        Row,
+        Expanded,
+        Scaffold,
+        FractionallySizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
-
+import 'package:tcp_receiver/tcp_receiver.dart';
+import 'package:tcp_receiver/transaction.dart' show TcpTransaction;
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
+import '../common/providers/payment.provider.dart';
 import '../common/widgets/button.dart';
 import '../core/core.dart';
 import '../helpers/transaction_helper.dart';
@@ -22,10 +54,13 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
+  final tcpReceiver = TcpReceiver();
+
   @override
   void initState() {
     super.initState();
     TransactionHelper.reconnect();
+    _initializeTcpListener();
   }
 
   @override
@@ -33,8 +68,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final merchantInfo = ref.watch(
-        appNotifierProvider.select((state) => state.profile!.merchantConfig));
-
+      appNotifierProvider.select((state) => state.profile!.merchantConfig),
+    );
     return Container(
       decoration: const BoxDecoration(
         gradient: headerGradient,
@@ -59,7 +94,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 height: context.dynamicSize(250, 150),
                 margin:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                // padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 90),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.white,
@@ -154,5 +188,29 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void _initializeTcpListener() async {
+    final config = await tcpReceiver.loadConfig();
+    print("Port: ${config.port}, Enabled: ${config.enabled}");
+
+    // await tcpReceiver.saveConfig(port: 8551, enabled: true);
+
+    tcpReceiver.onMessageReceived((msg) async {
+      final paymentNotifier = ref.read(paymentNotifierProvider.notifier);
+      final transaction = TcpTransaction.fromJson(json.decode(msg));
+      paymentNotifier.setFromTcpTransaction(transaction);
+      context.goNamed('payment');
+    });
+
+    if (config.enabled) {
+      tcpReceiver.startServer();
+    }
+  }
+
+  @override
+  dispose() {
+    tcpReceiver.stopServer();
+    super.dispose();
   }
 }

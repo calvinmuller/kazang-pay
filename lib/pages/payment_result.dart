@@ -24,8 +24,8 @@ import 'package:flutter/material.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
-import '../common/providers/intent.provider.dart';
-import '../common/providers/payment.provider.dart';
+import '../common/providers/payment.controller.dart'
+    show paymentControllerProvider;
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
@@ -70,7 +70,8 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         if (result.isSuccessful) {
           TransactionHelper.paymentSuccess();
           // Automatically print the merchant receipt.
-          PrintHelper.printMerchantReceipt(context, ref, result.ourReferenceNumber!);
+          PrintHelper.printMerchantReceipt(
+              context, ref, result.ourReferenceNumber!);
         }
       }
     });
@@ -165,14 +166,10 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           elevation: 0,
           height: 60,
           width: double.infinity,
-          onPressed: () {
-            final launchMode = ref.read(launchModeProvider);
-            if (launchMode == LaunchMode.intent) {
-              final payment = ref.read(paymentIntentNotifierProvider.notifier);
-              payment.complete(transactionResult: result);
-            } else {
-              Navigator.pop(context);
-            }
+          onPressed: () async {
+            await ref
+                .read(paymentControllerProvider.notifier)
+                .postTransaction(context, result);
           },
           icon: const Icon(Icons.arrow_forward),
           child: Text(l10n.continueButton),
