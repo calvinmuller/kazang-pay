@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart'
-    show BuildContext, showDialog;
+import 'package:flutter/material.dart' show BuildContext, showDialog;
 import 'package:flutter/services.dart' show MethodChannel, PlatformException;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -52,12 +51,29 @@ class PrintHelper {
     }
   }
 
-  static printReceipt({
+  static Future<String> sendPrinterData(
+      PrintRequest clientReceipt, PrintRequest merchantReceipt) async {
+    try {
+      final String result = await _instance.methodChannel.invokeMethod(
+        'sendPrinterData',
+        {
+          'merchantReceipt': merchantReceipt.toJson(),
+          'clientReceipt': clientReceipt.toJson(),
+        },
+      );
+      return result;
+    } on PlatformException {
+      rethrow;
+    }
+  }
+
+  static Future<PrintRequest?> printReceipt({
     Transaction? transaction,
     BuildContext? context,
     MerchantConfig? merchantConfig,
     TerminalConfig? terminalConfig,
     ReceiptSectionEnum receiptType = ReceiptSectionEnum.CUSTOMER,
+    bool returnResult = false,
   }) async {
     final df = DateFormat('yyyy-MM-dd');
     final tf = DateFormat('HH:mm:ss');
@@ -188,7 +204,12 @@ class PrintHelper {
     printRequest.printLineItems.add(NewLinePrintCommand());
     printRequest.printLineItems.add(NewLinePrintCommand());
 
-    await startPrint(printRequest);
+    if (returnResult) {
+      return printRequest;
+    } else {
+      await startPrint(printRequest);
+    }
+    return null;
   }
 
   static void printMerchantReceipt(context, WidgetRef ref, String rrn) {
@@ -205,6 +226,35 @@ class PrintHelper {
         terminalConfig: appState.profile!.terminalConfig,
         context: context,
       );
+    });
+  }
+
+  static void printReceipts(BuildContext context, WidgetRef ref, String rrn) {
+    final transactionProvider = ref.read(
+      getByReferenceDataProvider(rrn),
+    );
+
+    transactionProvider.whenData((result) async {
+      final appState = ref.read(appNotifierProvider);
+      final merchantReceipt = await PrintHelper.printReceipt(
+        transaction: result,
+        receiptType: ReceiptSectionEnum.MERCHANT,
+        merchantConfig: appState.profile!.merchantConfig,
+        terminalConfig: appState.profile!.terminalConfig,
+        context: context,
+        returnResult: true,
+      );
+
+      final customerReceipt = await PrintHelper.printReceipt(
+        transaction: result,
+        receiptType: ReceiptSectionEnum.CUSTOMER,
+        merchantConfig: appState.profile!.merchantConfig,
+        terminalConfig: appState.profile!.terminalConfig,
+        context: context,
+        returnResult: true,
+      );
+
+      await sendPrinterData(customerReceipt!, merchantReceipt!);
     });
   }
 }

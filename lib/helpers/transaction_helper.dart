@@ -1,5 +1,7 @@
 import 'dart:convert' show jsonDecode;
-import 'package:flutter/services.dart' show MethodChannel, EventChannel;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart'
+    show MethodChannel, EventChannel, PlatformException;
 import '../common/interfaces/factory.events.dart'
     show
         FactoryEventHandler,
@@ -11,6 +13,7 @@ import '../common/interfaces/factory.events.dart'
 import '../models/app_state.dart';
 import '../models/payment.dart';
 import '../models/transaction.dart';
+import '../models/transaction_result.dart';
 import 'currency_helpers.dart';
 
 class TransactionHelper {
@@ -33,7 +36,7 @@ class TransactionHelper {
   static Future<void> doTransaction(Payment payment) async {
     final amount = CurrencyHelper.formatForTransaction(payment.amount);
     final cashbackAmount =
-        CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
+        CurrencyHelper.formatForTransaction(payment.cashbackAmount);
 
     if (payment.type == PaymentType.voidTransaction) {
       await _instance.methodChannel
@@ -203,5 +206,33 @@ class TransactionHelper {
 
   static void performOsUpdate() async {
     await _instance.methodChannel.invokeMethod('performOsUpdate');
+  }
+
+  static Future<void> completeTransaction(
+      Payment payment, TransactionResult? transactionResult) async {
+    final params = {
+      'uniqueId': payment.uniqueId,
+      'refNo': payment.rrn,
+      'responseId': transactionResult?.ourReferenceNumber
+    };
+    log('completeTransaction', params.toString());
+    await _instance.methodChannel.invokeMethod('completeTransaction', params);
+  }
+
+  static Future<void> log(String tag, String message,
+      {String level = 'd'}) async {
+    if (kDebugMode) {
+      print('[$tag] $message');
+    } else {
+      try {
+        await _instance.methodChannel.invokeMethod('log', {
+          'tag': tag,
+          'message': message,
+          'level': level,
+        });
+      } on PlatformException catch (e) {
+        print('Failed to log message: ${e.message}');
+      }
+    }
   }
 }

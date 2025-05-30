@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment;
+    show
+        StatelessWidget,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Expanded,
+        Text,
+        AppBar,
+        MainAxisSize,
+        Padding,
+        Column,
+        Scaffold,
+        CrossAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../common/providers/payment.controller.dart';
 import '../common/providers/payment.provider.dart';
 import '../common/widgets/widgets.dart';
 import '../core/core.dart';
@@ -34,13 +47,20 @@ class NewSalePage extends StatelessWidget {
             Consumer(
               builder: (context, ref, child) {
                 final payment = ref.watch(paymentNotifierProvider);
+
                 return Button(
                   height: context.dynamicSize(90, 72),
                   width: double.infinity,
                   colour: CustomColours.greenish,
-                  onPressed: (payment.hasAmount) ? () {
-                    context.goNamed('payment');
-                  }: null,
+                  onPressed: (payment.hasAmount)
+                      ? () {
+                          ref
+                              .read(paymentControllerProvider.notifier)
+                              .setPayment(payment);
+
+                          context.goNamed('payment');
+                        }
+                      : null,
                   child: Text(l10n.pay),
                 );
               },

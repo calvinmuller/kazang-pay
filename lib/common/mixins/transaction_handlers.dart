@@ -55,7 +55,9 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     // We dont want to popup an error if keys need to be injected
     if (!value!.contains("KSN keys are not injected")) {
       error = true;
-      showErrorDialog(context, value).then((_) => context.pop(true));
+      showErrorDialog(context, value).then((_) {
+        context.pop(true);
+      });
     }
   }
 
@@ -81,6 +83,15 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onReturnPrinterResultEvent(PrinterResultEvent event) {}
 
+   @override
+  void onPrintDataCancelledEvent(bool value) {
+    final l10n = AppLocalizations.of(context)!;
+    showErrorDialog(context, l10n.printerError).then((_) {});
+  }
+
+  @override
+  void onPrinterOperationEndEvent(bool value) {}
+
   @override
   void onDisConnectEvent(bool value) {}
 
@@ -90,15 +101,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     showErrorDialog(context, l10n.batteryLow(percentage))
         .then((_) => context.pop(true));
   }
-
-  @override
-  void onPrintDataCancelledEvent(bool value) {
-    final l10n = AppLocalizations.of(context)!;
-    showErrorDialog(context, l10n.printerError).then((_) {});
-  }
-
-  @override
-  void onPrinterOperationEndEvent(bool value) {}
 
   @override
   void onKmsUpdateRequired() {
