@@ -6,7 +6,7 @@ part of 'payment.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$paymentNotifierHash() => r'73795fddb8eb4672218c701fc272bc960b20b5b3';
+String _$paymentNotifierHash() => r'6af29cc1da57eca7ae68e7ea798bd8d4dcd07708';
 
 /// See also [PaymentNotifier].
 @ProviderFor(PaymentNotifier)

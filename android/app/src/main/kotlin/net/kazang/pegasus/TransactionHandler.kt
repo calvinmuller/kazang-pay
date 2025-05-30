@@ -31,6 +31,7 @@ import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import net.kazang.pegasus.BuildConfig
+import java.util.HashMap
 import kotlin.concurrent.thread
 
 interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
@@ -54,6 +55,7 @@ interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEven
     fun onFactoryInitialized()
     fun onOsUpdateRequired(build: String, seNumber: String)
     fun performOsUpdate()
+    fun sendPrinterData(merchantReceipt: PrintRequest?, clientPrintRequest: PrintRequest?)
 }
 
 class TransactionHandler : TransactionInterface {
@@ -408,6 +410,19 @@ class TransactionHandler : TransactionInterface {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun sendPrinterData(
+        merchantReceipt: PrintRequest?,
+        clientReceipt: PrintRequest?
+    ) {
+        merchantReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        merchantReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        clientReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        clientReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        factory!!.sendPrinterData(merchantReceipt!!, clientReceipt!!)
     }
 
     override fun onKmsUpdateResult(status: String, message: String) {

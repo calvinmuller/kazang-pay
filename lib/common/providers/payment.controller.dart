@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show StateNotifierProvider;
+    show StateNotifierProvider, WidgetRef;
 import 'package:go_router/go_router.dart';
 import 'package:riverpod/riverpod.dart' show StateNotifier;
 
@@ -22,13 +22,21 @@ class PaymentController extends StateNotifier<Payment> {
   }
 
   Future<void> postTransaction(BuildContext context, TransactionResult result) async {
+    handler.postTransaction(state, result);
+    context.go('/home');
+  }
+
+  void onSuccessfulPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref) {
+    handler.onSuccessfulPayment(context, result, payment, ref);
+  }
+
+  TransactionHandler get handler {
     TransactionHandler handler = KeypadTransactionHandler();
     if (state.launchMode == LaunchMode.wifi) {
       handler = TcpTransactionHandler();
     } else if (state.launchMode == LaunchMode.intent) {
       handler = IntentTransactionHandler();
     }
-    handler.postTransaction(state, result);
-    context.go('/home');
+    return handler;
   }
 }

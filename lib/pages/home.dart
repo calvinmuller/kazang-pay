@@ -37,6 +37,7 @@ import 'package:tcp_receiver/tcp_receiver.dart';
 import 'package:tcp_receiver/transaction.dart' show TcpTransaction;
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
+import '../common/providers/payment.controller.dart';
 import '../common/providers/payment.provider.dart';
 import '../common/widgets/button.dart';
 import '../core/core.dart';
@@ -60,7 +61,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
     TransactionHelper.reconnect();
-    _initializeTcpListener();
+    if (ref.read(paymentControllerProvider).launchMode != LaunchMode.intent) {
+      _initializeTcpListener();
+    } else {
+      TransactionHelper.log("TCPReceiver", "TCP Receiver not initialized in intent mode.");
+    }
   }
 
   @override

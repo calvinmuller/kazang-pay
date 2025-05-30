@@ -66,6 +66,20 @@ class PrinterHandler(private val transactionHandler: TransactionInterface) : Met
                 result.success(gson.toJson(printRequest))
                 transactionHandler.printReceipt(printRequest)
             }
+            "sendPrinterData" -> {
+                val merchantReceipt = call.argument<HashMap<Any, Any>>("merchantReceipt")!!
+                val clientReceipt = call.argument<HashMap<Any, Any>>("clientReceipt")!!
+                val merchantPrintRequest = gson.fromJson(
+                    gson.toJson(merchantReceipt),
+                    PrintRequest::class.java
+                )
+                val clientPrintRequest = gson.fromJson(
+                    gson.toJson(clientReceipt),
+                    PrintRequest::class.java
+                )
+                Log.d("PrinterHandler", "sendPrinterData: ${gson.toJson(merchantPrintRequest)}")
+                transactionHandler.sendPrinterData(merchantPrintRequest, clientPrintRequest)
+            }
             else -> {
                 result.notImplemented()
             }

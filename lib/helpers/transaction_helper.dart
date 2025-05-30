@@ -216,9 +216,7 @@ class TransactionHelper {
       'responseId': transactionResult?.ourReferenceNumber
     };
     log('completeTransaction', params.toString());
-    await _instance.methodChannel.invokeMethod(
-      'completeTransaction',
-    );
+    await _instance.methodChannel.invokeMethod('completeTransaction', params);
   }
 
   static Future<void> log(String tag, String message,
