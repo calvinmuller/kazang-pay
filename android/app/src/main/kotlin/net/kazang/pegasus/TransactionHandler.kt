@@ -30,8 +30,6 @@ import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
-import net.kazang.pegasus.BuildConfig
-import java.util.HashMap
 import kotlin.concurrent.thread
 
 interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
@@ -449,12 +447,12 @@ class TransactionHandler : TransactionInterface {
         factory!!.startTransaction(factorybb)
     }
 
-    override fun voidTransaction(rrn: String) {
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
         transactionType = TransactionTypesEnum.VOID_TRANSACTION
-        val item = repo!!.getByReferenceData(rrn)
+        val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder)
         if (item == null) {
-            Log.e("voidTransaction", "Transaction not found for RRN: $rrn")
-            throw IllegalArgumentException("Transaction not found for RRN: $rrn")
+            Log.e("voidTransaction", "Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+            throw IllegalArgumentException("Transaction not found for RRN: $retrievalReferenceNumberBuilder")
         } else {
             factorybb = factorybb.createVoid("VOID", item)
             factory!!.startTransaction(factorybb)

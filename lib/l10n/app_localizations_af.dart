@@ -53,7 +53,8 @@ class AppLocalizationsAf extends AppLocalizations {
   String get cancel => 'Kanselleer Transaksie';
 
   @override
-  String get cancelTitle => 'Jy staan op die punt om hierdie transaksie te kanselleer';
+  String get cancelTitle =>
+      'Jy staan op die punt om hierdie transaksie te kanselleer';
 
   @override
   String get cancelMessage => 'Jou huidige transaksie sal gekanselleer word';
@@ -62,7 +63,8 @@ class AppLocalizationsAf extends AppLocalizations {
   String get checkBalance => 'Kontroleer Balans';
 
   @override
-  String get enterPin => 'Voer PIN in om toegang tot transaksiegeskiedenis en verrekeninge te verkry';
+  String get enterPin =>
+      'Voer PIN in om toegang tot transaksiegeskiedenis en verrekeninge te verkry';
 
   @override
   String get supervisorPin => 'Verskaf asseblief jou toesighouer PIN';
@@ -83,7 +85,8 @@ class AppLocalizationsAf extends AppLocalizations {
   String get error => 'Fout';
 
   @override
-  String get unexpectedError => 'Onverwagte fout het voorgekom, probeer asseblief weer.';
+  String get unexpectedError =>
+      'Onverwagte fout het voorgekom, probeer asseblief weer.';
 
   @override
   String get removeCard => 'Verwyder Kaart';
@@ -196,10 +199,12 @@ class AppLocalizationsAf extends AppLocalizations {
   String get onboardingWelcome => 'Welkom by Kazang Pay!';
 
   @override
-  String get onboardingRegister => 'Baie geluk, jy is by die laaste stap van die opstel van jou Kazang Pay Kaartleser.';
+  String get onboardingRegister =>
+      'Baie geluk, jy is by die laaste stap van die opstel van jou Kazang Pay Kaartleser.';
 
   @override
-  String get onboardRegisterHelp => 'Laat die Kazang Verkoopsagent jou asseblief help met die laaste stap.';
+  String get onboardRegisterHelp =>
+      'Laat die Kazang Verkoopsagent jou asseblief help met die laaste stap.';
 
   @override
   String get signIn => 'Verskaf asseblief jou aanmeldbewyse om voort te gaan:';
@@ -208,13 +213,16 @@ class AppLocalizationsAf extends AppLocalizations {
   String get standalone => 'Selfstandige modus opgespoor.';
 
   @override
-  String get onboard1 => 'Jy kan nou kaartbetalings aanvaar vir enige verkope op jou Kazang-toestel met jou eie Kazang Pay-toestel.';
+  String get onboard1 =>
+      'Jy kan nou kaartbetalings aanvaar vir enige verkope op jou Kazang-toestel met jou eie Kazang Pay-toestel.';
 
   @override
-  String get onboard2 => 'Jy kan nou jou Kazang Beursie aanvul met jou Kazang Pay-toestel, geen bankbesoeke meer en minder risiko vir jou besigheid.';
+  String get onboard2 =>
+      'Jy kan nou jou Kazang Beursie aanvul met jou Kazang Pay-toestel, geen bankbesoeke meer en minder risiko vir jou besigheid.';
 
   @override
-  String get onboard3 => 'Jou kaartbetalings sal direk in jou Kazang Beursie oorgedra word.';
+  String get onboard3 =>
+      'Jou kaartbetalings sal direk in jou Kazang Beursie oorgedra word.';
 
   @override
   String get registerDevice => 'Registreer Toestel';
@@ -244,10 +252,12 @@ class AppLocalizationsAf extends AppLocalizations {
   String get initialized => 'Geginitialiseer';
 
   @override
-  String get enterPinAccessSettings => 'Voer PIN in om toegang tot instellings te verkry';
+  String get enterPinAccessSettings =>
+      'Voer PIN in om toegang tot instellings te verkry';
 
   @override
-  String get pleaseProvideSupervisorPin => 'Verskaf asseblief jou toesighouer PIN';
+  String get pleaseProvideSupervisorPin =>
+      'Verskaf asseblief jou toesighouer PIN';
 
   @override
   String get noPinSet => 'Geen PIN is opgestel nie';
@@ -308,7 +318,8 @@ class AppLocalizationsAf extends AppLocalizations {
   }
 
   @override
-  String get totalSettlementAmountCalc => '* Totale Verrekeningsbedrag = Totale Bedrag Verwerk - Totale Verrekeninge voltooi - Fooie';
+  String get totalSettlementAmountCalc =>
+      '* Totale Verrekeningsbedrag = Totale Bedrag Verwerk - Totale Verrekeninge voltooi - Fooie';
 
   @override
   String get proxySettings => 'Proxy Instellings';
@@ -362,10 +373,12 @@ class AppLocalizationsAf extends AppLocalizations {
   String get profileInformation => 'Profielinligting';
 
   @override
-  String get serialNumberLengthMax => 'Verseker dat hierdie veld nie meer as 14 karakters bevat nie.';
+  String get serialNumberLengthMax =>
+      'Verseker dat hierdie veld nie meer as 14 karakters bevat nie.';
 
   @override
-  String get serialNumberLengthMin => 'Verseker dat hierdie veld minstens 13 karakters bevat.';
+  String get serialNumberLengthMin =>
+      'Verseker dat hierdie veld minstens 13 karakters bevat.';
 
   @override
   String get required => 'Hierdie veld is verpligtend.';
@@ -380,7 +393,8 @@ class AppLocalizationsAf extends AppLocalizations {
   String get model => 'Model:';
 
   @override
-  String get voidConfirm => 'Jy staan op die punt om hierdie transaksie nietig te verklaar';
+  String get voidConfirm =>
+      'Jy staan op die punt om hierdie transaksie nietig te verklaar';
 
   @override
   String batteryLow(Object percentage) {
@@ -388,16 +402,20 @@ class AppLocalizationsAf extends AppLocalizations {
   }
 
   @override
-  String get printerError => 'Drukkerfout het voorgekom, kontroleer asseblief die papier en probeer weer.';
+  String get printerError =>
+      'Drukkerfout het voorgekom, kontroleer asseblief die papier en probeer weer.';
 
   @override
-  String get usernameMin => 'Verseker dat hierdie veld minstens 10 karakters bevat.';
+  String get usernameMin =>
+      'Verseker dat hierdie veld minstens 10 karakters bevat.';
 
   @override
-  String get usernameMax => 'Verseker dat hierdie veld nie meer as 10 karakters bevat nie.';
+  String get usernameMax =>
+      'Verseker dat hierdie veld nie meer as 10 karakters bevat nie.';
 
   @override
-  String get connectionError => 'Verbindingsfout het voorgekom, probeer asseblief weer.';
+  String get connectionError =>
+      'Verbindingsfout het voorgekom, probeer asseblief weer.';
 
   @override
   String get transType => 'TRANSAKSIE TIPE:';
