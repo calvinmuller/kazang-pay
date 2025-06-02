@@ -25,7 +25,7 @@ class IntentTransactionHandler extends TransactionHandler {
   @override
   void onFailedPayment(BuildContext context, TransactionResult result,
       Payment payment, WidgetRef ref) {
-    // TODO: implement onFailedPayment
+    TransactionHelper.completeTransaction(payment, result);
   }
 }
 
@@ -85,5 +85,6 @@ abstract class TransactionHandler {
   void onSuccessfulPayment(BuildContext context, TransactionResult result,
       Payment payment, WidgetRef ref);
 
-  void onFailedPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref);
+  void onFailedPayment(BuildContext context, TransactionResult result,
+      Payment payment, WidgetRef ref);
 }
