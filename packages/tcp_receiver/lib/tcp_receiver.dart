@@ -1,5 +1,4 @@
 import 'tcp_receiver_platform_interface.dart';
-
 import 'transaction.dart';
 
 class TcpReceiver {

@@ -39,6 +39,7 @@ import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/providers/payment.controller.dart';
 import '../common/providers/payment.provider.dart';
+import '../common/providers/tcp.provider.dart' show tcpServerProvider;
 import '../common/widgets/button.dart';
 import '../core/core.dart';
 import '../helpers/transaction_helper.dart';
@@ -64,7 +65,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     if (ref.read(paymentControllerProvider).launchMode != LaunchMode.intent) {
       _initializeTcpListener();
     } else {
-      TransactionHelper.log("TCPReceiver", "TCP Receiver not initialized in intent mode.");
+      TransactionHelper.log(
+          "TCPReceiver", "TCP Receiver not initialized in intent mode.");
     }
   }
 
@@ -196,24 +198,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   void _initializeTcpListener() async {
-    final config = await tcpReceiver.loadConfig();
-    TransactionHelper.log("tcpReceiver", "Port: ${config.port}, Enabled: ${config.enabled}");
-
-    tcpReceiver.onMessageReceived((msg) async {
-      final paymentNotifier = ref.read(paymentNotifierProvider.notifier);
-      final transaction = TcpTransaction.fromJson(json.decode(msg));
-      paymentNotifier.setFromTcpTransaction(transaction);
-      context.goNamed('payment');
-    });
-
-    if (config.enabled) {
-      tcpReceiver.startServer();
-    }
+    final server = ref.read(tcpServerProvider);
+    server.start();
   }
 
   @override
   dispose() {
-    tcpReceiver.stopServer();
     super.dispose();
   }
 }

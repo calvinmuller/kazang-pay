@@ -210,7 +210,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     TransactionHelper.log("onReturnPrinterResultEvent", event.value);
     await ref
         .read(paymentControllerProvider.notifier)
-        .postTransaction(context, result);
+        .postTransaction(context, result, ref);
   }
 
   @override

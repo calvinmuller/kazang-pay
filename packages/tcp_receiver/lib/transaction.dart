@@ -57,6 +57,25 @@ class TcpTransaction {
   String toString() {
     return 'TcpTransaction(accountNumber: $accountNumber, cardNumber: $cardNumber, amount: $amount, cashbackAmount: $cashbackAmount, type: $type, uniqueId: $uniqueId, port: $port, timeout: $timeout, refNo: $refNo)';
   }
+
+  static fromString(String msg) {
+    // 1001162167|42615555|0000000250|0000000000|1|00000000000001234567|8551|75000| |SS|
+    final parts = msg.split('|');
+    if (parts.length < 9) {
+      throw FormatException('Invalid message format: $msg');
+    }
+    return TcpTransaction(
+      accountNumber: parts[0],
+      cardNumber: parts[1],
+      amount: int.parse(parts[2]),
+      cashbackAmount: int.parse(parts[3]),
+      type: parts[4] == "1" ? 'Purchase' : 'Cancel',
+      uniqueId: parts[5],
+      port: parts[6],
+      timeout: parts[7],
+      refNo: parts[8].replaceAll('SS', '').trim(),
+    );
+  }
 }
 
 class TcpTransactionResponse {

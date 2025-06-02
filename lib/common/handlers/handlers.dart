@@ -9,11 +9,12 @@ import '../../helpers/print_helper.dart' show PrintHelper;
 import '../../helpers/transaction_helper.dart';
 import '../../models/payment.dart';
 import '../../models/transaction_result.dart' show TransactionResult;
+import '../providers/tcp.provider.dart' show tcpServerProvider;
 
 class IntentTransactionHandler extends TransactionHandler {
   @override
   Future<void> postTransaction(
-      Payment payment, TransactionResult result) async {
+      Payment payment, TransactionResult result, WidgetRef ref) async {
     TransactionHelper.completeTransaction(payment, result);
   }
 
@@ -33,9 +34,8 @@ class IntentTransactionHandler extends TransactionHandler {
 class TcpTransactionHandler extends TransactionHandler {
   @override
   Future<void> postTransaction(
-      Payment payment, TransactionResult result) async {
+      Payment payment, TransactionResult result, WidgetRef ref) async {
     debugPrint("Cleaning up after TCP transaction...");
-    final receiver = TcpReceiver();
     final tcpTransaction = TcpTransactionResponse(
       status: result.isSuccessful ? 'True' : 'False',
       responseCode: result.responseCode ?? '',
@@ -44,7 +44,8 @@ class TcpTransactionHandler extends TransactionHandler {
       panBin: result.pan ?? '000000',
       uniqueId: payment.uniqueId ?? '',
     );
-    await receiver.sendTransactionCompleted(tcpTransaction);
+
+    await ref.read(tcpServerProvider).complete(tcpTransaction.toString());
   }
 
   @override
@@ -56,7 +57,7 @@ class TcpTransactionHandler extends TransactionHandler {
   @override
   void onFailedPayment(BuildContext context, TransactionResult result,
       Payment payment, WidgetRef ref) {
-    postTransaction(payment, result);
+    postTransaction(payment, result, ref);
     Navigator.pop(context);
   }
 }
@@ -64,7 +65,7 @@ class TcpTransactionHandler extends TransactionHandler {
 class KeypadTransactionHandler extends TransactionHandler {
   @override
   Future<void> postTransaction(
-      Payment context, TransactionResult result) async {
+      Payment context, TransactionResult result, WidgetRef ref) async {
     debugPrint("Cleaning up after Keypad transaction...");
   }
 
@@ -82,7 +83,8 @@ class KeypadTransactionHandler extends TransactionHandler {
 }
 
 abstract class TransactionHandler {
-  Future<void> postTransaction(Payment context, TransactionResult result);
+  Future<void> postTransaction(
+      Payment context, TransactionResult result, WidgetRef ref);
 
   void onSuccessfulPayment(BuildContext context, TransactionResult result,
       Payment payment, WidgetRef ref);

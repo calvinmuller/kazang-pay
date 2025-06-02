@@ -21,8 +21,8 @@ class PaymentController extends StateNotifier<Payment> {
     state = request;
   }
 
-  Future<void> postTransaction(BuildContext context, TransactionResult result) async {
-    handler.postTransaction(state, result);
+  Future<void> postTransaction(BuildContext context, TransactionResult result, WidgetRef ref) async {
+    handler.postTransaction(state, result, ref);
     Navigator.pop(context);
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:tcp_receiver/tcp_receiver.dart';
+import 'package:tcp_receiver/tcp_client_server.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,14 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    _tcpReceiverPlugin.startServer();
+    final server = TcpClientServer(
+    port: 3333,
+    onTransactionReceived: (transaction) {
+      print('Transaction received: $transaction');
+    },
+  );
+
+  server.start();
   }
 
   @override
