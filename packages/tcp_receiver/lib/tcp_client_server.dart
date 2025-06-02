@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:tcp_receiver/tcp_receiver.dart';
+import 'package:tcp_receiver/transaction.dart';
 
 const String stopIndicator = 'SS|';
 const String pingRequest = 'PING';
@@ -13,7 +14,7 @@ class TcpClientServer {
   Socket? _clientSocket;
   TcpReceiver tcpReceiver = TcpReceiver();
 
-  final Function(String) onTransactionReceived;
+  final Function(TcpTransaction) onTransactionReceived;
   bool _waitingForResponse = false;
 
   TcpClientServer({required this.onTransactionReceived, bool enabled = true});
@@ -48,9 +49,10 @@ class TcpClientServer {
             _waitingForResponse = true;
 
             try {
-              onTransactionReceived(message);
+              final transaction = TcpTransaction.fromString(message);
+              onTransactionReceived(transaction);
             } catch (e) {
-              print('Error parsing: $e');
+              debugPrint('Error parsing: $e');
             }
           }
         }
@@ -72,7 +74,7 @@ class TcpClientServer {
         await _clientSocket!.close();
         _waitingForResponse = false;
       } catch (e) {
-        print('Error sending response: $e');
+        debugPrint('Error sending response: $e');
       }
     }
   }
@@ -82,14 +84,12 @@ class TcpClientServer {
   }
 
   Future<void> stop() async {
-    print('TCP Client/Server stop');
     await _clientSocket?.close();
     await _serverSocket?.close();
     _cleanup("stop");
   }
 
   void _cleanup(String? method) {
-    print('TCP Client/Server cleanup ${method}');
     _clientSocket = null;
     _waitingForResponse = false;
   }

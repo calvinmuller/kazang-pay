@@ -89,23 +89,13 @@ class PaymentNotifier extends _$PaymentNotifier {
       launchMode: LaunchMode.intent,
     );
 
-    print(state.toString());
-
     ref.read(paymentControllerProvider.notifier).setPayment(state);
   }
 
   void setFromTcpTransaction(TcpTransaction tcpTransaction) {
-    var amount = tcpTransaction.amount;
-    var cashbackAmount = tcpTransaction.cashbackAmount;
-
-    if (tcpTransaction.type == "Cash_withdrawal") {
-      amount = int.parse("0");
-      cashbackAmount = tcpTransaction.amount;
-    }
-
     state = state.copyWith(
-      amount: amount,
-      cashbackAmount: cashbackAmount,
+      amount: tcpTransaction.amount,
+      cashbackAmount: tcpTransaction.cashbackAmount,
       type: tcpTransaction.isVoid
           ? PaymentType.voidTransaction
           : PaymentType.payment,
@@ -113,7 +103,6 @@ class PaymentNotifier extends _$PaymentNotifier {
       uniqueId: tcpTransaction.uniqueId,
       launchMode: LaunchMode.wifi,
     );
-
     ref.read(paymentControllerProvider.notifier).setPayment(state);
   }
 }

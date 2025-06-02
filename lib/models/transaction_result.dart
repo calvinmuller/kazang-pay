@@ -53,6 +53,20 @@ abstract class TransactionResult with _$TransactionResult {
         CardDataInputMode.ContactlessIntegratedCircuitCard
       ].contains(cardDataInputMode) && transactionType != TransactionType.VOID_TRANSACTION;
 
+  static failed(message, code) {
+    return TransactionResult(
+      canPrintReceipt: false,
+      isCancelled: false,
+      isSuccessful: false,
+      isSupervisor: false,
+      message: message,
+      responseCode: code,
+      responseMessage: message,
+      transactionAmount: 0,
+      transactionClientAction: TransactionClientAction.TRANSACTION_DECLINED,
+    ).toJson();
+  }
+
 }
 
 enum CardDataInputMode {

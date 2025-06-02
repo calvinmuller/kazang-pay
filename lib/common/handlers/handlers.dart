@@ -55,7 +55,7 @@ class TcpTransactionHandler extends TransactionHandler {
   void onFailedPayment(BuildContext context, TransactionResult result,
       Payment payment, WidgetRef ref) {
     postTransaction(payment, result, ref);
-    Navigator.pop(context);
+    if (context.mounted) Navigator.popUntil(context, (route) => route.isFirst);
   }
 }
 
@@ -80,12 +80,9 @@ class KeypadTransactionHandler extends TransactionHandler {
 }
 
 abstract class TransactionHandler {
-  Future<void> postTransaction(
-      Payment context, TransactionResult result, WidgetRef ref);
+  Future<void> postTransaction(Payment context, TransactionResult result, WidgetRef ref);
 
-  void onSuccessfulPayment(BuildContext context, TransactionResult result,
-      Payment payment, WidgetRef ref);
+  void onSuccessfulPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref);
 
-  void onFailedPayment(BuildContext context, TransactionResult result,
-      Payment payment, WidgetRef ref);
+  void onFailedPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref);
 }

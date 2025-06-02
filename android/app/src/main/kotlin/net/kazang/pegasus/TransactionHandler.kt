@@ -117,13 +117,13 @@ class TransactionHandler : TransactionInterface {
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        if (config.merchant_config.velocity_rules.isNotEmpty()) {
-            factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
-            factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
-        } else {
-            factoryConstructor!!.posFactorySetup!!.velocityCount = 100
-            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 50
-        }
+//        if (config.merchant_config.velocity_rules.isNotEmpty()) {
+//            factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
+//            factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
+//        } else {
+//            factoryConstructor!!.posFactorySetup!!.velocityCount = 100
+//            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 50
+//        }
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true
         factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
@@ -452,8 +452,14 @@ class TransactionHandler : TransactionInterface {
     override fun voidTransaction(rrn: String) {
         transactionType = TransactionTypesEnum.VOID_TRANSACTION
         val item = repo!!.getByReferenceData(rrn)
-        factorybb = factorybb.createVoid("VOID", item!!)
-        factory!!.startTransaction(factorybb)
+        if (item == null) {
+            Log.e("voidTransaction", "Transaction not found for RRN: $rrn")
+            throw IllegalArgumentException("Transaction not found for RRN: $rrn")
+        } else {
+            factorybb = factorybb.createVoid("VOID", item)
+            factory!!.startTransaction(factorybb)
+        }
+
     }
 
     override fun continueTransaction(pos: Int, value: String) {

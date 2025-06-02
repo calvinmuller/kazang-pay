@@ -75,7 +75,8 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "createPurchase") {
                 thread {
                     transactionHandler.createPurchase(
-                        amount = call.argument<String>("amount")!!, description = call.argument<String>("description")!!
+                        amount = call.argument<String>("amount")!!,
+                        description = call.argument<String>("description")!!
                     )
                 }
                 result.success(true)
@@ -102,9 +103,15 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "voidTransaction") {
                 val rrn = call.argument<String>("rrn")!!
                 thread {
-                    transactionHandler.voidTransaction(rrn)
+                    try {
+                        transactionHandler.voidTransaction(rrn)
+                        result.success(true)
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error voiding transaction: ${e.message}")
+                        result.error("VoidError", e.message, e)
+                    }
+
                 }
-                result.success(true)
             } else if (call.method == "continueTransactionBudget") {
                 thread {
                     transactionHandler.continueTransactionBudget(value = call.argument<Int>("value")!!)
@@ -116,7 +123,8 @@ class MainActivity : FlutterActivity() {
                     result.success(transactions)
                 }
             } else if (call.method == "getByReferenceData") {
-                val transaction = transactionHandler.getByReferenceData(call.argument<String>("responseId")!!)
+                val transaction =
+                    transactionHandler.getByReferenceData(call.argument<String>("responseId")!!)
                 result.success(gson.toJson(transaction))
             } else if (call.method == "abortTransaction") {
                 thread {
@@ -163,7 +171,10 @@ class MainActivity : FlutterActivity() {
                         val transaction = transactionHandler.getByReferenceData(
                             call.argument<String>("responseId")!!
                         )!!
-                        tt.putExtra("success", if (transaction.ResponseCode == "00") "True" else "False")
+                        tt.putExtra(
+                            "success",
+                            if (transaction.ResponseCode == "00") "True" else "False"
+                        )
                         tt.putExtra("rspCode", transaction.ResponseCode);
                         tt.putExtra("rspMessage", transaction.ResponseMessage);
                         tt.putExtra("uinqueId", uniqueId);
@@ -222,7 +233,8 @@ class MainActivity : FlutterActivity() {
         val value: String?
         runBlocking {
             val preferencesKey = stringPreferencesKey(key)
-            val result = context.sharedPreferencesDataStore.data.map { preferences -> preferences[preferencesKey] }
+            val result =
+                context.sharedPreferencesDataStore.data.map { preferences -> preferences[preferencesKey] }
             value = result.firstOrNull()
         }
         val type: Type = object : TypeToken<HashMap<Any, Any>>() {}.type
@@ -307,7 +319,10 @@ class MainActivity : FlutterActivity() {
             //Android is 11 (R) or above
             if (Environment.isExternalStorageManager()) {
                 //Manage External Storage Permissions Granted
-                Log.d("Permission", "onActivityResult: Manage External Storage Permissions Granted");
+                Log.d(
+                    "Permission",
+                    "onActivityResult: Manage External Storage Permissions Granted"
+                );
             } else {
                 Log.d("Permission", "onActivityResult: Storage Permissions Denied");
             }

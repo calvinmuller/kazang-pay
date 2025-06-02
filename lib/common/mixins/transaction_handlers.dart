@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' show showDialog;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import '../../helpers/dialog_helpers.dart'
 import '../../helpers/transaction_helper.dart' show TransactionHelper;
 import '../../l10n/app_localizations.dart' show AppLocalizations;
 import '../../models/payment.dart' show Payment;
+import '../../models/transaction_result.dart' show TransactionResult;
 import '../interfaces/factory.events.dart';
 import '../providers/status.provider.dart' show statusMessageProvider;
 import '../providers/transaction.provider.dart';
@@ -20,7 +22,13 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   initialize() async {
     TransactionHelper.initialize(this);
-    await TransactionHelper.doTransaction(payment);
+    try {
+      await TransactionHelper.doTransaction(payment);
+    } on PlatformException catch (e) {
+      onTransactionCompletedEvent(
+        TransactionCompletedEvent(TransactionResult.failed(e.message, "06")),
+      );
+    }
   }
 
   @override
@@ -83,7 +91,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onReturnPrinterResultEvent(PrinterResultEvent event) {}
 
-   @override
+  @override
   void onPrintDataCancelledEvent(bool value) {
     final l10n = AppLocalizations.of(context)!;
     showErrorDialog(context, l10n.printerError).then((_) {});

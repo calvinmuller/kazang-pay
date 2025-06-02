@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart'
     show
-    AlertDialog,
-    Navigator,
-    Text,
-    TextButton,
-    Widget,
-    showDialog,
-    showModalBottomSheet,
-    Clip,
-    BuildContext;
+        AlertDialog,
+        Navigator,
+        Text,
+        TextButton,
+        Widget,
+        showDialog,
+        showModalBottomSheet,
+        Clip,
+        BuildContext;
 
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/list_dialog.dart';
@@ -24,7 +24,7 @@ showBottomSheet(context, Widget dialog) async {
   );
 }
 
-showListDialog(mainContext, List<dynamic> items, { String? title}) {
+showListDialog(mainContext, List<dynamic> items, {String? title}) {
   return showDialog(
     context: mainContext,
     barrierDismissible: false,
@@ -35,32 +35,40 @@ showListDialog(mainContext, List<dynamic> items, { String? title}) {
 }
 
 showSuccessDialog(context, message) {
-  return showErrorDialog(context, message, icon: const LottieWidget(
-    assetName: 'assets/animations/result-success.lottie',
-    size: 48,
-  ));
+  return showErrorDialog(context, message,
+      icon: const LottieWidget(
+        assetName: 'assets/animations/result-success.lottie',
+        size: 48,
+      ));
 }
 
-showErrorDialog
-    (context, String? message, {Widget icon = const LottieWidget(
-  assetName: 'assets/animations/result-failure.lottie',
-  size: 48,
-) }) {
+bool _isDialogShowing = false;
+
+showErrorDialog(context, String? message,
+    {Widget icon = const LottieWidget(
+      assetName: 'assets/animations/result-failure.lottie',
+      size: 48,
+    )}) {
+  if (_isDialogShowing) return;
+
+  _isDialogShowing = true;
   final l10n = AppLocalizations.of(context)!;
   return showDialog<bool>(
     context: context,
     barrierDismissible: false,
-    builder: (context) =>
-        AlertDialog(
-          icon: icon,
-          content: Text(message ?? l10n.unexpectedError),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l10n.ok),
-            ),
-          ],
+    builder: (context) => AlertDialog(
+      icon: icon,
+      content: Text(message ?? l10n.unexpectedError),
+      actions: [
+        TextButton(
+          onPressed: () {
+            _isDialogShowing = false;
+            Navigator.of(context).pop(true);
+          },
+          child: Text(l10n.ok),
         ),
+      ],
+    ),
   );
 }
 

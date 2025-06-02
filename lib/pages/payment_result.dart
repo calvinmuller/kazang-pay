@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         TickerProviderStateMixin,
@@ -20,7 +19,8 @@ import 'package:flutter/material.dart'
         Icons,
         Column,
         Scaffold,
-        ListView;
+        ListView,
+        Navigator;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import '../common/interfaces/factory.events.dart';
@@ -32,9 +32,10 @@ import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
 import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
-import '../core/constants.dart' show borderGradient;
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
+import '../helpers/dialog_helpers.dart' show showErrorDialog;
+import '../helpers/throttle.dart' show DebounceAggregator;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/payment.dart';
@@ -55,7 +56,10 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result =
-      ref.read(transactionResultNotifierProvider)!;
+ref.read(transactionResultNotifierProvider)!;
+  late final DebounceAggregator _aggregator;
+
+  @override
   late final Payment payment = ref.read(paymentControllerProvider)!;
   late final PaymentController paymentController =
       ref.read(paymentControllerProvider.notifier)!;
@@ -94,6 +98,16 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         }
       }
     });
+
+    _aggregator = DebounceAggregator(
+      delay: const Duration(seconds: 1),
+      onFirstCall: () {
+        onReturnPrinterResultEvent(PrinterResultEvent("SUCCESS"));
+      },
+      onDebounced: (aggregatedMessage) async {
+        await showErrorDialog(navigatorKey.currentContext, aggregatedMessage);
+      },
+    );
   }
 
   @override
@@ -185,7 +199,8 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           elevation: 0,
           height: 60,
           width: double.infinity,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              Navigator.popUntil(context, (route) => route.isFirst),
           icon: const Icon(Icons.arrow_forward),
           child: Text(l10n.continueButton),
         ),
@@ -213,5 +228,10 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   @override
   void onPrinterOperationEndEvent(bool value) {
     TransactionHelper.log("onPrinterOperationEndEvent", value.toString());
+  }
+
+  @override
+  void onErrorEvent(String? value) {
+    _aggregator(value);
   }
 }

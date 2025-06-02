@@ -1,7 +1,9 @@
 import 'dart:convert' show jsonDecode;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart'
-    show MethodChannel, EventChannel, PlatformException;
+    show MethodChannel, EventChannel;
+
 import '../common/interfaces/factory.events.dart'
     show
         FactoryEventHandler,
@@ -94,6 +96,10 @@ class TransactionHelper {
     var result = TransactionHelper.messageStream;
 
     await for (final message in result) {
+      TransactionHelper.log(
+        'TransactionHelper',
+        'Received event: ${message.event} with value: ${message.value}',
+      );
       if (message.event == "onUserApplicationSelectionRequiredEvent") {
         handler.onUserApplicationSelectionRequired(
           UserApplicationSelectionRequired(message.value),
@@ -121,6 +127,10 @@ class TransactionHelper {
       } else if (message.event == "onReturnPrinterResultEvent") {
         handler.onReturnPrinterResultEvent(
           PrinterResultEvent(message.value),
+        );
+      } else if (message.event == "onPrinterOperationEndEvent") {
+        handler.onPrinterOperationEndEvent(
+          message.value as bool,
         );
       } else if (message.event == "onDisConnectEvent") {
         handler.onDisConnectEvent(
@@ -224,15 +234,11 @@ class TransactionHelper {
     if (kDebugMode) {
       print('[$tag] $message');
     } else {
-      try {
-        await _instance.methodChannel.invokeMethod('log', {
-          'tag': tag,
-          'message': message,
-          'level': level,
-        });
-      } on PlatformException catch (e) {
-        print('Failed to log message: ${e.message}');
-      }
+      await _instance.methodChannel.invokeMethod('log', {
+        'tag': tag,
+        'message': message,
+        'level': level,
+      });
     }
   }
 }

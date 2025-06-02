@@ -10,9 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class TcpReceiverPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
   private lateinit var channel: MethodChannel
-  private var isRunning = false
   private lateinit var context: Context
-  private var output: java.io.OutputStream? = null
 
   override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(binding.binaryMessenger, "tcp_listener_plugin")

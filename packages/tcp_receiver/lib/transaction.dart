@@ -64,11 +64,21 @@ class TcpTransaction {
     if (parts.length < 9) {
       throw FormatException('Invalid message format: $msg');
     }
+
+    var amount = int.parse(parts[2]);
+    var cashbackAmount = int.parse(parts[3]);
+
+    if (parts[4] == '3') {
+      // If type is Cash_withdrawal, set amount to 0
+      amount = 0;
+      cashbackAmount = int.parse(parts[2]);
+    }
+
     return TcpTransaction(
       accountNumber: parts[0],
       cardNumber: parts[1],
-      amount: int.parse(parts[2]),
-      cashbackAmount: int.parse(parts[3]),
+      amount: amount,
+      cashbackAmount: cashbackAmount,
       type: switch (parts[4]) {
         '1' => 'Purchase',
         '2' => 'Purchase_with_cash_back',
