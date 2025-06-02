@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,6 +57,7 @@ class TcpTransactionHandler extends TransactionHandler {
   void onFailedPayment(BuildContext context, TransactionResult result,
       Payment payment, WidgetRef ref) {
     postTransaction(payment, result);
+    Navigator.pop(context);
   }
 }
 
