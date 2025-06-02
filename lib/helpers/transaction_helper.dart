@@ -1,8 +1,7 @@
 import 'dart:convert' show jsonDecode;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart'
-    show MethodChannel, EventChannel;
+import 'package:flutter/services.dart' show MethodChannel, EventChannel;
 
 import '../common/interfaces/factory.events.dart'
     show
@@ -223,7 +222,8 @@ class TransactionHelper {
     final params = {
       'uniqueId': payment.uniqueId,
       'refNo': payment.rrn,
-      'responseId': transactionResult?.ourReferenceNumber
+      'responseId': transactionResult?.ourReferenceNumber,
+      'message': transactionResult?.responseMessage,
     };
     log('completeTransaction', params.toString());
     await _instance.methodChannel.invokeMethod('completeTransaction', params);

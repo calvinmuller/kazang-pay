@@ -166,6 +166,7 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "completeTransaction") {
                 val tt = Intent()
                 val uniqueId = call.argument<String>("uniqueId")
+                val message = call.argument<String>("message") ?: "Transaction Cancelled"
                 thread {
                     try {
                         val transaction = transactionHandler.getByReferenceData(
@@ -183,7 +184,7 @@ class MainActivity : FlutterActivity() {
                     } catch (e: Exception) {
                         tt.putExtra("success", "False")
                         tt.putExtra("rspCode", "06");
-                        tt.putExtra("rspMessage", "Transaction Cancelled");
+                        tt.putExtra("rspMessage", message);
                         tt.putExtra("uinqueId", uniqueId);
                         tt.putExtra("refNo", "NA");
                         tt.putExtra("bin", "000000");
@@ -192,7 +193,6 @@ class MainActivity : FlutterActivity() {
                     result.success(true)
                     setResult(Activity.RESULT_OK, tt);
                     finishAndRemoveTask()
-
                 }
             } else if (call.method == "log") {
                 thread {

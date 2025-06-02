@@ -10,8 +10,7 @@ import '../providers/tcp.provider.dart' show tcpServerProvider;
 
 class IntentTransactionHandler extends TransactionHandler {
   @override
-  Future<void> postTransaction(
-      Payment payment, TransactionResult result, WidgetRef ref) async {
+  void postTransaction(Payment payment, TransactionResult result, WidgetRef ref) {
     TransactionHelper.completeTransaction(payment, result);
   }
 
@@ -80,7 +79,7 @@ class KeypadTransactionHandler extends TransactionHandler {
 }
 
 abstract class TransactionHandler {
-  Future<void> postTransaction(Payment context, TransactionResult result, WidgetRef ref);
+  void postTransaction(Payment context, TransactionResult result, WidgetRef ref);
 
   void onSuccessfulPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref);
 
