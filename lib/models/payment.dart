@@ -19,6 +19,7 @@ abstract class Payment with _$Payment {
     @Default(null) String? rrn,
     @Default(null) String? uniqueId,
     @Default(LaunchMode.normal) LaunchMode launchMode,
+    @Default(null) Duration? timeout,
   }) = _Payment;
 
   factory Payment.fromJson(Map<String, dynamic> json) =>
