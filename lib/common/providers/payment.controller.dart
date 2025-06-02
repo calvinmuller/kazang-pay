@@ -23,7 +23,7 @@ class PaymentController extends StateNotifier<Payment> {
 
   Future<void> postTransaction(BuildContext context, TransactionResult result) async {
     handler.postTransaction(state, result);
-    context.go('/home');
+    Navigator.pop(context);
   }
 
   void onSuccessfulPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref) {
@@ -38,5 +38,9 @@ class PaymentController extends StateNotifier<Payment> {
       handler = IntentTransactionHandler();
     }
     return handler;
+  }
+
+  void onFailedPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref) {
+     handler.onFailedPayment(context, result, payment, ref);
   }
 }

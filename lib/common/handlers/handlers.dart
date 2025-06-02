@@ -21,6 +21,12 @@ class IntentTransactionHandler extends TransactionHandler {
       Payment payment, WidgetRef ref) {
     PrintHelper.printReceipts(context, ref, result.ourReferenceNumber!);
   }
+
+  @override
+  void onFailedPayment(BuildContext context, TransactionResult result,
+      Payment payment, WidgetRef ref) {
+    // TODO: implement onFailedPayment
+  }
 }
 
 class TcpTransactionHandler extends TransactionHandler {
@@ -45,6 +51,12 @@ class TcpTransactionHandler extends TransactionHandler {
       Payment payment, WidgetRef ref) {
     PrintHelper.printReceipts(context, ref, result.ourReferenceNumber!);
   }
+
+  @override
+  void onFailedPayment(BuildContext context, TransactionResult result,
+      Payment payment, WidgetRef ref) {
+    postTransaction(payment, result);
+  }
 }
 
 class KeypadTransactionHandler extends TransactionHandler {
@@ -59,10 +71,19 @@ class KeypadTransactionHandler extends TransactionHandler {
       Payment payment, WidgetRef ref) {
     PrintHelper.printMerchantReceipt(context, ref, result.ourReferenceNumber!);
   }
+
+  @override
+  void onFailedPayment(BuildContext context, TransactionResult result,
+      Payment payment, WidgetRef ref) {
+    // TODO: implement onFailedPayment
+  }
 }
 
 abstract class TransactionHandler {
   Future<void> postTransaction(Payment context, TransactionResult result);
 
-  void onSuccessfulPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref);
+  void onSuccessfulPayment(BuildContext context, TransactionResult result,
+      Payment payment, WidgetRef ref);
+
+  void onFailedPayment(BuildContext context, TransactionResult result, Payment payment, WidgetRef ref);
 }

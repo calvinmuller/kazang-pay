@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         TickerProviderStateMixin,
@@ -22,6 +23,7 @@ import 'package:flutter/material.dart'
         ListView;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
+import 'package:go_router/go_router.dart';
 
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
@@ -80,6 +82,13 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           TransactionHelper.paymentSuccess();
 
           paymentController.onSuccessfulPayment(
+            context,
+            result,
+            payment,
+            ref,
+          );
+        } else {
+          paymentController.onFailedPayment(
             context,
             result,
             payment,
@@ -179,11 +188,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           elevation: 0,
           height: 60,
           width: double.infinity,
-          onPressed: () async {
-            await ref
-                .read(paymentControllerProvider.notifier)
-                .postTransaction(context, result);
-          },
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_forward),
           child: Text(l10n.continueButton),
         ),
@@ -201,8 +206,11 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   }
 
   @override
-  void onReturnPrinterResultEvent(PrinterResultEvent event) {
+  void onReturnPrinterResultEvent(PrinterResultEvent event) async {
     TransactionHelper.log("onReturnPrinterResultEvent", event.value);
+    await ref
+        .read(paymentControllerProvider.notifier)
+        .postTransaction(context, result);
   }
 
   @override
