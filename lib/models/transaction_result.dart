@@ -23,7 +23,7 @@ abstract class TransactionResult with _$TransactionResult {
     @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard) CardDataInputMode? cardDataInputMode,
     String? cardSequenceNumber,
     List<int>? cardVerificationMethod,
-    required String declinedReason,
+    String? declinedReason,
     required bool isCancelled,
     required bool isSuccessful,
     required bool isSupervisor,

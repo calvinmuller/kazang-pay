@@ -20,7 +20,7 @@ _TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
       cardVerificationMethod: (json['cardVerificationMethod'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
-      declinedReason: json['declinedReason'] as String,
+      declinedReason: json['declinedReason'] as String?,
       isCancelled: json['isCancelled'] as bool,
       isSuccessful: json['isSuccessful'] as bool,
       isSupervisor: json['isSupervisor'] as bool,

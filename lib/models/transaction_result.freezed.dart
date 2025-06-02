@@ -25,7 +25,7 @@ mixin _$TransactionResult {
   CardDataInputMode? get cardDataInputMode;
   String? get cardSequenceNumber;
   List<int>? get cardVerificationMethod;
-  String get declinedReason;
+  String? get declinedReason;
   bool get isCancelled;
   bool get isSuccessful;
   bool get isSupervisor;
@@ -173,7 +173,7 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       List<int>? cardVerificationMethod,
-      String declinedReason,
+      String? declinedReason,
       bool isCancelled,
       bool isSuccessful,
       bool isSupervisor,
@@ -217,7 +217,7 @@ class _$TransactionResultCopyWithImpl<$Res>
     Object? cardDataInputMode = freezed,
     Object? cardSequenceNumber = freezed,
     Object? cardVerificationMethod = freezed,
-    Object? declinedReason = null,
+    Object? declinedReason = freezed,
     Object? isCancelled = null,
     Object? isSuccessful = null,
     Object? isSupervisor = null,
@@ -267,10 +267,10 @@ class _$TransactionResultCopyWithImpl<$Res>
           ? _self.cardVerificationMethod
           : cardVerificationMethod // ignore: cast_nullable_to_non_nullable
               as List<int>?,
-      declinedReason: null == declinedReason
+      declinedReason: freezed == declinedReason
           ? _self.declinedReason
           : declinedReason // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isCancelled: null == isCancelled
           ? _self.isCancelled
           : isCancelled // ignore: cast_nullable_to_non_nullable
@@ -364,7 +364,7 @@ class _TransactionResult extends TransactionResult {
       this.cardDataInputMode,
       this.cardSequenceNumber,
       final List<int>? cardVerificationMethod,
-      required this.declinedReason,
+      this.declinedReason,
       required this.isCancelled,
       required this.isSuccessful,
       required this.isSupervisor,
@@ -428,7 +428,7 @@ class _TransactionResult extends TransactionResult {
   }
 
   @override
-  final String declinedReason;
+  final String? declinedReason;
   @override
   final bool isCancelled;
   @override
@@ -609,7 +609,7 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       List<int>? cardVerificationMethod,
-      String declinedReason,
+      String? declinedReason,
       bool isCancelled,
       bool isSuccessful,
       bool isSupervisor,
@@ -653,7 +653,7 @@ class __$TransactionResultCopyWithImpl<$Res>
     Object? cardDataInputMode = freezed,
     Object? cardSequenceNumber = freezed,
     Object? cardVerificationMethod = freezed,
-    Object? declinedReason = null,
+    Object? declinedReason = freezed,
     Object? isCancelled = null,
     Object? isSuccessful = null,
     Object? isSupervisor = null,
@@ -703,10 +703,10 @@ class __$TransactionResultCopyWithImpl<$Res>
           ? _self._cardVerificationMethod
           : cardVerificationMethod // ignore: cast_nullable_to_non_nullable
               as List<int>?,
-      declinedReason: null == declinedReason
+      declinedReason: freezed == declinedReason
           ? _self.declinedReason
           : declinedReason // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isCancelled: null == isCancelled
           ? _self.isCancelled
           : isCancelled // ignore: cast_nullable_to_non_nullable

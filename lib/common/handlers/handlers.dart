@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show debugPrint;
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart' show debugPrint, BuildContext, Navigator;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tcp_receiver/tcp_receiver.dart';
 import 'package:tcp_receiver/transaction.dart' show TcpTransactionResponse;
 
 import '../../helpers/print_helper.dart' show PrintHelper;

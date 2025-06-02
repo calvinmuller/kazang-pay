@@ -23,8 +23,6 @@ import 'package:flutter/material.dart'
         ListView;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
-import 'package:go_router/go_router.dart';
-
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/providers/payment.controller.dart'
@@ -37,7 +35,6 @@ import '../common/widgets/receipt_tabs.dart';
 import '../core/constants.dart' show borderGradient;
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
-import '../helpers/print_helper.dart' show PrintHelper;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/payment.dart';
@@ -135,7 +132,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     );
   }
 
-  getBody(l10n) {
+  getBody(AppLocalizations l10n) {
     return [
       LottieWidget(
         animate: false,
@@ -154,7 +151,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       ),
       if (!result.isSuccessful)
         Text(
-          result.declinedReason,
+          result.declinedReason ?? l10n.declined,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge,
         ),

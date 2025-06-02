@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:tcp_receiver/tcp_receiver.dart';
 
 const String stopIndicator = 'SS|';
@@ -16,7 +15,6 @@ class TcpClientServer {
 
   final Function(String) onTransactionReceived;
   bool _waitingForResponse = false;
-  StreamSubscription? _subscription;
 
   TcpClientServer({required this.onTransactionReceived, bool enabled = true});
 
@@ -37,7 +35,7 @@ class TcpClientServer {
     _clientSocket = client;
     final buffer = StringBuffer();
 
-    _subscription = client.listen(
+    client.listen(
       (data) {
         final chunk = utf8.decode(data);
         buffer.write(chunk);

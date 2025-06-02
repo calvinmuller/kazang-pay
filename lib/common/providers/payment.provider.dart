@@ -95,9 +95,17 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   void setFromTcpTransaction(TcpTransaction tcpTransaction) {
+    var amount = tcpTransaction.amount;
+    var cashbackAmount = tcpTransaction.cashbackAmount;
+
+    if (tcpTransaction.type == "Cash_withdrawal") {
+      amount = int.parse("0");
+      cashbackAmount = tcpTransaction.amount;
+    }
+
     state = state.copyWith(
-      amount: tcpTransaction.amount,
-      cashbackAmount: tcpTransaction.cashbackAmount,
+      amount: amount,
+      cashbackAmount: cashbackAmount,
       type: tcpTransaction.isVoid
           ? PaymentType.voidTransaction
           : PaymentType.payment,
