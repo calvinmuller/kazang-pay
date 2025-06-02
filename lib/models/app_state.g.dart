@@ -194,7 +194,7 @@ IntentInfo _$IntentInfoFromJson(Map json) => IntentInfo(
       transactionType:
           $enumDecodeNullable(_$PaymentTypeEnumMap, json['transactionType']),
       amount: json['amount'] as String?,
-      cashbackAmount: json['cashbackAmount'] as String?,
+      cashBackAmount: json['cashBackAmount'] as String?,
       uniqueId: json['uniqueId'] as String?,
       refNo: json['refNo'] as String?,
       isLocalRequest: json['isLocalRequest'] as String?,
@@ -205,7 +205,7 @@ Map<String, dynamic> _$IntentInfoToJson(IntentInfo instance) =>
       'username': instance.username,
       'transactionType': _$PaymentTypeEnumMap[instance.transactionType],
       'amount': instance.amount,
-      'cashbackAmount': instance.cashbackAmount,
+      'cashBackAmount': instance.cashBackAmount,
       'uniqueId': instance.uniqueId,
       'refNo': instance.refNo,
       'isLocalRequest': instance.isLocalRequest,

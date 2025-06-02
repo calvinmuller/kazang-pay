@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     final server = TcpClientServer(
-    port: 3333,
     onTransactionReceived: (transaction) {
       print('Transaction received: $transaction');
     },

@@ -1,5 +1,3 @@
-import 'dart:convert' show json;
-
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -34,11 +32,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 import 'package:tcp_receiver/tcp_receiver.dart';
-import 'package:tcp_receiver/transaction.dart' show TcpTransaction;
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/providers/payment.controller.dart';
-import '../common/providers/payment.provider.dart';
 import '../common/providers/tcp.provider.dart' show tcpServerProvider;
 import '../common/widgets/button.dart';
 import '../core/core.dart';
@@ -62,12 +58,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
     TransactionHelper.reconnect();
-    if (ref.read(paymentControllerProvider).launchMode != LaunchMode.intent) {
-      _initializeTcpListener();
-    } else {
-      TransactionHelper.log(
-          "TCPReceiver", "TCP Receiver not initialized in intent mode.");
-    }
+    _initializeTcpListener();
   }
 
   @override
@@ -198,8 +189,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   void _initializeTcpListener() async {
-    final server = ref.read(tcpServerProvider);
-    server.start();
+    if (ref.read(paymentControllerProvider).launchMode != LaunchMode.intent) {
+      final server = ref.read(tcpServerProvider);
+      server.start();
+    } else {
+      TransactionHelper.log(
+          "TCPReceiver", "TCP Receiver not initialized in intent mode.");
+    }
   }
 
   @override

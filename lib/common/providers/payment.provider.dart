@@ -71,16 +71,27 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   void setFromIntentInfo(IntentInfo intentInfo) {
+    // Hack this one
+    final amount = (intentInfo.transactionType == PaymentType.Cash_withdrawal)
+        ? int.parse("0")
+        : int.parse(intentInfo.amount ?? "0");
+
+    final cashbackAmount =
+        (intentInfo.transactionType == PaymentType.Cash_withdrawal)
+            ? int.parse(intentInfo.amount ?? "0")
+            : int.parse(intentInfo.cashBackAmount ?? "0");
+
     state = state.copyWith(
-      amount: int.parse(intentInfo.amount ?? "0"),
-      cashbackAmount: int.parse(intentInfo.cashbackAmount ?? "0"),
-      type: intentInfo.transactionType! != PaymentType.Purchase
-          ? PaymentType.voidTransaction
-          : PaymentType.payment,
+      amount: amount,
+      cashbackAmount: cashbackAmount,
+      type:
+          intentInfo.isVoid ? PaymentType.voidTransaction : PaymentType.payment,
       rrn: intentInfo.refNo,
       uniqueId: intentInfo.uniqueId,
       launchMode: LaunchMode.intent,
     );
+
+    print(state.toString());
 
     ref.read(paymentControllerProvider.notifier).setPayment(state);
   }

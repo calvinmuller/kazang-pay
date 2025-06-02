@@ -314,7 +314,7 @@ class IntentInfo {
   final String? username;
   final PaymentType? transactionType;
   final String? amount;
-  final String? cashbackAmount;
+  final String? cashBackAmount;
   final String? uniqueId;
   final String? refNo;
   final String? isLocalRequest;
@@ -323,7 +323,7 @@ class IntentInfo {
     this.username,
     this.transactionType,
     this.amount,
-    this.cashbackAmount,
+    this.cashBackAmount,
     this.uniqueId,
     this.refNo,
     this.isLocalRequest,
@@ -339,10 +339,12 @@ class IntentInfo {
   factory IntentInfo.fromJson(Map<String, dynamic> json) =>
       _$IntentInfoFromJson(json);
 
+  bool get isVoid => transactionType == PaymentType.Cancel;
+
   Map<String, dynamic> toJson() => _$IntentInfoToJson(this);
 
   @override
   String toString() {
-    return 'IntentInfo(username: $username, transactionType: $transactionType, amount: $amount, cashbackAmount: $cashbackAmount, uniqueId: $uniqueId, refNo: $refNo, isLocalRequest: $isLocalRequest)';
+    return 'IntentInfo(username: $username, transactionType: $transactionType, amount: $amount, cashbackAmount: $cashBackAmount, uniqueId: $uniqueId, refNo: $refNo, isLocalRequest: $isLocalRequest)';
   }
 }

@@ -45,8 +45,8 @@ class TransactionHelper {
     }
 
     if (payment.cashWithdrawal) {
-      await _instance.methodChannel.invokeMethod('createCashWithdrawal',
-          {'amount': amount, 'cashbackAmount': cashbackAmount});
+      await _instance.methodChannel.invokeMethod(
+          'createCashWithdrawal', {'cashbackAmount': cashbackAmount});
     } else if (payment.isPayment) {
       await _instance.methodChannel.invokeMethod('createPurchase', {
         'amount': amount,

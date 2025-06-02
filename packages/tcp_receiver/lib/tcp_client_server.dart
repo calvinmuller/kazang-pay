@@ -37,7 +37,7 @@ class TcpClientServer {
     _clientSocket = client;
     final buffer = StringBuffer();
 
-    this._subscription = client.listen(
+    _subscription = client.listen(
       (data) {
         final chunk = utf8.decode(data);
         buffer.write(chunk);
@@ -58,11 +58,10 @@ class TcpClientServer {
         }
       },
       onDone: () {
-        _cleanup();
+        _cleanup("onDone");
       },
       onError: (e) {
-        print('Client error: $e');
-        _cleanup();
+        _cleanup("onError");
       },
     );
   }
@@ -88,13 +87,12 @@ class TcpClientServer {
     print('TCP Client/Server stop');
     await _clientSocket?.close();
     await _serverSocket?.close();
-    _cleanup();
+    _cleanup("stop");
   }
 
-  void _cleanup() {
-    print('TCP Client/Server cleanup');
+  void _cleanup(String? method) {
+    print('TCP Client/Server cleanup ${method}');
     _clientSocket = null;
-    _serverSocket = null;
     _waitingForResponse = false;
   }
 }
