@@ -37,6 +37,7 @@ mixin _$TransactionResult {
   String? get stan;
   String? get priorityMessage;
   String? get receiptReference;
+  @JsonKey(defaultValue: "06")
   String? get responseCode;
   String? get responseMessage;
   String? get terminalId;
@@ -185,7 +186,7 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       String? stan,
       String? priorityMessage,
       String? receiptReference,
-      String? responseCode,
+      @JsonKey(defaultValue: "06") String? responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
@@ -376,7 +377,7 @@ class _TransactionResult extends TransactionResult {
       this.stan,
       this.priorityMessage,
       this.receiptReference,
-      required this.responseCode,
+      @JsonKey(defaultValue: "06") required this.responseCode,
       required this.responseMessage,
       this.terminalId,
       required this.transactionAmount,
@@ -452,6 +453,7 @@ class _TransactionResult extends TransactionResult {
   @override
   final String? receiptReference;
   @override
+  @JsonKey(defaultValue: "06")
   final String? responseCode;
   @override
   final String? responseMessage;
@@ -621,7 +623,7 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       String? stan,
       String? priorityMessage,
       String? receiptReference,
-      String? responseCode,
+      @JsonKey(defaultValue: "06") String? responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,

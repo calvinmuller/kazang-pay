@@ -20,7 +20,9 @@ abstract class TransactionResult with _$TransactionResult {
     @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
     List<int>? authorizationCode,
     required bool canPrintReceipt,
-    @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard) CardDataInputMode? cardDataInputMode,
+    @JsonKey(
+        unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
+    CardDataInputMode? cardDataInputMode,
     String? cardSequenceNumber,
     List<int>? cardVerificationMethod,
     String? declinedReason,
@@ -35,23 +37,27 @@ abstract class TransactionResult with _$TransactionResult {
     String? stan,
     String? priorityMessage,
     String? receiptReference,
-    required String? responseCode,
+    @JsonKey(defaultValue: "06") required String? responseCode,
     required String? responseMessage,
     String? terminalId,
     required int transactionAmount,
-    @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN) required TransactionClientAction? transactionClientAction,
+    @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
+    required TransactionClientAction? transactionClientAction,
     String? transactionDate,
-    @JsonKey(unknownEnumValue: TransactionType.P) TransactionType? transactionType,
+    @JsonKey(unknownEnumValue: TransactionType.P)
+    TransactionType? transactionType,
     List<String>? cardApplications,
   }) = _TransactionResult;
 
   factory TransactionResult.fromJson(Map<String, dynamic> json) =>
       _$TransactionResultFromJson(json);
 
-  get isTap => [
+  get isTap =>
+      [
         CardDataInputMode.CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
         CardDataInputMode.ContactlessIntegratedCircuitCard
-      ].contains(cardDataInputMode) && transactionType != TransactionType.VOID_TRANSACTION;
+      ].contains(cardDataInputMode) &&
+      transactionType != TransactionType.VOID_TRANSACTION;
 
   static failed(message, code) {
     return TransactionResult(
@@ -66,7 +72,6 @@ abstract class TransactionResult with _$TransactionResult {
       transactionClientAction: TransactionClientAction.TRANSACTION_DECLINED,
     ).toJson();
   }
-
 }
 
 enum CardDataInputMode {

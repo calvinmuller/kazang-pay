@@ -32,7 +32,7 @@ _TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
       stan: json['stan'] as String?,
       priorityMessage: json['priorityMessage'] as String?,
       receiptReference: json['receiptReference'] as String?,
-      responseCode: json['responseCode'] as String?,
+      responseCode: json['responseCode'] as String? ?? '06',
       responseMessage: json['responseMessage'] as String?,
       terminalId: json['terminalId'] as String?,
       transactionAmount: (json['transactionAmount'] as num).toInt(),
