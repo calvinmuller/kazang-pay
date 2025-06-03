@@ -13,7 +13,6 @@ import 'package:flutter/material.dart'
         Column,
         Scaffold,
         TextAlign,
-        debugPrint,
         PopScope;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
@@ -133,7 +132,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     if (context.mounted) {
       final result = TransactionResult.fromJson(value.value);
-      debugPrint(result.toString(), wrapWidth: 1024);
+      TransactionHelper.log("onTransactionCompletedEvent", result.toString());
       ref.read(transactionResultNotifierProvider.notifier).set(result);
       context.goNamed('payment-result', extra: result);
     }
