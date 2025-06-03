@@ -17,9 +17,6 @@ _Payment _$PaymentFromJson(Map json) => _Payment(
       launchMode:
           $enumDecodeNullable(_$LaunchModeEnumMap, json['launchMode']) ??
               LaunchMode.normal,
-      timeout: json['timeout'] == null
-          ? null
-          : Duration(microseconds: (json['timeout'] as num).toInt()),
     );
 
 Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
@@ -30,7 +27,6 @@ Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
       'rrn': instance.rrn,
       'uniqueId': instance.uniqueId,
       'launchMode': _$LaunchModeEnumMap[instance.launchMode]!,
-      'timeout': instance.timeout?.inMicroseconds,
     };
 
 const _$PaymentTypeEnumMap = {

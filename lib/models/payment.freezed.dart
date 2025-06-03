@@ -22,7 +22,6 @@ mixin _$Payment {
   String? get rrn;
   String? get uniqueId;
   LaunchMode get launchMode;
-  Duration? get timeout;
 
   /// Create a copy of Payment
   /// with the given fields replaced by the non-null parameter values.
@@ -49,18 +48,17 @@ mixin _$Payment {
             (identical(other.uniqueId, uniqueId) ||
                 other.uniqueId == uniqueId) &&
             (identical(other.launchMode, launchMode) ||
-                other.launchMode == launchMode) &&
-            (identical(other.timeout, timeout) || other.timeout == timeout));
+                other.launchMode == launchMode));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, amount, cashbackAmount, type,
-      cashbackOnly, rrn, uniqueId, launchMode, timeout);
+      cashbackOnly, rrn, uniqueId, launchMode);
 
   @override
   String toString() {
-    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn, uniqueId: $uniqueId, launchMode: $launchMode, timeout: $timeout)';
+    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn, uniqueId: $uniqueId, launchMode: $launchMode)';
   }
 }
 
@@ -76,8 +74,7 @@ abstract mixin class $PaymentCopyWith<$Res> {
       bool? cashbackOnly,
       String? rrn,
       String? uniqueId,
-      LaunchMode launchMode,
-      Duration? timeout});
+      LaunchMode launchMode});
 }
 
 /// @nodoc
@@ -99,7 +96,6 @@ class _$PaymentCopyWithImpl<$Res> implements $PaymentCopyWith<$Res> {
     Object? rrn = freezed,
     Object? uniqueId = freezed,
     Object? launchMode = null,
-    Object? timeout = freezed,
   }) {
     return _then(_self.copyWith(
       amount: null == amount
@@ -130,10 +126,6 @@ class _$PaymentCopyWithImpl<$Res> implements $PaymentCopyWith<$Res> {
           ? _self.launchMode
           : launchMode // ignore: cast_nullable_to_non_nullable
               as LaunchMode,
-      timeout: freezed == timeout
-          ? _self.timeout
-          : timeout // ignore: cast_nullable_to_non_nullable
-              as Duration?,
     ));
   }
 }
@@ -148,8 +140,7 @@ class _Payment extends Payment {
       this.cashbackOnly = false,
       this.rrn = null,
       this.uniqueId = null,
-      this.launchMode = LaunchMode.normal,
-      this.timeout = null})
+      this.launchMode = LaunchMode.normal})
       : super._();
   factory _Payment.fromJson(Map<String, dynamic> json) =>
       _$PaymentFromJson(json);
@@ -175,9 +166,6 @@ class _Payment extends Payment {
   @override
   @JsonKey()
   final LaunchMode launchMode;
-  @override
-  @JsonKey()
-  final Duration? timeout;
 
   /// Create a copy of Payment
   /// with the given fields replaced by the non-null parameter values.
@@ -209,18 +197,17 @@ class _Payment extends Payment {
             (identical(other.uniqueId, uniqueId) ||
                 other.uniqueId == uniqueId) &&
             (identical(other.launchMode, launchMode) ||
-                other.launchMode == launchMode) &&
-            (identical(other.timeout, timeout) || other.timeout == timeout));
+                other.launchMode == launchMode));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, amount, cashbackAmount, type,
-      cashbackOnly, rrn, uniqueId, launchMode, timeout);
+      cashbackOnly, rrn, uniqueId, launchMode);
 
   @override
   String toString() {
-    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn, uniqueId: $uniqueId, launchMode: $launchMode, timeout: $timeout)';
+    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn, uniqueId: $uniqueId, launchMode: $launchMode)';
   }
 }
 
@@ -237,8 +224,7 @@ abstract mixin class _$PaymentCopyWith<$Res> implements $PaymentCopyWith<$Res> {
       bool? cashbackOnly,
       String? rrn,
       String? uniqueId,
-      LaunchMode launchMode,
-      Duration? timeout});
+      LaunchMode launchMode});
 }
 
 /// @nodoc
@@ -260,7 +246,6 @@ class __$PaymentCopyWithImpl<$Res> implements _$PaymentCopyWith<$Res> {
     Object? rrn = freezed,
     Object? uniqueId = freezed,
     Object? launchMode = null,
-    Object? timeout = freezed,
   }) {
     return _then(_Payment(
       amount: null == amount
@@ -291,10 +276,6 @@ class __$PaymentCopyWithImpl<$Res> implements _$PaymentCopyWith<$Res> {
           ? _self.launchMode
           : launchMode // ignore: cast_nullable_to_non_nullable
               as LaunchMode,
-      timeout: freezed == timeout
-          ? _self.timeout
-          : timeout // ignore: cast_nullable_to_non_nullable
-              as Duration?,
     ));
   }
 }
