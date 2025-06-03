@@ -56,11 +56,12 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result =
-ref.read(transactionResultNotifierProvider)!;
+      ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
 
   @override
-  late final Payment payment = ref.read(paymentControllerProvider)!;
+  Payment get payment => ref.read(paymentControllerProvider)!;
+
   late final PaymentController paymentController =
       ref.read(paymentControllerProvider.notifier)!;
 

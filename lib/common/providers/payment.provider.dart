@@ -102,7 +102,6 @@ class PaymentNotifier extends _$PaymentNotifier {
       rrn: tcpTransaction.refNo,
       uniqueId: tcpTransaction.uniqueId,
       launchMode: LaunchMode.wifi,
-      timeout: const Duration(seconds: 30),
     );
     ref.read(paymentControllerProvider.notifier).setPayment(state);
   }

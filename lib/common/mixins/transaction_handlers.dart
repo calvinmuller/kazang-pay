@@ -32,12 +32,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
         TransactionCompletedEvent(TransactionResult.failed(e.message, "06")),
       );
     }
-    // start a timeout if the payment.timeout is set and execute onTransactionCompletedEvent if it is reached
-    if (payment.timeout != null) {
-      _timer = Timer(payment.timeout!, () {
-        TransactionHelper.abortTransaction();
-      });
-    }
   }
 
   @override
