@@ -78,13 +78,14 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       ref.read(statusMessageProvider.notifier).state = value ?? '';
       if (value == "Sending request online.") {
         ref.read(transactionStepProvider.notifier).state = 4;
-      }
-      else if (value == "Card timeout occurred.") {
+      } else if (value == "Card timeout occurred.") {
         onTransactionCompletedEvent(
           TransactionCompletedEvent(
             TransactionResult.failed(value, "06"),
           ),
         );
+      } else if (value == "Online process error") {
+        onErrorEvent(value);
       }
     }
   }
