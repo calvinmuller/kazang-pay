@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
@@ -21,7 +19,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> implements FactoryEventHandler {
   late final Payment payment;
   bool error = false;
-  Timer? _timer;
 
   initialize() async {
     TransactionHelper.initialize(this);
@@ -79,11 +76,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       if (value == "Sending request online.") {
         ref.read(transactionStepProvider.notifier).state = 4;
       } else if (value == "Card timeout occurred.") {
-        onTransactionCompletedEvent(
-          TransactionCompletedEvent(
-            TransactionResult.failed(value, "06"),
-          ),
-        );
+        TransactionHelper.abortTransaction();
       } else if (value == "Online process error") {
         onErrorEvent(value);
       }
@@ -166,13 +159,5 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onOsUpdateRequired(String build, String seNumber) {
     // TODO: implement onOsUpdateRequired
-  }
-
-  @override
-  void dispose() {
-    if (_timer != null && _timer!.isActive) {
-      _timer!.cancel();
-    }
-    super.dispose();
   }
 }
