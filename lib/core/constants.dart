@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        LinearGradient,
-        Color,
-        Alignment,
-        BorderRadius,
-        Radius,
-        Colors,
-        Offset,
-        BoxShadow,
-        BoxDecoration;
+    show LinearGradient, Color, Alignment, BorderRadius, Radius, Colors, Offset, BoxShadow, BoxDecoration, NavigatorState, GlobalKey;
 
 const headerGradient = LinearGradient(
   colors: <Color>[
@@ -86,3 +77,5 @@ const panelDecoration = BoxDecoration(
     )
   ],
 );
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

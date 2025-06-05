@@ -20,7 +20,7 @@ _TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
       cardVerificationMethod: (json['cardVerificationMethod'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
-      declinedReason: json['declinedReason'] as String,
+      declinedReason: json['declinedReason'] as String?,
       isCancelled: json['isCancelled'] as bool,
       isSuccessful: json['isSuccessful'] as bool,
       isSupervisor: json['isSupervisor'] as bool,
@@ -32,7 +32,7 @@ _TransactionResult _$TransactionResultFromJson(Map json) => _TransactionResult(
       stan: json['stan'] as String?,
       priorityMessage: json['priorityMessage'] as String?,
       receiptReference: json['receiptReference'] as String?,
-      responseCode: json['responseCode'] as String?,
+      responseCode: json['responseCode'] as String? ?? '06',
       responseMessage: json['responseMessage'] as String?,
       terminalId: json['terminalId'] as String?,
       transactionAmount: (json['transactionAmount'] as num).toInt(),

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart' show showDialog;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
+import '../../core/core.dart';
 import '../../helpers/dialog_helpers.dart'
     show showErrorDialog, showListDialog, showSuccessDialog;
 import '../../helpers/transaction_helper.dart' show TransactionHelper;
 import '../../l10n/app_localizations.dart' show AppLocalizations;
 import '../../models/payment.dart' show Payment;
+import '../../models/transaction_result.dart' show TransactionResult;
 import '../interfaces/factory.events.dart';
 import '../providers/status.provider.dart' show statusMessageProvider;
 import '../providers/transaction.provider.dart';
@@ -20,7 +23,13 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   initialize() async {
     TransactionHelper.initialize(this);
-    await TransactionHelper.doTransaction(payment);
+    try {
+      await TransactionHelper.doTransaction(payment);
+    } on PlatformException catch (e) {
+      onTransactionCompletedEvent(
+        TransactionCompletedEvent(TransactionResult.failed(e.message, "06")),
+      );
+    }
   }
 
   @override
@@ -52,11 +61,19 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onErrorEvent(String? value) {
-    // We dont want to popup an error if keys need to be injected
-    if (!value!.contains("KSN keys are not injected")) {
+    context.deviceCallback(urovo: () {
+      if (!value!.contains("KSN keys are not injected")) {
+        error = true;
+        showErrorDialog(context, value).then((_) {
+          context.pop(true);
+        });
+      }
+    }, sunmi: () {
       error = true;
-      showErrorDialog(context, value).then((_) => context.pop(true));
-    }
+      showErrorDialog(context, value).then((_) {
+        context.pop(true);
+      });
+    });
   }
 
   @override
@@ -65,6 +82,10 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       ref.read(statusMessageProvider.notifier).state = value ?? '';
       if (value == "Sending request online.") {
         ref.read(transactionStepProvider.notifier).state = 4;
+      } else if (value == "Card timeout occurred.") {
+        TransactionHelper.abortTransaction();
+      } else if (value == "Online process error") {
+        onErrorEvent(value);
       }
     }
   }
@@ -82,6 +103,15 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   void onReturnPrinterResultEvent(PrinterResultEvent event) {}
 
   @override
+  void onPrintDataCancelledEvent(bool value) {
+    final l10n = AppLocalizations.of(context)!;
+    showErrorDialog(context, l10n.printerError).then((_) {});
+  }
+
+  @override
+  void onPrinterOperationEndEvent(bool value) {}
+
+  @override
   void onDisConnectEvent(bool value) {}
 
   @override
@@ -90,15 +120,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     showErrorDialog(context, l10n.batteryLow(percentage))
         .then((_) => context.pop(true));
   }
-
-  @override
-  void onPrintDataCancelledEvent(bool value) {
-    final l10n = AppLocalizations.of(context)!;
-    showErrorDialog(context, l10n.printerError).then((_) {});
-  }
-
-  @override
-  void onPrinterOperationEndEvent(bool value) {}
 
   @override
   void onKmsUpdateRequired() {

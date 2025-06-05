@@ -17,43 +17,58 @@ import 'package:flutter/material.dart'
         Text,
         IconAlignment,
         Icons,
-        Navigator,
         Column,
         Scaffold,
-        ListView;
+        ListView,
+        Navigator;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
-
+import '../common/interfaces/factory.events.dart';
+import '../common/mixins/transaction_handlers.dart';
+import '../common/providers/payment.controller.dart'
+    show paymentControllerProvider, PaymentController;
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
 import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
-import '../core/constants.dart' show borderGradient;
+import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
-import '../helpers/print_helper.dart' show PrintHelper;
+import '../helpers/dialog_helpers.dart' show showErrorDialog;
+import '../helpers/throttle.dart' show DebounceAggregator;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
+import '../models/payment.dart';
 import '../models/transaction_result.dart' show TransactionResult;
 import '../ui/widgets.dart';
 
 class PaymentResultPage extends ConsumerStatefulWidget {
-  const PaymentResultPage({super.key});
+  const PaymentResultPage({super.key, this.autoPrint = true});
+
+  final bool autoPrint;
 
   @override
   ConsumerState<PaymentResultPage> createState() => _PaymentResultPageState();
 }
 
 class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, TransactionHandlersMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result =
       ref.read(transactionResultNotifierProvider)!;
+  late final DebounceAggregator _aggregator;
+
+  @override
+  Payment get payment => ref.read(paymentControllerProvider)!;
+
+  late final PaymentController paymentController =
+      ref.read(paymentControllerProvider.notifier)!;
 
   @override
   void initState() {
     super.initState();
+    TransactionHelper.initialize(this);
 
     _animationController = AnimationController(
         vsync: this, duration: const Duration(seconds: 1, milliseconds: 500))
@@ -67,11 +82,33 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         _borderAnimationController.repeat();
         if (result.isSuccessful) {
           TransactionHelper.paymentSuccess();
-          // Automatically print the merchant receipt.
-          PrintHelper.printMerchantReceipt(context, ref, result.ourReferenceNumber!);
+
+          paymentController.onSuccessfulPayment(
+            context,
+            result,
+            payment,
+            ref,
+          );
+        } else {
+          paymentController.onFailedPayment(
+            context,
+            result,
+            payment,
+            ref,
+          );
         }
       }
     });
+
+    _aggregator = DebounceAggregator(
+      delay: const Duration(seconds: 1),
+      onFirstCall: () {
+        onReturnPrinterResultEvent(PrinterResultEvent("SUCCESS"));
+      },
+      onDebounced: (aggregatedMessage) async {
+        await showErrorDialog(navigatorKey.currentContext, aggregatedMessage);
+      },
+    );
   }
 
   @override
@@ -110,7 +147,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     );
   }
 
-  getBody(l10n) {
+  getBody(AppLocalizations l10n) {
     return [
       LottieWidget(
         animate: false,
@@ -129,7 +166,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       ),
       if (!result.isSuccessful)
         Text(
-          result.declinedReason,
+          result.declinedReason ?? l10n.declined,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
@@ -163,7 +200,8 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           elevation: 0,
           height: 60,
           width: double.infinity,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              Navigator.popUntil(context, (route) => route.isFirst),
           icon: const Icon(Icons.arrow_forward),
           child: Text(l10n.continueButton),
         ),
@@ -173,5 +211,28 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         ReceiptTabs(transactionResult: result),
       ]
     ];
+  }
+
+  @override
+  void onTransactionCompletedEvent(TransactionCompletedEvent value) {
+    // TODO: implement onTransactionCompletedEvent
+  }
+
+  @override
+  void onReturnPrinterResultEvent(PrinterResultEvent event) async {
+    TransactionHelper.log("onReturnPrinterResultEvent", event.value);
+    await ref
+        .read(paymentControllerProvider.notifier)
+        .postTransaction(context, result, ref);
+  }
+
+  @override
+  void onPrinterOperationEndEvent(bool value) {
+    TransactionHelper.log("onPrinterOperationEndEvent", value.toString());
+  }
+
+  @override
+  void onErrorEvent(String? value) {
+    _aggregator(value);
   }
 }

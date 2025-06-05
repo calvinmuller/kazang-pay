@@ -30,7 +30,6 @@ import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
-import net.kazang.pegasus.BuildConfig
 import kotlin.concurrent.thread
 
 interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
@@ -54,6 +53,8 @@ interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEven
     fun onFactoryInitialized()
     fun onOsUpdateRequired(build: String, seNumber: String)
     fun performOsUpdate()
+    fun sendPrinterData(merchantReceipt: PrintRequest?, clientPrintRequest: PrintRequest?)
+    fun cleanup()
 }
 
 class TransactionHandler : TransactionInterface {
@@ -115,12 +116,13 @@ class TransactionHandler : TransactionInterface {
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]?.toInt()
-            ?: 10
-        factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]?.toInt()
-            ?: 5
-        factoryConstructor!!.posFactorySetup!!.cashbackLimit =
-            config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
+        if (config.merchant_config.velocity_rules.isNotEmpty()) {
+            factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
+        } else {
+            factoryConstructor!!.posFactorySetup!!.velocityCount = 100
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 50
+        }
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true
         factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
@@ -412,6 +414,27 @@ class TransactionHandler : TransactionInterface {
         }
     }
 
+    override fun sendPrinterData(
+        merchantReceipt: PrintRequest?,
+        clientReceipt: PrintRequest?
+    ) {
+        merchantReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        merchantReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        clientReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        clientReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        factory!!.sendPrinterData(merchantReceipt!!, clientReceipt!!)
+    }
+
+
+
+
+    override fun cleanup() {
+        factory!!.disconnect()
+        factory!!.dispose()
+    }
+
     override fun onKmsUpdateResult(status: String, message: String) {
         handler.post {
             eventSink?.success(
@@ -433,11 +456,17 @@ class TransactionHandler : TransactionInterface {
         factory!!.startTransaction(factorybb)
     }
 
-    override fun voidTransaction(rrn: String) {
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
         transactionType = TransactionTypesEnum.VOID_TRANSACTION
-        val item = repo!!.getByReferenceData(rrn)
-        factorybb = factorybb.createVoid("VOID", item!!)
-        factory!!.startTransaction(factorybb)
+        val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder)
+        if (item == null) {
+            Log.e("voidTransaction", "Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+            throw IllegalArgumentException("Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+        } else {
+            factorybb = factorybb.createVoid("VOID", item)
+            factory!!.startTransaction(factorybb)
+        }
+
     }
 
     override fun continueTransaction(pos: Int, value: String) {
