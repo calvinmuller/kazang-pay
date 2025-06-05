@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 
+import '../../core/core.dart';
 import '../../helpers/dialog_helpers.dart'
     show showErrorDialog, showListDialog, showSuccessDialog;
 import '../../helpers/transaction_helper.dart' show TransactionHelper;
@@ -60,13 +61,19 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
 
   @override
   void onErrorEvent(String? value) {
-    // We dont want to popup an error if keys need to be injected
-    if (!value!.contains("KSN keys are not injected")) {
+    context.deviceCallback(urovo: () {
+      if (!value!.contains("KSN keys are not injected")) {
+        error = true;
+        showErrorDialog(context, value).then((_) {
+          context.pop(true);
+        });
+      }
+    }, sunmi: () {
       error = true;
       showErrorDialog(context, value).then((_) {
         context.pop(true);
       });
-    }
+    });
   }
 
   @override

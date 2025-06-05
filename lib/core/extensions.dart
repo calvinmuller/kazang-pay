@@ -22,4 +22,13 @@ extension UrovoSizeExtension on BuildContext {
       return baseSize;
     }
   }
+
+  void deviceCallback({required Function urovo, required Function sunmi}) {
+    final deviceInfo = DeviceInfoProvider.of(this);
+    if (["urovo", "ubx"].contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
+      urovo();
+    } else {
+      sunmi();
+    }
+  }
 }

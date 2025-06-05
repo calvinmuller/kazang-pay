@@ -54,6 +54,7 @@ interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEven
     fun onOsUpdateRequired(build: String, seNumber: String)
     fun performOsUpdate()
     fun sendPrinterData(merchantReceipt: PrintRequest?, clientPrintRequest: PrintRequest?)
+    fun cleanup()
 }
 
 class TransactionHandler : TransactionInterface {
@@ -424,6 +425,14 @@ class TransactionHandler : TransactionInterface {
         clientReceipt.bitmapImageResourceId = R.drawable.receipt
 
         factory!!.sendPrinterData(merchantReceipt!!, clientReceipt!!)
+    }
+
+
+
+
+    override fun cleanup() {
+        factory!!.disconnect()
+        factory!!.dispose()
     }
 
     override fun onKmsUpdateResult(status: String, message: String) {

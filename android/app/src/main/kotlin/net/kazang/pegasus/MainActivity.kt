@@ -176,22 +176,22 @@ class MainActivity : FlutterActivity() {
                             "success",
                             if (transaction.ResponseCode == "00") "True" else "False"
                         )
-                        tt.putExtra("rspCode", transaction.ResponseCode);
-                        tt.putExtra("rspMessage", transaction.ResponseMessage);
-                        tt.putExtra("uinqueId", uniqueId);
-                        tt.putExtra("refNo", transaction.RetrievalReferenceNumber ?: "NA");
-                        tt.putExtra("bin", transaction.MaskedPan?.substring(0, 6) ?: "000000");
+                        tt.putExtra("rspCode", transaction.ResponseCode)
+                        tt.putExtra("rspMessage", transaction.ResponseMessage)
+                        tt.putExtra("uinqueId", uniqueId)
+                        tt.putExtra("refNo", transaction.RetrievalReferenceNumber ?: "NA")
+                        tt.putExtra("bin", transaction.MaskedPan?.substring(0, 6) ?: "000000")
                     } catch (e: Exception) {
                         tt.putExtra("success", "False")
-                        tt.putExtra("rspCode", "06");
-                        tt.putExtra("rspMessage", message);
-                        tt.putExtra("uinqueId", uniqueId);
-                        tt.putExtra("refNo", "NA");
-                        tt.putExtra("bin", "000000");
+                        tt.putExtra("rspCode", "06")
+                        tt.putExtra("rspMessage", message)
+                        tt.putExtra("uinqueId", uniqueId)
+                        tt.putExtra("refNo", "NA")
+                        tt.putExtra("bin", "000000")
                     }
                     Log.d("MainActivity", "completeTransaction: ${tt.extras}")
                     result.success(true)
-                    setResult(Activity.RESULT_OK, tt);
+                    setResult(Activity.RESULT_OK, tt)
                     finishAndRemoveTask()
                 }
             } else if (call.method == "log") {
@@ -245,7 +245,7 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun handleIntent(intent: Intent) {
+    private fun handleIntent(intent: Intent, s: String) {
         val username = intent.getStringExtra("User Number") ?: intent.getStringExtra("Username")
         val transactionType = intent.getStringExtra("TransactionType")
         val amount = intent.getStringExtra("Amount")
@@ -262,18 +262,18 @@ class MainActivity : FlutterActivity() {
             "refNo" to refNo,
             "isLocalRequest" to isLocalRequest
         )
-        Log.d("onAttachedToActivity", intentMap.toString())
+        Log.d(s, intentMap.toString())
         initialIntentMap = intentMap
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handleIntent(intent)
+        handleIntent(intent, "onCreate")
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        handleIntent(intent)
+        handleIntent(intent, "onNewIntent")
     }
 
     private fun requestForStoragePermissions() {
@@ -292,6 +292,12 @@ class MainActivity : FlutterActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        Log.d("MainActivity", "onDestroy: Cleaning up resources")
+        transactionHandler.cleanup()
+        super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
