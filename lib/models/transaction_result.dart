@@ -20,8 +20,7 @@ abstract class TransactionResult with _$TransactionResult {
     @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
     List<int>? authorizationCode,
     required bool canPrintReceipt,
-    @JsonKey(
-        unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
+    @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
     CardDataInputMode? cardDataInputMode,
     String? cardSequenceNumber,
     List<int>? cardVerificationMethod,
@@ -56,8 +55,7 @@ abstract class TransactionResult with _$TransactionResult {
       [
         CardDataInputMode.CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
         CardDataInputMode.ContactlessIntegratedCircuitCard
-      ].contains(cardDataInputMode) &&
-      transactionType != TransactionType.VOID_TRANSACTION;
+      ].contains(cardDataInputMode) && transactionType != TransactionType.VOID_TRANSACTION;
 
   static failed(message, code) {
     return TransactionResult(

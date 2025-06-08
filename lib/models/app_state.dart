@@ -22,8 +22,7 @@ abstract class AppState with _$AppState {
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
     @JsonKey(includeToJson: false, includeFromJson: false)
-    @Default(null)
-    IntentInfo? intentInfo,
+    @Default(null) IntentInfo? intentInfo,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>

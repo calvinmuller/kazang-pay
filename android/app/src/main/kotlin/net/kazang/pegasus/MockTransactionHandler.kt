@@ -27,10 +27,8 @@ import com.prism.device.management.DeviceManagement
 import com.prism.factory.BuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.MockTransactionFactory
-import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
-import java.util.HashMap
 
 
 class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
@@ -46,11 +44,6 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var repo: TransactionRepository? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
-        if (connected && factory != null) {
-            factory!!.disconnect()
-            factory!!.dispose()
-            factory = null
-        }
         activity = context as Activity
         if (factory == null) {
             factory = MockTransactionFactory(context)
