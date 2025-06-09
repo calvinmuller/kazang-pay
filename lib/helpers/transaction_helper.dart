@@ -41,7 +41,7 @@ class TransactionHelper {
 
     if (payment.type == PaymentType.voidTransaction) {
       await _instance.methodChannel.invokeMethod('voidTransaction',
-          {'rrn': payment.rrn, 'userVoid': payment.userVoidable});
+          {'rrn': payment.rrn, 'userVoidable': payment.userVoidable});
       return;
     }
 
@@ -52,13 +52,13 @@ class TransactionHelper {
       await _instance.methodChannel.invokeMethod('createPurchase', {
         'amount': amount,
         'description': '',
-        'userVoid': payment.userVoidable
+        'userVoidable': payment.userVoidable
       });
     } else {
       await _instance.methodChannel.invokeMethod('createCashback', {
         'amount': amount,
         'cashbackAmount': cashbackAmount,
-        'userVoid': payment.userVoidable
+        'userVoidable': payment.userVoidable
       });
     }
   }
