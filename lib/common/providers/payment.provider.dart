@@ -87,6 +87,7 @@ class PaymentNotifier extends _$PaymentNotifier {
       rrn: intentInfo.refNo,
       uniqueId: intentInfo.uniqueId,
       launchMode: LaunchMode.intent,
+      userVoidable: false,
     );
 
     ref.read(paymentControllerProvider.notifier).setPayment(state);
@@ -102,6 +103,7 @@ class PaymentNotifier extends _$PaymentNotifier {
       rrn: tcpTransaction.refNo,
       uniqueId: tcpTransaction.uniqueId,
       launchMode: LaunchMode.wifi,
+      userVoidable: false,
     );
     ref.read(paymentControllerProvider.notifier).setPayment(state);
   }

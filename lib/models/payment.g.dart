@@ -17,6 +17,7 @@ _Payment _$PaymentFromJson(Map json) => _Payment(
       launchMode:
           $enumDecodeNullable(_$LaunchModeEnumMap, json['launchMode']) ??
               LaunchMode.normal,
+      userVoidable: json['userVoidable'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
@@ -27,6 +28,7 @@ Map<String, dynamic> _$PaymentToJson(_Payment instance) => <String, dynamic>{
       'rrn': instance.rrn,
       'uniqueId': instance.uniqueId,
       'launchMode': _$LaunchModeEnumMap[instance.launchMode]!,
+      'userVoidable': instance.userVoidable,
     };
 
 const _$PaymentTypeEnumMap = {

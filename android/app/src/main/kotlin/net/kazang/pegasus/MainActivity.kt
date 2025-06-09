@@ -76,7 +76,8 @@ class MainActivity : FlutterActivity() {
                 thread {
                     transactionHandler.createPurchase(
                         amount = call.argument<String>("amount")!!,
-                        description = call.argument<String>("description")!!
+                        description = call.argument<String>("description")!!,
+                        userVoidable = call.argument<Boolean>("userVoidable") ?: true,
                     )
                 }
                 result.success(true)
@@ -85,19 +86,22 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "continueTransaction") {
                 thread {
                     transactionHandler.continueTransaction(
-                        value = call.argument<String>("value")!!, pos = call.argument<Int>("pos")!!
+                        value = call.argument<String>("value")!!,
+                        pos = call.argument<Int>("pos")!!,
                     )
                 }
                 result.success(true)
             } else if (call.method == "createCashback") {
                 transactionHandler.createCashback(
                     amount = call.argument<String>("amount")!!,
-                    cashbackAmount = call.argument<String>("cashbackAmount")!!
+                    cashbackAmount = call.argument<String>("cashbackAmount")!!,
+                    userVoidable = call.argument<Boolean>("userVoidable") ?: true,
                 )
                 result.success(true)
             } else if (call.method == "createCashWithdrawal") {
                 transactionHandler.createCashWithdrawal(
-                    cashbackAmount = call.argument<String>("cashbackAmount")!!
+                    cashbackAmount = call.argument<String>("cashbackAmount")!!,
+                    userVoidable = call.argument<Boolean>("userVoidable") ?: true,
                 )
                 result.success(true)
             } else if (call.method == "voidTransaction") {

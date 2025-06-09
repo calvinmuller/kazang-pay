@@ -330,7 +330,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         }
     }
 
-    override fun createPurchase(amount: String, description: String) {
+    override fun createPurchase(amount: String, description: String, userVoidable: Boolean) {
         Log.d("createPurchase", "amount: $amount, description: $description")
         factorybb = factorybb.createPurchase(amount, "0.00", "", true)
         factory!!.startTransaction(factorybb)
@@ -357,7 +357,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         )
     }
 
-    override fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean) {
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -365,7 +365,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         )
     }
 
-    override fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean) {
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
         factory!!.startTransaction(

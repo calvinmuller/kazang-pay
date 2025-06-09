@@ -18,7 +18,8 @@ abstract class Payment with _$Payment {
     @Default(false) bool? cashbackOnly,
     @Default(null) String? rrn,
     @Default(null) String? uniqueId,
-    @Default(LaunchMode.normal) LaunchMode launchMode
+    @Default(LaunchMode.normal) LaunchMode launchMode,
+    @Default(true) bool userVoidable,
   }) = _Payment;
 
   factory Payment.fromJson(Map<String, dynamic> json) =>

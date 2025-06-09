@@ -35,12 +35,12 @@ import kotlin.concurrent.thread
 interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
 
     fun initialize(context: Context, config: TerminalConfig, proxy: Boolean = false)
-    fun createPurchase(amount: String, description: String)
+    fun createPurchase(amount: String, description: String, userVoidable: Boolean = true)
     fun voidTransaction(retrievalReferenceNumberBuilder: String)
     fun continueTransaction(pos: Int, value: String)
     fun continueTransactionBudget(value: Int)
-    fun createCashback(amount: String, cashbackAmount: String)
-    fun createCashWithdrawal(cashbackAmount: String)
+    fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean = true)
+    fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean = true)
     fun getHistoryData(limit: Int = 0, responseCode: String = ""): List<String>
     fun getByReferenceData(responseId: String): TransactionItem?
     fun getDeviceInfo(context: Context, result: MethodChannel.Result)
@@ -71,17 +71,9 @@ class TransactionHandler : TransactionInterface {
     private var activity: Activity? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
-        if (connected && factory != null) {
-            factory!!.disconnect()
-            factory!!.dispose()
-            factory = null
-        }
         activity = context as Activity
-        if (factory == null) {
-            factory = TransactionFactory(context)
-        }
+        factory = TransactionFactory(context)
         val result = factory!!.getBuildAndSENumber()
-        factory!!.dispose()
 
         if (result.requiredUpdate) {
             onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
@@ -117,11 +109,13 @@ class TransactionHandler : TransactionInterface {
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
         if (config.merchant_config.velocity_rules.isNotEmpty()) {
-            factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
-            factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityCount =
+                config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod =
+                config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
         } else {
-            factoryConstructor!!.posFactorySetup!!.velocityCount = 100
-            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 50
+            factoryConstructor!!.posFactorySetup!!.velocityCount = 0
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
         }
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true
@@ -427,9 +421,6 @@ class TransactionHandler : TransactionInterface {
         factory!!.sendPrinterData(merchantReceipt!!, clientReceipt!!)
     }
 
-
-
-
     override fun cleanup() {
         factory!!.disconnect()
         factory!!.dispose()
@@ -449,10 +440,10 @@ class TransactionHandler : TransactionInterface {
         }
     }
 
-    override fun createPurchase(amount: String, description: String) {
+    override fun createPurchase(amount: String, description: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createPurchase", "amount: $amount, description: $description")
-        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
+        factorybb = factorybb.createPurchase(amount, "0.00", "", userVoidable)
         factory!!.startTransaction(factorybb)
     }
 
@@ -484,19 +475,19 @@ class TransactionHandler : TransactionInterface {
         )
     }
 
-    override fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
-        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
+        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", userVoidable)
         factory!!.startTransaction(
             factorybb
         )
     }
 
-    override fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
-        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
+        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", userVoidable)
         factory!!.startTransaction(
             factorybb
         )
