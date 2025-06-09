@@ -1,5 +1,8 @@
 import 'dart:convert' show jsonDecode;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show MethodChannel, EventChannel;
+
 import '../common/interfaces/factory.events.dart'
     show
         FactoryEventHandler,
@@ -11,6 +14,7 @@ import '../common/interfaces/factory.events.dart'
 import '../models/app_state.dart';
 import '../models/payment.dart';
 import '../models/transaction.dart';
+import '../models/transaction_result.dart';
 import 'currency_helpers.dart';
 
 class TransactionHelper {
@@ -33,26 +37,28 @@ class TransactionHelper {
   static Future<void> doTransaction(Payment payment) async {
     final amount = CurrencyHelper.formatForTransaction(payment.amount);
     final cashbackAmount =
-        CurrencyHelper.formatForTransaction(payment.cashbackAmount!);
+        CurrencyHelper.formatForTransaction(payment.cashbackAmount);
 
     if (payment.type == PaymentType.voidTransaction) {
-      await _instance.methodChannel
-          .invokeMethod('voidTransaction', {'rrn': payment.rrn});
+      await _instance.methodChannel.invokeMethod('voidTransaction',
+          {'rrn': payment.rrn, 'userVoidable': payment.userVoidable});
       return;
     }
 
     if (payment.cashWithdrawal) {
-      await _instance.methodChannel.invokeMethod('createCashWithdrawal',
-          {'amount': amount, 'cashbackAmount': cashbackAmount});
+      await _instance.methodChannel.invokeMethod(
+          'createCashWithdrawal', {'cashbackAmount': cashbackAmount});
     } else if (payment.isPayment) {
       await _instance.methodChannel.invokeMethod('createPurchase', {
         'amount': amount,
         'description': '',
+        'userVoidable': payment.userVoidable
       });
     } else {
       await _instance.methodChannel.invokeMethod('createCashback', {
         'amount': amount,
         'cashbackAmount': cashbackAmount,
+        'userVoidable': payment.userVoidable
       });
     }
   }
@@ -91,6 +97,10 @@ class TransactionHelper {
     var result = TransactionHelper.messageStream;
 
     await for (final message in result) {
+      TransactionHelper.log(
+        'TransactionHelper',
+        'Received event: ${message.event} with value: ${message.value}',
+      );
       if (message.event == "onUserApplicationSelectionRequiredEvent") {
         handler.onUserApplicationSelectionRequired(
           UserApplicationSelectionRequired(message.value),
@@ -118,6 +128,10 @@ class TransactionHelper {
       } else if (message.event == "onReturnPrinterResultEvent") {
         handler.onReturnPrinterResultEvent(
           PrinterResultEvent(message.value),
+        );
+      } else if (message.event == "onPrinterOperationEndEvent") {
+        handler.onPrinterOperationEndEvent(
+          message.value as bool,
         );
       } else if (message.event == "onDisConnectEvent") {
         handler.onDisConnectEvent(
@@ -203,5 +217,30 @@ class TransactionHelper {
 
   static void performOsUpdate() async {
     await _instance.methodChannel.invokeMethod('performOsUpdate');
+  }
+
+  static Future<void> completeTransaction(
+      Payment payment, TransactionResult? transactionResult) async {
+    final params = {
+      'uniqueId': payment.uniqueId,
+      'refNo': payment.rrn,
+      'responseId': transactionResult?.ourReferenceNumber,
+      'message': transactionResult?.responseMessage,
+    };
+    log('completeTransaction', params.toString());
+    await _instance.methodChannel.invokeMethod('completeTransaction', params);
+  }
+
+  static Future<void> log(String tag, String message,
+      {String level = 'd'}) async {
+    if (kDebugMode) {
+      print('[$tag] $message');
+    } else {
+      await _instance.methodChannel.invokeMethod('log', {
+        'tag': tag,
+        'message': message,
+        'level': level,
+      });
+    }
   }
 }

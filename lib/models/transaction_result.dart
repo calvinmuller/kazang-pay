@@ -20,10 +20,11 @@ abstract class TransactionResult with _$TransactionResult {
     @JsonKey(fromJson: arrayToString) String? applicationIdentifier,
     List<int>? authorizationCode,
     required bool canPrintReceipt,
-    @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard) CardDataInputMode? cardDataInputMode,
+    @JsonKey(unknownEnumValue: CardDataInputMode.ContactlessIntegratedCircuitCard)
+    CardDataInputMode? cardDataInputMode,
     String? cardSequenceNumber,
     List<int>? cardVerificationMethod,
-    required String declinedReason,
+    String? declinedReason,
     required bool isCancelled,
     required bool isSuccessful,
     required bool isSupervisor,
@@ -35,24 +36,40 @@ abstract class TransactionResult with _$TransactionResult {
     String? stan,
     String? priorityMessage,
     String? receiptReference,
-    required String? responseCode,
+    @JsonKey(defaultValue: "06") required String? responseCode,
     required String? responseMessage,
     String? terminalId,
     required int transactionAmount,
-    @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN) required TransactionClientAction? transactionClientAction,
+    @JsonKey(unknownEnumValue: TransactionClientAction.UNKNOWN)
+    required TransactionClientAction? transactionClientAction,
     String? transactionDate,
-    @JsonKey(unknownEnumValue: TransactionType.P) TransactionType? transactionType,
+    @JsonKey(unknownEnumValue: TransactionType.P)
+    TransactionType? transactionType,
     List<String>? cardApplications,
   }) = _TransactionResult;
 
   factory TransactionResult.fromJson(Map<String, dynamic> json) =>
       _$TransactionResultFromJson(json);
 
-  get isTap => [
+  get isTap =>
+      [
         CardDataInputMode.CONTACTLESS_INTEGRATED_CIRCUIT_CARD,
         CardDataInputMode.ContactlessIntegratedCircuitCard
       ].contains(cardDataInputMode) && transactionType != TransactionType.VOID_TRANSACTION;
 
+  static failed(message, code) {
+    return TransactionResult(
+      canPrintReceipt: false,
+      isCancelled: false,
+      isSuccessful: false,
+      isSupervisor: false,
+      message: message,
+      responseCode: code,
+      responseMessage: message,
+      transactionAmount: 0,
+      transactionClientAction: TransactionClientAction.TRANSACTION_DECLINED,
+    ).toJson();
+  }
 }
 
 enum CardDataInputMode {

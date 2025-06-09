@@ -13,7 +13,6 @@ import 'package:flutter/material.dart'
         Column,
         Scaffold,
         TextAlign,
-        debugPrint,
         PopScope;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
@@ -21,7 +20,7 @@ import 'package:go_router/go_router.dart';
 
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
-import '../common/providers/payment.provider.dart';
+import '../common/providers/payment.controller.dart';
 import '../common/providers/status.provider.dart';
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/widgets.dart';
@@ -49,7 +48,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   @override
   void initState() {
     if (widget.payment == null) {
-      payment = ref.read(paymentNotifierProvider);
+      payment = ref.read(paymentControllerProvider)!;
     } else {
       payment = widget.payment!;
     }
@@ -133,7 +132,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     if (context.mounted) {
       final result = TransactionResult.fromJson(value.value);
-      debugPrint(result.toString(), wrapWidth: 1024);
+      TransactionHelper.log("onTransactionCompletedEvent", result.toString());
       ref.read(transactionResultNotifierProvider.notifier).set(result);
       context.goNamed('payment-result', extra: result);
     }

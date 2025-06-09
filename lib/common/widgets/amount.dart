@@ -30,7 +30,7 @@ class AmountWidget extends ConsumerWidget {
         notifier.set(type!);
       },
       child: Text(
-        CurrencyHelper.formatCurrency(context, amount!),
+        CurrencyHelper.formatCurrency(context, amount),
         style: CustomTheme.graphikSemiBold.copyWith(
           fontSize: fontSize,
         ),

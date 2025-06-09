@@ -191,12 +191,36 @@ Map<String, dynamic> _$UserConfigToJson(UserConfig instance) =>
 
 IntentInfo _$IntentInfoFromJson(Map json) => IntentInfo(
       username: json['username'] as String?,
+      transactionType:
+          $enumDecodeNullable(_$PaymentTypeEnumMap, json['transactionType']),
+      amount: json['amount'] as String?,
+      cashBackAmount: json['cashBackAmount'] as String?,
+      uniqueId: json['uniqueId'] as String?,
+      refNo: json['refNo'] as String?,
+      isLocalRequest: json['isLocalRequest'] as String?,
     );
 
 Map<String, dynamic> _$IntentInfoToJson(IntentInfo instance) =>
     <String, dynamic>{
       'username': instance.username,
+      'transactionType': _$PaymentTypeEnumMap[instance.transactionType],
+      'amount': instance.amount,
+      'cashBackAmount': instance.cashBackAmount,
+      'uniqueId': instance.uniqueId,
+      'refNo': instance.refNo,
+      'isLocalRequest': instance.isLocalRequest,
     };
+
+const _$PaymentTypeEnumMap = {
+  PaymentType.payment: 'payment',
+  PaymentType.cashback: 'cashback',
+  PaymentType.voidTransaction: 'voidTransaction',
+  PaymentType.Purchase: 'Purchase',
+  PaymentType.Purchase_with_cash_back: 'Purchase_with_cash_back',
+  PaymentType.Cash_withdrawal: 'Cash_withdrawal',
+  PaymentType.Refund: 'Refund',
+  PaymentType.Cancel: 'Cancel',
+};
 
 _AppState _$AppStateFromJson(Map json) => _AppState(
       pinVerified: json['pinVerified'] as bool? ?? true,

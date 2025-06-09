@@ -13,6 +13,8 @@ class DeviceInfoProvider extends InheritedWidget {
   final DeviceInfo deviceInfo;
   final AppState appState;
 
+  get isExternallyInvoked =>  true; //appState.intentInfo?.transactionType != null;
+
   static DeviceInfoProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<DeviceInfoProvider>();
   }

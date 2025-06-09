@@ -30,18 +30,17 @@ import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
-import net.kazang.pegasus.BuildConfig
 import kotlin.concurrent.thread
 
 interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
 
     fun initialize(context: Context, config: TerminalConfig, proxy: Boolean = false)
-    fun createPurchase(amount: String, description: String)
+    fun createPurchase(amount: String, description: String, userVoidable: Boolean = true)
     fun voidTransaction(retrievalReferenceNumberBuilder: String)
     fun continueTransaction(pos: Int, value: String)
     fun continueTransactionBudget(value: Int)
-    fun createCashback(amount: String, cashbackAmount: String)
-    fun createCashWithdrawal(cashbackAmount: String)
+    fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean = true)
+    fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean = true)
     fun getHistoryData(limit: Int = 0, responseCode: String = ""): List<String>
     fun getByReferenceData(responseId: String): TransactionItem?
     fun getDeviceInfo(context: Context, result: MethodChannel.Result)
@@ -54,6 +53,8 @@ interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEven
     fun onFactoryInitialized()
     fun onOsUpdateRequired(build: String, seNumber: String)
     fun performOsUpdate()
+    fun sendPrinterData(merchantReceipt: PrintRequest?, clientPrintRequest: PrintRequest?)
+    fun cleanup()
 }
 
 class TransactionHandler : TransactionInterface {
@@ -70,17 +71,9 @@ class TransactionHandler : TransactionInterface {
     private var activity: Activity? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
-        if (connected && factory != null) {
-            factory!!.disconnect()
-            factory!!.dispose()
-            factory = null
-        }
         activity = context as Activity
-        if (factory == null) {
-            factory = TransactionFactory(context)
-        }
+        factory = TransactionFactory(context)
         val result = factory!!.getBuildAndSENumber()
-        factory!!.dispose()
 
         if (result.requiredUpdate) {
             onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
@@ -115,12 +108,15 @@ class TransactionHandler : TransactionInterface {
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]?.toInt()
-            ?: 10
-        factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]?.toInt()
-            ?: 5
-        factoryConstructor!!.posFactorySetup!!.cashbackLimit =
-            config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
+        if (config.merchant_config.velocity_rules.isNotEmpty()) {
+            factoryConstructor!!.posFactorySetup!!.velocityCount =
+                config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod =
+                config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
+        } else {
+            factoryConstructor!!.posFactorySetup!!.velocityCount = 0
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
+        }
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
         factoryConstructor!!.posFactorySetup!!.enableSettlements = true
         factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
@@ -412,6 +408,24 @@ class TransactionHandler : TransactionInterface {
         }
     }
 
+    override fun sendPrinterData(
+        merchantReceipt: PrintRequest?,
+        clientReceipt: PrintRequest?
+    ) {
+        merchantReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        merchantReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        clientReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        clientReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        factory!!.sendPrinterData(merchantReceipt!!, clientReceipt!!)
+    }
+
+    override fun cleanup() {
+        factory!!.disconnect()
+        factory!!.dispose()
+    }
+
     override fun onKmsUpdateResult(status: String, message: String) {
         handler.post {
             eventSink?.success(
@@ -426,18 +440,24 @@ class TransactionHandler : TransactionInterface {
         }
     }
 
-    override fun createPurchase(amount: String, description: String) {
+    override fun createPurchase(amount: String, description: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createPurchase", "amount: $amount, description: $description")
-        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
+        factorybb = factorybb.createPurchase(amount, "0.00", "", userVoidable)
         factory!!.startTransaction(factorybb)
     }
 
-    override fun voidTransaction(rrn: String) {
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
         transactionType = TransactionTypesEnum.VOID_TRANSACTION
-        val item = repo!!.getByReferenceData(rrn)
-        factorybb = factorybb.createVoid("VOID", item!!)
-        factory!!.startTransaction(factorybb)
+        val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder)
+        if (item == null) {
+            Log.e("voidTransaction", "Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+            throw IllegalArgumentException("Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+        } else {
+            factorybb = factorybb.createVoid("VOID", item)
+            factory!!.startTransaction(factorybb)
+        }
+
     }
 
     override fun continueTransaction(pos: Int, value: String) {
@@ -455,19 +475,19 @@ class TransactionHandler : TransactionInterface {
         )
     }
 
-    override fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
-        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
+        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", userVoidable)
         factory!!.startTransaction(
             factorybb
         )
     }
 
-    override fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
-        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
+        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", userVoidable)
         factory!!.startTransaction(
             factorybb
         )
