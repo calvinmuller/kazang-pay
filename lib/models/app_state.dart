@@ -14,7 +14,7 @@ abstract class AppState with _$AppState {
   factory AppState({
     @Default(true) bool pinVerified,
     @Default(false) bool isConfigured,
-    @Default(false) bool proxy,
+    @Default(true) bool proxy,
     @Default(null) DeviceInfo? deviceInfo,
     @Default(null) LoginRequest? accountInfo,
     @Default(null) TerminalProfile? profile,
