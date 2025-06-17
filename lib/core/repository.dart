@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' show Dio, DioException;
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../common/exceptions.dart';
@@ -25,6 +26,7 @@ class KazangRepository {
       });
       return response.data;
     } on DioException catch (e) {
+      debugPrint(e.toString());
       throw e.response?.data['response_message'] ?? "Error fetching profile";
     }
   }

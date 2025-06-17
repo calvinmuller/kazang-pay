@@ -196,10 +196,12 @@ class AppLocalizationsAm extends AppLocalizations {
   String get onboardingWelcome => 'እንኳን ወደ ካዛንግ ፔይ በደህና መጡ!';
 
   @override
-  String get onboardingRegister => 'እንኳን ደስ አላችሁ፣ የካዛንግ ፔይ ካርድ አንቀሳቃሽዎን ለማቀናበር የመጨረሻውን ደረጃ ደርሳችኋል።';
+  String get onboardingRegister =>
+      'እንኳን ደስ አላችሁ፣ የካዛንግ ፔይ ካርድ አንቀሳቃሽዎን ለማቀናበር የመጨረሻውን ደረጃ ደርሳችኋል።';
 
   @override
-  String get onboardRegisterHelp => 'Please allow the Kazang Sales Agent to assist you with the final step.';
+  String get onboardRegisterHelp =>
+      'Please allow the Kazang Sales Agent to assist you with the final step.';
 
   @override
   String get signIn => 'Please provide your login credentials to continue:';
@@ -208,13 +210,16 @@ class AppLocalizationsAm extends AppLocalizations {
   String get standalone => 'Stand-Alone mode detected. ';
 
   @override
-  String get onboard1 => 'You can now accept card payments for any sales on your Kazang device using your very own Kazang Pay device.';
+  String get onboard1 =>
+      'You can now accept card payments for any sales on your Kazang device using your very own Kazang Pay device.';
 
   @override
-  String get onboard2 => 'You can now top up your Kazang Wallet using your Kazang Pay device, no more trips to the banks and less risk for your business.';
+  String get onboard2 =>
+      'You can now top up your Kazang Wallet using your Kazang Pay device, no more trips to the banks and less risk for your business.';
 
   @override
-  String get onboard3 => 'Your card payments will be transferred directly into your Kazang Wallet.';
+  String get onboard3 =>
+      'Your card payments will be transferred directly into your Kazang Wallet.';
 
   @override
   String get registerDevice => 'መሳሪያን ይመዝግቡ';
@@ -308,7 +313,8 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get totalSettlementAmountCalc => '* Total Settlement Amount = Total Amount Processed - Total Settlements completed - Fees';
+  String get totalSettlementAmountCalc =>
+      '* Total Settlement Amount = Total Amount Processed - Total Settlements completed - Fees';
 
   @override
   String get proxySettings => 'Proxy Settings';
@@ -362,10 +368,12 @@ class AppLocalizationsAm extends AppLocalizations {
   String get profileInformation => 'Profile Information';
 
   @override
-  String get serialNumberLengthMax => 'Ensure this field has no more than 14 characters.';
+  String get serialNumberLengthMax =>
+      'Ensure this field has no more than 14 characters.';
 
   @override
-  String get serialNumberLengthMin => 'Ensure this field has at least 13 characters.';
+  String get serialNumberLengthMin =>
+      'Ensure this field has at least 13 characters.';
 
   @override
   String get required => 'This field is required.';
@@ -388,7 +396,8 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get printerError => 'Printer error occurred, please check paper and try again.';
+  String get printerError =>
+      'Printer error occurred, please check paper and try again.';
 
   @override
   String get usernameMin => 'Ensure this field has at least 10 characters.';

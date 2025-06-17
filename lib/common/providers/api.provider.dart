@@ -3,6 +3,7 @@ import 'dart:io' show HttpClient, X509Certificate;
 import 'package:dio/io.dart';
 
 import 'package:dio/dio.dart' show BaseOptions, Dio, DioException;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -96,6 +97,7 @@ Future<TerminalProfile> fetchProfile(Ref ref) async {
     appState.setProfile(profile);
     return profile;
   } on DioException catch (e) {
+    debugPrint(e.toString());
     throw Exception(e.error);
   }
 }

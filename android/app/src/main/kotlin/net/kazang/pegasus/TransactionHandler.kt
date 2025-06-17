@@ -83,10 +83,14 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]?.toInt()
-            ?: 10
-        factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]?.toInt()
-            ?: 5
+        // this array could be empty, so we need to check if it has any contents before applying velocity rules
+        if (config.merchant_config.velocity_rules.isNotEmpty()) {
+            factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
+        } else {
+            factoryConstructor!!.posFactorySetup!!.velocityCount = 0
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
+        }
         factoryConstructor!!.posFactorySetup!!.cashbackLimit =
             config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
         factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
