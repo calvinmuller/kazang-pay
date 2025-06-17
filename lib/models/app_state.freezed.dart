@@ -156,7 +156,7 @@ class _AppState extends AppState {
   _AppState(
       {this.pinVerified = true,
       this.isConfigured = false,
-      this.proxy = false,
+      this.proxy = true,
       this.deviceInfo = null,
       this.accountInfo = null,
       this.profile = null,

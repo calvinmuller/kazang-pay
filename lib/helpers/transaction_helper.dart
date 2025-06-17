@@ -174,6 +174,8 @@ class TransactionHelper {
 
   static Future<AppState> getAppState() async {
     final appState = (await getJson('appState')).cast<String, dynamic>();
+    print(appState);
+    print(appState.isNotEmpty);
     return appState.isNotEmpty ? AppState.fromJson(appState) : AppState();
   }
 
