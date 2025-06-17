@@ -60,13 +60,13 @@ android {
     productFlavors {
         uat {
             dimension "default"
-            resValue "string", "app_name", "Pegasus UAT"
+            resValue "string", "app_name", "Kazang Pay UAT"
             applicationIdSuffix = ".dev"
             versionNameSuffix "-uat"
         }
         prod {
             dimension "default"
-            resValue "string", "app_name", "Pegasus"
+            resValue "string", "app_name", "Kazang Pay"
             applicationIdSuffix = ""
         }
     }

@@ -62,7 +62,8 @@ class AppLocalizationsSo extends AppLocalizations {
   String get checkBalance => 'Hubi Xisaabta';
 
   @override
-  String get enterPin => 'Geli PIN si aad u aragto Taariikhda Qaddarka & Habaynta';
+  String get enterPin =>
+      'Geli PIN si aad u aragto Taariikhda Qaddarka & Habaynta';
 
   @override
   String get supervisorPin => 'Fadlan geli PIN-kaaga ee Supervisor';
@@ -83,7 +84,8 @@ class AppLocalizationsSo extends AppLocalizations {
   String get error => 'Khalad';
 
   @override
-  String get unexpectedError => 'Khalad lama filaan ah ayaa dhacay, fadlan isku day mar kale.';
+  String get unexpectedError =>
+      'Khalad lama filaan ah ayaa dhacay, fadlan isku day mar kale.';
 
   @override
   String get removeCard => 'Ka saar Kaarka';
@@ -196,10 +198,12 @@ class AppLocalizationsSo extends AppLocalizations {
   String get onboardingWelcome => 'Ku soo dhawoow Kazang Pay!';
 
   @override
-  String get onboardingRegister => 'Hambalyo, waxaad ku jirtaa tillaabada ugu dambeysa ee dejinta Akhbaarta Kazang Pay.';
+  String get onboardingRegister =>
+      'Hambalyo, waxaad ku jirtaa tillaabada ugu dambeysa ee dejinta Akhbaarta Kazang Pay.';
 
   @override
-  String get onboardRegisterHelp => 'Fadlan u oggolow Wakiilka Kazang inuu kaa caawiyo tillaabada ugu dambeysa.';
+  String get onboardRegisterHelp =>
+      'Fadlan u oggolow Wakiilka Kazang inuu kaa caawiyo tillaabada ugu dambeysa.';
 
   @override
   String get signIn => 'Fadlan gali xogtaada si aad ugu sii socoto:';
@@ -208,13 +212,16 @@ class AppLocalizationsSo extends AppLocalizations {
   String get standalone => 'Qaabka kaliya ee loo aqoonsaday.';
 
   @override
-  String get onboard1 => 'Hadda waxaad aqbali kartaa lacag bixinta kaarka ee iib kasta ee qalabkaaga Kazang adigoo isticmaalaya qalabkaaga Kazang Pay.';
+  String get onboard1 =>
+      'Hadda waxaad aqbali kartaa lacag bixinta kaarka ee iib kasta ee qalabkaaga Kazang adigoo isticmaalaya qalabkaaga Kazang Pay.';
 
   @override
-  String get onboard2 => 'Hadda waxaad ku dari kartaa lacag Kazang Wallet-kaaga adigoo isticmaalaya qalabkaaga Kazang Pay, ma jirto baahi loo qabo in aad tagto bangiyada iyo khatar yar ee ganacsigaaga.';
+  String get onboard2 =>
+      'Hadda waxaad ku dari kartaa lacag Kazang Wallet-kaaga adigoo isticmaalaya qalabkaaga Kazang Pay, ma jirto baahi loo qabo in aad tagto bangiyada iyo khatar yar ee ganacsigaaga.';
 
   @override
-  String get onboard3 => 'Lacagaha kaarkaaga waxaa si toos ah ugu wareejin doona Kazang Wallet-kaaga.';
+  String get onboard3 =>
+      'Lacagaha kaarkaaga waxaa si toos ah ugu wareejin doona Kazang Wallet-kaaga.';
 
   @override
   String get registerDevice => 'Diiwaangeli Qalabka';
@@ -247,7 +254,8 @@ class AppLocalizationsSo extends AppLocalizations {
   String get enterPinAccessSettings => 'Geli PIN si aad u gasho Dejinta';
 
   @override
-  String get pleaseProvideSupervisorPin => 'Fadlan gali PIN-kaaga ee Supervisor';
+  String get pleaseProvideSupervisorPin =>
+      'Fadlan gali PIN-kaaga ee Supervisor';
 
   @override
   String get noPinSet => 'Ma jiraan PIN la dejiyay';
@@ -308,7 +316,8 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String get totalSettlementAmountCalc => '* Wadarta Qaddarka Habaynta = Wadarta Qaddarka La Hagaajiyay - Wadarta Habaynta la dhammeeyey - Kharashka';
+  String get totalSettlementAmountCalc =>
+      '* Wadarta Qaddarka Habaynta = Wadarta Qaddarka La Hagaajiyay - Wadarta Habaynta la dhammeeyey - Kharashka';
 
   @override
   String get proxySettings => 'Dejinta Proxy';
@@ -362,10 +371,12 @@ class AppLocalizationsSo extends AppLocalizations {
   String get profileInformation => 'Macluumaadka Profile-ka';
 
   @override
-  String get serialNumberLengthMax => 'Hubi in boggan aanu ka badnayn 14 characters.';
+  String get serialNumberLengthMax =>
+      'Hubi in boggan aanu ka badnayn 14 characters.';
 
   @override
-  String get serialNumberLengthMin => 'Hubi in boggan uu leeyahay ugu yaraan 13 characters.';
+  String get serialNumberLengthMin =>
+      'Hubi in boggan uu leeyahay ugu yaraan 13 characters.';
 
   @override
   String get required => 'Boggan waa lagama maarmaan.';
@@ -388,16 +399,19 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String get printerError => 'Khalad daabacaadda ayaa dhacay, fadlan hubi warqadda oo isku day mar kale.';
+  String get printerError =>
+      'Khalad daabacaadda ayaa dhacay, fadlan hubi warqadda oo isku day mar kale.';
 
   @override
-  String get usernameMin => 'Hubi in boggan uu leeyahay ugu yaraan 10 characters.';
+  String get usernameMin =>
+      'Hubi in boggan uu leeyahay ugu yaraan 10 characters.';
 
   @override
   String get usernameMax => 'Hubi in boggan aanu ka badnayn 10 characters.';
 
   @override
-  String get connectionError => 'Khalad xiriir ayaa dhacay, fadlan isku day mar kale.';
+  String get connectionError =>
+      'Khalad xiriir ayaa dhacay, fadlan isku day mar kale.';
 
   @override
   String get transType => 'Nooca Qaddarka:';
@@ -412,7 +426,8 @@ class AppLocalizationsSo extends AppLocalizations {
   String get resetPin => 'Reset PIN';
 
   @override
-  String get pinResetSuccess => 'PIN-ka Supervisor si guul leh ayaa loo hagaajiyay';
+  String get pinResetSuccess =>
+      'PIN-ka Supervisor si guul leh ayaa loo hagaajiyay';
 
   @override
   String get retry => 'Isku day mar kale';
