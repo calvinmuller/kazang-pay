@@ -136,7 +136,7 @@ class TransactionHelper {
     return;
   }
 
-  static Future<void> connect({TerminalProfile? config, bool proxy = false}) async {
+  static Future<void> connect({TerminalProfile? config, bool proxy = true}) async {
     return await _instance.methodChannel.invokeMethod('connect', {
       "config": config!.toJson(),
       "proxy": proxy,
