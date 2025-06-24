@@ -77,9 +77,9 @@ flutter {
 }
 
 dependencies {
-    implementation files('libs/prismcore-release-1.0.10.aar')
-    implementation files('libs/prismfactory-sunmi-release-1.0.12.aar')
-    implementation files('libs/prismdevice-sunmi-release-1.0.12.aar')
+    implementation files('libs/prismcore-release-1.0.15.aar')
+    implementation files('libs/prismfactory-sunmi-release-1.0.24.aar')
+    implementation files('libs/prismdevice-sunmi-release-1.0.18.aar')
     implementation files('libs/prismiso8583-release-1.0.8.aar')
 
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
