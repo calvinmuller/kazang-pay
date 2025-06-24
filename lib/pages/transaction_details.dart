@@ -15,6 +15,7 @@ import '../models/payment.dart' show Payment, PaymentType;
 import '../models/printer.dart';
 import '../models/transaction.dart';
 import '../theme.dart';
+import '../ui/widgets.dart';
 import 'pages.dart';
 
 class TransactionDetails extends ConsumerWidget {

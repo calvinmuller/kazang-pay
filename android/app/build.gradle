@@ -88,14 +88,14 @@ flutter {
 }
 
 dependencies {
-    implementation files('libs/prismcore-release-1.0.12.aar')
+    implementation files('libs/prismcore-release-1.0.13.aar')
     implementation files('libs/prismiso8583-release-1.0.10.aar')
 
-    urovoImplementation files('libs/prismdevice-urovo-release-1.0.15.aar')
-    urovoImplementation files('libs/prismfactory-urovo-release-1.0.21.aar')
+    urovoImplementation files('libs/prismdevice-urovo-release-1.0.16.aar')
+    urovoImplementation files('libs/prismfactory-urovo-release-1.0.22.aar')
 
-    sunmiImplementation files('libs/prismfactory-sunmi-release-1.0.21.aar')
-    sunmiImplementation files('libs/prismdevice-sunmi-release-1.0.15.aar')
+    sunmiImplementation files('libs/prismfactory-sunmi-release-1.0.22.aar')
+    sunmiImplementation files('libs/prismdevice-sunmi-release-1.0.16.aar')
     sunmiImplementation("com.sunmi:printerx:1.0.17")
 
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show BuildContext;
 
 import '../common/providers/device_info.dart' show DeviceInfoProvider;
@@ -10,10 +11,19 @@ extension IndexedIterable<E> on Iterable<E> {
 }
 
 extension UrovoSizeExtension on BuildContext {
-  double dynamicSize(double baseSize, double urovoSize) {
+  bool hasPinPad() {
     final deviceInfo = DeviceInfoProvider.of(this);
     try {
-      if (["urovo", "ubx"].contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
+      return deviceInfo!.deviceInfo.model!.toLowerCase() == "i5300";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  double dynamicSize(double baseSize, double urovoSize) {
+    final mediaQuery = MediaQuery.of(this);
+    try {
+      if (mediaQuery.size.height < 800) {
         return urovoSize;
       } else {
         return baseSize;
@@ -25,7 +35,8 @@ extension UrovoSizeExtension on BuildContext {
 
   void deviceCallback({required Function urovo, required Function sunmi}) {
     final deviceInfo = DeviceInfoProvider.of(this);
-    if (["urovo", "ubx"].contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
+    if (["urovo", "ubx"]
+        .contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
       urovo();
     } else {
       sunmi();

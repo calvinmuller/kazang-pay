@@ -74,7 +74,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
               FormField(
                 autofocus: true,
                 obscureText: true,
-                textInputType: TextInputType.number,
+                textInputType: context.hasPinPad() ? TextInputType.none : TextInputType.number,
                 controller: pinController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

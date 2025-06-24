@@ -86,12 +86,14 @@ class PaymentPageState extends ConsumerState<PaymentPage>
                 ],
               ),
               const TransactionInformation(),
-              const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: LottieWidget(
-                  width: 400,
-                  size: null,
-                  assetName: 'assets/animations/insert-card.lottie',
+              const HiddenOnMobile(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: LottieWidget(
+                    width: 400,
+                    size: null,
+                    assetName: 'assets/animations/insert-card.lottie',
+                  ),
                 ),
               ),
               Padding(

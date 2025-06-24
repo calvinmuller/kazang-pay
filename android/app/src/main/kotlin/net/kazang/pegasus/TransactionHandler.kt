@@ -451,7 +451,10 @@ class TransactionHandler : TransactionInterface {
         transactionType = TransactionTypesEnum.VOID_TRANSACTION
         val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder)
         if (item == null) {
-            Log.e("voidTransaction", "Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+            Log.e(
+                "voidTransaction",
+                "Transaction not found for RRN: $retrievalReferenceNumberBuilder"
+            )
             throw IllegalArgumentException("Transaction not found for RRN: $retrievalReferenceNumberBuilder")
         } else {
             factorybb = factorybb.createVoid("VOID", item)

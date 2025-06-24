@@ -1,30 +1,32 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
-        TickerProviderStateMixin,
-        AnimationController,
-        BuildContext,
-        Widget,
-        Padding,
-        EdgeInsets,
-        Icon,
-        Divider,
-        AnimationStatus,
-        BorderRadius,
-        MainAxisAlignment,
-        CrossAxisAlignment,
-        Theme,
-        TextAlign,
-        Text,
-        IconAlignment,
-        Icons,
-        Column,
-        Scaffold,
-        ListView,
-        Navigator;
+    TickerProviderStateMixin,
+    AnimationController,
+    BuildContext,
+    Widget,
+    Padding,
+    EdgeInsets,
+    Icon,
+    Divider,
+    AnimationStatus,
+    BorderRadius,
+    MainAxisAlignment,
+    CrossAxisAlignment,
+    Theme,
+    TextAlign,
+    Text,
+    IconAlignment,
+    Icons,
+    Column,
+    Scaffold,
+    ListView,
+    Navigator;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
+import '../common/providers/device_info.dart';
 import '../common/providers/payment.controller.dart'
     show paymentControllerProvider, PaymentController;
 import '../common/providers/transaction.provider.dart';
@@ -35,10 +37,12 @@ import '../common/widgets/receipt_tabs.dart';
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
 import '../helpers/dialog_helpers.dart' show showErrorDialog;
+import '../helpers/print_helper.dart' show printReceiptDialog;
 import '../helpers/throttle.dart' show DebounceAggregator;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/payment.dart';
+import '../models/printer.dart' show ReceiptSectionEnum;
 import '../models/transaction_result.dart' show TransactionResult;
 import '../ui/widgets.dart';
 
@@ -56,18 +60,20 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result =
-      ref.read(transactionResultNotifierProvider)!;
+  ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Payment get payment => ref.read(paymentControllerProvider)!;
 
   late final PaymentController paymentController =
-      ref.read(paymentControllerProvider.notifier)!;
+  ref.read(paymentControllerProvider.notifier)!;
 
   @override
   void initState() {
     super.initState();
+    _focusNode.requestFocus();
     TransactionHelper.initialize(this);
 
     _animationController = AnimationController(
@@ -114,34 +120,40 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   @override
   void dispose() {
     _animationController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // _focusNode.requestFocus();
     final l10n = AppLocalizations.of(context)!;
+    final deviceInfo = DeviceInfoProvider.of(context)!;
 
-    return AnimatedGradientBorder(
-      controller: _borderAnimationController,
-      gradientColors: result.isSuccessful
-          ? borderGradient['success']!
-          : borderGradient['error']!,
-      borderRadius: BorderRadius.zero,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        body: Panel(
-          child: (result.isTap || !result.isSuccessful)
-              ? Column(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: getBody(l10n),
-                )
-              : ListView(
-                  children: getBody(l10n),
-                ),
+    return PopOnEnter(
+      focusNode: _focusNode,
+      child: AnimatedGradientBorder(
+        controller: _borderAnimationController,
+        gradientColors: result.isSuccessful
+            ? borderGradient['success']!
+            : borderGradient['error']!,
+        borderRadius: BorderRadius.zero,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          extendBodyBehindAppBar: true,
+          extendBody: true,
+          body: Panel(
+            child: ((result.isTap || !result.isSuccessful) && !deviceInfo.isi5300)
+                ? Column(
+              spacing: 10,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: getBody(l10n),
+            )
+                : ListView(
+              children: getBody(l10n),
+            ),
+          ),
         ),
       ),
     );
@@ -161,14 +173,20 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       // titleMedium
       Text(
         result.responseMessage!,
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme
+            .of(context)
+            .textTheme
+            .titleLarge,
         textAlign: TextAlign.center,
       ),
       if (!result.isSuccessful)
         Text(
           result.declinedReason ?? l10n.declined,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodyLarge,
         ),
       // Amount
       Text(
@@ -176,34 +194,44 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           context,
           result.transactionAmount,
         ),
-        style: Theme.of(context).textTheme.headlineLarge,
+        style: Theme
+            .of(context)
+            .textTheme
+            .headlineLarge,
         textAlign: TextAlign.center,
       ),
       if (!result.isTap && result.isSuccessful)
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
-          child: LottieWidget(
-            width: double.infinity,
-            assetName: 'assets/animations/remove-card.lottie',
+        const HiddenOnMobile(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+            child: LottieWidget(
+              width: double.infinity,
+              assetName: 'assets/animations/remove-card.lottie',
+            ),
           ),
         ),
       if (!result.isTap && result.isSuccessful)
         Text(
           l10n.removeCard,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleMedium,
           textAlign: TextAlign.center,
         ),
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Button(
-          iconAlignment: IconAlignment.end,
-          elevation: 0,
-          height: 60,
-          width: double.infinity,
-          onPressed: () =>
-              Navigator.popUntil(context, (route) => route.isFirst),
-          icon: const Icon(Icons.arrow_forward),
-          child: Text(l10n.continueButton),
+      HiddenOnMobile(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Button(
+            iconAlignment: IconAlignment.end,
+            elevation: 0,
+            height: 60,
+            width: double.infinity,
+            onPressed: () =>
+                Navigator.popUntil(context, (route) => route.isFirst),
+            icon: const Icon(Icons.arrow_forward),
+            child: Text(l10n.continueButton),
+          ),
         ),
       ),
       if (result.canPrintReceipt) ...[
