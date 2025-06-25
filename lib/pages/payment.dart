@@ -77,11 +77,17 @@ class PaymentPageState extends ConsumerState<PaymentPage>
                 children: [
                   Text(
                     "${l10n.amountDue}:",
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleMedium,
                   ),
                   Text(
                     CurrencyHelper.formatCurrency(context, payment.totalAmount),
-                    style: Theme.of(context).textTheme.displayLarge,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .displayLarge,
                   ),
                 ],
               ),
@@ -114,7 +120,8 @@ class PaymentPageState extends ConsumerState<PaymentPage>
                   ),
                   child: Text(
                     l10n.cancel,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .titleMedium!
                         .copyWith(color: CustomColours.red),
@@ -134,8 +141,20 @@ class PaymentPageState extends ConsumerState<PaymentPage>
       final result = TransactionResult.fromJson(value.value);
       TransactionHelper.log("onTransactionCompletedEvent", result.toString());
       ref.read(transactionResultNotifierProvider.notifier).set(result);
-      context.goNamed('payment-result', extra: result);
+      if (!error) {
+        context.goNamed('payment-result', extra: result);
+      }
     }
+  }
+
+  @override
+  void onErrorEvent(String? value) {
+    error = true;
+    showErrorDialog(context, value).then((_) {
+      if (mounted && context.canPop()) {
+        context.pop(true);
+      }
+    });
   }
 }
 
@@ -149,11 +168,14 @@ class TransactionInformation extends ConsumerWidget {
     final widget = transactionStatus == "Sending request online."
         ? loadingWidget(transactionStatus)
         : Text(
-            maxLines: 2,
-            transactionStatus,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge,
-          );
+      maxLines: 2,
+      transactionStatus,
+      textAlign: TextAlign.center,
+      style: Theme
+          .of(context)
+          .textTheme
+          .bodyLarge,
+    );
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget);
   }
