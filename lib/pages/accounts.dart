@@ -1,17 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Scaffold,
-        Theme,
-        Widget,
-        CrossAxisAlignment,
-        EdgeInsets,
-        Spacer,
-        TextAlign,
-        Text,
-        Padding,
-        Column;
+    show BuildContext, Scaffold, Theme, Widget, EdgeInsets, TextAlign, Text, Padding, Column, Expanded, ListView;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show WidgetRef, ConsumerWidget, StateProvider;
 
@@ -42,7 +30,6 @@ class AccountsPage extends ConsumerWidget {
             Expanded(
               child: ListView(
                 shrinkWrap: true,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(

@@ -188,21 +188,20 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
 
   @override
   void onOsUpdateRequired(String build, String seNumber) {
-    onFactoryInitialized();
-    // final l10n = AppLocalizations.of(context)!;
-    // showDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) {
-    //     return Loader(
-    //       showLoader: false,
-    //       message: l10n.osUpdateRequired,
-    //     );
-    //   },
-    // );
-    // Future.delayed(const Duration(seconds: 1)).then((_) {
-    //   TransactionHelper.performOsUpdate();
-    // });
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Loader(
+          showLoader: false,
+          message: l10n.osUpdateRequired,
+        );
+      },
+    );
+    Future.delayed(const Duration(seconds: 1)).then((_) {
+      TransactionHelper.performOsUpdate();
+    });
   }
 
   @override

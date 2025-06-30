@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         Widget,
@@ -25,7 +24,9 @@ import 'package:flutter/material.dart'
         Feedback,
         InkWell,
         KeyboardListener,
-        FocusNode;
+        FocusNode,
+        debugPrint,
+        SizedBox;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget;
@@ -81,8 +82,10 @@ class _KeyPadState extends ConsumerState<KeyPad> {
           } else if (key == LogicalKeyboardKey.delete) {
             clearAll();
           } else if (key == LogicalKeyboardKey.enter) {
-            ref.read(paymentControllerProvider.notifier).setPayment(payment);
-            context.goNamed('payment');
+            if (payment.hasAmount) {
+              ref.read(paymentControllerProvider.notifier).setPayment(payment);
+              context.goNamed('payment');
+            }
           }
         }
       },

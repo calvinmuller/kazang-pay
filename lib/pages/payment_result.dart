@@ -1,5 +1,27 @@
 import 'package:flutter/material.dart'
-    show TickerProviderStateMixin, AnimationController, BuildContext, Widget, Padding, EdgeInsets, Icon, Divider, AnimationStatus, BorderRadius, MainAxisAlignment, CrossAxisAlignment, Theme, TextAlign, Text, IconAlignment, Icons, Column, Scaffold, ListView, Navigator, FocusNode;
+    show
+        TickerProviderStateMixin,
+        AnimationController,
+        BuildContext,
+        Widget,
+        Padding,
+        EdgeInsets,
+        Icon,
+        Divider,
+        AnimationStatus,
+        BorderRadius,
+        MainAxisAlignment,
+        CrossAxisAlignment,
+        Theme,
+        TextAlign,
+        Text,
+        IconAlignment,
+        Icons,
+        Column,
+        Scaffold,
+        ListView,
+        Navigator,
+        FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:flutter_svg/svg.dart';
@@ -16,12 +38,10 @@ import '../common/widgets/receipt_tabs.dart';
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
 import '../helpers/dialog_helpers.dart' show showErrorDialog;
-import '../helpers/print_helper.dart' show printReceiptDialog;
 import '../helpers/throttle.dart' show DebounceAggregator;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/payment.dart';
-import '../models/printer.dart' show ReceiptSectionEnum;
 import '../models/transaction_result.dart' show TransactionResult;
 import '../ui/widgets.dart';
 
@@ -39,7 +59,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result =
-    ref.read(transactionResultNotifierProvider)!;
+      ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
   final FocusNode _focusNode = FocusNode();
 
@@ -47,7 +67,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   Payment get payment => ref.read(paymentControllerProvider)!;
 
   late final PaymentController paymentController =
-  ref.read(paymentControllerProvider.notifier)!;
+      ref.read(paymentControllerProvider.notifier)!;
 
   @override
   void initState() {
@@ -121,16 +141,17 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           extendBodyBehindAppBar: true,
           extendBody: true,
           body: Panel(
-            child: ((result.isTap || !result.isSuccessful) && !deviceInfo.isi5300)
-                ? Column(
-              spacing: 10,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: getBody(l10n),
-            )
-                : ListView(
-              children: getBody(l10n),
-            ),
+            child:
+                ((result.isTap || !result.isSuccessful) && !deviceInfo.isi5300)
+                    ? Column(
+                        spacing: 10,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: getBody(l10n),
+                      )
+                    : ListView(
+                        children: getBody(l10n),
+                      ),
           ),
         ),
       ),
@@ -151,20 +172,14 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       // titleMedium
       Text(
         result.responseMessage!,
-        style: Theme
-            .of(context)
-            .textTheme
-            .titleLarge,
+        style: Theme.of(context).textTheme.titleLarge,
         textAlign: TextAlign.center,
       ),
       if (!result.isSuccessful)
         Text(
           result.declinedReason ?? l10n.declined,
           textAlign: TextAlign.center,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyLarge,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       // Amount
       Text(
@@ -172,10 +187,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           context,
           result.transactionAmount,
         ),
-        style: Theme
-            .of(context)
-            .textTheme
-            .headlineLarge,
+        style: Theme.of(context).textTheme.headlineLarge,
         textAlign: TextAlign.center,
       ),
       if (!result.isTap && result.isSuccessful)
@@ -196,10 +208,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       if (!result.isTap && result.isSuccessful)
         Text(
           l10n.removeCard,
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleMedium,
+          style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
       HiddenOnMobile(

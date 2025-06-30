@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BuildContext, MediaQuery;
+import 'package:flutter/material.dart' show BuildContext;
 
 import '../common/providers/device_info.dart' show DeviceInfoProvider;
 
@@ -29,7 +29,7 @@ extension UrovoSizeExtension on BuildContext {
     try {
       if (["urovo", "ubx"]
           .contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
-        return deviceInfo!.deviceInfo.model!.toLowerCase() == "i5300";
+        return deviceInfo.deviceInfo.model!.toLowerCase() == "i5300";
       }
       return false;
     } catch (e) {

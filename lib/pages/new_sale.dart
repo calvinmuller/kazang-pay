@@ -1,18 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        StatelessWidget,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        Expanded,
-        Text,
-        AppBar,
-        MainAxisSize,
-        Padding,
-        Column,
-        Scaffold,
-        CrossAxisAlignment;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment, MainAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,7 +8,6 @@ import '../common/providers/payment.provider.dart';
 import '../common/widgets/widgets.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
-import '../ui/widgets.dart';
 
 class NewSalePage extends StatelessWidget {
   const NewSalePage({super.key});

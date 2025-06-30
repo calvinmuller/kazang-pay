@@ -1,16 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        StatelessWidget,
-        AnimationController,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        BoxFit,
-        Padding,
-        FractionallySizedBox,
-        MediaQuery,
-        SizedBox;
+    show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding, FractionallySizedBox, MediaQuery, SizedBox, FocusNode, KeyEvent, debugPrint, Navigator, KeyboardListener;
 import 'package:flutter/services.dart' show KeyDownEvent, LogicalKeyboardKey;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
@@ -40,14 +29,15 @@ class LogoWidget extends StatelessWidget {
 }
 
 class LottieWidget extends StatelessWidget {
-  const LottieWidget(
-      {super.key,
-      required this.assetName,
-      this.controller,
-      this.size = 200,
-      this.repeat = false,
-      this.width = 200,
-      this.animate = true});
+  const LottieWidget({
+    super.key,
+    required this.assetName,
+    this.controller,
+    this.size = 200,
+    this.repeat = false,
+    this.width = 200,
+    this.animate = true,
+  });
 
   final String assetName;
   final double? size;
@@ -105,7 +95,11 @@ class HiddenOnMobile extends StatelessWidget {
 /// The i5300 has a hardware enter key that can be used to pop the current route.
 class PopOnEnter extends StatelessWidget {
   const PopOnEnter(
-      {super.key, required this.child, this.onEnterPressed, this.focusNode, this.autofocus = true});
+      {super.key,
+      required this.child,
+      this.onEnterPressed,
+      this.focusNode,
+      this.autofocus = true});
 
   final Widget child;
   final Function? onEnterPressed;
@@ -132,28 +126,5 @@ class PopOnEnter extends StatelessWidget {
       },
       child: child,
     );
-  }
-}
-
-// I need a responsive widget that shows a column or row depends on the isi5300 on deviceInfoProvider
-class ResponsiveFlex extends StatelessWidget {
-  const ResponsiveFlex({super.key, required this.children, this.spacing = 12});
-
-  final List<Widget> children;
-  final double spacing;
-
-  @override
-  Widget build(BuildContext context) {
-    final isi5300 = DeviceInfoProvider.of(context)!.isi5300;
-    return !isi5300
-        ? Row(
-            spacing: spacing,
-            children: children,
-          )
-        : Column(
-            spacing: spacing,
-            mainAxisSize: MainAxisSize.min,
-            children: children,
-          );
   }
 }

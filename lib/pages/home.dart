@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart'
         BoxDecoration,
         Icon,
         EdgeInsets,
-        BorderRadius,
         Color,
         TextStyle,
         Theme,
@@ -15,8 +13,6 @@ import 'package:flutter/material.dart'
         IconButton,
         AppBar,
         MainAxisSize,
-        Border,
-        Radius,
         TextAlign,
         Text,
         Container,
@@ -29,11 +25,12 @@ import 'package:flutter/material.dart'
         Expanded,
         Scaffold,
         FractionallySizedBox;
-import 'package:flutter/services.dart' show KeyDownEvent, LogicalKeyboardKey;
+import 'package:flutter/widgets.dart' show FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
 import 'package:tcp_receiver/tcp_receiver.dart';
+
 import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/providers/payment.controller.dart';

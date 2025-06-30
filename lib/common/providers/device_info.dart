@@ -13,9 +13,6 @@ class DeviceInfoProvider extends InheritedWidget {
   final DeviceInfo deviceInfo;
   final AppState appState;
 
-  get isExternallyInvoked =>
-      true; //appState.intentInfo?.transactionType != null;
-
   bool get isi5300 => deviceInfo.model?.toLowerCase() == "i5300";
 
   static DeviceInfoProvider? of(BuildContext context) {

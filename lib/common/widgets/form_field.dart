@@ -2,7 +2,6 @@ import 'package:flutter/material.dart'
     show StatelessWidget, BuildContext, Widget, TextFormField, InputDecoration, TextInputType, TextInputAction, Theme, BorderSide, OutlineInputBorder, FormFieldValidator, TextEditingController;
 
 import '../../core/constants.dart';
-import '../../core/core.dart';
 
 class FormField extends StatelessWidget {
   const FormField({
