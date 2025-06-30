@@ -105,11 +105,12 @@ class HiddenOnMobile extends StatelessWidget {
 /// The i5300 has a hardware enter key that can be used to pop the current route.
 class PopOnEnter extends StatelessWidget {
   const PopOnEnter(
-      {super.key, required this.child, this.onEnterPressed, this.focusNode});
+      {super.key, required this.child, this.onEnterPressed, this.focusNode, this.autofocus = true});
 
   final Widget child;
   final Function? onEnterPressed;
   final FocusNode? focusNode;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +124,7 @@ class PopOnEnter extends StatelessWidget {
         if (event is KeyDownEvent &&
             event.logicalKey == LogicalKeyboardKey.enter &&
             isi5300) {
+          debugPrint('Enter key pressed on i5300');
           onEnterPressed != null
               ? onEnterPressed!()
               : Navigator.popUntil(context, (route) => route.isFirst);

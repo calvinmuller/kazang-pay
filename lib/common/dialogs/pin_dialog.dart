@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' hide FormField;
 import 'package:flutter/material.dart'
     show
         FormState,
@@ -24,6 +25,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/pin.dart' show PinDialogConfig;
+import '../../ui/widgets.dart';
 import '../providers/app.provider.dart';
 import '../providers/pin.provider.dart';
 import '../widgets/button.dart' show Button;
@@ -74,7 +76,9 @@ class _PinDialogState extends ConsumerState<PinDialog> {
               FormField(
                 autofocus: true,
                 obscureText: true,
-                textInputType: context.hasPinPad() ? TextInputType.none : TextInputType.number,
+                textInputType: context.hasPinPad()
+                    ? TextInputType.none
+                    : TextInputType.number,
                 controller: pinController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -103,13 +107,15 @@ class _PinDialogState extends ConsumerState<PinDialog> {
           elevation: 0,
           child: Text(l10n.continueButton),
         ),
-        Button.main(
-          height: buttonSize,
-          onPressed: () => Navigator.of(context).pop(false),
-          elevation: 0,
-          borderColour: Colors.black,
-          inverse: true,
-          child: Text(l10n.back),
+        HiddenOnMobile(
+          child: Button.main(
+            height: buttonSize,
+            onPressed: () => Navigator.of(context).pop(false),
+            elevation: 0,
+            borderColour: Colors.black,
+            inverse: true,
+            child: Text(l10n.back),
+          ),
         ),
         const KeyboardPadding(),
       ],

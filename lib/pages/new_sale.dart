@@ -49,28 +49,26 @@ class NewSalePage extends StatelessWidget {
               flex: hasPinPad ? 0 : 1,
               child: const KeyPad(),
             ),
-            HiddenOnMobile(
-              child: Consumer(
-                builder: (context, ref, child) {
-                  final payment = ref.watch(paymentNotifierProvider);
+            Consumer(
+              builder: (context, ref, child) {
+                final payment = ref.watch(paymentNotifierProvider);
 
-                  return Button(
-                    height: context.dynamicSize(90, 72),
-                    width: double.infinity,
-                    colour: CustomColours.greenish,
-                    onPressed: (payment.hasAmount)
-                        ? () {
-                            ref
-                                .read(paymentControllerProvider.notifier)
-                                .setPayment(payment);
+                return Button(
+                  height: context.dynamicSize(90, 72),
+                  width: double.infinity,
+                  colour: CustomColours.greenish,
+                  onPressed: (payment.hasAmount)
+                      ? () {
+                          ref
+                              .read(paymentControllerProvider.notifier)
+                              .setPayment(payment);
 
-                            context.goNamed('payment');
-                          }
-                        : null,
-                    child: Text(l10n.pay),
-                  );
-                },
-              ),
+                          context.goNamed('payment');
+                        }
+                      : null,
+                  child: Text(l10n.pay),
+                );
+              },
             ),
           ],
         ),

@@ -1,29 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-    TickerProviderStateMixin,
-    AnimationController,
-    BuildContext,
-    Widget,
-    Padding,
-    EdgeInsets,
-    Icon,
-    Divider,
-    AnimationStatus,
-    BorderRadius,
-    MainAxisAlignment,
-    CrossAxisAlignment,
-    Theme,
-    TextAlign,
-    Text,
-    IconAlignment,
-    Icons,
-    Column,
-    Scaffold,
-    ListView,
-    Navigator;
+    show TickerProviderStateMixin, AnimationController, BuildContext, Widget, Padding, EdgeInsets, Icon, Divider, AnimationStatus, BorderRadius, MainAxisAlignment, CrossAxisAlignment, Theme, TextAlign, Text, IconAlignment, Icons, Column, Scaffold, ListView, Navigator, FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter_svg/svg.dart';
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/providers/device_info.dart';
@@ -60,7 +39,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
   late final TransactionResult result =
-  ref.read(transactionResultNotifierProvider)!;
+    ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
   final FocusNode _focusNode = FocusNode();
 
@@ -126,7 +105,6 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
 
   @override
   Widget build(BuildContext context) {
-    // _focusNode.requestFocus();
     final l10n = AppLocalizations.of(context)!;
     final deviceInfo = DeviceInfoProvider.of(context)!;
 
@@ -201,13 +179,18 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         textAlign: TextAlign.center,
       ),
       if (!result.isTap && result.isSuccessful)
-        const HiddenOnMobile(
+        HiddenOnMobile(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
-            child: LottieWidget(
-              width: double.infinity,
-              assetName: 'assets/animations/remove-card.lottie',
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+            child: (!context.isUrovo)
+                ? const LottieWidget(
+                    width: double.infinity,
+                    assetName: 'assets/animations/remove-card.lottie',
+                  )
+                : SvgPicture.asset(
+                    'assets/remove-card-urovo.svg',
+                    height: 150,
+                  ),
           ),
         ),
       if (!result.isTap && result.isSuccessful)

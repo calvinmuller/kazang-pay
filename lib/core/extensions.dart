@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show BuildContext;
+import 'package:flutter/material.dart' show BuildContext, MediaQuery;
 
 import '../common/providers/device_info.dart' show DeviceInfoProvider;
 
@@ -11,25 +10,30 @@ extension IndexedIterable<E> on Iterable<E> {
 }
 
 extension UrovoSizeExtension on BuildContext {
-  bool hasPinPad() {
+  double dynamicSize(double baseSize, double urovoSize) {
     final deviceInfo = DeviceInfoProvider.of(this);
     try {
-      return deviceInfo!.deviceInfo.model!.toLowerCase() == "i5300";
-    } catch (e) {
-      return false;
-    }
-  }
-
-  double dynamicSize(double baseSize, double urovoSize) {
-    final mediaQuery = MediaQuery.of(this);
-    try {
-      if (mediaQuery.size.height < 800) {
+      if (["urovo", "ubx"]
+          .contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
         return urovoSize;
       } else {
         return baseSize;
       }
     } catch (e) {
       return baseSize;
+    }
+  }
+
+  bool hasPinPad() {
+    final deviceInfo = DeviceInfoProvider.of(this);
+    try {
+      if (["urovo", "ubx"]
+          .contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
+        return deviceInfo!.deviceInfo.model!.toLowerCase() == "i5300";
+      }
+      return false;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -40,6 +44,16 @@ extension UrovoSizeExtension on BuildContext {
       urovo();
     } else {
       sunmi();
+    }
+  }
+
+  bool get isUrovo {
+    final deviceInfo = DeviceInfoProvider.of(this);
+    if (["urovo", "ubx"]
+        .contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

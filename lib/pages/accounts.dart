@@ -1,6 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Scaffold, Theme, Widget, CrossAxisAlignment, EdgeInsets, Spacer, TextAlign, Text, Padding, Column;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef, ConsumerWidget, StateProvider;
+    show
+        BuildContext,
+        Scaffold,
+        Theme,
+        Widget,
+        CrossAxisAlignment,
+        EdgeInsets,
+        Spacer,
+        TextAlign,
+        Text,
+        Padding,
+        Column;
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show WidgetRef, ConsumerWidget, StateProvider;
 
 import 'package:go_router/go_router.dart';
 
@@ -25,37 +38,46 @@ class AccountsPage extends ConsumerWidget {
       resizeToAvoidBottomInset: false,
       body: Panel(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 28, horizontal: 33.5),
-              child: Text(
-                textAlign: TextAlign.center,
-                l10n.selectAccount,
-                style: Theme.of(context).textTheme.titleMedium,
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 28,
+                      horizontal: 33.5,
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      l10n.selectAccount,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: accounts.mapIndexed((account, index) {
+                        return AccountItem(
+                          dense: context.hasPinPad(),
+                          index: index,
+                          padding: const EdgeInsets.only(bottom: 16),
+                          groupValue: selectedAccount!,
+                          account: account,
+                          onChanged: (value) {
+                            ref.read(selectedAccountProvider.notifier).state = {
+                              'index': index,
+                              'account': account,
+                            };
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: accounts.mapIndexed((account, index) {
-                  return AccountItem(
-                    index: index,
-                    padding: const EdgeInsets.only(bottom: 16),
-                    groupValue: selectedAccount!,
-                    account: account,
-                    onChanged: (value) {
-                      ref.read(selectedAccountProvider.notifier).state = {
-                        'index': index,
-                        'account': account,
-                      };
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-            const Spacer(),
             Button.main(
               height: 64,
               margin: const EdgeInsets.all(16),

@@ -225,7 +225,7 @@ const _$PaymentTypeEnumMap = {
 _AppState _$AppStateFromJson(Map json) => _AppState(
       pinVerified: json['pinVerified'] as bool? ?? true,
       isConfigured: json['isConfigured'] as bool? ?? false,
-      proxy: json['proxy'] as bool? ?? false,
+      proxy: json['proxy'] as bool? ?? true,
       deviceInfo: json['deviceInfo'] == null
           ? null
           : DeviceInfo.fromJson(
