@@ -127,6 +127,10 @@ class PopOnEnter extends StatelessWidget {
   Widget build(BuildContext context) {
     final isi5300 = DeviceInfoProvider.of(context)!.isi5300;
 
+    if (!isi5300) {
+      return child;
+    }
+
     return KeyboardListener(
       autofocus: true,
       focusNode: focusNode ?? FocusNode(),
