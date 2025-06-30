@@ -60,75 +60,84 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBody: true,
-        body: Panel(
-          footer: const SizedBox(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Dots(),
-              const SizedBox(),
-              Column(
-                children: [
-                  Text(
-                    "${l10n.amountDue}:",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    CurrencyHelper.formatCurrency(context, payment.totalAmount),
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                ],
-              ),
-              const TransactionInformation(),
-              HiddenOnMobile(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: (context.isUrovo)
-                      ? SvgPicture.asset(
-                          'assets/insert-card-urovo.svg',
-                          height: 200,
-                        )
-                      : const LottieWidget(
-                          width: 400,
-                          size: null,
-                          assetName: 'assets/animations/insert-card.lottie',
-                        ),
+    return PopOnEnter(
+      onBackPressed: () async {
+        final shouldPop = await showConfirmationDialog(context);
+        if (shouldPop != null && shouldPop) {
+          TransactionHelper.abortTransaction();
+        }
+      },
+      child: PopScope(
+        canPop: false,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          extendBody: true,
+          body: Panel(
+            footer: const SizedBox(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Dots(),
+                const SizedBox(),
+                Column(
+                  children: [
+                    Text(
+                      "${l10n.amountDue}:",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      CurrencyHelper.formatCurrency(
+                          context, payment.totalAmount),
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Button.secondary(
-                  onPressed: () async {
-                    if (error) {
-                      context.pop(false);
-                    } else {
-                      final shouldPop = await showConfirmationDialog(context);
-                      if (shouldPop != null && shouldPop) {
-                        TransactionHelper.abortTransaction();
+                const TransactionInformation(),
+                HiddenOnMobile(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: (context.isUrovo)
+                        ? SvgPicture.asset(
+                            'assets/insert-card-urovo.svg',
+                            height: 200,
+                          )
+                        : const LottieWidget(
+                            width: 400,
+                            size: null,
+                            assetName: 'assets/animations/insert-card.lottie',
+                          ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Button.secondary(
+                    onPressed: () async {
+                      if (error) {
+                        context.pop(false);
+                      } else {
+                        final shouldPop = await showConfirmationDialog(context);
+                        if (shouldPop != null && shouldPop) {
+                          TransactionHelper.abortTransaction();
+                        }
                       }
-                    }
-                  },
-                  icon: const Icon(
-                    CustomIcons.close,
-                    color: CustomColours.red,
-                    size: 24,
-                  ),
-                  child: Text(
-                    l10n.cancel,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: CustomColours.red),
+                    },
+                    icon: const Icon(
+                      CustomIcons.close,
+                      color: CustomColours.red,
+                      size: 24,
+                    ),
+                    child: Text(
+                      l10n.cancel,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: CustomColours.red),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

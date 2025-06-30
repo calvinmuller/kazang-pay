@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding, FractionallySizedBox, MediaQuery, SizedBox, FocusNode, KeyEvent, debugPrint, Navigator, KeyboardListener;
+    show
+        StatelessWidget,
+        AnimationController,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxFit,
+        Padding,
+        FractionallySizedBox,
+        MediaQuery,
+        SizedBox,
+        FocusNode,
+        KeyEvent,
+        debugPrint,
+        Navigator,
+        KeyboardListener;
 import 'package:flutter/services.dart' show KeyDownEvent, LogicalKeyboardKey;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
@@ -98,11 +113,13 @@ class PopOnEnter extends StatelessWidget {
       {super.key,
       required this.child,
       this.onEnterPressed,
+      this.onBackPressed,
       this.focusNode,
       this.autofocus = true});
 
   final Widget child;
   final Function? onEnterPressed;
+  final Function? onBackPressed;
   final FocusNode? focusNode;
   final bool autofocus;
 
@@ -122,6 +139,11 @@ class PopOnEnter extends StatelessWidget {
           onEnterPressed != null
               ? onEnterPressed!()
               : Navigator.popUntil(context, (route) => route.isFirst);
+        } else if (event is KeyDownEvent &&
+            event.logicalKey == LogicalKeyboardKey.goBack &&
+            isi5300) {
+          debugPrint('Backspace key pressed on i5300');
+          if (onBackPressed != null) onBackPressed!();
         }
       },
       child: child,
