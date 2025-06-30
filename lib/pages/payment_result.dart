@@ -211,19 +211,17 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
-      HiddenOnMobile(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Button(
-            iconAlignment: IconAlignment.end,
-            elevation: 0,
-            height: 60,
-            width: double.infinity,
-            onPressed: () =>
-                Navigator.popUntil(context, (route) => route.isFirst),
-            icon: const Icon(Icons.arrow_forward),
-            child: Text(l10n.continueButton),
-          ),
+      Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Button(
+          iconAlignment: IconAlignment.end,
+          elevation: 0,
+          height: 60,
+          width: double.infinity,
+          onPressed: () =>
+              Navigator.popUntil(context, (route) => route.isFirst),
+          icon: const Icon(Icons.arrow_forward),
+          child: Text(l10n.continueButton),
         ),
       ),
       if (result.canPrintReceipt) ...[
