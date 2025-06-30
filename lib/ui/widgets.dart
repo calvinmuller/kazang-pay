@@ -109,13 +109,14 @@ class HiddenOnMobile extends StatelessWidget {
 
 /// The i5300 has a hardware enter key that can be used to pop the current route.
 class PopOnEnter extends StatelessWidget {
-  const PopOnEnter(
-      {super.key,
-      required this.child,
-      this.onEnterPressed,
-      this.onBackPressed,
-      this.focusNode,
-      this.autofocus = true});
+  const PopOnEnter({
+    super.key,
+    required this.child,
+    this.onEnterPressed,
+    this.onBackPressed,
+    this.focusNode,
+    this.autofocus = true,
+  });
 
   final Widget child;
   final Function? onEnterPressed;
