@@ -23,6 +23,7 @@ import 'package:flutter/material.dart'
         Navigator;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
+import 'package:flutter_svg/svg.dart';
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
 import '../common/providers/payment.controller.dart'
@@ -180,12 +181,17 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         textAlign: TextAlign.center,
       ),
       if (!result.isTap && result.isSuccessful)
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
-          child: LottieWidget(
-            width: double.infinity,
-            assetName: 'assets/animations/remove-card.lottie',
-          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+          child: (!context.isUrovo)
+              ? const LottieWidget(
+                  width: double.infinity,
+                  assetName: 'assets/animations/remove-card.lottie',
+                )
+              : SvgPicture.asset(
+                  'assets/remove-card-urovo.svg',
+                  height: 150,
+                ),
         ),
       if (!result.isTap && result.isSuccessful)
         Text(
