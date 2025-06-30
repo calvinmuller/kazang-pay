@@ -1,5 +1,32 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController, SingleChildScrollView;
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        Spacer,
+        Text,
+        AppBar,
+        TabBarView,
+        Colors,
+        BorderRadius,
+        CrossAxisAlignment,
+        Column,
+        Theme,
+        Row,
+        Padding,
+        Card,
+        TabBarIndicatorSize,
+        Tab,
+        TabBar,
+        SliverToBoxAdapter,
+        NestedScrollView,
+        Scaffold,
+        DefaultTabController,
+        SingleChildScrollView,
+        SizedBox,
+        Icons;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, ProviderScope, WidgetRef;
 import 'package:go_router/go_router.dart';
@@ -15,6 +42,7 @@ import '../models/payment.dart' show Payment, PaymentType;
 import '../models/printer.dart';
 import '../models/transaction.dart';
 import '../theme.dart';
+import '../ui/widgets.dart';
 import 'pages.dart';
 
 class TransactionDetails extends ConsumerWidget {
@@ -35,6 +63,8 @@ class TransactionDetails extends ConsumerWidget {
         ),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerScrolled) {
+            var isAuthorized = transaction.authorised;
+
             return [
               SliverToBoxAdapter(
                 child: Column(
@@ -69,19 +99,30 @@ class TransactionDetails extends ConsumerWidget {
                                   ],
                                 ),
                                 const Spacer(),
-                                Text(
-                                  transaction.authorised
-                                      ? l10n.approved
-                                      : l10n.declined,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .merge(CustomTheme.graphikSemiBold)
-                                      .copyWith(
-                                        color: (transaction.authorised)
-                                            ? CustomColours.green
-                                            : CustomColours.red,
-                                      ),
+                                HiddenOnMobile(
+                                  alternate: Icon(
+                                    size: 32,
+                                    color: isAuthorized
+                                        ? CustomColours.green
+                                        : CustomColours.red,
+                                    isAuthorized
+                                        ? CustomIcons.done
+                                        : CustomIcons.close,
+                                  ),
+                                  child: Text(
+                                    isAuthorized
+                                        ? l10n.approved
+                                        : l10n.declined,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .merge(CustomTheme.graphikSemiBold)
+                                        .copyWith(
+                                          color: (isAuthorized)
+                                              ? CustomColours.green
+                                              : CustomColours.red,
+                                        ),
+                                  ),
                                 ),
                               ],
                             ),
