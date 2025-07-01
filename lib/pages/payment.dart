@@ -67,6 +67,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
           TransactionHelper.abortTransaction();
         }
       },
+      onEnterPressed: () => null,
       child: PopScope(
         canPop: false,
         child: Scaffold(
