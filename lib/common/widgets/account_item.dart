@@ -14,6 +14,7 @@ class AccountItem extends ConsumerWidget {
     required this.onChanged,
     required this.index,
     this.padding,
+    this.dense = false
   });
 
   final String account;
@@ -21,6 +22,7 @@ class AccountItem extends ConsumerWidget {
   final EdgeInsets? padding;
   final Map groupValue;
   final ValueChanged<String> onChanged;
+  final bool dense;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,6 +31,7 @@ class AccountItem extends ConsumerWidget {
       padding: padding ?? const EdgeInsets.all(0),
       child: Material(
         child: ListTile(
+          dense: dense,
           tileColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

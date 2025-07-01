@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BuildContext, Container, Widget, EdgeInsets, Offset, BorderRadius, FittedBox, Colors, BoxShadow, Radius, BoxDecoration, MainAxisSize, Theme, Text, BoxFit, Column, MainAxisAlignment;
+import 'package:flutter/material.dart' show BuildContext, Container, Widget, EdgeInsets, Offset, BorderRadius, FittedBox, Colors, BoxShadow, Radius, BoxDecoration, MainAxisSize, Theme, Text, BoxFit, Column, MainAxisAlignment, TextAlign;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
 
 import '../../l10n/app_localizations.dart';
@@ -35,6 +35,7 @@ class TotalsWidget extends ConsumerWidget {
           Text(
             "${l10n.purchaseAmount}:",
             style: Theme.of(context).textTheme.titleMedium,
+            textAlign: TextAlign.center,
           ),
           const FittedBox(fit: BoxFit.fitWidth, child: AmountWidget(
             type: PaymentType.payment,
@@ -42,6 +43,7 @@ class TotalsWidget extends ConsumerWidget {
           Text(
             "${l10n.cashbackAmount}:",
             style: Theme.of(context).textTheme.titleMedium,
+            textAlign: TextAlign.center,
           ),
           const FittedBox(
             fit: BoxFit.fitWidth,

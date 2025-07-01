@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        StatelessWidget,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        Expanded,
-        Text,
-        AppBar,
-        MainAxisSize,
-        Padding,
-        Column,
-        Scaffold,
-        CrossAxisAlignment;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment, MainAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,6 +14,7 @@ class NewSalePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasPinPad = context.hasPinPad();
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       extendBody: true,
@@ -39,10 +28,12 @@ class NewSalePage extends StatelessWidget {
           spacing: 12,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const TotalsWidget(),
-            const Expanded(
-              child: KeyPad(),
+            Expanded(
+              flex: hasPinPad ? 0 : 1,
+              child: const KeyPad(),
             ),
             Consumer(
               builder: (context, ref, child) {

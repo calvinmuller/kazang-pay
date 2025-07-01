@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show LinearGradient, Color, Alignment, BorderRadius, Radius, Colors, Offset, BoxShadow, BoxDecoration, NavigatorState, GlobalKey;
+    show LinearGradient, Color, Alignment, BorderRadius, Radius, Colors, Offset, BoxShadow, BoxDecoration, NavigatorState, GlobalKey, Border;
 
 const headerGradient = LinearGradient(
   colors: <Color>[
@@ -8,6 +8,17 @@ const headerGradient = LinearGradient(
   ],
   begin: Alignment.topLeft,
   end: Alignment.center,
+);
+
+final homeDecoration = BoxDecoration(
+  border: Border.all(
+    color: Colors.white,
+    width: 1.5,
+  ),
+  borderRadius: const BorderRadius.only(
+    topLeft: Radius.circular(25),
+    bottomRight: Radius.circular(25),
+  ),
 );
 
 const borderGradient = {
