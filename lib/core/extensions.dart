@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BuildContext;
+import 'package:flutter/material.dart' show BuildContext, MediaQuery;
 
 import '../common/providers/device_info.dart' show DeviceInfoProvider;
 
@@ -11,10 +11,9 @@ extension IndexedIterable<E> on Iterable<E> {
 
 extension UrovoSizeExtension on BuildContext {
   double dynamicSize(double baseSize, double urovoSize) {
-    final deviceInfo = DeviceInfoProvider.of(this);
+    final mediaQuery = MediaQuery.of(this);
     try {
-      if (["urovo", "ubx"]
-          .contains(deviceInfo!.deviceInfo.manufacturer!.toLowerCase())) {
+      if (mediaQuery.size.height < 800) {
         return urovoSize;
       } else {
         return baseSize;

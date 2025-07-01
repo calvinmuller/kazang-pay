@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, EdgeInsets, BoxDecoration, Spacer, Text, AppBar, TabBarView, Colors, BorderRadius, CrossAxisAlignment, Column, Theme, Row, Padding, Card, TabBarIndicatorSize, Tab, TabBar, SliverToBoxAdapter, NestedScrollView, Scaffold, DefaultTabController, SingleChildScrollView, SizedBox, Icons, Icon;
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        BoxDecoration,
+        Spacer,
+        Text,
+        AppBar,
+        TabBarView,
+        Colors,
+        BorderRadius,
+        CrossAxisAlignment,
+        Column,
+        Theme,
+        Row,
+        Padding,
+        Card,
+        TabBarIndicatorSize,
+        Tab,
+        TabBar,
+        SliverToBoxAdapter,
+        NestedScrollView,
+        Scaffold,
+        DefaultTabController,
+        SingleChildScrollView,
+        Icon;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, ProviderScope, WidgetRef;
 import 'package:go_router/go_router.dart';
@@ -99,7 +124,7 @@ class TransactionDetails extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            if (transaction.isUserVoidable)
+                            if (transaction.canVoid)
                               Button.secondary(
                                 radius: 5,
                                 child: Text(l10n.voidTransaction),

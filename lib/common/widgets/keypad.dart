@@ -70,13 +70,9 @@ class _KeyPadState extends ConsumerState<KeyPad> {
         debugPrint('Keypad Key Pressed: ${event.logicalKey.keyLabel}');
         if (event is KeyDownEvent) {
           final key = event.logicalKey;
-          if (key.keyLabel.length == 1 &&
-              key.keyLabel.contains(RegExp(r'^\d$'))) {
+          if (key.keyLabel.length == 1 && key.keyLabel.contains(RegExp(r'^\d$'))) {
             final digit = int.tryParse(key.keyLabel);
             numberPressed(digit);
-            if (digit != null) {
-              (digit.toString());
-            }
           } else if (key == LogicalKeyboardKey.backspace) {
             clear();
           } else if (key == LogicalKeyboardKey.delete) {
