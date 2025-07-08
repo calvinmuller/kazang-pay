@@ -21,7 +21,9 @@ abstract class AppState with _$AppState {
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
     @JsonKey(includeToJson: false, includeFromJson: false)
-    @Default(null) IntentInfo? intentInfo,
+    @Default(null)
+    IntentInfo? intentInfo,
+    @Default(false) bool? externallyLaunched,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
@@ -36,6 +38,7 @@ abstract class AppState with _$AppState {
   AppState setIntentInfo({required IntentInfo intentInfo}) {
     if (!isSetup && intentInfo.username != null) {
       return copyWith(
+        externallyLaunched: intentInfo.username != null,
         intentInfo: intentInfo,
         accountInfo: LoginRequest.fromJson({
           'accountNumber': intentInfo.username,
@@ -44,7 +47,9 @@ abstract class AppState with _$AppState {
         }),
       );
     }
-    return this;
+    return copyWith(
+      externallyLaunched: intentInfo.username != null,
+    );
   }
 }
 
@@ -282,7 +287,7 @@ class MerchantConfig {
     required this.merchantNumber,
   });
 
-  get switchName => routingSwitch == "LESAKA" ? "PRISM": routingSwitch;
+  get switchName => routingSwitch == "LESAKA" ? "PRISM" : routingSwitch;
 
   factory MerchantConfig.fromJson(Map<String, dynamic> json) =>
       _$MerchantConfigFromJson(json);

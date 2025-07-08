@@ -130,6 +130,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun onConnectEvent(value: Boolean) {
+        Log.d("onConnectEvent", value.toString())
         connected = true
     }
 
@@ -391,6 +392,11 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun connect() {
         factory!!.connect()
+    }
+
+    override fun cleanup() {
+        factory!!.disconnect()
+        factory!!.dispose()
     }
 
 }

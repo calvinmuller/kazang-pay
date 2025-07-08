@@ -43,6 +43,7 @@ interface TransactionInterface : EventChannel.StreamHandler {
     fun printReceipt(data: PrintRequest)
     fun abortTransaction()
     fun connect()
+    fun cleanup()
 }
 
 class TransactionHandler : FactoryActivityEvents, TransactionInterface {
@@ -84,8 +85,10 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
         if (config.merchant_config.velocity_rules.isNotEmpty()) {
-            factoryConstructor!!.posFactorySetup!!.velocityCount = config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
-            factoryConstructor!!.posFactorySetup!!.velocityPeriod = config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityCount =
+                config.merchant_config.velocity_rules[0]["velocity_count"]!!.toInt()
+            factoryConstructor!!.posFactorySetup!!.velocityPeriod =
+                config.merchant_config.velocity_rules[0]["velocity_period"]!!.toInt()
         } else {
             factoryConstructor!!.posFactorySetup!!.velocityCount = 0
             factoryConstructor!!.posFactorySetup!!.velocityPeriod = 0
@@ -428,6 +431,11 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     override fun connect() {
         if (!connected)
             factory!!.connect()
+    }
+
+    override fun cleanup() {
+        factory!!.disconnect()
+        factory!!.dispose()
     }
 
 }

@@ -267,5 +267,13 @@
   "voidTransaction": "Jooji Qaddarka",
   "@voidTransaction": {},
   "welcome": "Maalin Wanaagsan",
-  "@welcome": {}
+  "@welcome": {},
+  "yes": "Haa",
+  "@yes": {},
+  "no": "Maya",
+  "@no": {},
+  "transactionCompleted": "Qaddarka, la dhammeeyey",
+  "@transactionCompleted": {},
+  "transactionCompletedPrompt": "'Dooro “Haa” si aad ugu laabato App-ka Kazang.\nDooro “Maya” si aad uga baxdo.'",
+  "@transactionCompletedPrompt": {}
 }

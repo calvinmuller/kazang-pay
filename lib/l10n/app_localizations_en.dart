@@ -429,6 +429,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get switchTitle => 'Switch';
+
+  @override
+  String get transactionCompleted => 'Transaction Completed';
+
+  @override
+  String get transactionCompletedPrompt =>
+      '\'Select “Yes” to return to the Kazang App.\nSelect “No” to Exit.\'';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).
@@ -856,4 +869,17 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get switchTitle => 'Switch';
+
+  @override
+  String get transactionCompleted => 'Transaction Completed';
+
+  @override
+  String get transactionCompletedPrompt =>
+      'Select \"Yes\" to return to the Kazang App.\nSelect \"No\" to Exit.';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
 }

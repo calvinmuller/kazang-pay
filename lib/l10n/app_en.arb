@@ -134,5 +134,9 @@
   "resetPin": "Reset PIN",
   "pinResetSuccess": "Supervisor PIN reset successfully",
   "retry": "Retry",
-  "switchTitle": "Switch"
+  "switchTitle": "Switch",
+  "transactionCompleted": "Transaction Completed",
+  "transactionCompletedPrompt": "'Select “Yes” to return to the Kazang App.\nSelect “No” to Exit.'",
+  "yes": "Yes",
+  "no": "No"
 }

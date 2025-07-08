@@ -196,4 +196,10 @@ class MainActivity : FlutterActivity() {
         super.onCreate(savedInstanceState)
         handleIntent(intent)
     }
+
+    override fun onDestroy() {
+        Log.d("MainActivity", "onDestroy: Cleaning up resources")
+        transactionHandler.cleanup()
+        super.onDestroy()
+    }
 }

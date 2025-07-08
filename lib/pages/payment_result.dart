@@ -20,9 +20,11 @@ import 'package:flutter/material.dart'
         Navigator,
         Column,
         Scaffold;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
+import '../common/providers/app.provider.dart';
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/animated_borders.dart';
 import '../common/widgets/button.dart';
@@ -30,6 +32,7 @@ import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
 import '../core/constants.dart' show borderGradient;
 import '../helpers/currency_helpers.dart';
+import '../helpers/dialog_helpers.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
 import '../models/transaction_result.dart' show TransactionResult;
@@ -42,10 +45,12 @@ class PaymentResultPage extends ConsumerStatefulWidget {
   ConsumerState<PaymentResultPage> createState() => _PaymentResultPageState();
 }
 
-class _PaymentResultPageState extends ConsumerState<PaymentResultPage> with TickerProviderStateMixin {
+class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
+    with TickerProviderStateMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
-  late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
+  late final TransactionResult result =
+      ref.read(transactionResultNotifierProvider)!;
 
   @override
   void initState() {
@@ -142,7 +147,22 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage> with Tick
                   elevation: 0,
                   height: 60,
                   width: double.infinity,
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () async {
+                    final appState = ref.read(appNotifierProvider);
+                    if (appState.externallyLaunched!) {
+                      final result =
+                          await showTransactionCompletedSheet(context);
+                      if (result == true) {
+                        SystemNavigator.pop();
+                      } else {
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
+                      }
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
                   icon: const Icon(Icons.arrow_forward),
                   child: Text(l10n.continueButton),
                 ),

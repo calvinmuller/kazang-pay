@@ -434,4 +434,17 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get switchTitle => 'Beddel';
+
+  @override
+  String get transactionCompleted => 'Qaddarka, la dhammeeyey';
+
+  @override
+  String get transactionCompletedPrompt =>
+      '\'Dooro “Haa” si aad ugu laabato App-ka Kazang.\nDooro “Maya” si aad uga baxdo.\'';
+
+  @override
+  String get yes => 'Haa';
+
+  @override
+  String get no => 'Maya';
 }
