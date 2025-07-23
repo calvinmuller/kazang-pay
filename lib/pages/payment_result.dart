@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart'
     show
-    TickerProviderStateMixin,
-    AnimationController,
-    BuildContext,
-    Widget,
-    Padding,
-    EdgeInsets,
-    Icon,
-    Divider,
-    AnimationStatus,
-    BorderRadius,
-    MainAxisAlignment,
-    CrossAxisAlignment,
-    Theme,
-    TextAlign,
-    Text,
-    IconAlignment,
-    Icons,
-    Column,
-    Scaffold,
-    ListView,
-    Navigator;
+        TickerProviderStateMixin,
+        AnimationController,
+        BuildContext,
+        Widget,
+        Padding,
+        EdgeInsets,
+        Icon,
+        Divider,
+        AnimationStatus,
+        BorderRadius,
+        MainAxisAlignment,
+        CrossAxisAlignment,
+        Theme,
+        TextAlign,
+        Text,
+        IconAlignment,
+        Icons,
+        Column,
+        Scaffold,
+        ListView,
+        Navigator;
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
@@ -62,15 +62,13 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     with TickerProviderStateMixin, TransactionHandlersMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
-  late final TransactionResult result = ref.read(
-      transactionResultNotifierProvider)!;
+  late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
 
   @override
   Payment get payment => ref.read(paymentControllerProvider)!;
 
-  late final PaymentController paymentController =
-  ref.read(paymentControllerProvider.notifier)!;
+  late final PaymentController paymentController = ref.read(paymentControllerProvider.notifier)!;
 
   @override
   void initState() {
@@ -141,14 +139,14 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         body: Panel(
           child: (result.isTap || !result.isSuccessful)
               ? Column(
-            spacing: 10,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: getBody(l10n),
-          )
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: getBody(l10n),
+                )
               : ListView(
-            children: getBody(l10n),
-          ),
+                  children: getBody(l10n),
+                ),
         ),
       ),
     );
@@ -168,20 +166,14 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       // titleMedium
       Text(
         result.responseMessage!,
-        style: Theme
-            .of(context)
-            .textTheme
-            .titleLarge,
+        style: Theme.of(context).textTheme.titleLarge,
         textAlign: TextAlign.center,
       ),
       if (!result.isSuccessful)
         Text(
           result.declinedReason ?? l10n.declined,
           textAlign: TextAlign.center,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyLarge,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       // Amount
       Text(
@@ -189,10 +181,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           context,
           result.transactionAmount,
         ),
-        style: Theme
-            .of(context)
-            .textTheme
-            .headlineLarge,
+        style: Theme.of(context).textTheme.headlineLarge,
         textAlign: TextAlign.center,
       ),
       if (!result.isTap && result.isSuccessful)
@@ -200,21 +189,18 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
           child: (!context.isUrovo)
               ? const LottieWidget(
-            width: double.infinity,
-            assetName: 'assets/animations/remove-card.lottie',
-          )
+                  width: double.infinity,
+                  assetName: 'assets/animations/remove-card.lottie',
+                )
               : SvgPicture.asset(
-            'assets/remove-card-urovo.svg',
-            height: 150,
-          ),
+                  'assets/remove-card-urovo.svg',
+                  height: 150,
+                ),
         ),
       if (!result.isTap && result.isSuccessful)
         Text(
           l10n.removeCard,
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleMedium,
+          style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
       Padding(
@@ -227,8 +213,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           onPressed: () async {
             final appState = ref.read(appNotifierProvider);
             if (appState.externallyLaunched!) {
-              final result =
-              await showTransactionCompletedSheet(context);
+              final result = await showTransactionCompletedSheet(context);
               if (result == true) {
                 SystemNavigator.pop();
               } else {
