@@ -22,6 +22,12 @@ import 'package:flutter/material.dart'
         ListView,
         Navigator,
         FocusNode;
+
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
+import '../common/providers/app.provider.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:flutter_svg/svg.dart';
@@ -37,7 +43,7 @@ import '../common/widgets/panel.dart';
 import '../common/widgets/receipt_tabs.dart';
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
-import '../helpers/dialog_helpers.dart' show showErrorDialog;
+import '../helpers/dialog_helpers.dart';
 import '../helpers/throttle.dart' show DebounceAggregator;
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart';
@@ -58,16 +64,14 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     with TickerProviderStateMixin, TransactionHandlersMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
-  late final TransactionResult result =
-      ref.read(transactionResultNotifierProvider)!;
+  late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
   final FocusNode _focusNode = FocusNode();
 
   @override
   Payment get payment => ref.read(paymentControllerProvider)!;
 
-  late final PaymentController paymentController =
-      ref.read(paymentControllerProvider.notifier)!;
+  late final PaymentController paymentController = ref.read(paymentControllerProvider.notifier)!;
 
   @override
   void initState() {
@@ -218,8 +222,21 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
           elevation: 0,
           height: 60,
           width: double.infinity,
-          onPressed: () =>
-              Navigator.popUntil(context, (route) => route.isFirst),
+          onPressed: () async {
+            final appState = ref.read(appNotifierProvider);
+            if (appState.externallyLaunched!) {
+              final result = await showTransactionCompletedSheet(context);
+              if (result == true) {
+                SystemNavigator.pop();
+              } else {
+                if (context.mounted) {
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                }
+              }
+            } else {
+              Navigator.popUntil(context, (route) => route.isFirst);
+            }
+          },
           icon: const Icon(Icons.arrow_forward),
           child: Text(l10n.continueButton),
         ),

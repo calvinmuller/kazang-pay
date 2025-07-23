@@ -907,6 +907,30 @@ abstract class AppLocalizations {
   /// **'Switch'**
   String get switchTitle;
 
+  /// No description provided for @transactionCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Completed'**
+  String get transactionCompleted;
+
+  /// No description provided for @transactionCompletedPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'\'Select “Yes” to return to the Kazang App.\nSelect “No” to Exit.\''**
+  String get transactionCompletedPrompt;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
   /// No description provided for @updateKeys.
   ///
   /// In en, this message translates to:

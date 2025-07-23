@@ -23,6 +23,7 @@ abstract class AppState with _$AppState {
     @Default('en_ZA') String? language,
     @JsonKey(includeToJson: false, includeFromJson: false)
     @Default(null) IntentInfo? intentInfo,
+    @Default(false) bool? externallyLaunched,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
@@ -36,12 +37,13 @@ abstract class AppState with _$AppState {
   // If it's configured we don't want to override it
   AppState setIntentInfo({required IntentInfo intentInfo}) {
     return copyWith(
-      intentInfo: intentInfo,
-      accountInfo: LoginRequest.fromJson({
-        'accountNumber': intentInfo.username ?? accountInfo?.accountNumber,
-        'password': accountInfo?.password,
-        'serialNumber': deviceInfo!.serial,
-      }),
+        externallyLaunched: intentInfo.username != null,
+        intentInfo: intentInfo,
+        accountInfo: LoginRequest.fromJson({
+          'accountNumber': intentInfo.username ?? accountInfo?.accountNumber,
+          'password': accountInfo?.password,
+          'serialNumber': deviceInfo!.serial,
+        }),
     );
   }
 }

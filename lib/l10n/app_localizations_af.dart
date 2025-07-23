@@ -439,6 +439,19 @@ class AppLocalizationsAf extends AppLocalizations {
   String get switchTitle => 'Skakelaar';
 
   @override
+  String get transactionCompleted => 'Transaksie Voltooi';
+
+  @override
+  String get transactionCompletedPrompt =>
+      '\'Kies “Ja” om na die Kazang App terug te keer.\\nKies “Nee” om te verlaat.\'';
+
+  @override
+  String get yes => 'Ja';
+
+  @override
+  String get no => 'Nee';
+
+  @override
   String get updateKeys => 'Updating Keys...';
 
   @override

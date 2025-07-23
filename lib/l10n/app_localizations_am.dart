@@ -204,10 +204,10 @@ class AppLocalizationsAm extends AppLocalizations {
       'Please allow the Kazang Sales Agent to assist you with the final step.';
 
   @override
-  String get signIn => 'Please provide your login credentials to continue:';
+  String get signIn => 'እባኮትን ለመቀጠል የመግቢያ መረጃዎን ያስገቡ:';
 
   @override
-  String get standalone => 'Stand-Alone mode detected. ';
+  String get standalone => 'የራስ አንደኛ ሁኔታ ተገኝቷል።';
 
   @override
   String get onboard1 =>
@@ -243,7 +243,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get submit => 'Submit';
 
   @override
-  String get loading => 'Loading please wait';
+  String get loading => 'በማገናኘት ላይ እባኮትን ይጠብቁ';
 
   @override
   String get initialized => 'Initialized';
@@ -258,7 +258,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get noPinSet => 'No PIN has been set';
 
   @override
-  String get setPinToProceed => 'Please set a pin to proceed';
+  String get setPinToProceed => 'እባኮትን ለመቀጠል ፒን ያስቀምጡ';
 
   @override
   String get pinLengthError => 'PIN must be 4 digits long';
@@ -270,7 +270,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get voidTransaction => 'Void Transaction';
 
   @override
-  String get settlements => 'Settlements';
+  String get settlements => 'ስተልመንት';
 
   @override
   String get totalSettlementAmount => 'Total Settlement Amount';
@@ -286,7 +286,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String settlementSummaryFor(Object date) {
-    return 'Settlement Summary for $date';
+    return 'የስተልመንት አጠቃላይ ለ $date';
   }
 
   @override
@@ -309,7 +309,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String settlementHistoryFor(Object date) {
-    return 'Settlement History for $date';
+    return 'የስተልመንት ታሪክ ለ $date';
   }
 
   @override
@@ -320,13 +320,13 @@ class AppLocalizationsAm extends AppLocalizations {
   String get proxySettings => 'Proxy Settings';
 
   @override
-  String get sendDeviceLogs => 'Send Device Logs';
+  String get sendDeviceLogs => 'የመሳሪያ ሎጎችን ላክ';
 
   @override
   String get connectPos => 'Connect POS';
 
   @override
-  String get supervisorPinTitle => 'Supervisor PIN';
+  String get supervisorPinTitle => 'የአስተዳደር ፒን';
 
   @override
   String get profile => 'መገለጫ';
@@ -335,10 +335,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get language => 'ቋንቋ';
 
   @override
-  String get settlementDetails => 'Settlement Details';
+  String get settlementDetails => 'የስተልመንት ዝርዝር';
 
   @override
-  String get timeColumn => 'Time:';
+  String get timeColumn => 'ሰዓት:';
 
   @override
   String get amount => 'Amount:';
@@ -359,33 +359,31 @@ class AppLocalizationsAm extends AppLocalizations {
   String get version => 'Version:';
 
   @override
-  String get terminalIdTitle => 'Terminal ID:';
+  String get terminalIdTitle => 'የመሳሪያ መታወቂያ:';
 
   @override
-  String get loadingSettlements => 'Loading Settlements';
+  String get loadingSettlements => 'ስተልመንት በማገናኘት ላይ';
 
   @override
-  String get profileInformation => 'Profile Information';
+  String get profileInformation => 'የመገለጫ መረጃ';
 
   @override
-  String get serialNumberLengthMax =>
-      'Ensure this field has no more than 14 characters.';
+  String get serialNumberLengthMax => 'እባኮትን ይህ መስክ 14 ቁጥር ያህል ብቻ ይዟል።';
 
   @override
-  String get serialNumberLengthMin =>
-      'Ensure this field has at least 13 characters.';
+  String get serialNumberLengthMin => 'እባኮትን ይህ መስክ 13 ቁጥር ያነሱ ብቻ ይዟል።';
 
   @override
-  String get required => 'This field is required.';
+  String get required => 'ይህ መስክ አስፈላጊ ነው።';
 
   @override
-  String get pinTooShort => 'PIN must be at least 4 digits long';
+  String get pinTooShort => 'ፒን ቢያንስ 4 ቁጥር መሆን አለበት';
 
   @override
-  String get manufacturer => 'Manufacturer:';
+  String get manufacturer => 'አምራች:';
 
   @override
-  String get model => 'Model:';
+  String get model => 'ሞዴል:';
 
   @override
   String get voidConfirm => 'You are about to Void this transaction';
@@ -428,6 +426,18 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get switchTitle => 'ማስተላለፍ';
+
+  @override
+  String get transactionCompleted => 'ግብይቱ ተጠናቋል';
+
+  @override
+  String get transactionCompletedPrompt => 'ግብይቱ ተጠናቋል፣ የግብይት መረጃዎን ይመልከቱ።';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
 
   @override
   String get updateKeys => 'Updating Keys...';
