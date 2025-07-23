@@ -22,8 +22,7 @@ abstract class AppState with _$AppState {
     @Default(null) String? pin,
     @Default('en_ZA') String? language,
     @JsonKey(includeToJson: false, includeFromJson: false)
-    @Default(null)
-    IntentInfo? intentInfo,
+    @Default(null) IntentInfo? intentInfo,
     @Default(false) bool? externallyLaunched,
   }) = _AppState;
 
@@ -41,7 +40,7 @@ abstract class AppState with _$AppState {
         externallyLaunched: intentInfo.username != null,
         intentInfo: intentInfo,
         accountInfo: LoginRequest.fromJson({
-          'accountNumber': intentInfo.username,
+          'accountNumber': intentInfo.username ?? accountInfo?.accountNumber,
           'password': accountInfo?.password,
           'serialNumber': deviceInfo!.serial,
         }),

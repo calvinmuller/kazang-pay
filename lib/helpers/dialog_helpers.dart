@@ -9,26 +9,20 @@ import 'package:flutter/material.dart'
         showModalBottomSheet,
         Clip,
         BuildContext,
-        Container,
         EdgeInsets,
-        BoxDecoration,
         SizedBox,
-        Color,
         BorderSide,
         Colors,
         BorderRadius,
-        Radius,
         MainAxisSize,
         FontWeight,
         TextStyle,
-        Border,
         TextAlign,
         ElevatedButton,
         RoundedRectangleBorder,
         OutlinedButton,
-        Column;
-import 'package:flutter/src/widgets/basic.dart';
-
+        Column,
+        Padding;
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/list_dialog.dart';
 import '../core/constants.dart';
@@ -142,8 +136,10 @@ Future<bool?> showTransactionCompletedSheet(BuildContext context) {
                 },
                 child: Text(
                   l10n.yes,
-                  style:
-                      const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

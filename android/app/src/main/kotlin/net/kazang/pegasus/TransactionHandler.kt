@@ -579,10 +579,5 @@ class TransactionHandler : TransactionInterface {
             e.printStackTrace()
         }
     }
-    
-    override fun cleanup() {
-      factory!!.disconnect()
-      factory!!.dispose()
-    }
 
 }
