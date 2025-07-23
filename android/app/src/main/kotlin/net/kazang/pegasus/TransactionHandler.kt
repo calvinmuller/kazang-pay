@@ -1,6 +1,8 @@
 package net.kazang.pegasus
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Handler
 
@@ -21,32 +23,41 @@ import com.prism.core.enums.ServiceConfigurationEnum
 import com.prism.core.enums.TransactionTypesEnum
 import com.prism.core.helpers.FactoryTransactionBuilder
 import com.prism.core.interfaces.FactoryActivityEvents
-import com.prism.factory.BuildConfig
+import com.prism.core.static.PrismCodes
+import com.prism.device.management.DeviceManagement
+import com.prism.factory.BuildConfig as FactoryBuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.TransactionFactory
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
+import kotlin.concurrent.thread
 
-// create abstract class of the following below
-interface TransactionInterface : EventChannel.StreamHandler {
+interface TransactionInterface : EventChannel.StreamHandler, FactoryActivityEvents {
 
     fun initialize(context: Context, config: TerminalConfig, proxy: Boolean = false)
-    fun createPurchase(amount: String, description: String)
+    fun createPurchase(amount: String, description: String, userVoidable: Boolean = true)
     fun voidTransaction(retrievalReferenceNumberBuilder: String)
     fun continueTransaction(pos: Int, value: String)
     fun continueTransactionBudget(value: Int)
-    fun createCashback(amount: String, cashbackAmount: String)
-    fun createCashWithdrawal(cashbackAmount: String)
+    fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean = true)
+    fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean = true)
     fun getHistoryData(limit: Int = 0, responseCode: String = ""): List<String>
     fun getByReferenceData(responseId: String): TransactionItem?
     fun getDeviceInfo(context: Context, result: MethodChannel.Result)
     fun printReceipt(data: PrintRequest)
     fun abortTransaction()
     fun connect()
+    fun loadKeys()
+    fun onKmsUpdateRequired()
+    fun onKmsUpdateResult(status: String, message: String)
+    fun onFactoryInitialized()
+    fun onOsUpdateRequired(build: String, seNumber: String)
+    fun performOsUpdate()
+    fun sendPrinterData(merchantReceipt: PrintRequest?, clientPrintRequest: PrintRequest?)
     fun cleanup()
 }
 
-class TransactionHandler : FactoryActivityEvents, TransactionInterface {
+class TransactionHandler : TransactionInterface {
 
     private var factory: TransactionFactory? = null
     private var factoryConstructor: FactoryConstructorData? = null
@@ -57,17 +68,30 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var eventSink: EventChannel.EventSink? = null
     private var repo: TransactionRepository? = null
     private var transactionType: TransactionTypesEnum? = null
+    private var activity: Activity? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
-        if (connected) {
-            factory!!.disconnect()
-            factory!!.dispose()
+        activity = context as Activity
+        factory = TransactionFactory(context)
+        val result = factory!!.getBuildAndSENumber()
+
+        if (result.requiredUpdate) {
+            onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
+        } else {
+            setupFactory(context, config, proxy)
         }
+    }
+
+    private fun setupFactory(context: Activity, config: TerminalConfig, proxy: Boolean) {
         factoryConstructor = FactoryConstructorData()
         factoryConstructor!!.context = context
         factoryConstructor!!.p2peEnabled = true
-        factoryConstructor!!.debugMode = BuildConfig.DEBUG
-        factoryConstructor!!.serviceConfiguration = ServiceConfigurationEnum.UAT
+        factoryConstructor!!.debugMode = FactoryBuildConfig.DEBUG
+        factoryConstructor!!.serviceConfiguration = if (BuildConfig.FLAVOR == "prod") {
+            ServiceConfigurationEnum.PROD
+        } else {
+            ServiceConfigurationEnum.UAT
+        }
         factoryConstructor!!.serviceTimeout = 60000
         factoryConstructor!!.proxyUrl = if (proxy) "proxy.kazang.net:30720" else null
         Log.d("Proxy", factoryConstructor!!.proxyUrl ?: "none")
@@ -244,13 +268,25 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun onStatusMessageEvent(value: String?) {
         Log.d("onStatusMessageEvent", value!!)
-        handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onStatusMessageEvent"
-                )
-            )
+        when (value) {
+            "Perform remote KMS update" -> {
+                onKmsUpdateRequired()
+            }
+
+            "Factory initialized." -> {
+                onFactoryInitialized()
+            }
+
+            else -> {
+                handler.post {
+                    eventSink?.success(
+                        mapOf(
+                            "value" to value,
+                            "event" to "onStatusMessageEvent"
+                        )
+                    )
+                }
+            }
         }
     }
 
@@ -323,18 +359,107 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         }
     }
 
-    override fun createPurchase(amount: String, description: String) {
+    override fun onKmsUpdateRequired() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onKmsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun onFactoryInitialized() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onFactoryInitialized"
+                )
+            )
+        }
+    }
+
+    override fun onOsUpdateRequired(build: String, seNumber: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "build" to build,
+                        "seNumber" to seNumber
+                    ),
+                    "event" to "onOsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun performOsUpdate() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.CLASSNAME_OSUPDATE
+            )
+            intent.putExtra("IP_OTA", DeviceManagement.OTA_IP_ADDRESS)
+            intent.putExtra("PORT_OTA", DeviceManagement.PORT)
+            activity!!.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun sendPrinterData(
+        merchantReceipt: PrintRequest?,
+        clientReceipt: PrintRequest?
+    ) {
+        merchantReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        merchantReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        clientReceipt!!.fontName = "arial" //monospace_typewriter.ttf
+        clientReceipt.bitmapImageResourceId = R.drawable.receipt
+
+        factory!!.sendPrinterData(merchantReceipt!!, clientReceipt!!)
+    }
+
+    override fun cleanup() {
+        factory!!.disconnect()
+        factory!!.dispose()
+    }
+
+    override fun onKmsUpdateResult(status: String, message: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "status" to status,
+                        "message" to message
+                    ),
+                    "event" to "onKmsUpdateResult"
+                )
+            )
+        }
+    }
+
+    override fun createPurchase(amount: String, description: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createPurchase", "amount: $amount, description: $description")
-        factorybb = factorybb.createPurchase(amount, "0.00", "", true)
+        factorybb = factorybb.createPurchase(amount, "0.00", "", userVoidable)
         factory!!.startTransaction(factorybb)
     }
 
-    override fun voidTransaction(rrn: String) {
+    override fun voidTransaction(retrievalReferenceNumberBuilder: String) {
         transactionType = TransactionTypesEnum.VOID_TRANSACTION
-        val item = repo!!.getByReferenceData(rrn)
-        factorybb = factorybb.createVoid("VOID", item!!)
-        factory!!.startTransaction(factorybb)
+        val item = repo!!.getByReferenceData(retrievalReferenceNumberBuilder)
+        if (item == null) {
+            Log.e("voidTransaction", "Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+            throw IllegalArgumentException("Transaction not found for RRN: $retrievalReferenceNumberBuilder")
+        } else {
+            factorybb = factorybb.createVoid("VOID", item)
+            factory!!.startTransaction(factorybb)
+        }
+
     }
 
     override fun continueTransaction(pos: Int, value: String) {
@@ -352,19 +477,19 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
         )
     }
 
-    override fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
-        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
+        factorybb = factorybb.createCashBack(amount, cashbackAmount, "", userVoidable)
         factory!!.startTransaction(
             factorybb
         )
     }
 
-    override fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean) {
         transactionType = null
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
-        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
+        factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", userVoidable)
         factory!!.startTransaction(
             factorybb
         )
@@ -418,13 +543,15 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
     }
 
     override fun printReceipt(data: PrintRequest) {
-        data.imageXpos = 0
-        data.fontName = "arial" //monospace_typewriter.ttf
-        data.bitmapImageResourceId = R.drawable.receipt
-        factory!!.sendPrinterData(data)
+        thread {
+            data.fontName = "arial" //monospace_typewriter.ttf
+            data.bitmapImageResourceId = R.drawable.receipt
+            factory!!.sendPrinterData(data)
+        }
     }
 
     override fun abortTransaction() {
+        Log.d("abortTransaction", "abort")
         factory!!.abortTransaction()
     }
 
@@ -433,9 +560,29 @@ class TransactionHandler : FactoryActivityEvents, TransactionInterface {
             factory!!.connect()
     }
 
+    override fun loadKeys() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.KMS_CLASSNAME
+            )
+            intent.putExtra("IP_RKI", DeviceManagement.KMS_IP_ADDRESS)
+            intent.putExtra("PORT_RKI", DeviceManagement.RKI_PORT)
+            intent.putExtra("PORT_CA_RKI", DeviceManagement.CA_RKI_PORT)
+            intent.putExtra("customer", 2)
+            activity!!.startActivityForResult(
+                intent,
+                PrismCodes.KEY_INJECTION_REQUEST_CODE
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    
     override fun cleanup() {
-        factory!!.disconnect()
-        factory!!.dispose()
+      factory!!.disconnect()
+      factory!!.dispose()
     }
 
 }

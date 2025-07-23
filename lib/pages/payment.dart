@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, SizedBox, Padding, EdgeInsets, Icon, CrossAxisAlignment, MainAxisAlignment, Theme, Text, Column, Scaffold, TextAlign, debugPrint, PopScope;
+    show
+        BuildContext,
+        Widget,
+        SizedBox,
+        Padding,
+        EdgeInsets,
+        Icon,
+        CrossAxisAlignment,
+        MainAxisAlignment,
+        Theme,
+        Text,
+        Column,
+        Scaffold,
+        TextAlign,
+        PopScope;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
-import '../common/providers/payment.provider.dart';
+import '../common/providers/payment.controller.dart';
 import '../common/providers/status.provider.dart';
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/widgets.dart';
 import '../core/constants.dart';
+import '../core/core.dart';
 import '../core/icons.dart';
 import '../helpers/currency_helpers.dart';
 import '../helpers/dialog_helpers.dart';
@@ -34,7 +50,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   @override
   void initState() {
     if (widget.payment == null) {
-      payment = ref.read(paymentNotifierProvider);
+      payment = ref.read(paymentControllerProvider)!;
     } else {
       payment = widget.payment!;
     }
@@ -78,13 +94,18 @@ class PaymentPageState extends ConsumerState<PaymentPage>
                 ],
               ),
               const TransactionInformation(),
-              const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: LottieWidget(
-                  width: 400,
-                  size: null,
-                  assetName: 'assets/animations/insert-card.lottie',
-                ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: (context.isUrovo)
+                    ? SvgPicture.asset(
+                        'assets/insert-card-urovo.svg',
+                        height: 200,
+                      )
+                    : const LottieWidget(
+                        width: 400,
+                        size: null,
+                        assetName: 'assets/animations/insert-card.lottie',
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -125,7 +146,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
     if (context.mounted) {
       final result = TransactionResult.fromJson(value.value);
-      debugPrint(result.toString(), wrapWidth: 1024);
+      TransactionHelper.log("onTransactionCompletedEvent", result.toString());
       ref.read(transactionResultNotifierProvider.notifier).set(result);
       if (!error) {
         context.goNamed('payment-result', extra: result);

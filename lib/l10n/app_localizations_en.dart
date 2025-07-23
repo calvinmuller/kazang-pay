@@ -442,6 +442,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no => 'No';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
+
+  @override
+  String get osUpdateRequired => 'OS Update Required';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

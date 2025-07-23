@@ -447,4 +447,10 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get no => 'Maya';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
+
+  @override
+  String get osUpdateRequired => 'OS Update Required';
 }

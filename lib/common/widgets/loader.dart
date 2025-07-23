@@ -2,10 +2,11 @@ import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widge
 import '../../l10n/app_localizations.dart';
 
 class Loader extends StatelessWidget {
-  const Loader({super.key, this.message, this.transparent = false, this.padding = const EdgeInsets.symmetric(vertical: 25, horizontal: 32)});
+  const Loader({super.key, this.message, this.transparent = false, this.padding = const EdgeInsets.symmetric(vertical: 25, horizontal: 32), this.showLoader = true});
 
   final String? message;
   final bool transparent;
+  final bool showLoader;
   final EdgeInsets padding;
 
   @override
@@ -23,10 +24,11 @@ class Loader extends StatelessWidget {
           spacing: 20,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox.square(
-              dimension: 25,
-              child: CircularProgressIndicator(strokeWidth: 1.5),
-            ),
+            if (showLoader)
+              const SizedBox.square(
+                dimension: 25,
+                child: CircularProgressIndicator(strokeWidth: 1.5),
+              ),
             Text((message != null) ? message!: l10n.loading, style: Theme.of(context).textTheme.titleSmall),
           ],
         ),

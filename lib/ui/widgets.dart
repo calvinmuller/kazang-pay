@@ -1,22 +1,24 @@
-import 'package:flutter/material.dart' show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding;
+import 'package:flutter/material.dart' show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding, FractionallySizedBox;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
 
 class LogoWidget extends StatelessWidget {
-  const LogoWidget({super.key, this.width = 250});
+  const LogoWidget({super.key, this.widthFactor});
 
-  final double width;
+  final double? widthFactor;
 
   @override
   Widget build(BuildContext context) {
     const assetName = 'assets/logo-app.svg';
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: SvgPicture.asset(
-        width: width,
-        assetName,
-        semanticsLabel: 'KazangPay Logo',
-        fit: BoxFit.scaleDown,
+      child: FractionallySizedBox(
+        widthFactor: widthFactor,
+        child: SvgPicture.asset(
+          assetName,
+          semanticsLabel: 'KazangPay Logo',
+          fit: BoxFit.scaleDown,
+        ),
       ),
     );
   }

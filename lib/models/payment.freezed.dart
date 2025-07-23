@@ -16,10 +16,13 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Payment {
   int get amount;
-  dynamic get cashbackAmount;
+  int get cashbackAmount;
   PaymentType? get type;
   bool? get cashbackOnly;
   String? get rrn;
+  String? get uniqueId;
+  LaunchMode get launchMode;
+  bool get userVoidable;
 
   /// Create a copy of Payment
   /// with the given fields replaced by the non-null parameter values.
@@ -37,27 +40,28 @@ mixin _$Payment {
         (other.runtimeType == runtimeType &&
             other is Payment &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            const DeepCollectionEquality()
-                .equals(other.cashbackAmount, cashbackAmount) &&
+            (identical(other.cashbackAmount, cashbackAmount) ||
+                other.cashbackAmount == cashbackAmount) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.cashbackOnly, cashbackOnly) ||
                 other.cashbackOnly == cashbackOnly) &&
-            (identical(other.rrn, rrn) || other.rrn == rrn));
+            (identical(other.rrn, rrn) || other.rrn == rrn) &&
+            (identical(other.uniqueId, uniqueId) ||
+                other.uniqueId == uniqueId) &&
+            (identical(other.launchMode, launchMode) ||
+                other.launchMode == launchMode) &&
+            (identical(other.userVoidable, userVoidable) ||
+                other.userVoidable == userVoidable));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      amount,
-      const DeepCollectionEquality().hash(cashbackAmount),
-      type,
-      cashbackOnly,
-      rrn);
+  int get hashCode => Object.hash(runtimeType, amount, cashbackAmount, type,
+      cashbackOnly, rrn, uniqueId, launchMode, userVoidable);
 
   @override
   String toString() {
-    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn)';
+    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn, uniqueId: $uniqueId, launchMode: $launchMode, userVoidable: $userVoidable)';
   }
 }
 
@@ -68,10 +72,13 @@ abstract mixin class $PaymentCopyWith<$Res> {
   @useResult
   $Res call(
       {int amount,
-      dynamic cashbackAmount,
+      int cashbackAmount,
       PaymentType? type,
       bool? cashbackOnly,
-      String? rrn});
+      String? rrn,
+      String? uniqueId,
+      LaunchMode launchMode,
+      bool userVoidable});
 }
 
 /// @nodoc
@@ -87,20 +94,23 @@ class _$PaymentCopyWithImpl<$Res> implements $PaymentCopyWith<$Res> {
   @override
   $Res call({
     Object? amount = null,
-    Object? cashbackAmount = freezed,
+    Object? cashbackAmount = null,
     Object? type = freezed,
     Object? cashbackOnly = freezed,
     Object? rrn = freezed,
+    Object? uniqueId = freezed,
+    Object? launchMode = null,
+    Object? userVoidable = null,
   }) {
     return _then(_self.copyWith(
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as int,
-      cashbackAmount: freezed == cashbackAmount
+      cashbackAmount: null == cashbackAmount
           ? _self.cashbackAmount
           : cashbackAmount // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int,
       type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -113,6 +123,18 @@ class _$PaymentCopyWithImpl<$Res> implements $PaymentCopyWith<$Res> {
           ? _self.rrn
           : rrn // ignore: cast_nullable_to_non_nullable
               as String?,
+      uniqueId: freezed == uniqueId
+          ? _self.uniqueId
+          : uniqueId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      launchMode: null == launchMode
+          ? _self.launchMode
+          : launchMode // ignore: cast_nullable_to_non_nullable
+              as LaunchMode,
+      userVoidable: null == userVoidable
+          ? _self.userVoidable
+          : userVoidable // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -125,7 +147,10 @@ class _Payment extends Payment {
       this.cashbackAmount = 0,
       this.type = PaymentType.payment,
       this.cashbackOnly = false,
-      this.rrn = null})
+      this.rrn = null,
+      this.uniqueId = null,
+      this.launchMode = LaunchMode.normal,
+      this.userVoidable = true})
       : super._();
   factory _Payment.fromJson(Map<String, dynamic> json) =>
       _$PaymentFromJson(json);
@@ -135,7 +160,7 @@ class _Payment extends Payment {
   final int amount;
   @override
   @JsonKey()
-  final dynamic cashbackAmount;
+  final int cashbackAmount;
   @override
   @JsonKey()
   final PaymentType? type;
@@ -145,6 +170,15 @@ class _Payment extends Payment {
   @override
   @JsonKey()
   final String? rrn;
+  @override
+  @JsonKey()
+  final String? uniqueId;
+  @override
+  @JsonKey()
+  final LaunchMode launchMode;
+  @override
+  @JsonKey()
+  final bool userVoidable;
 
   /// Create a copy of Payment
   /// with the given fields replaced by the non-null parameter values.
@@ -167,27 +201,28 @@ class _Payment extends Payment {
         (other.runtimeType == runtimeType &&
             other is _Payment &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            const DeepCollectionEquality()
-                .equals(other.cashbackAmount, cashbackAmount) &&
+            (identical(other.cashbackAmount, cashbackAmount) ||
+                other.cashbackAmount == cashbackAmount) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.cashbackOnly, cashbackOnly) ||
                 other.cashbackOnly == cashbackOnly) &&
-            (identical(other.rrn, rrn) || other.rrn == rrn));
+            (identical(other.rrn, rrn) || other.rrn == rrn) &&
+            (identical(other.uniqueId, uniqueId) ||
+                other.uniqueId == uniqueId) &&
+            (identical(other.launchMode, launchMode) ||
+                other.launchMode == launchMode) &&
+            (identical(other.userVoidable, userVoidable) ||
+                other.userVoidable == userVoidable));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      amount,
-      const DeepCollectionEquality().hash(cashbackAmount),
-      type,
-      cashbackOnly,
-      rrn);
+  int get hashCode => Object.hash(runtimeType, amount, cashbackAmount, type,
+      cashbackOnly, rrn, uniqueId, launchMode, userVoidable);
 
   @override
   String toString() {
-    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn)';
+    return 'Payment(amount: $amount, cashbackAmount: $cashbackAmount, type: $type, cashbackOnly: $cashbackOnly, rrn: $rrn, uniqueId: $uniqueId, launchMode: $launchMode, userVoidable: $userVoidable)';
   }
 }
 
@@ -199,10 +234,13 @@ abstract mixin class _$PaymentCopyWith<$Res> implements $PaymentCopyWith<$Res> {
   @useResult
   $Res call(
       {int amount,
-      dynamic cashbackAmount,
+      int cashbackAmount,
       PaymentType? type,
       bool? cashbackOnly,
-      String? rrn});
+      String? rrn,
+      String? uniqueId,
+      LaunchMode launchMode,
+      bool userVoidable});
 }
 
 /// @nodoc
@@ -218,18 +256,23 @@ class __$PaymentCopyWithImpl<$Res> implements _$PaymentCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? amount = null,
-    Object? cashbackAmount = freezed,
+    Object? cashbackAmount = null,
     Object? type = freezed,
     Object? cashbackOnly = freezed,
     Object? rrn = freezed,
+    Object? uniqueId = freezed,
+    Object? launchMode = null,
+    Object? userVoidable = null,
   }) {
     return _then(_Payment(
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as int,
-      cashbackAmount:
-          freezed == cashbackAmount ? _self.cashbackAmount! : cashbackAmount,
+      cashbackAmount: null == cashbackAmount
+          ? _self.cashbackAmount
+          : cashbackAmount // ignore: cast_nullable_to_non_nullable
+              as int,
       type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -242,6 +285,18 @@ class __$PaymentCopyWithImpl<$Res> implements _$PaymentCopyWith<$Res> {
           ? _self.rrn
           : rrn // ignore: cast_nullable_to_non_nullable
               as String?,
+      uniqueId: freezed == uniqueId
+          ? _self.uniqueId
+          : uniqueId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      launchMode: null == launchMode
+          ? _self.launchMode
+          : launchMode // ignore: cast_nullable_to_non_nullable
+              as LaunchMode,
+      userVoidable: null == userVoidable
+          ? _self.userVoidable
+          : userVoidable // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

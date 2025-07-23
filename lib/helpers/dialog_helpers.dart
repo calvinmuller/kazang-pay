@@ -54,20 +54,37 @@ showListDialog(mainContext, List<dynamic> items, {String? title}) {
   );
 }
 
-showErrorDialog(context, String? message) {
+showSuccessDialog(context, message) {
+  return showErrorDialog(context, message,
+      icon: const LottieWidget(
+        assetName: 'assets/animations/result-success.lottie',
+        size: 48,
+      ));
+}
+
+bool _isDialogShowing = false;
+
+showErrorDialog(context, String? message,
+    {Widget icon = const LottieWidget(
+      assetName: 'assets/animations/result-failure.lottie',
+      size: 48,
+    )}) {
+  if (_isDialogShowing) return;
+
+  _isDialogShowing = true;
   final l10n = AppLocalizations.of(context)!;
   return showDialog<bool>(
     context: context,
     barrierDismissible: false,
     builder: (context) => AlertDialog(
-      icon: const LottieWidget(
-        assetName: 'assets/animations/result-failure.lottie',
-        size: 48,
-      ),
+      icon: icon,
       content: Text(message ?? l10n.unexpectedError),
       actions: [
         TextButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            _isDialogShowing = false;
+            Navigator.of(context).pop(true);
+          },
           child: Text(l10n.ok),
         ),
       ],

@@ -438,4 +438,10 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get no => 'No';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
+
+  @override
+  String get osUpdateRequired => 'OS Update Required';
 }

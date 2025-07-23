@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, TickerProviderStateMixin, AnimationController, Positioned, EdgeInsets, Alignment, StackFit, Padding, CrossAxisAlignment, MainAxisAlignment, Text, TextAlign, Theme, Row, Stack, LinearGradient, BoxDecoration, Container, AnimatedBuilder, Scaffold, FilledButton, Column, MainAxisSize;
+    show
+        BuildContext,
+        Widget,
+        TickerProviderStateMixin,
+        AnimationController,
+        Positioned,
+        EdgeInsets,
+        Alignment,
+        StackFit,
+        Padding,
+        CrossAxisAlignment,
+        MainAxisAlignment,
+        Text,
+        TextAlign,
+        Theme,
+        Row,
+        Stack,
+        LinearGradient,
+        BoxDecoration,
+        Container,
+        AnimatedBuilder,
+        Scaffold,
+        FilledButton,
+        Column,
+        MainAxisSize,
+        showDialog;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
@@ -13,6 +38,8 @@ import '../interfaces/factory.events.dart';
 import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
 import '../providers/api.provider.dart';
 import '../providers/app.provider.dart';
+import '../providers/payment.provider.dart'
+    show paymentNotifierProvider;
 import 'loader.dart';
 import 'phoenix.dart';
 
@@ -45,7 +72,8 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
     final l10n = AppLocalizations.of(context)!;
 
     ref.listen(fetchProfileProvider, (previous, next) {
-      final proxy = ref.read(appNotifierProvider.select((state) => state.proxy));
+      final proxy =
+          ref.read(appNotifierProvider.select((state) => state.proxy));
       if (next is AsyncError) {
         if (stateProfile != null) {
           TransactionHelper.connect(config: stateProfile, proxy: proxy);
@@ -87,58 +115,59 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 32.0),
                 child: LogoWidget(
-                  width: 300,
+                  widthFactor: 0.8,
                 ),
               ),
             ),
             Positioned(
               right: 0,
+              left: 0,
               bottom: 0,
               top: 0,
               child: SvgPicture.asset(
                 "assets/k.svg",
-                width: 400,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: switch (profile) {
-                    AsyncError(:final error) => [
-                        Column(
-                          spacing: 10,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              error.toString(),
-                              textAlign: TextAlign.center,
-                            ),
-                            FilledButton(
-                              onPressed: () {
-                                Phoenix.rebirth(context);
-                              },
-                              child: Text(l10n.retry),
-                            )
-                          ],
-                        ),
-                      ],
-                    AsyncData() => [
-                        Text(
-                          l10n.initialized,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        )
-                      ],
-                    _ => [
-                        Loader(
-                          transparent: true,
-                          message: l10n.loading,
-                        )
-                      ],
-                  }),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: switch (profile) {
+                  AsyncError(:final error) => [
+                      Column(
+                        spacing: 10,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            error.toString(),
+                            textAlign: TextAlign.center,
+                          ),
+                          FilledButton(
+                            onPressed: () {
+                              Phoenix.rebirth(context);
+                            },
+                            child: Text(l10n.retry),
+                          )
+                        ],
+                      ),
+                    ],
+                  AsyncData() => [
+                      Text(
+                        l10n.initialized,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      )
+                    ],
+                  _ => [
+                      Loader(
+                        transparent: true,
+                        message: l10n.loading,
+                      )
+                    ],
+                },
+              ),
             )
           ],
         ),
@@ -147,15 +176,37 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
   }
 
   @override
-  void onStatusMessageEvent(String? value) {
-    if (value == "Factory initialized.") {
-      context.goNamed('home');
+  void onFactoryInitialized() {
+    final intentInfo = ref.read(appNotifierProvider).intentInfo!;
+    if (intentInfo.isIntentTransaction) {
+      ref.read(paymentNotifierProvider.notifier).setFromIntentInfo(intentInfo);
+      context.pushReplacementNamed('payment');
+    } else {
+      context.pushReplacementNamed('home');
     }
   }
 
   @override
+  void onOsUpdateRequired(String build, String seNumber) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Loader(
+          showLoader: false,
+          message: l10n.osUpdateRequired,
+        );
+      },
+    );
+    Future.delayed(const Duration(seconds: 1)).then((_) {
+      TransactionHelper.performOsUpdate();
+    });
+  }
+
+  @override
   void onTransactionCompletedEvent(TransactionCompletedEvent value) {
-    // TODO: implement onTransactionCompletedEvent
+    // We don't use this on this screen.
   }
 
   @override

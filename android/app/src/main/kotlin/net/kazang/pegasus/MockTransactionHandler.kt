@@ -1,6 +1,8 @@
 package net.kazang.pegasus
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +23,7 @@ import com.prism.core.enums.TransactionClientActionEnum
 import com.prism.core.enums.TransactionTypesEnum
 import com.prism.core.helpers.FactoryTransactionBuilder
 import com.prism.core.interfaces.FactoryActivityEvents
+import com.prism.device.management.DeviceManagement
 import com.prism.factory.BuildConfig
 import com.prism.factory.datarepos.TransactionRepository
 import com.prism.factory.factory.MockTransactionFactory
@@ -31,8 +34,9 @@ import io.flutter.plugin.common.MethodChannel
 class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     private var factory: MockTransactionFactory? = null
-    private var factoryconstructor: FactoryConstructorData? = null
+    private var factoryConstructor: FactoryConstructorData? = null
     private var connected = false
+    private lateinit var activity: Activity
     private var factorybb = FactoryTransactionBuilder()
 
     private var handler = Handler(Looper.getMainLooper())
@@ -40,49 +44,68 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     private var repo: TransactionRepository? = null
 
     override fun initialize(context: Context, config: TerminalConfig, proxy: Boolean) {
-        if (factory != null) {
-            factory!!.disconnect();
-            factory!!.dispose()
+        activity = context as Activity
+        if (factory == null) {
+            factory = MockTransactionFactory(context)
         }
-        factoryconstructor = FactoryConstructorData()
-        factoryconstructor!!.context = context
-        factoryconstructor!!.p2peEnabled = true
-        factoryconstructor!!.debugMode = BuildConfig.DEBUG
-        factoryconstructor!!.serviceConfiguration =
-            if (BuildConfig.DEBUG) ServiceConfigurationEnum.UAT else ServiceConfigurationEnum.PROD
-        factoryconstructor!!.serviceTimeout = 60000
-        factoryconstructor!!.proxyUrl = null
-        factoryconstructor!!.proxyUserName = null
-        factoryconstructor!!.proxyPassword = null
-        factoryconstructor!!.useSSLCerticates = false
+        val result = factory!!.getBuildAndSENumber()
+        factory!!.dispose()
+
+        if (result.requiredUpdate) {
+            onOsUpdateRequired(result.buildNumber!!, result.seNumber!!)
+        } else {
+            try {
+                setupFactory(context, config, proxy)
+            } catch (e: Exception) {
+                onFactoryInitialized()
+            }
+        }
+    }
+
+    private fun setupFactory(context: Activity, config: TerminalConfig, proxy: Boolean) {
+        factoryConstructor = FactoryConstructorData()
+        factoryConstructor!!.context = context
+        factoryConstructor!!.p2peEnabled = true
+        factoryConstructor!!.debugMode = BuildConfig.DEBUG
+        factoryConstructor!!.serviceConfiguration = if (net.kazang.pegasus.BuildConfig.FLAVOR == "prod") {
+            ServiceConfigurationEnum.PROD
+        } else {
+            ServiceConfigurationEnum.UAT
+        }
+        factoryConstructor!!.serviceTimeout = 60000
+        factoryConstructor!!.proxyUrl = if (proxy) "proxy.kazang.net:30720" else null
+        Log.d("Proxy", factoryConstructor!!.proxyUrl ?: "none")
+        factoryConstructor!!.proxyUserName = null
+        factoryConstructor!!.proxyPassword = null
+        factoryConstructor!!.useSSLCerticates = false
         val terminalSetup = TerminalSetup()
         terminalSetup.terminalId = config.terminal_config.terminal_id
         terminalSetup.merchantId = config.merchant_config.merchant_number
-        factoryconstructor!!.terminalSetup = terminalSetup
-        factoryconstructor!!.useExternalConfiguration = true
-        factoryconstructor!!.posFactorySetup = PosFactorySetup()
-        factoryconstructor!!.posFactorySetup!!.currencyCode =
+        factoryConstructor!!.terminalSetup = terminalSetup
+        factoryConstructor!!.useExternalConfiguration = true
+        factoryConstructor!!.posFactorySetup = PosFactorySetup()
+        factoryConstructor!!.posFactorySetup!!.currencyCode =
             CurrencyTypeEnum.fromCountryCodeString(config.terminal_config.currency_code)
-        factoryconstructor!!.posFactorySetup!!.routingSwitch =
+        factoryConstructor!!.posFactorySetup!!.routingSwitch =
             RoutingSwitchEnum.valueOf(config.merchant_config.routing_switch)
-        factoryconstructor!!.posFactorySetup!!.velocityCount = 0
-        factoryconstructor!!.posFactorySetup!!.velocityPeriod = 0
-        factoryconstructor!!.posFactorySetup!!.cashbackLimit =
+        factoryConstructor!!.posFactorySetup!!.velocityCount = 10
+        factoryConstructor!!.posFactorySetup!!.velocityPeriod = 5
+        factoryConstructor!!.posFactorySetup!!.cashbackLimit =
             config.terminal_config.custom_parameters?.cashbacks?.limit?.toInt() ?: 1000
-        factoryconstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
-        factoryconstructor!!.posFactorySetup!!.enableSettlements = true
-        factoryconstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
-        factoryconstructor!!.posFactorySetup!!.primaryTermappIpAddress =
+        factoryConstructor!!.posFactorySetup!!.automaticSettlementTime = "13:23"
+        factoryConstructor!!.posFactorySetup!!.enableSettlements = true
+        factoryConstructor!!.posFactorySetup!!.parameterDownloadTime = "13:23"
+        factoryConstructor!!.posFactorySetup!!.primaryTermappIpAddress =
             config.termapp_config.primary_ip
-        factoryconstructor!!.posFactorySetup!!.primaryTermappPort =
+        factoryConstructor!!.posFactorySetup!!.primaryTermappPort =
             config.termapp_config.primary_port
-        factoryconstructor!!.posFactorySetup!!.secondaryTermappIpAddress =
+        factoryConstructor!!.posFactorySetup!!.secondaryTermappIpAddress =
             config.termapp_config.secondary_ip
-        factoryconstructor!!.posFactorySetup!!.secondaryTermappPort =
+        factoryConstructor!!.posFactorySetup!!.secondaryTermappPort =
             config.termapp_config.secondary_port
-        factoryconstructor!!.posFactorySetup!!.pinKSN = config.termapp_config.pin_ksn
-        factoryconstructor!!.posFactorySetup!!.dataKSN = config.termapp_config.data_ksn
-        factoryconstructor!!.posFactorySetup!!.batchNo = "001"
+        factoryConstructor!!.posFactorySetup!!.pinKSN = config.termapp_config.pin_ksn
+        factoryConstructor!!.posFactorySetup!!.dataKSN = config.termapp_config.data_ksn
+        factoryConstructor!!.posFactorySetup!!.batchNo = "001"
 
         val enabledTransactions = ArrayList<TransactionTypesEnum>()
         if (config.terminal_config.custom_parameters?.cashbacks?.allowed!!) {
@@ -92,20 +115,27 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
             enabledTransactions.add(TransactionTypesEnum.REFUND)
         }
         config.merchant_config.transaction_types.forEach {
-            val type = it.uppercase()
-            if (type == "VOID") {
-                enabledTransactions.add(TransactionTypesEnum.VOID_TRANSACTION)
-            } else if (type == "CASH_WITHDRAWAL") {
-                enabledTransactions.add(TransactionTypesEnum.CASH_WITH_DRAWAL)
-            } else if (type == "PURCHASE_WITH_CASHBACK") {
-                enabledTransactions.add(TransactionTypesEnum.PURCHASE_TIP)
-            } else {
-                enabledTransactions.add(TransactionTypesEnum.valueOf(type))
+            when (val type = it.uppercase()) {
+                "VOID" -> {
+                    enabledTransactions.add(TransactionTypesEnum.VOID_TRANSACTION)
+                }
+
+                "CASH_WITHDRAWAL" -> {
+                    enabledTransactions.add(TransactionTypesEnum.CASH_WITH_DRAWAL)
+                }
+
+                "PURCHASE_WITH_CASHBACK" -> {
+                    enabledTransactions.add(TransactionTypesEnum.PURCHASE_TIP)
+                }
+
+                else -> {
+                    enabledTransactions.add(TransactionTypesEnum.valueOf(type))
+                }
             }
         }
-        factoryconstructor!!.posFactorySetup!!.enabledTransactions = enabledTransactions
-        factory = MockTransactionFactory(factoryconstructor!!, this)
-        factory!!.initialize()
+        factoryConstructor!!.posFactorySetup!!.enabledTransactions = enabledTransactions
+        factory = MockTransactionFactory(factoryConstructor!!, this)
+        onFactoryInitialized()
         repo = TransactionRepository(context)
     }
 
@@ -212,13 +242,25 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun onStatusMessageEvent(value: String?) {
         Log.d("onStatusMessageEvent", value!!)
-        handler.post {
-            eventSink?.success(
-                mapOf(
-                    "value" to value,
-                    "event" to "onStatusMessageEvent"
-                )
-            )
+        when (value) {
+            "Perform remote KMS update" -> {
+                onKmsUpdateRequired()
+            }
+
+            "Factory initialized." -> {
+                onFactoryInitialized()
+            }
+
+            else -> {
+                handler.post {
+                    eventSink?.success(
+                        mapOf(
+                            "value" to value,
+                            "event" to "onStatusMessageEvent"
+                        )
+                    )
+                }
+            }
         }
     }
 
@@ -289,7 +331,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         }
     }
 
-    override fun createPurchase(amount: String, description: String) {
+    override fun createPurchase(amount: String, description: String, userVoidable: Boolean) {
         Log.d("createPurchase", "amount: $amount, description: $description")
         factorybb = factorybb.createPurchase(amount, "0.00", "", true)
         factory!!.startTransaction(factorybb)
@@ -316,7 +358,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         )
     }
 
-    override fun createCashback(amount: String, cashbackAmount: String) {
+    override fun createCashback(amount: String, cashbackAmount: String, userVoidable: Boolean) {
         Log.d("createCashback", "amount: $amount, cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashBack(amount, cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -324,7 +366,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
         )
     }
 
-    override fun createCashWithdrawal(cashbackAmount: String) {
+    override fun createCashWithdrawal(cashbackAmount: String, userVoidable: Boolean) {
         Log.d("createCashWithdrawal", "cashbackAmount: $cashbackAmount")
         factorybb = factorybb.createCashWithDrawable(cashbackAmount, "", true)
         factory!!.startTransaction(
@@ -350,7 +392,7 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
     override fun getDeviceInfo(context: Context, result: MethodChannel.Result) {
         val gson = Gson()
         factory = MockTransactionFactory(context)
-        val serial = factory!!.getDeviceSerial()
+        val serial = "P30224BCJ0696"
         val apiVersion = factory!!.getApiVersion()
         val hasOnboardPrinter = factory!!.hasOnboardPrinter()
         val build = gson.toJson(factory!!.getBuildAndSENumber())
@@ -392,6 +434,86 @@ class MockTransactionHandler : FactoryActivityEvents, TransactionInterface {
 
     override fun connect() {
         factory!!.connect()
+    }
+
+    override fun loadKeys() {
+        val (message, status) = if ((0..1).random() == 0)
+            "Keys loaded successfully" to "0"
+        else
+            "Failed to load keys" to "-1"
+        onKmsUpdateResult(status, message)
+    }
+
+    override fun onKmsUpdateRequired() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onKmsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun onKmsUpdateResult(status: String, message: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "status" to status,
+                        "message" to message
+                    ),
+                    "event" to "onKmsUpdateResult"
+                )
+            )
+        }
+    }
+
+    override fun onFactoryInitialized() {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to true,
+                    "event" to "onFactoryInitialized"
+                )
+            )
+        }
+    }
+
+    override fun onOsUpdateRequired(build: String, seNumber: String) {
+        handler.post {
+            eventSink?.success(
+                mapOf(
+                    "value" to mapOf(
+                        "build" to build,
+                        "seNumber" to seNumber
+                    ),
+                    "event" to "onOsUpdateRequired"
+                )
+            )
+        }
+    }
+
+    override fun performOsUpdate() {
+        try {
+            val intent = Intent()
+            intent.setClassName(
+                DeviceManagement.KMS_PACKAGENAME,
+                DeviceManagement.CLASSNAME_OSUPDATE
+            )
+            intent.putExtra("IP_OTA", DeviceManagement.OTA_IP_ADDRESS)
+            intent.putExtra("PORT_OTA", DeviceManagement.PORT)
+            activity!!.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun sendPrinterData(
+        merchantReceipt: PrintRequest?,
+        clientPrintRequest: PrintRequest?
+    ) {
+        TODO("Not yet implemented")
     }
 
     override fun cleanup() {

@@ -450,4 +450,10 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get no => 'Nee';
+
+  @override
+  String get updateKeys => 'Updating Keys...';
+
+  @override
+  String get osUpdateRequired => 'OS Update Required';
 }

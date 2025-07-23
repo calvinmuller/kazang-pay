@@ -15,6 +15,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    buildFeatures {
+        buildConfig true
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
@@ -55,9 +59,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions += "default"
+    flavorDimensions "brand", "env"
 
     productFlavors {
+        sunmi {
+            dimension "brand"
+        }
+        urovo {
+            dimension "brand"
+        }
+
         uat {
             dimension "default"
             resValue "string", "app_name", "Kazang Pay UAT"
@@ -78,9 +89,12 @@ flutter {
 
 dependencies {
     implementation files('libs/prismcore-release-1.0.15.aar')
+
     implementation files('libs/prismfactory-sunmi-release-1.0.24.aar')
     implementation files('libs/prismdevice-sunmi-release-1.0.18.aar')
     implementation files('libs/prismiso8583-release-1.0.8.aar')
+
+    implementation files('libs/prismiso8583-release-1.0.10.aar')
 
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")
@@ -91,7 +105,5 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.1.0"
     implementation "androidx.datastore:datastore-preferences-core:1.1.0"
     implementation "com.google.code.gson:gson:2.3.1"
-    implementation("com.sunmi:printerx:1.0.17")
     implementation("androidx.work:work-runtime:2.7.1")
-
 }

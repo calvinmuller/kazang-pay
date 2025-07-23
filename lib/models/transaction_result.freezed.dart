@@ -25,7 +25,7 @@ mixin _$TransactionResult {
   CardDataInputMode? get cardDataInputMode;
   String? get cardSequenceNumber;
   List<int>? get cardVerificationMethod;
-  String get declinedReason;
+  String? get declinedReason;
   bool get isCancelled;
   bool get isSuccessful;
   bool get isSupervisor;
@@ -37,7 +37,8 @@ mixin _$TransactionResult {
   String? get stan;
   String? get priorityMessage;
   String? get receiptReference;
-  String get responseCode;
+  @JsonKey(defaultValue: "06")
+  String? get responseCode;
   String? get responseMessage;
   String? get terminalId;
   int get transactionAmount;
@@ -173,7 +174,7 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       List<int>? cardVerificationMethod,
-      String declinedReason,
+      String? declinedReason,
       bool isCancelled,
       bool isSuccessful,
       bool isSupervisor,
@@ -185,7 +186,7 @@ abstract mixin class $TransactionResultCopyWith<$Res> {
       String? stan,
       String? priorityMessage,
       String? receiptReference,
-      String responseCode,
+      @JsonKey(defaultValue: "06") String? responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
@@ -217,7 +218,7 @@ class _$TransactionResultCopyWithImpl<$Res>
     Object? cardDataInputMode = freezed,
     Object? cardSequenceNumber = freezed,
     Object? cardVerificationMethod = freezed,
-    Object? declinedReason = null,
+    Object? declinedReason = freezed,
     Object? isCancelled = null,
     Object? isSuccessful = null,
     Object? isSupervisor = null,
@@ -229,7 +230,7 @@ class _$TransactionResultCopyWithImpl<$Res>
     Object? stan = freezed,
     Object? priorityMessage = freezed,
     Object? receiptReference = freezed,
-    Object? responseCode = null,
+    Object? responseCode = freezed,
     Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
@@ -267,10 +268,10 @@ class _$TransactionResultCopyWithImpl<$Res>
           ? _self.cardVerificationMethod
           : cardVerificationMethod // ignore: cast_nullable_to_non_nullable
               as List<int>?,
-      declinedReason: null == declinedReason
+      declinedReason: freezed == declinedReason
           ? _self.declinedReason
           : declinedReason // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isCancelled: null == isCancelled
           ? _self.isCancelled
           : isCancelled // ignore: cast_nullable_to_non_nullable
@@ -315,10 +316,10 @@ class _$TransactionResultCopyWithImpl<$Res>
           ? _self.receiptReference
           : receiptReference // ignore: cast_nullable_to_non_nullable
               as String?,
-      responseCode: null == responseCode
+      responseCode: freezed == responseCode
           ? _self.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       responseMessage: freezed == responseMessage
           ? _self.responseMessage
           : responseMessage // ignore: cast_nullable_to_non_nullable
@@ -364,7 +365,7 @@ class _TransactionResult extends TransactionResult {
       this.cardDataInputMode,
       this.cardSequenceNumber,
       final List<int>? cardVerificationMethod,
-      required this.declinedReason,
+      this.declinedReason,
       required this.isCancelled,
       required this.isSuccessful,
       required this.isSupervisor,
@@ -376,7 +377,7 @@ class _TransactionResult extends TransactionResult {
       this.stan,
       this.priorityMessage,
       this.receiptReference,
-      required this.responseCode,
+      @JsonKey(defaultValue: "06") required this.responseCode,
       required this.responseMessage,
       this.terminalId,
       required this.transactionAmount,
@@ -428,7 +429,7 @@ class _TransactionResult extends TransactionResult {
   }
 
   @override
-  final String declinedReason;
+  final String? declinedReason;
   @override
   final bool isCancelled;
   @override
@@ -452,7 +453,8 @@ class _TransactionResult extends TransactionResult {
   @override
   final String? receiptReference;
   @override
-  final String responseCode;
+  @JsonKey(defaultValue: "06")
+  final String? responseCode;
   @override
   final String? responseMessage;
   @override
@@ -609,7 +611,7 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       CardDataInputMode? cardDataInputMode,
       String? cardSequenceNumber,
       List<int>? cardVerificationMethod,
-      String declinedReason,
+      String? declinedReason,
       bool isCancelled,
       bool isSuccessful,
       bool isSupervisor,
@@ -621,7 +623,7 @@ abstract mixin class _$TransactionResultCopyWith<$Res>
       String? stan,
       String? priorityMessage,
       String? receiptReference,
-      String responseCode,
+      @JsonKey(defaultValue: "06") String? responseCode,
       String? responseMessage,
       String? terminalId,
       int transactionAmount,
@@ -653,7 +655,7 @@ class __$TransactionResultCopyWithImpl<$Res>
     Object? cardDataInputMode = freezed,
     Object? cardSequenceNumber = freezed,
     Object? cardVerificationMethod = freezed,
-    Object? declinedReason = null,
+    Object? declinedReason = freezed,
     Object? isCancelled = null,
     Object? isSuccessful = null,
     Object? isSupervisor = null,
@@ -665,7 +667,7 @@ class __$TransactionResultCopyWithImpl<$Res>
     Object? stan = freezed,
     Object? priorityMessage = freezed,
     Object? receiptReference = freezed,
-    Object? responseCode = null,
+    Object? responseCode = freezed,
     Object? responseMessage = freezed,
     Object? terminalId = freezed,
     Object? transactionAmount = null,
@@ -703,10 +705,10 @@ class __$TransactionResultCopyWithImpl<$Res>
           ? _self._cardVerificationMethod
           : cardVerificationMethod // ignore: cast_nullable_to_non_nullable
               as List<int>?,
-      declinedReason: null == declinedReason
+      declinedReason: freezed == declinedReason
           ? _self.declinedReason
           : declinedReason // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isCancelled: null == isCancelled
           ? _self.isCancelled
           : isCancelled // ignore: cast_nullable_to_non_nullable
@@ -751,10 +753,10 @@ class __$TransactionResultCopyWithImpl<$Res>
           ? _self.receiptReference
           : receiptReference // ignore: cast_nullable_to_non_nullable
               as String?,
-      responseCode: null == responseCode
+      responseCode: freezed == responseCode
           ? _self.responseCode
           : responseCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       responseMessage: freezed == responseMessage
           ? _self.responseMessage
           : responseMessage // ignore: cast_nullable_to_non_nullable

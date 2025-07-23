@@ -906,7 +906,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch'**
   String get switchTitle;
-
   /// No description provided for @transactionCompleted.
   ///
   /// In en, this message translates to:
@@ -930,6 +929,17 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No'**
   String get no;
+  /// No description provided for @updateKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating Keys...'**
+  String get updateKeys;
+
+  /// No description provided for @osUpdateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'OS Update Required'**
+  String get osUpdateRequired;
 }
 
 class _AppLocalizationsDelegate

@@ -1,10 +1,11 @@
+// ignore_for_file: constant_identifier_names
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../core/launch_mode.dart';
 
 part 'payment.freezed.dart';
-
 part 'payment.g.dart';
 
-enum PaymentType { payment, cashback, voidTransaction }
+enum PaymentType { payment, cashback, voidTransaction, Purchase, Purchase_with_cash_back, Cash_withdrawal, Refund, Cancel }
 
 @freezed
 abstract class Payment with _$Payment {
@@ -12,10 +13,13 @@ abstract class Payment with _$Payment {
 
   factory Payment({
     @Default(0) int amount,
-    @Default(0) cashbackAmount,
+    @Default(0) int cashbackAmount,
     @Default(PaymentType.payment) PaymentType? type,
     @Default(false) bool? cashbackOnly,
     @Default(null) String? rrn,
+    @Default(null) String? uniqueId,
+    @Default(LaunchMode.normal) LaunchMode launchMode,
+    @Default(true) bool userVoidable,
   }) = _Payment;
 
   factory Payment.fromJson(Map<String, dynamic> json) =>

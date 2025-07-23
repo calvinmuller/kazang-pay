@@ -1,12 +1,20 @@
+// ignore_for_file: avoid_manual_providers_as_generated_provider_dependency
+import 'package:tcp_receiver/transaction.dart' show TcpTransaction;
+
+import '../../core/core.dart';
+import '../../models/app_state.dart';
 import '../../models/payment.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import 'payment.controller.dart';
 
 part 'payment.provider.g.dart';
 
 @riverpod
 class PaymentNotifier extends _$PaymentNotifier {
   @override
-  Payment build() => Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+  Payment build() =>
+      Payment(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
 
   void updatePayment(int amount) => state.copyWith(amount: amount);
 
@@ -54,6 +62,49 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 
   clearAll() {
-    state = state.copyWith(amount: 0, cashbackAmount: 0, type: PaymentType.payment);
+    state = state.copyWith(
+      amount: 0,
+      cashbackAmount: 0,
+      type: PaymentType.payment,
+      launchMode: LaunchMode.normal,
+    );
+  }
+
+  void setFromIntentInfo(IntentInfo intentInfo) {
+    var amount = int.parse(intentInfo.amount ?? "0");
+    var cashbackAmount = int.parse(intentInfo.cashBackAmount ?? "0");
+
+    if (intentInfo.transactionType == PaymentType.Cash_withdrawal) {
+      amount = int.parse("0");
+      cashbackAmount = int.parse(intentInfo.amount ?? "0");
+    }
+
+    state = state.copyWith(
+      amount: amount,
+      cashbackAmount: cashbackAmount,
+      type:
+          intentInfo.isVoid ? PaymentType.voidTransaction : PaymentType.payment,
+      rrn: intentInfo.refNo,
+      uniqueId: intentInfo.uniqueId,
+      launchMode: LaunchMode.intent,
+      userVoidable: false,
+    );
+
+    ref.read(paymentControllerProvider.notifier).setPayment(state);
+  }
+
+  void setFromTcpTransaction(TcpTransaction tcpTransaction) {
+    state = state.copyWith(
+      amount: tcpTransaction.amount,
+      cashbackAmount: tcpTransaction.cashbackAmount,
+      type: tcpTransaction.isVoid
+          ? PaymentType.voidTransaction
+          : PaymentType.payment,
+      rrn: tcpTransaction.refNo,
+      uniqueId: tcpTransaction.uniqueId,
+      launchMode: LaunchMode.wifi,
+      userVoidable: false,
+    );
+    ref.read(paymentControllerProvider.notifier).setPayment(state);
   }
 }

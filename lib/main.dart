@@ -10,12 +10,13 @@ import 'helpers/transaction_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   final deviceInfo = await TransactionHelper.getDeviceInfo();
   final appState = await TransactionHelper.getAppState();
   final intentInfo = await TransactionHelper.getIntentInfo();
 
-  final newAppState = appState.copyWith(deviceInfo: deviceInfo).setIntentInfo(intentInfo: intentInfo);
+  final newAppState = appState
+      .copyWith(deviceInfo: deviceInfo)
+      .setIntentInfo(intentInfo: intentInfo);
 
   // ignore: missing_provider_scope
   runApp(
@@ -23,7 +24,8 @@ Future<void> main() async {
       child: ProviderScope(
         overrides: [
           // ignore: scoped_providers_should_specify_dependencies
-          appNotifierProvider.overrideWith(() => AppNotifier(appState: newAppState))
+          appNotifierProvider
+              .overrideWith(() => AppNotifier(appState: newAppState)),
         ],
         child: DeviceInfoProvider(
           appState: appState,

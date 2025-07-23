@@ -1,9 +1,14 @@
 package net.kazang.pegasus
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -12,6 +17,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.prism.core.static.PrismCodes
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -20,8 +26,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.Type
-import java.util.Locale
-import kotlin.collections.HashMap
+import java.util.*
 import kotlin.concurrent.thread
 
 private val Context.sharedPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("APP_STATE")
@@ -45,8 +50,7 @@ class MainActivity : FlutterActivity() {
             transactionHandler = TransactionHandler()
 
             MethodChannel(
-                flutterEngine.dartExecutor.binaryMessenger,
-                PRINT_CHANNEL
+                flutterEngine.dartExecutor.binaryMessenger, PRINT_CHANNEL
             ).setMethodCallHandler(
                 PrinterHandler(
                     transactionHandler
@@ -59,24 +63,21 @@ class MainActivity : FlutterActivity() {
         )
 
         MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            CHANNEL
+            flutterEngine.dartExecutor.binaryMessenger, CHANNEL
         ).setMethodCallHandler { call, result ->
             if (call.method == "connect") {
                 val config = call.argument<HashMap<Any, Any>>("config")!!
                 val proxy = call.argument<Boolean>("proxy")!!
                 val json = gson.toJson(config)
                 val terminalConfig = gson.fromJson(json, TerminalConfig::class.java)
-
-                thread {
-                    transactionHandler.initialize(context, terminalConfig, proxy)
-                }
+                transactionHandler.initialize(context, terminalConfig, proxy)
                 result.success(true)
             } else if (call.method == "createPurchase") {
                 thread {
                     transactionHandler.createPurchase(
                         amount = call.argument<String>("amount")!!,
-                        description = call.argument<String>("description")!!
+                        description = call.argument<String>("description")!!,
+                        userVoidable = call.argument<Boolean>("userVoidable") ?: true,
                     )
                 }
                 result.success(true)
@@ -86,27 +87,35 @@ class MainActivity : FlutterActivity() {
                 thread {
                     transactionHandler.continueTransaction(
                         value = call.argument<String>("value")!!,
-                        pos = call.argument<Int>("pos")!!
+                        pos = call.argument<Int>("pos")!!,
                     )
                 }
                 result.success(true)
             } else if (call.method == "createCashback") {
                 transactionHandler.createCashback(
                     amount = call.argument<String>("amount")!!,
-                    cashbackAmount = call.argument<String>("cashbackAmount")!!
+                    cashbackAmount = call.argument<String>("cashbackAmount")!!,
+                    userVoidable = call.argument<Boolean>("userVoidable") ?: true,
                 )
                 result.success(true)
             } else if (call.method == "createCashWithdrawal") {
                 transactionHandler.createCashWithdrawal(
-                    cashbackAmount = call.argument<String>("cashbackAmount")!!
+                    cashbackAmount = call.argument<String>("cashbackAmount")!!,
+                    userVoidable = call.argument<Boolean>("userVoidable") ?: true,
                 )
                 result.success(true)
             } else if (call.method == "voidTransaction") {
                 val rrn = call.argument<String>("rrn")!!
                 thread {
-                    transactionHandler.voidTransaction(rrn)
+                    try {
+                        transactionHandler.voidTransaction(rrn)
+                        result.success(true)
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error voiding transaction: ${e.message}")
+                        result.error("VoidError", e.message, e)
+                    }
+
                 }
-                result.success(true)
             } else if (call.method == "continueTransactionBudget") {
                 thread {
                     transactionHandler.continueTransactionBudget(value = call.argument<Int>("value")!!)
@@ -118,7 +127,8 @@ class MainActivity : FlutterActivity() {
                     result.success(transactions)
                 }
             } else if (call.method == "getByReferenceData") {
-                val transaction = transactionHandler.getByReferenceData(call.argument<String>("responseId")!!)
+                val transaction =
+                    transactionHandler.getByReferenceData(call.argument<String>("responseId")!!)
                 result.success(gson.toJson(transaction))
             } else if (call.method == "abortTransaction") {
                 thread {
@@ -149,10 +159,66 @@ class MainActivity : FlutterActivity() {
                 result.success(true)
             } else if (call.method == "getIntentInfo") {
                 result.success(initialIntentMap)
+            } else if (call.method == "performRemoteKmsUpdate") {
+                thread {
+                    transactionHandler.loadKeys()
+                }
+            } else if (call.method == "performOsUpdate") {
+                thread {
+                    transactionHandler.performOsUpdate()
+                }
+            } else if (call.method == "completeTransaction") {
+                val tt = Intent()
+                val uniqueId = call.argument<String>("uniqueId")
+                val message = call.argument<String>("message") ?: "Transaction Cancelled"
+                thread {
+                    try {
+                        val transaction = transactionHandler.getByReferenceData(
+                            call.argument<String>("responseId")!!
+                        )!!
+                        tt.putExtra(
+                            "success",
+                            if (transaction.ResponseCode == "00") "True" else "False"
+                        )
+                        tt.putExtra("rspCode", transaction.ResponseCode)
+                        tt.putExtra("rspMessage", transaction.ResponseMessage)
+                        tt.putExtra("uinqueId", uniqueId)
+                        tt.putExtra("refNo", transaction.RetrievalReferenceNumber ?: "NA")
+                        tt.putExtra("bin", transaction.MaskedPan?.substring(0, 6) ?: "000000")
+                    } catch (e: Exception) {
+                        tt.putExtra("success", "False")
+                        tt.putExtra("rspCode", "06")
+                        tt.putExtra("rspMessage", message)
+                        tt.putExtra("uinqueId", uniqueId)
+                        tt.putExtra("refNo", "NA")
+                        tt.putExtra("bin", "000000")
+                    }
+                    Log.d("MainActivity", "completeTransaction: ${tt.extras}")
+                    result.success(true)
+                    setResult(Activity.RESULT_OK, tt)
+                    finishAndRemoveTask()
+                }
+            } else if (call.method == "log") {
+                thread {
+                    val tag = call.argument<String>("tag") ?: "Flutter"
+                    val message = call.argument<String>("message") ?: ""
+                    val level = call.argument<String>("level") ?: "d"
+
+                    when (level.lowercase()) {
+                        "v" -> Log.v(tag, message)
+                        "d" -> Log.d(tag, message)
+                        "i" -> Log.i(tag, message)
+                        "w" -> Log.w(tag, message)
+                        "e" -> Log.e(tag, message)
+                        else -> Log.d(tag, message)
+                    }
+                }
+                result.success(null)
             } else {
                 result.notImplemented()
             }
         }
+        requestForStoragePermissions()
     }
 
     private fun play() {
@@ -183,18 +249,53 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun handleIntent(intent: Intent) {
+    private fun handleIntent(intent: Intent, s: String) {
         val username = intent.getStringExtra("User Number") ?: intent.getStringExtra("Username")
+        val transactionType = intent.getStringExtra("TransactionType")
+        val amount = intent.getStringExtra("Amount")
+        val cashBackAmount = intent.getStringExtra("CashBackAmount")
+        val uniqueId = intent.getStringExtra("UniqueId")
+        val refNo = intent.getStringExtra("RefNo")
+        val isLocalRequest = intent.getStringExtra("IsLocalRequest")
         val intentMap = mapOf<String, Any?>(
             "username" to username,
+            "transactionType" to transactionType,
+            "amount" to amount,
+            "cashBackAmount" to cashBackAmount,
+            "uniqueId" to uniqueId,
+            "refNo" to refNo,
+            "isLocalRequest" to isLocalRequest
         )
-        Log.d("onAttachedToActivity", intentMap.toString())
+        Log.d(s, intentMap.toString())
         initialIntentMap = intentMap
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handleIntent(intent)
+        handleIntent(intent, "onCreate")
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent, "onNewIntent")
+    }
+
+    private fun requestForStoragePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                try {
+                    val intent = Intent()
+                    intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    val uri = Uri.fromParts("package", this.packageName, null)
+                    intent.setData(uri)
+                    startActivityForResult(intent, 0)
+                } catch (e: Exception) {
+                    val intent = Intent()
+                    intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                    startActivityForResult(intent, 0)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -202,4 +303,40 @@ class MainActivity : FlutterActivity() {
         transactionHandler.cleanup()
         super.onDestroy()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PrismCodes.KEY_INJECTION_REQUEST_CODE) {
+            var message = "Error loading keys."
+            var status = "-1"
+            Log.d("onActivityResult", "onActivityResult: $requestCode $resultCode $data")
+            try {
+                if (data != null) {
+                    if (data.hasExtra("message")) {
+                        message = data.getStringExtra("message") + ""
+                    }
+                    if (data.hasExtra("status")) {
+                        status = java.lang.String.valueOf(data.getIntExtra("status", -1))
+                    }
+                    transactionHandler.onKmsUpdateResult(status, message)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                transactionHandler.onKmsUpdateResult(status, message)
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && requestCode != PrismCodes.KEY_INJECTION_REQUEST_CODE) {
+            //Android is 11 (R) or above
+            if (Environment.isExternalStorageManager()) {
+                //Manage External Storage Permissions Granted
+                Log.d(
+                    "Permission",
+                    "onActivityResult: Manage External Storage Permissions Granted"
+                );
+            } else {
+                Log.d("Permission", "onActivityResult: Storage Permissions Denied");
+            }
+        }
+    }
+
 }
