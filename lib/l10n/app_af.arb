@@ -267,5 +267,12 @@
   "voidTransaction": "Nietigverklaar Transaksie",
   "@voidTransaction": {},
   "welcome": "Goeie Dag",
-  "@welcome": {}
+  "@welcome": {},
+  "yes": "Ja",
+  "@yes": {},
+  "no": "Nee",
+  "@no": {},
+  "transactionCompleted": "Transaksie Voltooi",
+  "@transactionCompleted": {},
+  "transactionCompletedPrompt": "'Kies “Ja” om na die Kazang App terug te keer.\\nKies “Nee” om te verlaat.'"
 }

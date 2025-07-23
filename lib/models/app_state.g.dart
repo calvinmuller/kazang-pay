@@ -240,6 +240,7 @@ _AppState _$AppStateFromJson(Map json) => _AppState(
               Map<String, dynamic>.from(json['profile'] as Map)),
       pin: json['pin'] as String? ?? null,
       language: json['language'] as String? ?? 'en_ZA',
+      externallyLaunched: json['externallyLaunched'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$AppStateToJson(_AppState instance) => <String, dynamic>{
@@ -251,4 +252,5 @@ Map<String, dynamic> _$AppStateToJson(_AppState instance) => <String, dynamic>{
       'profile': instance.profile?.toJson(),
       'pin': instance.pin,
       'language': instance.language,
+      'externallyLaunched': instance.externallyLaunched,
     };

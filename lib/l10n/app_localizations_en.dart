@@ -431,6 +431,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchTitle => 'Switch';
 
   @override
+  String get transactionCompleted => 'Transaction Completed';
+
+  @override
+  String get transactionCompletedPrompt =>
+      '\'Select “Yes” to return to the Kazang App.\nSelect “No” to Exit.\'';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
   String get updateKeys => 'Updating Keys...';
 
   @override
@@ -862,4 +875,17 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get switchTitle => 'Switch';
+
+  @override
+  String get transactionCompleted => 'Transaction Completed';
+
+  @override
+  String get transactionCompletedPrompt =>
+      'Select \"Yes\" to return to the Kazang App.\nSelect \"No\" to Exit.';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
 }

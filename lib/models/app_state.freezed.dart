@@ -25,6 +25,7 @@ mixin _$AppState {
   String? get language;
   @JsonKey(includeToJson: false, includeFromJson: false)
   IntentInfo? get intentInfo;
+  bool? get externallyLaunched;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -55,17 +56,29 @@ mixin _$AppState {
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.intentInfo, intentInfo) ||
-                other.intentInfo == intentInfo));
+                other.intentInfo == intentInfo) &&
+            (identical(other.externallyLaunched, externallyLaunched) ||
+                other.externallyLaunched == externallyLaunched));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured, proxy,
-      deviceInfo, accountInfo, profile, pin, language, intentInfo);
+  int get hashCode => Object.hash(
+      runtimeType,
+      pinVerified,
+      isConfigured,
+      proxy,
+      deviceInfo,
+      accountInfo,
+      profile,
+      pin,
+      language,
+      intentInfo,
+      externallyLaunched);
 
   @override
   String toString() {
-    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, proxy: $proxy, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
+    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, proxy: $proxy, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo, externallyLaunched: $externallyLaunched)';
   }
 }
 
@@ -84,7 +97,8 @@ abstract mixin class $AppStateCopyWith<$Res> {
       String? pin,
       String? language,
       @JsonKey(includeToJson: false, includeFromJson: false)
-      IntentInfo? intentInfo});
+      IntentInfo? intentInfo,
+      bool? externallyLaunched});
 }
 
 /// @nodoc
@@ -108,6 +122,7 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
     Object? pin = freezed,
     Object? language = freezed,
     Object? intentInfo = freezed,
+    Object? externallyLaunched = freezed,
   }) {
     return _then(_self.copyWith(
       pinVerified: null == pinVerified
@@ -146,6 +161,10 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
           ? _self.intentInfo
           : intentInfo // ignore: cast_nullable_to_non_nullable
               as IntentInfo?,
+      externallyLaunched: freezed == externallyLaunched
+          ? _self.externallyLaunched
+          : externallyLaunched // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -163,7 +182,8 @@ class _AppState extends AppState {
       this.pin = null,
       this.language = 'en_ZA',
       @JsonKey(includeToJson: false, includeFromJson: false)
-      this.intentInfo = null})
+      this.intentInfo = null,
+      this.externallyLaunched = false})
       : super._();
   factory _AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);
@@ -195,6 +215,9 @@ class _AppState extends AppState {
   @override
   @JsonKey(includeToJson: false, includeFromJson: false)
   final IntentInfo? intentInfo;
+  @override
+  @JsonKey()
+  final bool? externallyLaunched;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -230,17 +253,29 @@ class _AppState extends AppState {
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.intentInfo, intentInfo) ||
-                other.intentInfo == intentInfo));
+                other.intentInfo == intentInfo) &&
+            (identical(other.externallyLaunched, externallyLaunched) ||
+                other.externallyLaunched == externallyLaunched));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, pinVerified, isConfigured, proxy,
-      deviceInfo, accountInfo, profile, pin, language, intentInfo);
+  int get hashCode => Object.hash(
+      runtimeType,
+      pinVerified,
+      isConfigured,
+      proxy,
+      deviceInfo,
+      accountInfo,
+      profile,
+      pin,
+      language,
+      intentInfo,
+      externallyLaunched);
 
   @override
   String toString() {
-    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, proxy: $proxy, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo)';
+    return 'AppState(pinVerified: $pinVerified, isConfigured: $isConfigured, proxy: $proxy, deviceInfo: $deviceInfo, accountInfo: $accountInfo, profile: $profile, pin: $pin, language: $language, intentInfo: $intentInfo, externallyLaunched: $externallyLaunched)';
   }
 }
 
@@ -261,7 +296,8 @@ abstract mixin class _$AppStateCopyWith<$Res>
       String? pin,
       String? language,
       @JsonKey(includeToJson: false, includeFromJson: false)
-      IntentInfo? intentInfo});
+      IntentInfo? intentInfo,
+      bool? externallyLaunched});
 }
 
 /// @nodoc
@@ -285,6 +321,7 @@ class __$AppStateCopyWithImpl<$Res> implements _$AppStateCopyWith<$Res> {
     Object? pin = freezed,
     Object? language = freezed,
     Object? intentInfo = freezed,
+    Object? externallyLaunched = freezed,
   }) {
     return _then(_AppState(
       pinVerified: null == pinVerified
@@ -323,6 +360,10 @@ class __$AppStateCopyWithImpl<$Res> implements _$AppStateCopyWith<$Res> {
           ? _self.intentInfo
           : intentInfo // ignore: cast_nullable_to_non_nullable
               as IntentInfo?,
+      externallyLaunched: freezed == externallyLaunched
+          ? _self.externallyLaunched
+          : externallyLaunched // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }

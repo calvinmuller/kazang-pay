@@ -266,5 +266,9 @@
   "voidTransaction": "Void Transaction",
   "@voidTransaction": {},
   "welcome": "Good Day",
-  "@welcome": {}
+  "@welcome": {},
+  "transactionCompleted": "Transaction Completed",
+  "transactionCompletedPrompt": "Select \"Yes\" to return to the Kazang App.\nSelect \"No\" to Exit.",
+  "yes": "Yes",
+  "no": "No"
 }
