@@ -228,9 +228,12 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   );
 
                   if (response.status == StatusResult.Failed) {
-                    throw AddDeviceException(response.statusDescription, error: response);
+                    throw AddDeviceException(response.statusDescription,
+                        error: response);
                   }
-                  ref.read(appNotifierProvider.notifier).setConfigured(loginRequest);
+                  ref
+                      .read(appNotifierProvider.notifier)
+                      .setConfigured(loginRequest);
                 } on AddDeviceException catch (e) {
                   if (context.mounted) {
                     context.pop();

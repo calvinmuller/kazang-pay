@@ -91,11 +91,11 @@ dependencies {
     implementation files('libs/prismcore-release-1.0.15.aar')
     implementation files('libs/prismiso8583-release-1.0.10.aar')
 
-    urovoImplementation files('libs/prismdevice-urovo-release-1.0.18.aar')
+    urovoImplementation files('libs/prismdevice-urovo-release-1.0.19.aar')
     urovoImplementation files('libs/prismfactory-urovo-release-1.0.24.aar')
 
+    sunmiImplementation files('libs/prismdevice-sunmi-release-1.0.19.aar')
     sunmiImplementation files('libs/prismfactory-sunmi-release-1.0.24.aar')
-    sunmiImplementation files('libs/prismdevice-sunmi-release-1.0.18.aar')
     sunmiImplementation("com.sunmi:printerx:1.0.17")
 
     implementation("com.squareup.retrofit2:retrofit:2.6.2")

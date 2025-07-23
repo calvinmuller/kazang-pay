@@ -20,7 +20,8 @@ import 'package:flutter/material.dart'
         Column,
         Scaffold,
         ListView,
-        Navigator;
+        Navigator,
+        FocusNode;
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
@@ -32,6 +33,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 import 'package:flutter_svg/svg.dart';
 import '../common/interfaces/factory.events.dart';
 import '../common/mixins/transaction_handlers.dart';
+import '../common/providers/device_info.dart';
 import '../common/providers/payment.controller.dart'
     show paymentControllerProvider, PaymentController;
 import '../common/providers/transaction.provider.dart';
@@ -64,6 +66,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   late final AnimationController _borderAnimationController;
   late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Payment get payment => ref.read(paymentControllerProvider)!;
@@ -73,6 +76,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   @override
   void initState() {
     super.initState();
+    _focusNode.requestFocus();
     TransactionHelper.initialize(this);
 
     _animationController = AnimationController(
@@ -119,34 +123,40 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
   @override
   void dispose() {
     _animationController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final deviceInfo = DeviceInfoProvider.of(context)!;
 
-    return AnimatedGradientBorder(
-      controller: _borderAnimationController,
-      gradientColors: result.isSuccessful
-          ? borderGradient['success']!
-          : borderGradient['error']!,
-      borderRadius: BorderRadius.zero,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        body: Panel(
-          child: (result.isTap || !result.isSuccessful)
-              ? Column(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: getBody(l10n),
-                )
-              : ListView(
-                  children: getBody(l10n),
-                ),
+    return PopOnEnter(
+      focusNode: _focusNode,
+      child: AnimatedGradientBorder(
+        controller: _borderAnimationController,
+        gradientColors: result.isSuccessful
+            ? borderGradient['success']!
+            : borderGradient['error']!,
+        borderRadius: BorderRadius.zero,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          extendBodyBehindAppBar: true,
+          extendBody: true,
+          body: Panel(
+            child:
+                ((result.isTap || !result.isSuccessful) && !deviceInfo.isi5300)
+                    ? Column(
+                        spacing: 10,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: getBody(l10n),
+                      )
+                    : ListView(
+                        children: getBody(l10n),
+                      ),
+          ),
         ),
       ),
     );
@@ -185,17 +195,19 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         textAlign: TextAlign.center,
       ),
       if (!result.isTap && result.isSuccessful)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
-          child: (!context.isUrovo)
-              ? const LottieWidget(
-                  width: double.infinity,
-                  assetName: 'assets/animations/remove-card.lottie',
-                )
-              : SvgPicture.asset(
-                  'assets/remove-card-urovo.svg',
-                  height: 150,
-                ),
+        HiddenOnMobile(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+            child: (!context.isUrovo)
+                ? const LottieWidget(
+                    width: double.infinity,
+                    assetName: 'assets/animations/remove-card.lottie',
+                  )
+                : SvgPicture.asset(
+                    'assets/remove-card-urovo.svg',
+                    height: 150,
+                  ),
+          ),
         ),
       if (!result.isTap && result.isSuccessful)
         Text(

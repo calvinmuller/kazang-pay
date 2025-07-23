@@ -25,7 +25,7 @@ import 'package:flutter/material.dart'
         Padding;
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/list_dialog.dart';
-import '../core/constants.dart';
+import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
 
@@ -89,6 +89,7 @@ showErrorDialog(context, String? message,
 showConfirmationDialog(BuildContext context) {
   return showModalBottomSheet(
     context: context,
+    isScrollControlled: context.hasPinPad(),
     showDragHandle: true,
     builder: (context) => const ConfirmDialog(),
   );
