@@ -90,3 +90,5 @@ const panelDecoration = BoxDecoration(
 );
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+const handledErrors = ["TRY_AGAIN_RESENT_CARD"];

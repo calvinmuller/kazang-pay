@@ -1,28 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BorderRadius,
-        BuildContext,
-        Colors,
-        Column,
-        CrossAxisAlignment,
-        Dialog,
-        EdgeInsets,
-        ListTile,
-        Padding,
-        Radio,
-        RoundedRectangleBorder,
-        State,
-        StatefulWidget,
-        Text,
-        TextAlign,
-        Theme,
-        Widget,
-        MainAxisSize,
-        Navigator;
+    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, Dialog, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Navigator, Scaffold, Card;
+import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
+import 'panel.dart';
 import 'widgets.dart' show Button;
 
 class ListDialog extends StatefulWidget {
@@ -38,84 +21,84 @@ class ListDialog extends StatefulWidget {
 }
 
 class _ListDialogState extends State<ListDialog> {
-  Map selectedAccount = {};
+  Map selectedAccount = {'index': 0, 'value': 'Straight'};
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Dialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: borderRadiusSmall,
-      ),
-      backgroundColor: Colors.white,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              textAlign: TextAlign.center,
-              widget.title ?? l10n.selectAccount,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          Expanded(
-            flex: 0,
-            child: ListView(
-              shrinkWrap: true,
-              children: widget.items.mapIndexed((item, i) {
-                final isActive = selectedAccount['index'] == i;
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ListTile(
-                    dense: true,
-                    tileColor: Colors.white,
-                    selectedTileColor: CustomColours.lightYellow,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 5,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    selected: isActive,
-                    onTap: () {
-                      if (item != selectedAccount) {
-                        setState(() {
-                          selectedAccount = {'index': i, 'value': item};
-                        });
-                      }
-                    },
-                    leading: Radio<num>(
-                      groupValue: selectedAccount['index'],
-                      value: i,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedAccount = {'index': i, 'value': newValue};
-                        });
-                      },
-                    ),
-                    title: Text(
-                      item.toString(),
+    return Scaffold(
+      body: Card(
+        color: Colors.white,
+        elevation: 10,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      widget.title ?? l10n.selectAccount,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
-                );
-              }).toList(),
+                  ...widget.items.mapIndexed((item, i) {
+                    final isActive = selectedAccount['index'] == i;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: ListTile(
+                        dense: true,
+                        tileColor: Colors.white,
+                        selectedTileColor: CustomColours.lightYellow,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5,
+                          horizontal: 5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        selected: isActive,
+                        onTap: () {
+                          if (item != selectedAccount) {
+                            setState(() {
+                              selectedAccount = {'index': i, 'value': item};
+                            });
+                          }
+                        },
+                        leading: Radio<num>(
+                          groupValue: selectedAccount['index'],
+                          value: i,
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedAccount = {'index': i, 'value': newValue};
+                            });
+                          },
+                        ),
+                        title: Text(
+                          item.toString(),
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    );
+                  })
+                ],
+              ),
             ),
-          ),
-          Button(
-            elevation: 0,
-            margin: const EdgeInsets.all(16),
-            onPressed: (selectedAccount.isNotEmpty)
-                ? () => Navigator.pop(context, selectedAccount)
-                : null,
-            child: Text(l10n.continueButton),
-          ),
-        ],
+            Button.main(
+              height: 64,
+              margin: const EdgeInsets.all(16),
+              onPressed: selectedAccount.isNotEmpty
+                  ? () => context.pop(selectedAccount)
+                  : null,
+              child: Text(l10n.continueButton),
+            ),
+          ],
+        ),
       ),
     );
   }
