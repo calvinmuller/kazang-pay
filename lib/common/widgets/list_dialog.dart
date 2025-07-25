@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, Dialog, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Navigator, Scaffold, Card;
+    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card;
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
-import 'panel.dart';
 import 'widgets.dart' show Button;
 
 class ListDialog extends StatefulWidget {
@@ -27,8 +26,7 @@ class _ListDialogState extends State<ListDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      body: Card(
+    return Card(
         color: Colors.white,
         elevation: 10,
         child: Column(
@@ -99,7 +97,6 @@ class _ListDialogState extends State<ListDialog> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

@@ -37,7 +37,6 @@ import '../common/providers/payment.controller.dart';
 import '../common/providers/tcp.provider.dart' show tcpServerProvider;
 import '../common/widgets/button.dart';
 import '../core/core.dart';
-import '../helpers/dialog_helpers.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
@@ -149,15 +148,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           colour: CustomColours.greenish,
                           textColour: CustomColours.black,
                           height: context.dynamicSize(90, 72),
-                          onPressed: () async {
-                            final result = await showListDialog(context, [
-                              "Straight",
-                              "3 Months",
-                              "6 Months",
-                              "12 Months",
-                              "24 Months",
-                            ], title: "OK");
-                          },
+                          onPressed: () => context.pushNamed('new-sale'),
                           icon: const Icon(
                             CustomIcons.card,
                             size: 37,

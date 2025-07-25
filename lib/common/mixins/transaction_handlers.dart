@@ -20,7 +20,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> implements FactoryEventHandler {
   late final Payment payment;
   bool error = false;
-  bool transactionResult = false;
 
   initialize() async {
     TransactionHelper.initialize(this);
