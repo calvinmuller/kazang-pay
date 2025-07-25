@@ -159,12 +159,14 @@ class PaymentPageState extends ConsumerState<PaymentPage>
 
   @override
   void onErrorEvent(String? value) {
-    error = true;
-    showErrorDialog(context, value).then((_) {
-      if (mounted && context.canPop()) {
-        context.pop(true);
-      }
-    });
+    if (!handledErrors.contains(value)) {
+      error = true;
+      showErrorDialog(context, value).then((_) {
+        if (mounted && context.canPop()) {
+          context.pop(true);
+        }
+      });
+    }
   }
 }
 

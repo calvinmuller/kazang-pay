@@ -22,6 +22,7 @@ import 'package:flutter/material.dart'
         SnackBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
+import 'package:go_router/go_router.dart';
 
 import '../../common/common.dart';
 import '../../common/providers/api.provider.dart' show crRepositoryProvider;
@@ -47,7 +48,8 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final deviceInfo = ref.watch(appNotifierProvider.select((state) => state.deviceInfo))!;
+    final deviceInfo =
+        ref.watch(appNotifierProvider.select((state) => state.deviceInfo))!;
     final crApi = ref.watch(crRepositoryProvider);
 
     return Scaffold(
@@ -116,6 +118,7 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                                 ref: ref,
                                 iconData: CustomIcons.lock,
                                 callback: () {
+                                  context.pop();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: CustomColours.green,
