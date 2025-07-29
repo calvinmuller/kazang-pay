@@ -469,4 +469,7 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get selectSettingToConfig =>
       'Select a setting from the left to configure';
+
+  @override
+  String get manageReceipts => 'Manage Receipts';
 }

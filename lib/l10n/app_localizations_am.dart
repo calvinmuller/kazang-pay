@@ -459,4 +459,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get selectSettingToConfig => 'ለማዋቀር ከግራ ወግ መቼት ይምረጡ';
+
+  @override
+  String get manageReceipts => 'Manage Receipts';
 }

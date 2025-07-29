@@ -4,6 +4,7 @@ import '../utils/responsive.dart';
 class ResponsivePageWrapper extends StatelessWidget {
   final String? title;
   final bool resizeToAvoidBottomInset;
+  final bool? centerTitle;
   final List<Widget>? actions;
   final Widget? leading;
   final Widget Function(BuildContext context) builder;
@@ -15,6 +16,7 @@ class ResponsivePageWrapper extends StatelessWidget {
     this.resizeToAvoidBottomInset = true,
     this.actions,
     this.leading,
+    this.centerTitle,
   });
 
   @override
@@ -33,6 +35,7 @@ class ResponsivePageWrapper extends StatelessWidget {
           title: Text(title!),
           actions: actions,
           leading: leading,
+          centerTitle: centerTitle,
         ) : null,
         body: content,
       );

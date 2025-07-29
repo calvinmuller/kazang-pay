@@ -972,6 +972,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a setting from the left to configure'**
   String get selectSettingToConfig;
+
+  /// No description provided for @manageReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Receipts'**
+  String get manageReceipts;
 }
 
 class _AppLocalizationsDelegate

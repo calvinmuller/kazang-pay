@@ -472,4 +472,7 @@ class AppLocalizationsAf extends AppLocalizations {
   @override
   String get selectSettingToConfig =>
       'Kies \'n instelling van die linkerkant om te konfigureer';
+
+  @override
+  String get manageReceipts => 'Manage Receipts';
 }

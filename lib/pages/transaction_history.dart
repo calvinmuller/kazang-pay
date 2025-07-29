@@ -132,4 +132,10 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }

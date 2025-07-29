@@ -25,10 +25,7 @@ final homeDecoration = BoxDecoration(
     color: CustomColours.primaryNeutral,
     width: 1,
   ),
-  borderRadius: const BorderRadius.only(
-    topLeft: Radius.circular(25),
-    bottomRight: Radius.circular(25),
-  ),
+  borderRadius: borderRadius
 );
 
 const borderGradient = {

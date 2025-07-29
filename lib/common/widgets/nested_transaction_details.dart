@@ -7,7 +7,7 @@ import '../../core/core.dart';
 import '../../pages/pages.dart';
 
 // Provider to track the currently selected detail view
-final selectedDetailProvider = StateProvider<DetailView?>((ref) => null);
+final selectedDetailProvider = StateProvider.autoDispose<DetailView?>((ref) => null);
 
 sealed class DetailView {
   const DetailView();

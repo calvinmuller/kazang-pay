@@ -1,31 +1,6 @@
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        BoxDecoration,
-        Icon,
-        EdgeInsets,
-        TextStyle,
-        Theme,
-        Colors,
-        Icons,
-        IconButton,
-        AppBar,
-        MainAxisSize,
-        TextAlign,
-        Text,
-        Container,
-        FontWeight,
-        Column,
-        CrossAxisAlignment,
-        Padding,
-        MainAxisAlignment,
-        Row,
-        Expanded,
-        FractionallySizedBox,
-        Alignment,
-        BorderRadius,
-        Radius;
+    show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, FractionallySizedBox, Alignment, BorderRadius, Radius;
+import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/widgets.dart' show FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
@@ -36,9 +11,9 @@ import '../common/common.dart';
 import '../common/providers/app.provider.dart';
 import '../common/providers/payment.controller.dart';
 import '../common/providers/tcp.provider.dart' show tcpServerProvider;
+import '../common/utils/responsive.dart';
 import '../common/widgets/button.dart';
 import '../common/widgets/responsive_scaffold.dart';
-import '../common/utils/responsive.dart';
 import '../core/core.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
@@ -82,6 +57,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           children: [
             // The container for the header text and border
             Container(
+              height: Responsive.responsive(context, xs: 200, sm: 350, lg: 350),
               decoration: const BoxDecoration(
                 gradient: headerGradient,
                 borderRadius: BorderRadius.only(
@@ -91,52 +67,54 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
               padding: const EdgeInsets.only(bottom: 10),
               alignment: Alignment.center,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AppBar(
-                    backgroundColor: Colors.transparent,
-                    leading: IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () => context.goNamed('settings'),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 10,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AppBar(
+                      backgroundColor: Colors.transparent,
+                      leading: IconButton(
+                        color: Colors.white,
+                        icon: const Icon(Icons.settings_outlined),
+                        onPressed: () => context.goNamed('settings'),
+                      ),
+                      title: const LogoWidget(widthFactor: 0.8),
                     ),
-                    title: const LogoWidget(widthFactor: 0.8),
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 15,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: responsive(context, xs: 12, sm: 32, lg: 42),
-                        horizontal:
-                            responsive(context, xs: 8, sm: 24, lg: 42),
-                      ),
-                      decoration: homeDecoration,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          HiddenOnMobile(
-                            child: Text(
-                              l10n.welcome,
-                              style: theme.textTheme.headlineLarge,
-                              textAlign: TextAlign.center,
-                            ),
+                    Expanded(
+                      child: FractionallySizedBox(
+                        widthFactor: 0.95,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 15,
                           ),
-                          Text(
-                            l10n.companyWelcome(merchantInfo.tradingName),
-                            style: theme.textTheme.bodyLarge!.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
+                          decoration: homeDecoration,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              HiddenOnMobile(
+                                child: Text(
+                                  l10n.welcome,
+                                  style: theme.textTheme.headlineLarge,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Text(
+                                l10n.companyWelcome(merchantInfo.tradingName),
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(

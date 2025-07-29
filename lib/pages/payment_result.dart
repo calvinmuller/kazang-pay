@@ -33,6 +33,7 @@ import '../common/providers/device_info.dart';
 import '../common/providers/payment.controller.dart'
     show paymentControllerProvider, PaymentController;
 import '../common/providers/transaction.provider.dart';
+import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/animated_borders.dart';
 import '../common/widgets/widgets.dart';
 import '../core/core.dart';
@@ -58,14 +59,16 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
     with TickerProviderStateMixin, TransactionHandlersMixin {
   late final AnimationController _animationController;
   late final AnimationController _borderAnimationController;
-  late final TransactionResult result = ref.read(transactionResultNotifierProvider)!;
+  late final TransactionResult result =
+      ref.read(transactionResultNotifierProvider)!;
   late final DebounceAggregator _aggregator;
   final FocusNode _focusNode = FocusNode();
 
   @override
   Payment get payment => ref.read(paymentControllerProvider)!;
 
-  late final PaymentController paymentController = ref.read(paymentControllerProvider.notifier)!;
+  late final PaymentController paymentController =
+      ref.read(paymentControllerProvider.notifier)!;
 
   @override
   void initState() {
@@ -135,6 +138,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
             : borderGradient['error']!,
         borderRadius: BorderRadius.zero,
         child: ResponsiveScaffold(
+          maxWidthFactor: 0.5,
           resizeToAvoidBottomInset: false,
           extendBodyBehindAppBar: true,
           extendBody: true,
@@ -236,6 +240,12 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         ),
       ),
       if (result.canPrintReceipt) ...[
+        if (Responsive.isLgUp(context))
+          Text(
+            l10n.manageReceipts,
+            textAlign: TextAlign.left,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
         const Divider(),
         ReceiptTabs(transactionResult: result),
       ]

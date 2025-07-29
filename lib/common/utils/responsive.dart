@@ -6,12 +6,15 @@ class Responsive {
   Responsive._();
 
   /// Breakpoint definitions (in logical pixels)
-  static const double _xs = 0;    // Extra small devices (phones)
-  static const double _sm = 330;  // Small devices (landscape phones)
-  static const double _lg = 768;  // Large devices (tablets/desktops)
+  /// - _xs: Extra small devices (i5300)
+  static const double _xs = 0; // Extra small devices (phones)
+  /// - _sm: Small devices (i5300L, Sunmi P3, Urovo i9100 etc)
+  static const double _sm = 360; // Small devices (landscape phones)
+  /// - _lg: Large devices (Sunmi P3 MIX / Tabblets)
+  static const double _lg = 1024; // Large devices (tablets/desktops)
 
   /// Returns a value based on the current screen width breakpoint
-  /// 
+  ///
   /// Example usage:
   /// ```dart
   /// EdgeInsets.all(responsive(context, xs: 8, sm: 12, lg: 16))
@@ -19,9 +22,9 @@ class Responsive {
   /// ```
   static T responsive<T>(
     BuildContext context, {
-    required T xs,  // Extra small (0px+)
-    T? sm,          // Small (576px+)
-    T? lg,          // Large (768px+)
+    required T xs, // Extra small (0px+)
+    T? sm, // Small (360px+)
+    T? lg, // Large (1024px+)
   }) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -33,36 +36,36 @@ class Responsive {
   /// Helper method to get current breakpoint name
   static String getCurrentBreakpoint(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     if (screenWidth >= _lg) return 'lg';
     if (screenWidth >= _sm) return 'sm';
     return 'xs';
   }
 
   /// Helper methods for checking specific breakpoints
-  static bool isXs(BuildContext context) => 
+  static bool isXs(BuildContext context) =>
       MediaQuery.of(context).size.width < _sm;
-      
-  static bool isSm(BuildContext context) => 
-      MediaQuery.of(context).size.width >= _sm && 
+
+  static bool isSm(BuildContext context) =>
+      MediaQuery.of(context).size.width >= _sm &&
       MediaQuery.of(context).size.width < _lg;
-      
-  static bool isLg(BuildContext context) => 
+
+  static bool isLg(BuildContext context) =>
       MediaQuery.of(context).size.width >= _lg;
 
   /// Helper methods for "at least" breakpoint checks
-  static bool isSmUp(BuildContext context) => 
+  static bool isSmUp(BuildContext context) =>
       MediaQuery.of(context).size.width >= _sm;
-      
-  static bool isLgUp(BuildContext context) => 
+
+  static bool isLgUp(BuildContext context) =>
       MediaQuery.of(context).size.width >= _lg;
 
   /// Get the actual breakpoint values (useful for debugging)
   static Map<String, double> get breakpoints => {
-    'xs': _xs,
-    'sm': _sm,
-    'lg': _lg,
-  };
+        'xs': _xs,
+        'sm': _sm,
+        'lg': _lg,
+      };
 }
 
 /// Convenience function for easier usage
@@ -71,4 +74,5 @@ T responsive<T>(
   required T xs,
   T? sm,
   T? lg,
-}) => Responsive.responsive<T>(context, xs: xs, sm: sm, lg: lg);
+}) =>
+    Responsive.responsive<T>(context, xs: xs, sm: sm, lg: lg);

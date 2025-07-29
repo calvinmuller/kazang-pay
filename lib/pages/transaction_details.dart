@@ -32,7 +32,7 @@ import 'package:go_router/go_router.dart';
 import '../common/common.dart';
 import '../common/providers/receipt.provider.dart';
 import '../common/widgets/receipt.dart';
-import '../common/widgets/widgets.dart' show Button;
+import '../common/widgets/widgets.dart' show Button, ResponsivePageWrapper;
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
 import '../l10n/app_localizations.dart';
@@ -51,17 +51,15 @@ class TransactionDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final transaction = this.transaction ?? GoRouterState.of(context).extra as Transaction;
+    final transaction =
+        this.transaction ?? GoRouterState.of(context).extra as Transaction;
 
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
+      child: ResponsivePageWrapper(
+        title: l10n.saleTransaction,
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(l10n.saleTransaction),
-          centerTitle: false,
-        ),
-        body: NestedScrollView(
+        builder: (context) => NestedScrollView(
           headerSliverBuilder: (context, innerScrolled) {
             var isAuthorized = transaction.authorised;
 

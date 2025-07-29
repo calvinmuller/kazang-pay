@@ -1,17 +1,44 @@
 import 'package:flutter/material.dart'
-    show AlertDialog, Navigator, Text, TextButton, Widget, showDialog, showModalBottomSheet, BuildContext, EdgeInsets, SizedBox, BorderSide, Colors, BorderRadius, MainAxisSize, FontWeight, TextStyle, TextAlign, ElevatedButton, RoundedRectangleBorder, OutlinedButton, Column, Padding, MediaQuery, WidgetBuilder, Dialog, FractionallySizedBox, AnimationStyle;
+    show
+        AlertDialog,
+        Navigator,
+        Text,
+        TextButton,
+        Widget,
+        showDialog,
+        showModalBottomSheet,
+        BuildContext,
+        EdgeInsets,
+        SizedBox,
+        BorderSide,
+        Colors,
+        BorderRadius,
+        MainAxisSize,
+        FontWeight,
+        TextStyle,
+        TextAlign,
+        ElevatedButton,
+        RoundedRectangleBorder,
+        OutlinedButton,
+        Column,
+        Padding,
+        MediaQuery,
+        WidgetBuilder,
+        Dialog,
+        FractionallySizedBox,
+        AnimationStyle;
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/list_dialog.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
 
-showBottomSheet({
+showBottomSheet<T>({
   required bool isScrollControlled,
   required bool showDragHandle,
   required BuildContext context,
   required WidgetBuilder builder,
-  required AnimationStyle sheetAnimationStyle,
+  AnimationStyle? sheetAnimationStyle,
 }) async {
   final mediaQuery = MediaQuery.of(context);
 
@@ -31,6 +58,7 @@ showBottomSheet({
       isScrollControlled: isScrollControlled,
       showDragHandle: showDragHandle,
       builder: (context) => builder(context),
+      sheetAnimationStyle: sheetAnimationStyle,
     );
   }
 }
@@ -84,7 +112,7 @@ showErrorDialog(context, String? message,
 }
 
 showConfirmationDialog(BuildContext context) {
-  return showModalBottomSheet(
+  return showBottomSheet(
     context: context,
     isScrollControlled: context.hasPinPad(),
     showDragHandle: true,
@@ -94,7 +122,7 @@ showConfirmationDialog(BuildContext context) {
 
 Future<bool?> showTransactionCompletedSheet(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
-  return showModalBottomSheet<bool>(
+  return showBottomSheet<bool>(
     context: context,
     showDragHandle: true,
     builder: (_) {
@@ -171,5 +199,6 @@ Future<bool?> showTransactionCompletedSheet(BuildContext context) {
         ),
       );
     },
+    isScrollControlled: false,
   );
 }

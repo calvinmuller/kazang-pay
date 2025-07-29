@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart' show BuildContext;
+import 'package:flutter/material.dart' show BuildContext, GlobalKey, NavigatorState;
 import 'package:go_router/go_router.dart' show GoRoute, GoRouterState, ShellRoute;
 
 import '../common/utils/responsive.dart';
 import '../pages/pages.dart';
 
+final settingsNavigatorKey = GlobalKey<NavigatorState>();
+
 final settingsRoutes = ShellRoute(
+  navigatorKey: settingsNavigatorKey,
   builder: (context, state, child) {
     return SettingsShell(child: child);
   },

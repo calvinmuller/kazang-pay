@@ -145,5 +145,6 @@
   "cashback": "Cashback:",
   "saleAmount": "Sale Amount:",
   "totalAmount": "Total:",
-  "selectSettingToConfig": "Select a setting from the left to configure"
+  "selectSettingToConfig": "Select a setting from the left to configure",
+  "manageReceipts": "Manage Receipts"
 }
