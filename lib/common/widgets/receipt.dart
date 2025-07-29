@@ -1,5 +1,37 @@
 import 'package:flutter/material.dart'
-    show AutomaticKeepAliveClientMixin, BuildContext, Widget, EdgeInsets, Icon, TextStyle, MainAxisSize, Text, showDialog, Padding, BorderRadius, BoxDecoration, Theme, FontWeight, BoxFit, Column, DefaultTextStyle, Container, TickerProviderStateMixin, AnimationController, Transform, Offset, AnimatedBuilder, Animation, Tween, Colors, AnimationStatus, SingleChildScrollView, Curves, CurvedAnimation, Interval, Opacity, BoxShadow, SlideTransition;
+    show
+        AutomaticKeepAliveClientMixin,
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Icon,
+        TextStyle,
+        MainAxisSize,
+        Text,
+        showDialog,
+        Padding,
+        BorderRadius,
+        BoxDecoration,
+        Theme,
+        FontWeight,
+        BoxFit,
+        Column,
+        DefaultTextStyle,
+        Container,
+        TickerProviderStateMixin,
+        AnimationController,
+        Transform,
+        Offset,
+        AnimatedBuilder,
+        Animation,
+        Tween,
+        Colors,
+        AnimationStatus,
+        SingleChildScrollView,
+        Curves,
+        CurvedAnimation,
+        Interval,
+        SlideTransition;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -28,13 +60,13 @@ class ReceiptState extends ConsumerState<Receipt>
   late final Animation<Offset> slideAnimation;
   late final Animation<double> scaleAnimation;
   late final Animation<double> rotationAnimation;
-  late final Animation<double> opacityAnimation;
   late final bool autoClose;
 
   @override
   void initState() {
     super.initState();
-    autoClose = ref.read(receiptParametersProvider.select((state) => state.autoClose));
+    autoClose =
+        ref.read(receiptParametersProvider.select((state) => state.autoClose));
 
     animationController = AnimationController(
       vsync: this,
@@ -43,7 +75,8 @@ class ReceiptState extends ConsumerState<Receipt>
 
     // Multi-phase animation that simulates printer paper coming out
     // Using offset (0, -1.5) means slide up by 1.5x screen height
-    slideAnimation = Tween(begin: const Offset(0, 0), end: const Offset(0, -1.5)).animate(
+    slideAnimation =
+        Tween(begin: const Offset(0, 0), end: const Offset(0, -1.5)).animate(
       CurvedAnimation(
         parent: animationController,
         curve: const Interval(0.0, 1.0, curve: Curves.easeInOut),
@@ -63,14 +96,6 @@ class ReceiptState extends ConsumerState<Receipt>
       CurvedAnimation(
         parent: animationController,
         curve: const Interval(0.1, 0.6, curve: Curves.elasticOut),
-      ),
-    );
-
-    // Fade out as it moves away
-    opacityAnimation = Tween(begin: 1.0, end: 0.3).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: const Interval(0.6, 1.0, curve: Curves.easeInQuart),
       ),
     );
 
@@ -131,115 +156,109 @@ class ReceiptState extends ConsumerState<Receipt>
           AnimatedBuilder(
             animation: animationController,
             builder: (context, child) {
-              return Opacity(
-                opacity: opacityAnimation.value,
-                child: SlideTransition(
-                  position: slideAnimation,
-                  child: Transform.scale(
-                    scale: scaleAnimation.value,
-                    child: Transform.rotate(
-                      angle: rotationAnimation.value,
-                      child: Container(
-                        margin: const EdgeInsets.all(12),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: CustomColours.grayscale,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1 * opacityAnimation.value),
-                              blurRadius: 8 * scaleAnimation.value,
-                              offset: Offset(0, 4 * scaleAnimation.value),
+              return SlideTransition(
+                position: slideAnimation,
+                child: Transform.scale(
+                  scale: scaleAnimation.value,
+                  child: Transform.rotate(
+                    angle: rotationAnimation.value,
+                    child: Container(
+                      margin: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: CustomColours.grayscale,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: DefaultTextStyle(
+                        // titleSmall
+                        style: Theme.of(context).textTheme.titleSmall!,
+                        child: Column(
+                          spacing: 18,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              (ReceiptSectionEnum.MERCHANT ==
+                                      receiptViewModel.type)
+                                  ? l10n.merchantReceipt
+                                  : l10n.customerReceipt,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SvgPicture.asset(
+                              'assets/receipt.svg',
+                              fit: BoxFit.contain,
+                              height: 75,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.merchantId,
+                              value: transactionResult.merchantId,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.terminalId,
+                              value: transactionResult.terminalId,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.date,
+                              value: dateFormatter.format(transactionDate),
+                            ),
+                            KeyValueWidget(
+                              title: l10n.time,
+                              value: timeFormatter.format(transactionDate),
+                            ),
+                            KeyValueWidget(
+                              title: l10n.aid,
+                              value: transactionResult.applicationIdentifier,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.pan,
+                              value: transactionResult.maskedPan,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.transType,
+                              value: transactionResult.type,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.transseqNo,
+                              value:
+                                  transactionResult.sequenceNumber.toString(),
+                            ),
+                            KeyValueWidget(
+                              title: l10n.rrn,
+                              value: transactionResult.retrievalReferenceNumber,
+                            ),
+                            KeyValueWidget(
+                              title: l10n.appType,
+                              value: transactionResult.applicationLabel,
+                            ),
+                            if (appState
+                                    .profile?.merchantConfig.routingSwitch !=
+                                null)
+                              KeyValueWidget(
+                                title: l10n.switchType,
+                                value:
+                                    appState.profile?.merchantConfig.switchName,
+                              ),
+                            KeyValueWidget(
+                              title: l10n.purchase,
+                              value: transactionResult.responseMessage,
+                            ),
+                            if (!transactionResult.isSuccessful)
+                              KeyValueWidget(
+                                title: l10n.reason,
+                                value: transactionResult.responseMessage,
+                              ),
+                            KeyValueWidget(
+                              bold: true,
+                              title: l10n.total,
+                              value: CurrencyHelper.formatCurrency(
+                                context,
+                                amount,
+                              ),
                             ),
                           ],
                         ),
-                    child: DefaultTextStyle(
-                      // titleSmall
-                      style: Theme.of(context).textTheme.titleSmall!,
-                      child: Column(
-                        spacing: 18,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                        Text(
-                          (ReceiptSectionEnum.MERCHANT == receiptViewModel.type)
-                              ? l10n.merchantReceipt
-                              : l10n.customerReceipt,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SvgPicture.asset(
-                          'assets/receipt.svg',
-                          fit: BoxFit.contain,
-                          height: 75,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.merchantId,
-                          value: transactionResult.merchantId,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.terminalId,
-                          value: transactionResult.terminalId,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.date,
-                          value: dateFormatter.format(transactionDate),
-                        ),
-                        KeyValueWidget(
-                          title: l10n.time,
-                          value: timeFormatter.format(transactionDate),
-                        ),
-                        KeyValueWidget(
-                          title: l10n.aid,
-                          value: transactionResult.applicationIdentifier,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.pan,
-                          value: transactionResult.maskedPan,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.transType,
-                          value: transactionResult.type,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.transseqNo,
-                          value: transactionResult.sequenceNumber.toString(),
-                        ),
-                        KeyValueWidget(
-                          title: l10n.rrn,
-                          value: transactionResult.retrievalReferenceNumber,
-                        ),
-                        KeyValueWidget(
-                          title: l10n.appType,
-                          value: transactionResult.applicationLabel,
-                        ),
-                        if (appState.profile?.merchantConfig.routingSwitch !=
-                            null)
-                          KeyValueWidget(
-                            title: l10n.switchType,
-                            value: appState.profile?.merchantConfig.switchName,
-                          ),
-                        KeyValueWidget(
-                          title: l10n.purchase,
-                          value: transactionResult.responseMessage,
-                        ),
-                        if (!transactionResult.isSuccessful)
-                          KeyValueWidget(
-                            title: l10n.reason,
-                            value: transactionResult.responseMessage,
-                          ),
-                        KeyValueWidget(
-                          bold: true,
-                          title: l10n.total,
-                          value: CurrencyHelper.formatCurrency(
-                            context,
-                            amount,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                       ),
                     ),
                   ),

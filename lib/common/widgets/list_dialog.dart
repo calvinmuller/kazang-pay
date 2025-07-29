@@ -1,24 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        BorderRadius,
-        BuildContext,
-        Colors,
-        Column,
-        CrossAxisAlignment,
-        EdgeInsets,
-        ListTile,
-        Padding,
-        Radio,
-        RoundedRectangleBorder,
-        State,
-        StatefulWidget,
-        Text,
-        TextAlign,
-        Theme,
-        Widget,
-        MainAxisSize,
-        Card;
+    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card, FractionallySizedBox, BorderSide, BoxDecoration, Container, ListView, Expanded;
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
