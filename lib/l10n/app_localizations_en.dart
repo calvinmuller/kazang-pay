@@ -467,6 +467,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get manageReceipts => 'Manage Receipts';
+
+  @override
+  String get selectToView => 'Select To View';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

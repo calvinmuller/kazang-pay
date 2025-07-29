@@ -63,13 +63,18 @@ showBottomSheet<T>({
   }
 }
 
-showListDialog(mainContext, List<dynamic> items, {String? title}) {
+showListDialog(mainContext, List<dynamic> items,
+    {String? title, bool inverted = false}) {
   return showDialog(
     context: mainContext,
     barrierDismissible: false,
     useRootNavigator: true,
-    builder: (context) =>
-        ListDialog(items: items, mainContext: context, title: title),
+    builder: (context) => ListDialog(
+      items: items,
+      mainContext: context,
+      title: title,
+      inverted: inverted,
+    ),
   );
 }
 

@@ -8,7 +8,6 @@ export 'transaction_item.dart';
 export 'custom_badge.dart';
 export 'receipt.dart';
 export 'receipt_tabs.dart';
-export 'account_item.dart';
 export 'label.dart';
 export 'loader.dart';
 export 'transactions_list.dart';

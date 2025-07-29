@@ -111,11 +111,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             )
           ],
         ),
-        GoRoute(
-          path: 'accounts',
-          name: 'accounts',
-          builder: (context, state) => const AccountsPage(),
-        ),
       ],
     ),
   ];

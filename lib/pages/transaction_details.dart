@@ -6,7 +6,6 @@ import 'package:flutter/material.dart'
         BoxDecoration,
         Spacer,
         Text,
-        AppBar,
         TabBarView,
         Colors,
         BorderRadius,
@@ -21,7 +20,6 @@ import 'package:flutter/material.dart'
         TabBar,
         SliverToBoxAdapter,
         NestedScrollView,
-        Scaffold,
         DefaultTabController,
         SingleChildScrollView,
         Icon;

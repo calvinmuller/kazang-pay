@@ -146,5 +146,6 @@
   "saleAmount": "Sale Amount:",
   "totalAmount": "Total:",
   "selectSettingToConfig": "Select a setting from the left to configure",
-  "manageReceipts": "Manage Receipts"
+  "manageReceipts": "Manage Receipts",
+  "selectToView": "Select To View"
 }

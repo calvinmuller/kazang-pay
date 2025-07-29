@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
@@ -7,7 +8,8 @@ import '../../core/core.dart';
 import '../../pages/pages.dart';
 
 // Provider to track the currently selected detail view
-final selectedDetailProvider = StateProvider.autoDispose<DetailView?>((ref) => null);
+final selectedDetailProvider =
+    StateProvider.autoDispose<DetailView?>((ref) => null);
 
 sealed class DetailView {
   const DetailView();
@@ -15,11 +17,13 @@ sealed class DetailView {
 
 class TransactionDetailView extends DetailView {
   final dynamic transaction;
+
   const TransactionDetailView(this.transaction);
 }
 
 class SettlementDetailView extends DetailView {
   final dynamic settlement;
+
   const SettlementDetailView(this.settlement);
 }
 
@@ -52,18 +56,15 @@ class NestedTransactionDetails extends ConsumerWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 12,
             children: [
-              const Icon(
-                Icons.receipt_long,
-                size: 64,
-                color: CustomColours.grey,
+              SvgPicture.asset(
+                'assets/transaction_details.svg',
+                width: 300,
               ),
-              const SizedBox(height: 16),
               Text(
-                l10n.selectAccount, // Reusing existing text - could add specific text
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: CustomColours.grey,
-                ),
+                l10n.selectToView,
+                style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
             ],
@@ -73,8 +74,10 @@ class NestedTransactionDetails extends ConsumerWidget {
     }
 
     return switch (selectedDetail) {
-      TransactionDetailView(:final transaction) => TransactionDetails(transaction: transaction),
-      SettlementDetailView(:final settlement) => SettlementDetails(settlement: settlement),
+      TransactionDetailView(:final transaction) =>
+        TransactionDetails(transaction: transaction),
+      SettlementDetailView(:final settlement) =>
+        SettlementDetails(settlement: settlement),
     };
   }
 }

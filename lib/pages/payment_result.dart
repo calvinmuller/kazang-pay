@@ -194,6 +194,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
       ),
       if (!result.isTap && result.isSuccessful)
         HiddenOnMobile(
+          hideOnTablet: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
             child: (!context.isUrovo)

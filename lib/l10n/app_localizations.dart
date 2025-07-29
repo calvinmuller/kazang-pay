@@ -978,6 +978,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage Receipts'**
   String get manageReceipts;
+
+  /// No description provided for @selectToView.
+  ///
+  /// In en, this message translates to:
+  /// **'Select To View'**
+  String get selectToView;
 }
 
 class _AppLocalizationsDelegate
