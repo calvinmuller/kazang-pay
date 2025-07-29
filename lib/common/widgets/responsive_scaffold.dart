@@ -13,7 +13,7 @@ class ResponsiveScaffold extends StatelessWidget {
     this.sideWidget,
     this.sideWidgetFlex = 2,
     this.mainWidgetFlex = 3,
-    this.splitViewSpacing = 16.0,
+    this.splitViewSpacing = 8.0,
     this.backgroundColor,
     this.extendBody = false,
     this.extendBodyBehindAppBar = false,
@@ -55,12 +55,12 @@ class ResponsiveScaffold extends StatelessWidget {
             widthFactor: maxWidthFactor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: splitViewSpacing,
               children: [
                 Expanded(
                   flex: mainWidgetFlex,
                   child: body!,
                 ),
-                SizedBox(width: splitViewSpacing),
                 Expanded(
                   flex: sideWidgetFlex,
                   child: sideWidget!,

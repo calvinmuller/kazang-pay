@@ -244,7 +244,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
         if (Responsive.isLgUp(context))
           Text(
             l10n.manageReceipts,
-            textAlign: TextAlign.left,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         const Divider(),

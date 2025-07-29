@@ -22,7 +22,7 @@ import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
 import '../common/providers/device_info.dart';
 
 class LogoWidget extends StatelessWidget {
-  const LogoWidget({super.key, this.widthFactor});
+  const LogoWidget({super.key, this.widthFactor = 0.7});
 
   final double? widthFactor;
 

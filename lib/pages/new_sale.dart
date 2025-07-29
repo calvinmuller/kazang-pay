@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../common/providers/payment.controller.dart';
 import '../common/providers/payment.provider.dart';
+import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/widgets.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
@@ -21,6 +22,7 @@ class NewSalePage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(l10n.newSale),
+        centerTitle: Responsive.responsive(context, xs: true, lg: false),
       ),
       sideWidget: const TransactionDetailsWidget(),
       body: Padding(

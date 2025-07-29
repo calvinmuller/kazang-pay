@@ -9,5 +9,4 @@ export 'transaction_details.dart';
 export 'settlement_details.dart';
 export 'settings/settings.dart';
 export 'settings/settings_shell.dart';
-export 'settings/settings_default.dart';
 export 'onboarding/onboarding.dart';

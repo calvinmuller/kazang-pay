@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, FractionallySizedBox, Alignment, BorderRadius, Radius, Center;
+    show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, FractionallySizedBox, Alignment, BorderRadius, Radius, Center, Clip;
 import 'package:flutter/widgets.dart' show FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
@@ -54,17 +54,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // The container for the header text and border
             Container(
-              height: Responsive.responsive(context, xs: 200, sm: 350, lg: 350),
+              margin: Responsive.responsive(
+                context,
+                xs: EdgeInsets.zero,
+                lg: const EdgeInsets.only(top: 15),
+              ),
+              height: Responsive.responsive(context, xs: 200, sm: 320, lg: 360, p3: 400),
               decoration: const BoxDecoration(
                 gradient: headerGradient,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
+                borderRadius: borderRadius
               ),
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
               alignment: Alignment.center,
               child: Center(
                 child: Column(
@@ -73,13 +74,20 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AppBar(
+                      clipBehavior: Clip.none,
                       backgroundColor: Colors.transparent,
                       leading: IconButton(
                         color: Colors.white,
+                        iconSize: Responsive.responsive(
+                          context,
+                          xs: 24,
+                          sm: 28,
+                          lg: 36,
+                        ),
                         icon: const Icon(Icons.settings_outlined),
                         onPressed: () => context.goNamed('settings'),
                       ),
-                      title: const LogoWidget(widthFactor: 0.8),
+                      title: const LogoWidget(widthFactor: 0.7),
                     ),
                     Expanded(
                       child: FractionallySizedBox(

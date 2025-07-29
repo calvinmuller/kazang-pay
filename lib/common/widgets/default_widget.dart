@@ -1,15 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Colors, Theme;
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 
-import '../../core/constants.dart';
-import '../../l10n/app_localizations.dart';
+import '../../core/core.dart' show CustomColours;
+import '../../l10n/app_localizations.dart' show AppLocalizations;
 
-class SettingsDefault extends StatelessWidget {
-  const SettingsDefault({super.key});
+class DefaultWidget extends StatelessWidget {
+
+  const DefaultWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -30,18 +35,15 @@ class SettingsDefault extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 12,
           children: [
-            const Icon(
-              Icons.settings,
-              size: 64,
-              color: CustomColours.grey,
+            SvgPicture.asset(
+              'assets/transaction_details.svg',
+              width: 300,
             ),
-            const SizedBox(height: 16),
             Text(
-              l10n.selectSettingToConfig,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: CustomColours.grey,
-              ),
+              l10n.selectToView,
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ],

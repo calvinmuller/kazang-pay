@@ -20,7 +20,9 @@ import 'package:flutter/material.dart'
         Colors,
         ButtonStyle,
         ElevatedButtonThemeData,
-        TextButtonThemeData;
+        TextButtonThemeData,
+        IconThemeData;
+import 'common/utils/utils.dart' show Responsive;
 import 'core/constants.dart';
 
 class CustomTheme {
@@ -44,14 +46,17 @@ class CustomTheme {
       useMaterial3: true,
       colorSchemeSeed: CustomColours.greenish,
       textTheme: createTextTheme(context),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         toolbarHeight: kToolbarHeight * 1.25,
         backgroundColor: CustomColours.beige,
         centerTitle: true,
+        iconTheme: IconThemeData(
+          size: Responsive.responsive(context, xs: 24, lg: 32),
+        ),
         titleTextStyle: TextStyle(
           fontFamily: 'Graphik',
           color: CustomColours.black,
-          fontSize: 18,
+          fontSize: Responsive.responsive(context, xs: 18, lg: 32),
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -111,8 +116,8 @@ TextTheme createTextTheme(BuildContext context) {
         .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
     titleLarge: baseTextTheme.titleMedium!
         .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
-    headlineLarge:
-        baseTextTheme.headlineLarge!.copyWith(fontWeight: FontWeight.bold, fontSize: 32),
+    headlineLarge: baseTextTheme.headlineLarge!
+        .copyWith(fontWeight: FontWeight.bold, fontSize: 32),
     displaySmall: baseTextTheme.displaySmall!
         .copyWith(fontWeight: FontWeight.bold, fontSize: 32),
     displayLarge: baseTextTheme.displayLarge!

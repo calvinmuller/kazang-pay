@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart' show BuildContext, GlobalKey, NavigatorState;
-import 'package:go_router/go_router.dart' show GoRoute, GoRouterState, ShellRoute;
+import 'package:flutter/material.dart'
+    show BuildContext, GlobalKey, NavigatorState;
+import 'package:go_router/go_router.dart'
+    show GoRoute, GoRouterState, ShellRoute;
 
 import '../common/utils/responsive.dart';
+import '../common/widgets/default_widget.dart';
+import '../common/widgets/transaction_details.dart';
 import '../pages/pages.dart';
 
 final settingsNavigatorKey = GlobalKey<NavigatorState>();
@@ -17,9 +21,9 @@ final settingsRoutes = ShellRoute(
       path: 'settings',
       builder: (BuildContext context, GoRouterState state) {
         final isLargeDevice = Responsive.isLgUp(context);
-        
+
         if (isLargeDevice) {
-          return const SettingsDefault();
+          return const DefaultWidget();
         } else {
           return const SettingsPage();
         }

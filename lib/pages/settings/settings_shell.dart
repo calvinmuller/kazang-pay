@@ -21,6 +21,7 @@ class SettingsShell extends StatelessWidget {
       return ResponsiveScaffold(
         appBar: AppBar(
           title: Text(l10n.settings),
+          centerTitle: false,
         ),
         sideWidget: child,
         body: const SettingsPage(),

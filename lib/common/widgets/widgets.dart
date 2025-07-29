@@ -21,3 +21,4 @@ export 'responsive_scaffold.dart';
 export 'responsive_page_wrapper.dart';
 export 'transaction_details.dart';
 export 'nested_transaction_details.dart';
+export 'default_widget.dart';

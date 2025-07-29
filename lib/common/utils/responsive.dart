@@ -13,6 +13,8 @@ class Responsive {
   /// - _lg: Large devices (Sunmi P3 MIX / Tabblets)
   static const double _lg = 1024; // Large devices (tablets/desktops)
 
+  static const double _p3 = 900; // Sunmi P3
+
   /// Returns a value based on the current screen width breakpoint
   ///
   /// Example usage:
@@ -25,9 +27,14 @@ class Responsive {
     required T xs, // Extra small (0px+)
     T? sm, // Small (360px+)
     T? lg, // Large (1024px+)
+    T? p3, // Length (long+)
   }) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
+    if (screenHeight >= _p3) {
+      if (p3 != null) return p3;
+    }
     if (screenWidth >= _lg && lg != null) return lg;
     if (screenWidth >= _sm && sm != null) return sm;
     return xs;
@@ -74,5 +81,6 @@ T responsive<T>(
   required T xs,
   T? sm,
   T? lg,
+  T? p3,
 }) =>
-    Responsive.responsive<T>(context, xs: xs, sm: sm, lg: lg);
+    Responsive.responsive<T>(context, xs: xs, sm: sm, lg: lg, p3: p3);

@@ -37,7 +37,7 @@ import '../../common/exceptions.dart' show AddDeviceException;
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
 import '../../common/providers/device_info.dart';
-import '../../common/widgets/widgets.dart' show Button, Label, FormField;
+import '../../common/widgets/widgets.dart' show Button, Label, FormField, ResponsiveScaffold;
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/crm.dart';
@@ -73,7 +73,8 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
     final api = ref.read(crmRepositoryProvider);
     final deviceInfo = DeviceInfoProvider.of(context)!.deviceInfo;
 
-    return Scaffold(
+    return ResponsiveScaffold(
+      maxWidthFactor: 0.5,
       body: ListView(children: [
         Hero(
           tag: 'logo',
