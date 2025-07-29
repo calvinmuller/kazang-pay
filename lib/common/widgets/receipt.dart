@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show AutomaticKeepAliveClientMixin, BuildContext, Widget, EdgeInsets, Icon, TextStyle, MainAxisSize, Text, showDialog, Padding, BorderRadius, BoxDecoration, Theme, FontWeight, BoxFit, Column, DefaultTextStyle, Container, TickerProviderStateMixin, AnimationController, Transform, Offset, AnimatedBuilder, Animation, Tween, Colors, AnimationStatus, SingleChildScrollView;
+    show AutomaticKeepAliveClientMixin, BuildContext, Widget, EdgeInsets, Icon, TextStyle, MainAxisSize, Text, showDialog, Padding, BorderRadius, BoxDecoration, Theme, FontWeight, BoxFit, Column, DefaultTextStyle, Container, TickerProviderStateMixin, AnimationController, Transform, Offset, AnimatedBuilder, Animation, Tween, Colors, AnimationStatus, SingleChildScrollView, Curves, CurvedAnimation, Interval, Opacity, BoxShadow, SlideTransition;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -25,7 +25,10 @@ class Receipt extends ConsumerStatefulWidget {
 class ReceiptState extends ConsumerState<Receipt>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   late final AnimationController animationController;
-  late final Animation<double> animation;
+  late final Animation<Offset> slideAnimation;
+  late final Animation<double> scaleAnimation;
+  late final Animation<double> rotationAnimation;
+  late final Animation<double> opacityAnimation;
   late final bool autoClose;
 
   @override
@@ -35,13 +38,50 @@ class ReceiptState extends ConsumerState<Receipt>
 
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2, milliseconds: 500),
+      duration: const Duration(seconds: 3),
     );
-    animation = Tween(begin: 0.0, end: -750.0).animate(animationController);
+
+    // Multi-phase animation that simulates printer paper coming out
+    // Using offset (0, -1.5) means slide up by 1.5x screen height
+    slideAnimation = Tween(begin: const Offset(0, 0), end: const Offset(0, -1.5)).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 1.0, curve: Curves.easeInOut),
+      ),
+    );
+
+    // Scale animation for 3D effect
+    scaleAnimation = Tween(begin: 1.0, end: 0.85).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
+      ),
+    );
+
+    // Slight rotation for realistic paper movement
+    rotationAnimation = Tween(begin: 0.0, end: 0.02).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.1, 0.6, curve: Curves.elasticOut),
+      ),
+    );
+
+    // Fade out as it moves away
+    opacityAnimation = Tween(begin: 1.0, end: 0.3).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeInQuart),
+      ),
+    );
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
-        if (!autoClose) animationController.reset();
+        if (!autoClose) {
+          // Add a small delay before resetting to show the effect
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (mounted) animationController.reset();
+          });
+        }
       }
     });
   }
@@ -91,22 +131,35 @@ class ReceiptState extends ConsumerState<Receipt>
           AnimatedBuilder(
             animation: animationController,
             builder: (context, child) {
-              return Transform.translate(
-                offset: Offset(0.0, animation.value),
-                child: Container(
-                  margin: const EdgeInsets.all(12),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: CustomColours.grayscale,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: DefaultTextStyle(
-                    // titleSmall
-                    style: Theme.of(context).textTheme.titleSmall!,
-                    child: Column(
-                      spacing: 18,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
+              return Opacity(
+                opacity: opacityAnimation.value,
+                child: SlideTransition(
+                  position: slideAnimation,
+                  child: Transform.scale(
+                    scale: scaleAnimation.value,
+                    child: Transform.rotate(
+                      angle: rotationAnimation.value,
+                      child: Container(
+                        margin: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: CustomColours.grayscale,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.1 * opacityAnimation.value),
+                              blurRadius: 8 * scaleAnimation.value,
+                              offset: Offset(0, 4 * scaleAnimation.value),
+                            ),
+                          ],
+                        ),
+                    child: DefaultTextStyle(
+                      // titleSmall
+                      style: Theme.of(context).textTheme.titleSmall!,
+                      child: Column(
+                        spacing: 18,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                         Text(
                           (ReceiptSectionEnum.MERCHANT == receiptViewModel.type)
                               ? l10n.merchantReceipt
@@ -185,6 +238,9 @@ class ReceiptState extends ConsumerState<Receipt>
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                      ),
                     ),
                   ),
                 ),

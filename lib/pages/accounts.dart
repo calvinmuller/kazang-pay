@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Scaffold, Theme, Widget, EdgeInsets, TextAlign, Text, Padding, Column, Expanded, ListView;
+    show BuildContext, Theme, Widget, EdgeInsets, TextAlign, Text, Padding, Column, Expanded, ListView, FractionallySizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show WidgetRef, ConsumerWidget, StateProvider;
 
 import 'package:go_router/go_router.dart';
 
+import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/account_item.dart';
 import '../common/widgets/button.dart' show Button;
 import '../common/widgets/panel.dart';
@@ -22,9 +23,9 @@ class AccountsPage extends ConsumerWidget {
     final accounts = GoRouterState.of(context).extra as List<dynamic>;
     final selectedAccount = ref.watch(selectedAccountProvider);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Panel(
+    return FractionallySizedBox(
+      widthFactor: Responsive.isLgUp(context) ? 0.5: null,
+      child: Panel(
         child: Column(
           children: [
             Expanded(

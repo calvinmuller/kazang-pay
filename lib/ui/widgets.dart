@@ -94,16 +94,16 @@ class LottieWidget extends StatelessWidget {
 // HiddenOnMobile is a widget that can be used to hide content on i5300
 class HiddenOnMobile extends StatelessWidget {
   const HiddenOnMobile(
-      {super.key, required this.child, this.alternate = const SizedBox()});
+      {super.key, required this.child, this.alternate = const SizedBox(), this.hideOnTablet = false});
 
   final Widget child;
   final Widget alternate;
+  final bool hideOnTablet;
 
   @override
   Widget build(BuildContext context) {
-    final isMobile =
-        MediaQuery.of(context).size.width < 350; // Example breakpoint
-    return isMobile ? alternate : child;
+    final isMobile = MediaQuery.of(context).size.width < 350; // Example breakpoint
+    return isMobile || hideOnTablet ? alternate : child;
   }
 }
 

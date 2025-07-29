@@ -440,8 +440,23 @@ class AppLocalizationsAm extends AppLocalizations {
   String get no => 'No';
 
   @override
-  String get updateKeys => 'Updating Keys...';
+  String get updateKeys => 'ቁልፎችን ማዘመን...';
 
   @override
-  String get osUpdateRequired => 'OS Update Required';
+  String get osUpdateRequired => 'የኦኤስ ማዘመን ይፈለጋል';
+
+  @override
+  String get transactionDetails => 'የግብይት ዝርዝሮች';
+
+  @override
+  String get cashback => 'የገንዘብ መልሶ ክፈላ';
+
+  @override
+  String get saleAmount => 'Sale Amount:';
+
+  @override
+  String get totalAmount => 'Total:';
+
+  @override
+  String get selectSettingToConfig => 'ለማዋቀር ከግራ ወግ መቼት ይምረጡ';
 }

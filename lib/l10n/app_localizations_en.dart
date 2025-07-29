@@ -448,6 +448,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get osUpdateRequired => 'OS Update Required';
+
+  @override
+  String get transactionDetails => 'Transaction Details:';
+
+  @override
+  String get cashback => 'Cashback:';
+
+  @override
+  String get saleAmount => 'Sale Amount:';
+
+  @override
+  String get totalAmount => 'Total:';
+
+  @override
+  String get selectSettingToConfig =>
+      'Select a setting from the left to configure';
 }
 
 /// The translations for English, as used in South Africa (`en_ZA`).

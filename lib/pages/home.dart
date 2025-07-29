@@ -5,7 +5,6 @@ import 'package:flutter/material.dart'
         BoxDecoration,
         Icon,
         EdgeInsets,
-        Color,
         TextStyle,
         Theme,
         Colors,
@@ -23,8 +22,10 @@ import 'package:flutter/material.dart'
         MainAxisAlignment,
         Row,
         Expanded,
-        Scaffold,
-        FractionallySizedBox;
+        FractionallySizedBox,
+        Alignment,
+        BorderRadius,
+        Radius;
 import 'package:flutter/widgets.dart' show FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
@@ -36,6 +37,8 @@ import '../common/providers/app.provider.dart';
 import '../common/providers/payment.controller.dart';
 import '../common/providers/tcp.provider.dart' show tcpServerProvider;
 import '../common/widgets/button.dart';
+import '../common/widgets/responsive_scaffold.dart';
+import '../common/utils/responsive.dart';
 import '../core/core.dart';
 import '../helpers/transaction_helper.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
@@ -69,57 +72,58 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     final merchantInfo = ref.watch(
       appNotifierProvider.select((state) => state.profile!.merchantConfig),
     );
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: headerGradient,
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => context.goNamed('settings'),
-          ),
-          title: const LogoWidget(widthFactor: 0.8),
-        ),
-        body: PopOnEnter(
-          focusNode: _focusNode,
-          onEnterPressed: () => context.pushNamed('new-sale'),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              HiddenOnMobile(
-                alternate: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 15),
-                  decoration: homeDecoration,
-                  child: Text(
-                    l10n.companyWelcome(merchantInfo.tradingName),
-                    style: theme.textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+    return ResponsiveScaffold(
+      resizeToAvoidBottomInset: false,
+      body: PopOnEnter(
+        focusNode: _focusNode,
+        onEnterPressed: () => context.pushNamed('new-sale'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // The container for the header text and border
+            Container(
+              decoration: const BoxDecoration(
+                gradient: headerGradient,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
                 ),
-                child: FractionallySizedBox(
-                  widthFactor: 0.95,
-                  child: Container(
-                    height: context.dynamicSize(250, 150),
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 15,
+              ),
+              padding: const EdgeInsets.only(bottom: 10),
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AppBar(
+                    backgroundColor: Colors.transparent,
+                    leading: IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () => context.goNamed('settings'),
                     ),
-                    decoration: homeDecoration,
-                    child: HiddenOnMobile(
+                    title: const LogoWidget(widthFactor: 0.8),
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: 0.95,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 15,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: responsive(context, xs: 12, sm: 32, lg: 42),
+                        horizontal:
+                            responsive(context, xs: 8, sm: 24, lg: 42),
+                      ),
+                      decoration: homeDecoration,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 10,
                         children: [
-                          Text(
-                            l10n.welcome,
-                            style: theme.textTheme.headlineLarge,
-                            textAlign: TextAlign.center,
+                          HiddenOnMobile(
+                            child: Text(
+                              l10n.welcome,
+                              style: theme.textTheme.headlineLarge,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           Text(
                             l10n.companyWelcome(merchantInfo.tradingName),
@@ -132,70 +136,68 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 50),
-                  color: const Color(0xFFFCFFD6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 12.0),
-                        child: Button(
-                          colour: CustomColours.greenish,
-                          textColour: CustomColours.black,
-                          height: context.dynamicSize(90, 72),
-                          onPressed: () => context.pushNamed('new-sale'),
-                          icon: const Icon(
-                            CustomIcons.card,
-                            size: 37,
-                          ),
-                          child: Text(l10n.newSale),
-                        ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Button(
+                      colour: CustomColours.greenish,
+                      textColour: CustomColours.black,
+                      height: context.dynamicSize(90, 72),
+                      onPressed: () => context.pushNamed('new-sale'),
+                      icon: const Icon(
+                        CustomIcons.card,
+                        size: 37,
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 12.0),
-                          child: Row(
-                            spacing: 2,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Button(
-                                height: 54,
-                                colour: CustomColours.white,
-                                icon: const Icon(
-                                  CustomIcons.document,
-                                  size: 24,
-                                ),
-                                onPressed: () {
-                                  showPinDialog(
-                                    iconData: CustomIcons.lock,
-                                    title: l10n.enterPin,
-                                    ref: ref,
-                                    callback: () =>
-                                        context.goNamed('transaction-history'),
-                                  );
-                                },
-                                child: Text(
-                                  l10n.transactionHistory,
-                                  style: const TextStyle(letterSpacing: 0.1),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      child: Text(l10n.newSale),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: responsive(context, xs: 12, sm: 14, lg: 16),
+                        horizontal:
+                            responsive(context, xs: 8, sm: 10, lg: 12),
+                      ),
+                      child: Row(
+                        spacing: 2,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Button(
+                            height: 54,
+                            colour: CustomColours.white,
+                            icon: const Icon(
+                              CustomIcons.document,
+                              size: 24,
+                            ),
+                            onPressed: () {
+                              showPinDialog(
+                                iconData: CustomIcons.lock,
+                                title: l10n.enterPin,
+                                ref: ref,
+                                callback: () =>
+                                    context.goNamed('transaction-history'),
+                              );
+                            },
+                            child: Text(
+                              l10n.transactionHistory,
+                              style: const TextStyle(letterSpacing: 0.1),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

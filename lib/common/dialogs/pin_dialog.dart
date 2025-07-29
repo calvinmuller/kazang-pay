@@ -12,7 +12,6 @@ import 'package:flutter/material.dart'
         Form,
         Navigator,
         MaterialPageRoute,
-        showModalBottomSheet,
         Colors,
         IconData,
         Color,
@@ -22,6 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
+import '../../helpers/dialog_helpers.dart' show showBottomSheet;
 import '../../l10n/app_localizations.dart';
 import '../../models/pin.dart' show PinDialogConfig;
 import '../../ui/widgets.dart';
@@ -166,7 +166,7 @@ showPinDialog({
         reset: reset,
         iconData: iconData,
       );
-  final result = await showModalBottomSheet(
+  final result = await showBottomSheet(
     isScrollControlled: true,
     showDragHandle: true,
     context: ref.context,

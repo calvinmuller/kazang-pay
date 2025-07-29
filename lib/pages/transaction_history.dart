@@ -22,7 +22,6 @@ import 'package:flutter/material.dart'
         showDateRangePicker,
         Row,
         NestedScrollView,
-        Scaffold,
         DefaultTabController;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
@@ -48,11 +47,14 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
 
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
+      child: ResponsiveScaffold(
         appBar: AppBar(
           title: Text(l10n.transactionHistoryTitle),
           centerTitle: false,
         ),
+        mainWidgetFlex: 2,
+        sideWidgetFlex: 3,
+        sideWidget: const NestedTransactionDetails(),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerScrolled) {
             return [

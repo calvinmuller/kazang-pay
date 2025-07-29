@@ -18,7 +18,7 @@ import 'package:flutter/material.dart'
         MainAxisAlignment,
         Padding,
         InkWell;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ConsumerWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -27,20 +27,32 @@ import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme.dart';
 import '../providers/transaction.provider.dart' show currentTransactionItem;
+import '../utils/responsive.dart';
+import 'nested_transaction_details.dart';
 
 class TransactionItem extends ConsumerWidget {
   const TransactionItem({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final item = ref.watch(currentTransactionItem);
     final df = DateFormat('yyyy-MM-dd HH:mm:ss');
+    final isLargeDevice = Responsive.isLgUp(context);
 
     return Container(
       decoration: panelDecoration,
       child: InkWell(
-        onTap: () => context.pushNamed('details', extra: item),
+        onTap: () {
+          if (isLargeDevice) {
+            // Use nested navigation on large screens
+            ref.read(selectedDetailProvider.notifier).state = 
+                TransactionDetailView(item);
+          } else {
+            // Use full-screen navigation on small screens
+            context.pushNamed('details', extra: item);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

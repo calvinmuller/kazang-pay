@@ -1,41 +1,38 @@
 import 'package:flutter/material.dart'
-    show
-        AlertDialog,
-        Navigator,
-        Text,
-        TextButton,
-        Widget,
-        showDialog,
-        showModalBottomSheet,
-        Clip,
-        BuildContext,
-        EdgeInsets,
-        SizedBox,
-        BorderSide,
-        Colors,
-        BorderRadius,
-        MainAxisSize,
-        FontWeight,
-        TextStyle,
-        TextAlign,
-        ElevatedButton,
-        RoundedRectangleBorder,
-        OutlinedButton,
-        Column,
-        Padding;
+    show AlertDialog, Navigator, Text, TextButton, Widget, showDialog, showModalBottomSheet, BuildContext, EdgeInsets, SizedBox, BorderSide, Colors, BorderRadius, MainAxisSize, FontWeight, TextStyle, TextAlign, ElevatedButton, RoundedRectangleBorder, OutlinedButton, Column, Padding, MediaQuery, WidgetBuilder, Dialog, FractionallySizedBox, AnimationStyle;
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/widgets/list_dialog.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
 
-showBottomSheet(context, Widget dialog) async {
-  return await showModalBottomSheet(
-    clipBehavior: Clip.none,
-    context: context,
-    showDragHandle: true,
-    builder: (context) => dialog,
-  );
+showBottomSheet({
+  required bool isScrollControlled,
+  required bool showDragHandle,
+  required BuildContext context,
+  required WidgetBuilder builder,
+  required AnimationStyle sheetAnimationStyle,
+}) async {
+  final mediaQuery = MediaQuery.of(context);
+
+  // show a dialog instead of modal bottom sheet is screen is larger than 900px
+  if (mediaQuery.size.width > 900) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => FractionallySizedBox(
+        widthFactor: 0.5,
+        child: Dialog(child: builder(context)),
+      ),
+    );
+  } else {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: isScrollControlled,
+      showDragHandle: showDragHandle,
+      builder: (context) => builder(context),
+    );
+  }
 }
 
 showListDialog(mainContext, List<dynamic> items, {String? title}) {

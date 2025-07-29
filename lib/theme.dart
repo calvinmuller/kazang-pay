@@ -112,7 +112,7 @@ TextTheme createTextTheme(BuildContext context) {
     titleLarge: baseTextTheme.titleMedium!
         .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
     headlineLarge:
-        baseTextTheme.headlineLarge!.copyWith(fontWeight: FontWeight.bold, fontSize: 36),
+        baseTextTheme.headlineLarge!.copyWith(fontWeight: FontWeight.bold, fontSize: 32),
     displaySmall: baseTextTheme.displaySmall!
         .copyWith(fontWeight: FontWeight.bold, fontSize: 32),
     displayLarge: baseTextTheme.displayLarge!

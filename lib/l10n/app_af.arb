@@ -274,5 +274,11 @@
   "@no": {},
   "transactionCompleted": "Transaksie Voltooi",
   "@transactionCompleted": {},
-  "transactionCompletedPrompt": "'Kies “Ja” om na die Kazang App terug te keer.\\nKies “Nee” om te verlaat.'"
+  "transactionCompletedPrompt": "'Kies \"Ja\" om na die Kazang App terug te keer.\\nKies \"Nee\" om te verlaat.'",
+  "updateKeys": "Opdateer sleutels...",
+  "osUpdateRequired": "OS opdatering nodig",
+  "transactionDetails": "Transaksie Besonderhede",
+  "cashback": "Kontantteruggawe",
+  "type": "Tipe",
+  "selectSettingToConfig": "Kies 'n instelling van die linkerkant om te konfigureer"
 }

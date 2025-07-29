@@ -274,6 +274,11 @@
   "@no": {},
   "transactionCompleted": "Qaddarka, la dhammeeyey",
   "@transactionCompleted": {},
-  "transactionCompletedPrompt": "'Dooro “Haa” si aad ugu laabato App-ka Kazang.\nDooro “Maya” si aad uga baxdo.'",
-  "@transactionCompletedPrompt": {}
+  "transactionCompletedPrompt": "'Dooro \"Haa\" si aad ugu laabato App-ka Kazang.\nDooro \"Maya\" si aad uga baxdo.'",
+  "@transactionCompletedPrompt": {},
+  "updateKeys": "Cusboonaysiintu furayaasha...",
+  "osUpdateRequired": "Waxaa loo baahan yahay cusboonaysiinta OS",
+  "transactionDetails": "Faahfaahinta Macaamilka",
+  "cashback": "Lacag Dib u Celin",
+  "type": "Nooca"
 }

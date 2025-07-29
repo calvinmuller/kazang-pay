@@ -942,6 +942,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OS Update Required'**
   String get osUpdateRequired;
+
+  /// No description provided for @transactionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Details:'**
+  String get transactionDetails;
+
+  /// No description provided for @cashback.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashback:'**
+  String get cashback;
+
+  /// No description provided for @saleAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale Amount:'**
+  String get saleAmount;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total:'**
+  String get totalAmount;
+
+  /// No description provided for @selectSettingToConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a setting from the left to configure'**
+  String get selectSettingToConfig;
 }
 
 class _AppLocalizationsDelegate

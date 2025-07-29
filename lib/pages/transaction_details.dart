@@ -44,12 +44,14 @@ import '../ui/widgets.dart';
 import 'pages.dart';
 
 class TransactionDetails extends ConsumerWidget {
-  const TransactionDetails({super.key});
+  const TransactionDetails({super.key, this.transaction});
+
+  final Transaction? transaction;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final transaction = GoRouterState.of(context).extra as Transaction;
+    final transaction = this.transaction ?? GoRouterState.of(context).extra as Transaction;
 
     return DefaultTabController(
       length: 2,

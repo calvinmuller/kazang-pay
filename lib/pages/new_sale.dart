@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment, MainAxisAlignment;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, CrossAxisAlignment, MainAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,12 +16,13 @@ class NewSalePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasPinPad = context.hasPinPad();
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
+    return ResponsiveScaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(l10n.newSale),
       ),
+      sideWidget: const TransactionDetailsWidget(),
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 8),
         child: Column(

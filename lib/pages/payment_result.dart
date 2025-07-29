@@ -18,7 +18,6 @@ import 'package:flutter/material.dart'
         IconAlignment,
         Icons,
         Column,
-        Scaffold,
         ListView,
         Navigator,
         FocusNode;
@@ -35,9 +34,7 @@ import '../common/providers/payment.controller.dart'
     show paymentControllerProvider, PaymentController;
 import '../common/providers/transaction.provider.dart';
 import '../common/widgets/animated_borders.dart';
-import '../common/widgets/button.dart';
-import '../common/widgets/panel.dart';
-import '../common/widgets/receipt_tabs.dart';
+import '../common/widgets/widgets.dart';
 import '../core/core.dart';
 import '../helpers/currency_helpers.dart';
 import '../helpers/dialog_helpers.dart';
@@ -137,7 +134,7 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
             ? borderGradient['success']!
             : borderGradient['error']!,
         borderRadius: BorderRadius.zero,
-        child: Scaffold(
+        child: ResponsiveScaffold(
           resizeToAvoidBottomInset: false,
           extendBodyBehindAppBar: true,
           extendBody: true,
