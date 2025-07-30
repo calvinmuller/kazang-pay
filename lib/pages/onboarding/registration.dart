@@ -24,10 +24,7 @@ import 'package:flutter/material.dart'
         Card,
         primaryFocus,
         UnfocusDisposition,
-        ScaffoldMessenger,
-        SnackBar,
         ListView,
-        Scaffold,
         TextInputType;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget;
@@ -37,8 +34,10 @@ import '../../common/exceptions.dart' show AddDeviceException;
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
 import '../../common/providers/device_info.dart';
-import '../../common/widgets/widgets.dart' show Button, Label, FormField, ResponsiveScaffold;
+import '../../common/widgets/widgets.dart'
+    show Button, Label, FormField, ResponsiveScaffold;
 import '../../core/constants.dart';
+import '../../helpers/dialog_helpers.dart' show showErrorDialog;
 import '../../l10n/app_localizations.dart';
 import '../../models/crm.dart';
 import '../../models/kazang.dart';
@@ -105,33 +104,34 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: borderRadiusSmall,
-                    color: CustomColours.lightGray,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: CustomColours.lightGray,
-                        width: 1,
-                      ),
+                decoration: const BoxDecoration(
+                  borderRadius: borderRadiusSmall,
+                  color: CustomColours.lightGray,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: CustomColours.lightGray,
+                      width: 1,
                     ),
                   ),
-                  margin: const EdgeInsets.all(12),
-                  padding: const EdgeInsets.all(12),
-                  child: RichText(
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodySmall,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: l10n.standalone,
-                          style: const TextStyle(
-                            color: CustomColours.orange,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+                margin: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodySmall,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: l10n.standalone,
+                        style: const TextStyle(
+                          color: CustomColours.orange,
+                          fontWeight: FontWeight.bold,
                         ),
-                        TextSpan(text: l10n.signIn),
-                      ],
-                    ),
-                  )),
+                      ),
+                      TextSpan(text: l10n.signIn),
+                    ],
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Form(
@@ -238,12 +238,9 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                 } on AddDeviceException catch (e) {
                   if (context.mounted) {
                     context.pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: CustomColours.red,
-                        content: Text(e.message),
-                        duration: const Duration(seconds: 5),
-                      ),
+                    showErrorDialog(
+                      context,
+                      e.message,
                     );
                   }
                 }

@@ -28,23 +28,22 @@ import 'package:flutter/material.dart'
         FractionallySizedBox,
         AnimationStyle;
 import '../common/dialogs/confirm_dialog.dart';
+import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/list_dialog.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
 
-showBottomSheet<T>({
+Future<T?> showBottomSheet<T>({
   required bool isScrollControlled,
   required bool showDragHandle,
   required BuildContext context,
   required WidgetBuilder builder,
   AnimationStyle? sheetAnimationStyle,
 }) async {
-  final mediaQuery = MediaQuery.of(context);
-
   // show a dialog instead of modal bottom sheet is screen is larger than 900px
-  if (mediaQuery.size.width > 900) {
-    return showDialog(
+  if (Responsive.isLgUp(context)) {
+    return showDialog<T?>(
       context: context,
       barrierDismissible: false,
       builder: (context) => FractionallySizedBox(
@@ -53,7 +52,7 @@ showBottomSheet<T>({
       ),
     );
   } else {
-    return showModalBottomSheet(
+    return showModalBottomSheet<T?>(
       context: context,
       isScrollControlled: isScrollControlled,
       showDragHandle: showDragHandle,
@@ -116,8 +115,8 @@ showErrorDialog(context, String? message,
   );
 }
 
-showConfirmationDialog(BuildContext context) {
-  return showBottomSheet(
+Future<bool?> showConfirmationDialog(BuildContext context) {
+  return showBottomSheet<bool>(
     context: context,
     isScrollControlled: context.hasPinPad(),
     showDragHandle: true,
@@ -127,7 +126,7 @@ showConfirmationDialog(BuildContext context) {
 
 Future<bool?> showTransactionCompletedSheet(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
-  return showBottomSheet<bool>(
+  return showBottomSheet<bool?>(
     context: context,
     showDragHandle: true,
     builder: (_) {
