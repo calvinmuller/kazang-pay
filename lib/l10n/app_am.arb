@@ -189,5 +189,11 @@
   "transactionCompleted": "ግብይቱ ተጠናቋል",
   "transactionCompletedPrompt": "ግብይቱ ተጠናቋል፣ የግብይት መረጃዎን ይመልከቱ።",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "updateKeys": "ቁልፎችን ማዘመን...",
+  "osUpdateRequired": "የኦኤስ ማዘመን ይፈለጋል",
+  "transactionDetails": "የግብይት ዝርዝሮች",
+  "cashback": "የገንዘብ መልሶ ክፈላ",
+  "type": "ዓይነት",
+  "selectSettingToConfig": "ለማዋቀር ከግራ ወግ መቼት ይምረጡ"
 }

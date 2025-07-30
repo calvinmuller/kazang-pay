@@ -443,7 +443,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get transactionCompletedPrompt =>
-      '\'Kies “Ja” om na die Kazang App terug te keer.\\nKies “Nee” om te verlaat.\'';
+      '\'Kies \"Ja\" om na die Kazang App terug te keer.\\nKies \"Nee\" om te verlaat.\'';
 
   @override
   String get yes => 'Ja';
@@ -452,8 +452,30 @@ class AppLocalizationsAf extends AppLocalizations {
   String get no => 'Nee';
 
   @override
-  String get updateKeys => 'Updating Keys...';
+  String get updateKeys => 'Opdateer sleutels...';
 
   @override
-  String get osUpdateRequired => 'OS Update Required';
+  String get osUpdateRequired => 'OS opdatering nodig';
+
+  @override
+  String get transactionDetails => 'Transaksie Besonderhede';
+
+  @override
+  String get cashback => 'Kontantteruggawe';
+
+  @override
+  String get saleAmount => 'Sale Amount:';
+
+  @override
+  String get totalAmount => 'Total:';
+
+  @override
+  String get selectSettingToConfig =>
+      'Kies \'n instelling van die linkerkant om te konfigureer';
+
+  @override
+  String get manageReceipts => 'Manage Receipts';
+
+  @override
+  String get selectToView => 'Select To View';
 }

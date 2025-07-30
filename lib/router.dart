@@ -8,6 +8,7 @@ import 'common/providers/app.provider.dart' show appNotifierProvider;
 import 'common/widgets/widgets.dart';
 import 'core/constants.dart' show navigatorKey;
 import 'pages/pages.dart';
+import 'routes/settings_routes.dart' show settingsRoutes;
 
 final routerProvider = Provider<GoRouter>((ref) {
   final isSetup =
@@ -61,39 +62,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             return const NewSalePage();
           },
         ),
-        GoRoute(
-          name: 'settings',
-          path: 'settings',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SettingsPage();
-          },
-          routes: [
-            GoRoute(
-              name: 'profile',
-              path: 'profile',
-              builder: (BuildContext context, GoRouterState state) =>
-                  const SettingsProfile(),
-            ),
-            GoRoute(
-              name: 'language',
-              path: 'language',
-              builder: (BuildContext context, GoRouterState state) =>
-                  const SettingsLanguage(),
-            ),
-            GoRoute(
-              name: 'pin',
-              path: 'pin',
-              builder: (BuildContext context, GoRouterState state) =>
-                  const SettingsPin(),
-            ),
-            GoRoute(
-              name: 'proxy',
-              path: 'proxy',
-              builder: (BuildContext context, GoRouterState state) =>
-                  const SettingsProxy(),
-            )
-          ],
-        ),
+        settingsRoutes,
         GoRoute(
           name: 'transaction-history',
           path: 'transaction-history',
@@ -141,11 +110,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             )
           ],
-        ),
-        GoRoute(
-          path: 'accounts',
-          name: 'accounts',
-          builder: (context, state) => const AccountsPage(),
         ),
       ],
     ),

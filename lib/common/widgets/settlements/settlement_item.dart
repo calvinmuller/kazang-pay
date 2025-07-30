@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 import '../../../core/constants.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../providers/transaction.provider.dart';
+import '../../utils/responsive.dart';
 import '../widgets.dart' show Button;
+import '../nested_transaction_details.dart';
 import 'settlement_total.dart';
 
 class SettlementItem extends ConsumerWidget {
@@ -17,6 +19,7 @@ class SettlementItem extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final format = DateFormat('d MMMM yyyy');
     final settlement = ref.read(currentSettlement);
+    final isLargeDevice = Responsive.isLgUp(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,7 +49,16 @@ class SettlementItem extends ConsumerWidget {
               ),
               Expanded(
                 child: Button.secondary(
-                  onPressed: () => context.pushNamed('summary-details', extra: settlement),
+                  onPressed: () {
+                    if (isLargeDevice) {
+                      // Use nested navigation on large screens
+                      ref.read(selectedDetailProvider.notifier).state = 
+                          SettlementDetailView(settlement);
+                    } else {
+                      // Use full-screen navigation on small screens
+                      context.pushNamed('summary-details', extra: settlement);
+                    }
+                  },
                   radius: 10,
                   textColour: CustomColours.black,
                   borderColour: CustomColours.black,

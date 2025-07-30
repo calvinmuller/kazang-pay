@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart'
     show
         BuildContext,
-        Scaffold,
         Widget,
         EdgeInsets,
         Text,
-        AppBar,
         MainAxisSize,
         CrossAxisAlignment,
         Theme,
@@ -17,6 +15,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/providers/app.provider.dart';
+import '../../common/widgets/responsive_page_wrapper.dart';
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -27,12 +26,9 @@ class SettingsLanguage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final appState = ref.watch(appNotifierProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.profile),
-      ),
-      body: Container(
+    return ResponsivePageWrapper(
+      title: l10n.language,
+      builder: (context) => Container(
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(12),
         decoration: panelDecoration,
@@ -41,18 +37,22 @@ class SettingsLanguage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 10,
           children: [
-            Text(l10n.language, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.left),
+            Text(l10n.language,
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.left),
             DropdownMenu(
               label: Text(l10n.language),
               initialSelection: appState.language!,
               onSelected: (locale) =>
                   ref.read(appNotifierProvider.notifier).setLocale(locale),
-              dropdownMenuEntries: AppLocalizations.supportedLocales.map(
+              dropdownMenuEntries: AppLocalizations.supportedLocales
+                  .map(
                     (locale) => DropdownMenuEntry(
                       value: locale.toString(),
                       label: label(locale.toString()),
                     ),
-                  ).toList(),
+                  )
+                  .toList(),
             ),
           ],
         ),
