@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart'
 
 import '../common/utils/responsive.dart';
 import '../common/widgets/default_widget.dart';
-import '../common/widgets/transaction_details.dart';
 import '../pages/pages.dart';
 
 final settingsNavigatorKey = GlobalKey<NavigatorState>();

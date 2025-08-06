@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card, FractionallySizedBox, BorderSide, BoxDecoration, Container, ListView, Expanded;
+    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card, FractionallySizedBox, BorderSide, BoxDecoration, Container, ListView, Expanded, Radius;
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -46,8 +46,11 @@ class _ListDialogState extends State<ListDialog> {
     return FractionallySizedBox(
       widthFactor: Responsive.isLgUp(context) ? 0.5 : null,
       child: Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
         color: Colors.white,
-        elevation: 10,
+        elevation: 0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

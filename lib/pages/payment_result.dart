@@ -225,7 +225,6 @@ class _PaymentResultPageState extends ConsumerState<PaymentResultPage>
             final appState = ref.read(appNotifierProvider);
             if (appState.externallyLaunched!) {
               final result = await showTransactionCompletedSheet(context);
-              print(result);
               if (result == true) {
                 SystemNavigator.pop();
               } else {

@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart' show StatelessWidget, Widget, BuildContext, EdgeInsets, BorderRadius, CrossAxisAlignment, Colors, Radius, BoxDecoration, Container, Expanded, Column, SafeArea;
 
-
-import 'package:flutter/material.dart' show StatelessWidget, Widget, BuildContext, EdgeInsets, BorderRadius, CrossAxisAlignment, Colors, BoxShadow, Radius, BoxDecoration, Container, Expanded, Column, SafeArea;
+import '../../core/constants.dart' show shadow;
 
 class Panel extends StatelessWidget {
   const Panel({super.key, required this.child, this.footer});
@@ -19,13 +19,7 @@ class Panel extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.09),
-                      blurRadius: 6,
-                      spreadRadius: 2,
-                    ),
-                  ],
+                  boxShadow: shadow,
                   borderRadius: (footer == null)
                       ? const BorderRadius.all(Radius.circular(10))
                       : const BorderRadius.only(

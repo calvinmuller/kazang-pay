@@ -4,7 +4,6 @@ import 'package:flutter/material.dart'
         Color,
         BorderRadius,
         Radius,
-        Colors,
         Offset,
         BoxShadow,
         BoxDecoration,
@@ -21,12 +20,11 @@ const headerGradient = LinearGradient(
 );
 
 final homeDecoration = BoxDecoration(
-  border: Border.all(
-    color: CustomColours.primaryNeutral,
-    width: 1,
-  ),
-  borderRadius: borderRadius
-);
+    border: Border.all(
+      color: CustomColours.primaryNeutral,
+      width: 1,
+    ),
+    borderRadius: borderRadius);
 
 const borderGradient = {
   'error': [
@@ -77,24 +75,17 @@ class CustomColours {
 
 const shadow = [
   BoxShadow(
-    color: Colors.black12,
-    blurRadius: 3,
-    spreadRadius: 1,
-    offset: Offset(0, 0.5),
-  )
+    color: Color.fromRGBO(0, 0, 0, 0.09),
+    offset: Offset(0, 1),
+    blurRadius: 6,
+    spreadRadius: 2,
+  ),
 ];
 
 const panelDecoration = BoxDecoration(
   color: CustomColours.white,
   borderRadius: borderRadiusSmall,
-  boxShadow: [
-    BoxShadow(
-      color: Colors.black12,
-      blurRadius: 3,
-      spreadRadius: 1,
-      offset: Offset(0, 1),
-    )
-  ],
+  boxShadow: shadow,
 );
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, CrossAxisAlignment, MainAxisAlignment;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, CrossAxisAlignment, MainAxisAlignment, SizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,7 +38,7 @@ class NewSalePage extends StatelessWidget {
               flex: hasPinPad ? 0 : 1,
               child: const KeyPad(),
             ),
-            Consumer(
+            if (!Responsive.isLg(context)) Consumer(
               builder: (context, ref, child) {
                 final payment = ref.watch(paymentNotifierProvider);
 
@@ -58,7 +58,7 @@ class NewSalePage extends StatelessWidget {
                   child: Text(l10n.pay),
                 );
               },
-            ),
+            ) else const SizedBox(),
           ],
         ),
       ),

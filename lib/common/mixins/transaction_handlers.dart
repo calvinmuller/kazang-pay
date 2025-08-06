@@ -39,7 +39,6 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
     ref.read(transactionStepProvider.notifier).state = 3;
     final result = await showListDialog(context, event.value,
         title: l10n.selectAccount, inverted: true);
-    print(result);
     if (result != null) {
       TransactionHelper.continueTransaction(result['index'], result['value']);
     } else {

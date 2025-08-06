@@ -22,11 +22,12 @@ import 'package:flutter/material.dart'
         OutlinedButton,
         Column,
         Padding,
-        MediaQuery,
         WidgetBuilder,
         Dialog,
         FractionallySizedBox,
-        AnimationStyle;
+        AnimationStyle,
+        Radius;
+
 import '../common/dialogs/confirm_dialog.dart';
 import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/list_dialog.dart';
@@ -47,8 +48,17 @@ Future<T?> showBottomSheet<T>({
       context: context,
       barrierDismissible: false,
       builder: (context) => FractionallySizedBox(
-        widthFactor: 0.5,
-        child: Dialog(child: builder(context)),
+        widthFactor: 0.4,
+        child: Dialog(
+          elevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: builder(context),
+          ),
+        ),
       ),
     );
   } else {
@@ -67,6 +77,7 @@ showListDialog(mainContext, List<dynamic> items,
   return showDialog(
     context: mainContext,
     barrierDismissible: false,
+    barrierColor: CustomColours.beige,
     useRootNavigator: true,
     builder: (context) => ListDialog(
       items: items,

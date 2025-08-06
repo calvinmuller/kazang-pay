@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart' show SvgPicture;
 
-import '../../core/constants.dart';
-import '../../l10n/app_localizations.dart';
-import '../../core/core.dart';
 import '../../pages/pages.dart';
 import 'widgets.dart' show DefaultWidget;
 
@@ -34,7 +30,6 @@ class NestedTransactionDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDetail = ref.watch(selectedDetailProvider);
-    final l10n = AppLocalizations.of(context)!;
 
     if (selectedDetail == null) {
       return const DefaultWidget();

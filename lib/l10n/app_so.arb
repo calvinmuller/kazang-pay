@@ -1,284 +1,575 @@
 {
   "@@locale": "so",
   "accountBalance": "Hantida Xisaabta",
-  "@accountBalance": {},
+  "@accountBalance": {
+    "description": "EN: Account Balance"
+  },
   "accountName": "Magaca Xisaabta: {name}",
-  "@accountName": {},
+  "@accountName": {
+    "description": "EN: Account Name: {name}"
+  },
   "accountNumber": "Gali lambarka xisaabta:",
-  "@accountNumber": {},
+  "@accountNumber": {
+    "description": "EN: Enter account number:"
+  },
   "addCashback": "Ku dar Cashback",
-  "@addCashback": {},
+  "@addCashback": {
+    "description": "EN: Add Cashback"
+  },
   "aid": "AID",
-  "@aid": {},
+  "@aid": {
+    "description": "EN: AID"
+  },
   "amount": "Qaddar:",
-  "@amount": {},
+  "@amount": {
+    "description": "EN: Amount:"
+  },
   "amountDue": "Qaddarka Lagaaga baahan yahay",
-  "@amountDue": {},
+  "@amountDue": {
+    "description": "EN: Amount Due"
+  },
   "app": "Kazang Pay",
-  "@app": {},
+  "@app": {
+    "description": "EN: Kazang Pay"
+  },
   "approved": "La oggolaaday",
-  "@approved": {},
+  "@approved": {
+    "description": "EN: Approved"
+  },
   "appType": "APP",
-  "@appType": {},
+  "@appType": {
+    "description": "EN: APP"
+  },
   "back": "Dib ugu noqo",
-  "@back": {},
+  "@back": {
+    "description": "EN: Back"
+  },
   "batteryLow": "Bateriga ayaa aad u hooseeya si ammaan ah loogu sameeyo macaamil. Fadlan ku shid qalabkaaga. {percentage}%",
-  "@batteryLow": {},
+  "@batteryLow": {
+    "description": "EN: Battery is too low to transact safely. Please charge your device. {percentage}%"
+  },
   "budgetTerm": "Xulo muddada miisaaniyadda si aad u sii wadato",
-  "@budgetTerm": {},
+  "@budgetTerm": {
+    "description": "EN: Select a budget term to continue"
+  },
   "cancel": "Jooji Qaddarka",
-  "@cancel": {},
+  "@cancel": {
+    "description": "EN: Cancel Transaction"
+  },
   "cancelled": "La joojiyey",
-  "@cancelled": {},
+  "@cancelled": {
+    "description": "EN: Cancelled"
+  },
   "cancelMessage": "Qaddarka hadda jirta waa la joojin doonaa",
-  "@cancelMessage": {},
+  "@cancelMessage": {
+    "description": "EN: Your current transaction will be cancelled"
+  },
   "cancelTitle": "Waad joojinaysaa Qaddarkan",
-  "@cancelTitle": {},
+  "@cancelTitle": {
+    "description": "EN: You are about to cancel this transaction"
+  },
   "cashbackAmount": "Qaddarka CashBack",
-  "@cashbackAmount": {},
+  "@cashbackAmount": {
+    "description": "EN: Cashback Amount"
+  },
   "checkAnother": "Hubi Xisaab kale",
-  "@checkAnother": {},
+  "@checkAnother": {
+    "description": "EN: Check Another Account"
+  },
   "checkBalance": "Hubi Xisaabta",
-  "@checkBalance": {},
+  "@checkBalance": {
+    "description": "EN: Check Balance"
+  },
   "companyWelcome": "Ku soo dhawoow {name}",
-  "@companyWelcome": {},
+  "@companyWelcome": {
+    "description": "EN: Welcome to {name}"
+  },
   "connectionError": "Khalad xiriir ayaa dhacay, fadlan isku day mar kale.",
-  "@connectionError": {},
+  "@connectionError": {
+    "description": "EN: Connection error occurred, please try again."
+  },
   "connectPos": "Xidhiidh POS",
-  "@connectPos": {},
+  "@connectPos": {
+    "description": "EN: Connect POS"
+  },
   "continueButton": "Sii wad",
-  "@continueButton": {},
+  "@continueButton": {
+    "description": "EN: Continue"
+  },
   "customerReceipt": "Rasiidhka Macmiilka",
-  "@customerReceipt": {},
+  "@customerReceipt": {
+    "description": "EN: Customer Receipt"
+  },
   "date": "Taariikhda",
-  "@date": {},
+  "@date": {
+    "description": "EN: DATE"
+  },
   "dateFilter": "Taariikhda",
-  "@dateFilter": {},
+  "@dateFilter": {
+    "description": "EN: Date"
+  },
   "declined": "La diiday",
-  "@declined": {},
+  "@declined": {
+    "description": "EN: Declined"
+  },
   "deviceSerial": "Serialka Qalabka:",
-  "@deviceSerial": {},
+  "@deviceSerial": {
+    "description": "EN: Device Serial:"
+  },
   "done": "La dhammeeyey",
-  "@done": {},
+  "@done": {
+    "description": "EN: Done"
+  },
   "enterPin": "Geli PIN si aad u aragto Taariikhda Qaddarka & Habaynta",
-  "@enterPin": {},
+  "@enterPin": {
+    "description": "EN: Enter Pin To Access Transaction History & Settlements"
+  },
   "enterPinAccessSettings": "Geli PIN si aad u gasho Dejinta",
-  "@enterPinAccessSettings": {},
+  "@enterPinAccessSettings": {
+    "description": "EN: Enter PIN To Access Settings"
+  },
   "enterSerialNumber": "Gali lambarka serialka qalabka:",
-  "@enterSerialNumber": {},
+  "@enterSerialNumber": {
+    "description": "EN: Enter Device Serial Number:"
+  },
   "error": "Khalad",
-  "@error": {},
+  "@error": {
+    "description": "EN: Error"
+  },
   "incorrectPin": "PIN khalad ah",
-  "@incorrectPin": {},
+  "@incorrectPin": {
+    "description": "EN: Invalid PIN"
+  },
   "initialized": "La abuuray",
-  "@initialized": {},
+  "@initialized": {
+    "description": "EN: Initialized"
+  },
   "insertOrTap": "Geli ama Taabo Kaarka",
-  "@insertOrTap": {},
+  "@insertOrTap": {
+    "description": "EN: Insert Or Tap Card"
+  },
   "language": "Luqad",
-  "@language": {},
+  "@language": {
+    "description": "EN: Language"
+  },
   "loading": "Loading fadlan sug",
-  "@loading": {},
+  "@loading": {
+    "description": "EN: Loading please wait"
+  },
   "loadingSettlements": "Loading Habaynta",
-  "@loadingSettlements": {},
+  "@loadingSettlements": {
+    "description": "EN: Loading Settlements"
+  },
   "manufacturer": "Soosaaraha:",
-  "@manufacturer": {},
+  "@manufacturer": {
+    "description": "EN: Manufacturer:"
+  },
   "merchantId": "Aqoonsiga Ganacsadaha",
-  "@merchantId": {},
+  "@merchantId": {
+    "description": "EN: Merchant ID"
+  },
   "merchantName": "Magaca Ganacsadaha",
-  "@merchantName": {},
+  "@merchantName": {
+    "description": "EN: Merchant Name"
+  },
   "merchantReceipt": "Rasiidhka Ganacsadaha",
-  "@merchantReceipt": {},
+  "@merchantReceipt": {
+    "description": "EN: Merchant Receipt"
+  },
   "model": "Qaabka:",
-  "@model": {},
+  "@model": {
+    "description": "EN: Model:"
+  },
   "newSale": "Iib cusub",
-  "@newSale": {},
+  "@newSale": {
+    "description": "EN: New Sale"
+  },
   "noOfSettlements": "Tirada Habaynta",
-  "@noOfSettlements": {},
+  "@noOfSettlements": {
+    "description": "EN: Number of Settlements"
+  },
   "noOfTransaction": "Tirada Qaddarka",
-  "@noOfTransaction": {},
+  "@noOfTransaction": {
+    "description": "EN: Number of Transactions"
+  },
   "noPinSet": "Ma jiraan PIN la dejiyay",
-  "@noPinSet": {},
+  "@noPinSet": {
+    "description": "EN: No PIN has been set"
+  },
   "noSettlementsFound": "Ma jiro habayn la helay",
-  "@noSettlementsFound": {},
+  "@noSettlementsFound": {
+    "description": "EN: No settlements found"
+  },
   "noTransactionsFound": "Ma jiro qaddar la helay",
-  "@noTransactionsFound": {},
+  "@noTransactionsFound": {
+    "description": "EN: No transactions found"
+  },
   "ok": "Haa",
-  "@ok": {},
+  "@ok": {
+    "description": "EN: Ok"
+  },
   "onboard1": "Hadda waxaad aqbali kartaa lacag bixinta kaarka ee iib kasta ee qalabkaaga Kazang adigoo isticmaalaya qalabkaaga Kazang Pay.",
-  "@onboard1": {},
+  "@onboard1": {
+    "description": "EN: You can now accept card payments for any sales on your Kazang device using your very own Kazang Pay device."
+  },
   "onboard2": "Hadda waxaad ku dari kartaa lacag Kazang Wallet-kaaga adigoo isticmaalaya qalabkaaga Kazang Pay, ma jirto baahi loo qabo in aad tagto bangiyada iyo khatar yar ee ganacsigaaga.",
-  "@onboard2": {},
+  "@onboard2": {
+    "description": "EN: You can now top up your Kazang Wallet using your Kazang Pay device, no more trips to the banks and less risk for your business."
+  },
   "onboard3": "Lacagaha kaarkaaga waxaa si toos ah ugu wareejin doona Kazang Wallet-kaaga.",
-  "@onboard3": {},
+  "@onboard3": {
+    "description": "EN: Your card payments will be transferred directly into your Kazang Wallet."
+  },
   "onboardingRegister": "Hambalyo, waxaad ku jirtaa tillaabada ugu dambeysa ee dejinta Akhbaarta Kazang Pay.",
-  "@onboardingRegister": {},
+  "@onboardingRegister": {
+    "description": "EN: Congratulations, you are at the final step of setting up your Kazang Pay Card Reader."
+  },
   "onboardingWelcome": "Ku soo dhawoow Kazang Pay!",
-  "@onboardingWelcome": {},
+  "@onboardingWelcome": {
+    "description": "EN: Welcome to Kazang Pay!"
+  },
   "onboardRegisterHelp": "Fadlan u oggolow Wakiilka Kazang inuu kaa caawiyo tillaabada ugu dambeysa.",
-  "@onboardRegisterHelp": {},
+  "@onboardRegisterHelp": {
+    "description": "EN: Please allow the Kazang Sales Agent to assist you with the final step."
+  },
   "pan": "PAN",
-  "@pan": {},
+  "@pan": {
+    "description": "EN: PAN"
+  },
   "password": "Gali ereyga sirta ah:",
-  "@password": {},
+  "@password": {
+    "description": "EN: Enter Password:"
+  },
   "passwordError": "Fadlan gali ereyga sirta ah.",
-  "@passwordError": {},
+  "@passwordError": {
+    "description": "EN: Please enter a password."
+  },
   "pay": "Bixinta",
-  "@pay": {},
+  "@pay": {
+    "description": "EN: Pay"
+  },
   "pending": "Xaalad sugitaan",
-  "@pending": {},
+  "@pending": {
+    "description": "EN: Pending"
+  },
   "pinLengthError": "PIN waa inuu ahaadaa 4 nambar",
-  "@pinLengthError": {},
+  "@pinLengthError": {
+    "description": "EN: PIN must be 4 digits long"
+  },
   "pinResetSuccess": "PIN-ka Supervisor si guul leh ayaa loo hagaajiyay",
-  "@pinResetSuccess": {},
+  "@pinResetSuccess": {
+    "description": "EN: Supervisor PIN reset successfully"
+  },
   "pinTooShort": "PIN waa inuu ahaadaa ugu yaraan 4 nambar",
-  "@pinTooShort": {},
+  "@pinTooShort": {
+    "description": "EN: PIN must be at least 4 digits long"
+  },
   "pleaseProvideSupervisorPin": "Fadlan gali PIN-kaaga ee Supervisor",
-  "@pleaseProvideSupervisorPin": {},
+  "@pleaseProvideSupervisorPin": {
+    "description": "EN: Please provide your supervisor pin"
+  },
   "print": "Daabac",
-  "@print": {},
+  "@print": {
+    "description": "EN: Print"
+  },
   "printerError": "Khalad daabacaadda ayaa dhacay, fadlan hubi warqadda oo isku day mar kale.",
-  "@printerError": {},
+  "@printerError": {
+    "description": "EN: Printer error occurred, please check paper and try again."
+  },
   "printing": "Daabacaya",
-  "@printing": {},
+  "@printing": {
+    "description": "EN: Printing"
+  },
   "printReceipt": "Daabac Rasiidh",
-  "@printReceipt": {},
+  "@printReceipt": {
+    "description": "EN: Print Receipt"
+  },
   "profile": "Hawlaha",
-  "@profile": {},
+  "@profile": {
+    "description": "EN: Profile"
+  },
   "profileInformation": "Macluumaadka Profile-ka",
-  "@profileInformation": {},
+  "@profileInformation": {
+    "description": "EN: Profile Information"
+  },
   "proxySettings": "Dejinta Proxy",
-  "@proxySettings": {},
+  "@proxySettings": {
+    "description": "EN: Proxy Settings"
+  },
   "purchase": "Iibsiga",
-  "@purchase": {},
+  "@purchase": {
+    "description": "EN: PURCHASE"
+  },
   "purchaseAmount": "Qaddarka Iibsiga",
-  "@purchaseAmount": {},
+  "@purchaseAmount": {
+    "description": "EN: Purchase Amount"
+  },
   "reason": "Sababta",
-  "@reason": {},
+  "@reason": {
+    "description": "EN: REASON"
+  },
   "refunded": "La soo celiyey",
-  "@refunded": {},
+  "@refunded": {
+    "description": "EN: Refunded"
+  },
   "registerDevice": "Diiwaangeli Qalabka",
-  "@registerDevice": {},
+  "@registerDevice": {
+    "description": "EN: Register Device"
+  },
   "removeCard": "Ka saar Kaarka",
-  "@removeCard": {},
+  "@removeCard": {
+    "description": "EN: Remove Card"
+  },
   "required": "Boggan waa lagama maarmaan.",
-  "@required": {},
+  "@required": {
+    "description": "EN: This field is required."
+  },
   "resetPin": "Reset PIN",
-  "@resetPin": {},
+  "@resetPin": {
+    "description": "EN: Reset PIN"
+  },
   "retry": "Isku day mar kale",
-  "@retry": {},
+  "@retry": {
+    "description": "EN: Retry"
+  },
   "returnTo": "Ku laabo Qaddarka",
-  "@returnTo": {},
+  "@returnTo": {
+    "description": "EN: Return To Transaction"
+  },
   "rrn": "RRN",
-  "@rrn": {},
+  "@rrn": {
+    "description": "EN: RRN"
+  },
   "saleTransaction": "Qaddarka Iibka",
-  "@saleTransaction": {},
+  "@saleTransaction": {
+    "description": "EN: Sale Transaction"
+  },
   "selectAccount": "Xulo Xisaab si aad u sii wadato",
-  "@selectAccount": {},
+  "@selectAccount": {
+    "description": "EN: Select an account to continue"
+  },
   "sendDeviceLogs": "U dir Diiwaanka Qalabka",
-  "@sendDeviceLogs": {},
+  "@sendDeviceLogs": {
+    "description": "EN: Send Device Logs"
+  },
   "serialNumberLengthMax": "Hubi in boggan aanu ka badnayn 14 characters.",
-  "@serialNumberLengthMax": {},
+  "@serialNumberLengthMax": {
+    "description": "EN: Ensure this field has no more than 14 characters."
+  },
   "serialNumberLengthMin": "Hubi in boggan uu leeyahay ugu yaraan 13 characters.",
-  "@serialNumberLengthMin": {},
+  "@serialNumberLengthMin": {
+    "description": "EN: Ensure this field has at least 13 characters."
+  },
   "setPinToProceed": "Fadlan dejiso PIN si aad u sii wadato",
-  "@setPinToProceed": {},
+  "@setPinToProceed": {
+    "description": "EN: Please set a pin to proceed"
+  },
   "settings": "Dejinta",
-  "@settings": {},
+  "@settings": {
+    "description": "EN: Settings"
+  },
   "settled": "La dhammeeyey",
-  "@settled": {},
+  "@settled": {
+    "description": "EN: Settled"
+  },
   "settlementDetails": "Faahfaahinta Habaynta",
-  "@settlementDetails": {},
+  "@settlementDetails": {
+    "description": "EN: Settlement Details"
+  },
   "settlementHistoryFor": "Taariikhda Habaynta ee {date}",
-  "@settlementHistoryFor": {},
+  "@settlementHistoryFor": {
+    "description": "EN: Settlement History for {date}"
+  },
   "settlements": "Habaynta",
-  "@settlements": {},
+  "@settlements": {
+    "description": "EN: Settlements"
+  },
   "settlementStatus": "Xaaladda:",
-  "@settlementStatus": {},
+  "@settlementStatus": {
+    "description": "EN: Status:"
+  },
   "settlementSummaryFor": "Dulmar Habaynta ee {date}",
-  "@settlementSummaryFor": {},
+  "@settlementSummaryFor": {
+    "description": "EN: Settlement Summary for {date}"
+  },
   "signIn": "Fadlan gali xogtaada si aad ugu sii socoto:",
-  "@signIn": {},
+  "@signIn": {
+    "description": "EN: Please provide your login credentials to continue:"
+  },
   "sortBy": "Kala soo bax",
-  "@sortBy": {},
+  "@sortBy": {
+    "description": "EN: Sort By"
+  },
   "standalone": "Qaabka kaliya ee loo aqoonsaday.",
-  "@standalone": {},
+  "@standalone": {
+    "description": "EN: Stand-Alone mode detected. "
+  },
   "submit": "Gudbi",
-  "@submit": {},
+  "@submit": {
+    "description": "EN: Submit"
+  },
   "supervisorPin": "Fadlan geli PIN-kaaga ee Supervisor",
-  "@supervisorPin": {},
+  "@supervisorPin": {
+    "description": "EN: Please provide your supervisor pin"
+  },
   "supervisorPinTitle": "PIN ee Supervisor",
-  "@supervisorPinTitle": {},
+  "@supervisorPinTitle": {
+    "description": "EN: Supervisor PIN"
+  },
   "switchTitle": "Beddel",
-  "@switchTitle": {},
+  "@switchTitle": {
+    "description": "EN: Switch"
+  },
   "switchType": "SWITCH",
-  "@switchType": {},
+  "@switchType": {
+    "description": "EN: SWITCH"
+  },
   "terminalId": "Aqoonsiga Terminalka",
-  "@terminalId": {},
+  "@terminalId": {
+    "description": "EN: TERMINAL ID"
+  },
   "terminalIdTitle": "Aqoonsiga Terminalka:",
-  "@terminalIdTitle": {},
+  "@terminalIdTitle": {
+    "description": "EN: Terminal ID:"
+  },
   "time": "Waqtiga",
-  "@time": {},
+  "@time": {
+    "description": "EN: TIME"
+  },
   "timeColumn": "Waqti:",
-  "@timeColumn": {},
+  "@timeColumn": {
+    "description": "EN: Time:"
+  },
   "total": "Wadarta:",
-  "@total": {},
+  "@total": {
+    "description": "EN: TOTAL:"
+  },
   "totalAmountProcessed": "Wadarta Qaddarka La Hagaajiyay:",
-  "@totalAmountProcessed": {},
+  "@totalAmountProcessed": {
+    "description": "EN: Total Amount Processed:"
+  },
   "totalCashbackAmount": "Wadarta Qaddarka CashBack:",
-  "@totalCashbackAmount": {},
+  "@totalCashbackAmount": {
+    "description": "EN: Total Cashback Amount:"
+  },
   "totalCashbackFees": "Wadarta Kharashka CashBack:",
-  "@totalCashbackFees": {},
+  "@totalCashbackFees": {
+    "description": "EN: Total Cashback Fees:"
+  },
   "totalFees": "Wadarta Kharashka:",
-  "@totalFees": {},
+  "@totalFees": {
+    "description": "EN: Total Fees:"
+  },
   "totalPurchaseAmount": "Wadarta Qaddarka Iibsiga:",
-  "@totalPurchaseAmount": {},
+  "@totalPurchaseAmount": {
+    "description": "EN: Total Purchase Amount:"
+  },
   "totalPurchaseFees": "Wadarta Kharashka Iibsiga:",
-  "@totalPurchaseFees": {},
+  "@totalPurchaseFees": {
+    "description": "EN: Total Purchase Fees:"
+  },
   "totalSettlementAmount": "Wadarta Qaddarka Habaynta",
-  "@totalSettlementAmount": {},
+  "@totalSettlementAmount": {
+    "description": "EN: Total Settlement Amount"
+  },
   "totalSettlementAmountCalc": "* Wadarta Qaddarka Habaynta = Wadarta Qaddarka La Hagaajiyay - Wadarta Habaynta la dhammeeyey - Kharashka",
-  "@totalSettlementAmountCalc": {},
+  "@totalSettlementAmountCalc": {
+    "description": "EN: * Total Settlement Amount = Total Amount Processed - Total Settlements completed - Fees"
+  },
   "transactionHistory": "Taariikhda Qaddarka",
-  "@transactionHistory": {},
+  "@transactionHistory": {
+    "description": "EN: Transaction History"
+  },
   "transactionHistoryTitle": "Taariikhda Qaddarka & Habaynta",
-  "@transactionHistoryTitle": {},
+  "@transactionHistoryTitle": {
+    "description": "EN: Transaction History & Settlements"
+  },
   "transseqNo": "TRANSSEQNO",
-  "@transseqNo": {},
+  "@transseqNo": {
+    "description": "EN: TRANSSEQNO"
+  },
   "transType": "Nooca Qaddarka:",
-  "@transType": {},
+  "@transType": {
+    "description": "EN: TRANTYPE:"
+  },
   "unexpectedError": "Khalad lama filaan ah ayaa dhacay, fadlan isku day mar kale.",
-  "@unexpectedError": {},
+  "@unexpectedError": {
+    "description": "EN: Unexpected error occurred, please try again."
+  },
   "username": "Magaca Isticmaale:",
-  "@username": {},
+  "@username": {
+    "description": "EN: Username:"
+  },
   "usernameError": "Fadlan gali magaca isticmaale.",
-  "@usernameError": {},
+  "@usernameError": {
+    "description": "EN: Please enter a username."
+  },
   "usernameMax": "Hubi in boggan aanu ka badnayn 10 characters.",
-  "@usernameMax": {},
+  "@usernameMax": {
+    "description": "EN: Ensure this field has no more than 10 characters."
+  },
   "usernameMin": "Hubi in boggan uu leeyahay ugu yaraan 10 characters.",
-  "@usernameMin": {},
+  "@usernameMin": {
+    "description": "EN: Ensure this field has at least 10 characters."
+  },
   "version": "Nooca:",
-  "@version": {},
+  "@version": {
+    "description": "EN: Version:"
+  },
   "view": "Muuji",
-  "@view": {},
+  "@view": {
+    "description": "EN: View"
+  },
   "viewMore": "Muuji Dheeraad ah",
-  "@viewMore": {},
+  "@viewMore": {
+    "description": "EN: View More"
+  },
   "voidConfirm": "Waad xaqiijinaysaa inaad joojiso qaddarkan",
-  "@voidConfirm": {},
+  "@voidConfirm": {
+    "description": "EN: You are about to Void this transaction"
+  },
   "voidTransaction": "Jooji Qaddarka",
-  "@voidTransaction": {},
+  "@voidTransaction": {
+    "description": "EN: Void Transaction"
+  },
   "welcome": "Maalin Wanaagsan",
-  "@welcome": {},
+  "@welcome": {
+    "description": "EN: Good Day"
+  },
   "yes": "Haa",
-  "@yes": {},
+  "@yes": {
+    "description": "EN: Yes"
+  },
   "no": "Maya",
-  "@no": {},
+  "@no": {
+    "description": "EN: No"
+  },
   "transactionCompleted": "Qaddarka, la dhammeeyey",
-  "@transactionCompleted": {},
+  "@transactionCompleted": {
+    "description": "EN: Transaction Completed"
+  },
   "transactionCompletedPrompt": "'Dooro \"Haa\" si aad ugu laabato App-ka Kazang.\nDooro \"Maya\" si aad uga baxdo.'",
-  "@transactionCompletedPrompt": {},
+  "@transactionCompletedPrompt": {
+    "description": "EN: 'Select \"Yes\" to return to the Kazang App.\\nSelect \"No\" to Exit.'"
+  },
   "updateKeys": "Cusboonaysiintu furayaasha...",
+  "@updateKeys": {
+    "description": "EN: Updating Keys..."
+  },
   "osUpdateRequired": "Waxaa loo baahan yahay cusboonaysiinta OS",
+  "@osUpdateRequired": {
+    "description": "EN: OS Update Required"
+  },
   "transactionDetails": "Faahfaahinta Macaamilka",
+  "@transactionDetails": {
+    "description": "EN: Transaction Details:"
+  },
   "cashback": "Lacag Dib u Celin",
-  "type": "Nooca"
+  "@cashback": {
+    "description": "EN: Cashback:"
+  },
+  "type": "Nooca",
+  "@type": {
+    "description": "EN: Type"
+  }
 }

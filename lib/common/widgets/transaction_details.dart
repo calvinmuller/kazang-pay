@@ -30,13 +30,7 @@ class TransactionDetailsWidget extends ConsumerWidget {
           color: CustomColours.primaryNeutral,
           width: 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.09),
-            blurRadius: 3,
-            offset: const Offset(0, 0),
-          ),
-        ],
+        boxShadow: shadow,
       ),
       child: Column(
         spacing: 10,

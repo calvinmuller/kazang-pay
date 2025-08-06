@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors, Theme;
+import 'package:flutter/material.dart' show Theme;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 
-import '../../core/core.dart' show CustomColours;
+import '../../core/core.dart' show CustomColours, shadow;
 import '../../l10n/app_localizations.dart' show AppLocalizations;
 
 class DefaultWidget extends StatelessWidget {
@@ -24,13 +24,7 @@ class DefaultWidget extends StatelessWidget {
           color: CustomColours.primaryNeutral,
           width: 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.09),
-            blurRadius: 3,
-            offset: const Offset(0, 0),
-          ),
-        ],
+        boxShadow: shadow,
       ),
       child: Center(
         child: Column(

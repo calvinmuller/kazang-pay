@@ -107,8 +107,7 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                             serialNumber: deviceInfo.serial,
                           );
                           try {
-                            final response =
-                                await crApi.authDevice(loginRequest);
+                            final response = await crApi.authDevice(loginRequest);
                             if (response.responseCode == 0 && context.mounted) {
                               await showPinDialog(
                                 ref: ref,
