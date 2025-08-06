@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show FormState, BuildContext, Widget, VoidCallback, GlobalKey, TextEditingController, Text, TextInputType, Column, Form, Navigator, MaterialPageRoute, Colors, IconData, Color, AnimationStyle, Row, MainAxisAlignment, Expanded;
+    show FormState, BuildContext, Widget, VoidCallback, GlobalKey, TextEditingController, Text, TextInputType, Column, Form, Navigator, MaterialPageRoute, Colors, IconData, Color, AnimationStyle, Row, MainAxisAlignment, Expanded, MainAxisSize, SizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
@@ -11,6 +11,7 @@ import '../../models/pin.dart' show PinDialogConfig;
 import '../../ui/widgets.dart';
 import '../providers/app.provider.dart';
 import '../providers/pin.provider.dart';
+import '../utils/responsive.dart' show Responsive;
 import '../widgets/button.dart' show Button;
 import '../widgets/form_field.dart';
 import '../widgets/keyboard_padding.dart' show KeyboardPadding;
@@ -47,6 +48,30 @@ class _PinDialogState extends ConsumerState<PinDialog> {
 
     final buttonSize = context.dynamicSize(60, 50);
 
+    final actions = [
+      Button.main(
+        height: buttonSize,
+        colour: pinConfig.actionButtonColour,
+        borderColour: pinConfig.actionButtonColour,
+        textColour:
+            (pinConfig.actionButtonColour != null) ? Colors.white : null,
+        onPressed:
+            (hasPin) ? onContinuePressed : () => onSetPinPressed(pinConfig),
+        elevation: 0,
+        child: Text(l10n.continueButton),
+      ),
+      HiddenOnMobile(
+        child: Button.main(
+          height: buttonSize,
+          onPressed: () => Navigator.of(context).pop(false),
+          elevation: 0,
+          borderColour: Colors.black,
+          inverse: true,
+          child: Text(l10n.back),
+        ),
+      ),
+    ];
+
     return Dialog(
       title: title,
       message: message,
@@ -79,36 +104,17 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             ],
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          spacing: 10,
-          children: [
-            Expanded(
-              child: Button.main(
-                height: buttonSize,
-                colour: pinConfig.actionButtonColour,
-                borderColour: pinConfig.actionButtonColour,
-                textColour: (pinConfig.actionButtonColour != null) ? Colors.white : null,
-                onPressed: (hasPin)
-                    ? onContinuePressed
-                    : () => onSetPinPressed(pinConfig),
-                elevation: 0,
-                child: Text(l10n.continueButton),
-              ),
-            ),
-            HiddenOnMobile(
-              child: Expanded(
-                child: Button.main(
-                  height: buttonSize,
-                  onPressed: () => Navigator.of(context).pop(false),
-                  elevation: 0,
-                  borderColour: Colors.black,
-                  inverse: true,
-                  child: Text(l10n.back),
-                ),
-              ),
-            ),
-          ],
+        Responsive.responsive(
+          context,
+          xs: Column(
+            spacing: 10,
+            mainAxisSize: MainAxisSize.min,
+            children: actions,
+          ),
+          lg: Row(
+            spacing: 10,
+            children: actions.map((action) => Expanded(child: action)).toList()
+          ),
         ),
         const KeyboardPadding(),
       ],

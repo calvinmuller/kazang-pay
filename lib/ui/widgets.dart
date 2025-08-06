@@ -20,6 +20,7 @@ import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
 
 import '../common/providers/device_info.dart';
+import '../common/utils/responsive.dart' show Responsive;
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({super.key, this.widthFactor = 0.7});
@@ -94,7 +95,7 @@ class LottieWidget extends StatelessWidget {
 // HiddenOnMobile is a widget that can be used to hide content on i5300
 class HiddenOnMobile extends StatelessWidget {
   const HiddenOnMobile(
-      {super.key, required this.child, this.alternate = const SizedBox(), this.hideOnTablet = false});
+      {super.key, required this.child, this.alternate = const SizedBox.shrink(), this.hideOnTablet = false});
 
   final Widget child;
   final Widget alternate;
@@ -103,7 +104,7 @@ class HiddenOnMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 350; // Example breakpoint
-    return isMobile || hideOnTablet ? alternate : child;
+    return isMobile || (hideOnTablet && Responsive.isLg(context)) ? alternate : child;
   }
 }
 

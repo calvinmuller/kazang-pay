@@ -40,13 +40,14 @@ Future<T?> showBottomSheet<T>({
   required bool showDragHandle,
   required BuildContext context,
   required WidgetBuilder builder,
+  bool barrierDismissible = true,
   AnimationStyle? sheetAnimationStyle,
 }) async {
   // show a dialog instead of modal bottom sheet is screen is larger than 900px
   if (Responsive.isLgUp(context)) {
     return showDialog<T?>(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: barrierDismissible,
       builder: (context) => FractionallySizedBox(
         widthFactor: 0.4,
         child: Dialog(
