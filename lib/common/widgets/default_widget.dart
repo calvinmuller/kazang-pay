@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Theme;
+import 'package:flutter/material.dart' show Theme, BuildContext, StatelessWidget, Widget, EdgeInsets, BorderRadius, Radius, Border, BoxDecoration, MainAxisAlignment, TextAlign, Text, Column, Center, Container;
 import 'package:flutter_svg/svg.dart' show SvgPicture;
 
 import '../../core/core.dart' show CustomColours, shadow;
