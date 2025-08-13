@@ -16,6 +16,10 @@ class CurrencyHelper {
     switch (number) {
       case '710':
         return 'ZAR';
+      case '894':
+        return 'ZMW';
+      case '072':
+        return 'BWP';
       default:
         return 'ZAR';
     }

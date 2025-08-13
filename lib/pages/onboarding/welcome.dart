@@ -13,14 +13,13 @@ import 'package:flutter/material.dart'
         Row,
         Card,
         Column,
-        Scaffold,
         TextAlign,
         ListView,
         Expanded;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../common/widgets/widgets.dart' show Button;
+import '../../common/widgets/widgets.dart' show Button, ResponsiveScaffold;
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -31,7 +30,8 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    return ResponsiveScaffold(
+      maxWidthFactor: 0.5,
       body: Column(
         children: [
           Hero(

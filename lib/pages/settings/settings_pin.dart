@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart'
     show
         BuildContext,
-        Scaffold,
         Widget,
         EdgeInsets,
         Text,
-        AppBar,
         MainAxisSize,
         CrossAxisAlignment,
         Column,
@@ -27,6 +25,7 @@ import 'package:go_router/go_router.dart';
 import '../../common/common.dart';
 import '../../common/providers/api.provider.dart' show crRepositoryProvider;
 import '../../common/providers/app.provider.dart';
+import '../../common/widgets/responsive_page_wrapper.dart';
 import '../../common/widgets/form_field.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;
 import '../../core/core.dart';
@@ -51,13 +50,10 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
     final deviceInfo =
         ref.watch(appNotifierProvider.select((state) => state.deviceInfo))!;
     final crApi = ref.watch(crRepositoryProvider);
-
-    return Scaffold(
+    return ResponsivePageWrapper(
+      title: l10n.supervisorPinTitle,
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: Text(l10n.supervisorPinTitle),
-      ),
-      body: Container(
+      builder: (context) => Container(
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(12),
         decoration: panelDecoration,
@@ -111,8 +107,7 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                             serialNumber: deviceInfo.serial,
                           );
                           try {
-                            final response =
-                                await crApi.authDevice(loginRequest);
+                            final response = await crApi.authDevice(loginRequest);
                             if (response.responseCode == 0 && context.mounted) {
                               await showPinDialog(
                                 ref: ref,

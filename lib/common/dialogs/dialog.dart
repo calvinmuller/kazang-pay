@@ -18,12 +18,13 @@ import '../../core/core.dart' show CustomIcons, CustomColours;
 import '../../core/extensions.dart';
 
 class Dialog extends StatelessWidget {
-  const Dialog(
-      {super.key,
-      this.iconData,
-      required this.title,
-      required this.message,
-      this.actions = const []});
+  const Dialog({
+    super.key,
+    this.iconData,
+    required this.title,
+    required this.message,
+    this.actions = const [],
+  });
 
   final IconData? iconData;
   final String title;

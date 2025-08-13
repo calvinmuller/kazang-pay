@@ -35,10 +35,12 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
   @override
   void onUserApplicationSelectionRequired(
       UserApplicationSelectionRequired event) async {
+    final l10n = AppLocalizations.of(context)!;
     ref.read(transactionStepProvider.notifier).state = 3;
-    final result = await context.pushNamed<Map>('accounts', extra: event.value);
+    final result = await showListDialog(context, event.value,
+        title: l10n.selectAccount, inverted: true);
     if (result != null) {
-      TransactionHelper.continueTransaction(result['index'], result['account']);
+      TransactionHelper.continueTransaction(result['index'], result['value']);
     } else {
       TransactionHelper.abortTransaction();
     }
@@ -49,7 +51,8 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       UserBudgetSelectionRequiredEvent event) async {
     final l10n = AppLocalizations.of(context)!;
     ref.read(transactionStepProvider.notifier).state = 2;
-    final result = await showListDialog(context, event.value, title: l10n.budgetTerm);
+    final result =
+        await showListDialog(context, event.value, title: l10n.budgetTerm);
 
     if (result != null) {
       await TransactionHelper.continueTransactionBudget(result['index']);

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart'
         Widget,
         showDialog,
         showModalBottomSheet,
-        Clip,
         BuildContext,
         EdgeInsets,
         SizedBox,
@@ -22,29 +21,71 @@ import 'package:flutter/material.dart'
         RoundedRectangleBorder,
         OutlinedButton,
         Column,
-        Padding;
+        Padding,
+        WidgetBuilder,
+        Dialog,
+        FractionallySizedBox,
+        AnimationStyle,
+        Radius;
+
 import '../common/dialogs/confirm_dialog.dart';
+import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/list_dialog.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../ui/widgets.dart';
 
-showBottomSheet(context, Widget dialog) async {
-  return await showModalBottomSheet(
-    clipBehavior: Clip.none,
-    context: context,
-    showDragHandle: true,
-    builder: (context) => dialog,
-  );
+Future<T?> showBottomSheet<T>({
+  required bool isScrollControlled,
+  required bool showDragHandle,
+  required BuildContext context,
+  required WidgetBuilder builder,
+  bool barrierDismissible = true,
+  AnimationStyle? sheetAnimationStyle,
+}) async {
+  // show a dialog instead of modal bottom sheet is screen is larger than 900px
+  if (Responsive.isLgUp(context)) {
+    return showDialog<T?>(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) => FractionallySizedBox(
+        widthFactor: 0.4,
+        child: Dialog(
+          elevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: builder(context),
+          ),
+        ),
+      ),
+    );
+  } else {
+    return showModalBottomSheet<T?>(
+      context: context,
+      isScrollControlled: isScrollControlled,
+      showDragHandle: showDragHandle,
+      builder: (context) => builder(context),
+      sheetAnimationStyle: sheetAnimationStyle,
+    );
+  }
 }
 
-showListDialog(mainContext, List<dynamic> items, {String? title}) {
+showListDialog(mainContext, List<dynamic> items,
+    {String? title, bool inverted = false}) {
   return showDialog(
     context: mainContext,
     barrierDismissible: false,
+    barrierColor: CustomColours.beige,
     useRootNavigator: true,
-    builder: (context) =>
-        ListDialog(items: items, mainContext: context, title: title),
+    builder: (context) => ListDialog(
+      items: items,
+      mainContext: context,
+      title: title,
+      inverted: inverted,
+    ),
   );
 }
 
@@ -86,8 +127,8 @@ showErrorDialog(context, String? message,
   );
 }
 
-showConfirmationDialog(BuildContext context) {
-  return showModalBottomSheet(
+Future<bool?> showConfirmationDialog(BuildContext context) {
+  return showBottomSheet<bool>(
     context: context,
     isScrollControlled: context.hasPinPad(),
     showDragHandle: true,
@@ -97,7 +138,7 @@ showConfirmationDialog(BuildContext context) {
 
 Future<bool?> showTransactionCompletedSheet(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
-  return showModalBottomSheet<bool>(
+  return showBottomSheet<bool?>(
     context: context,
     showDragHandle: true,
     builder: (_) {
@@ -174,5 +215,6 @@ Future<bool?> showTransactionCompletedSheet(BuildContext context) {
         ),
       );
     },
+    isScrollControlled: false,
   );
 }

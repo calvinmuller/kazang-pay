@@ -13,7 +13,6 @@ import 'package:flutter/material.dart'
         Expanded,
         Icons,
         Column,
-        required,
         Colors,
         BorderRadius,
         Border,
@@ -196,8 +195,8 @@ class _KeyPadState extends ConsumerState<KeyPad> {
 class CalculatorButton extends StatelessWidget {
   const CalculatorButton({
     super.key,
-    @required this.label,
-    @required this.onTap,
+    required this.label,
+    required this.onTap,
     this.onLongPress,
     this.backgroundColor,
     this.fontSize = 20,
