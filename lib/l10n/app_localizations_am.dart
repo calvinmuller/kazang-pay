@@ -18,7 +18,9 @@ class AppLocalizationsAm extends AppLocalizations {
   String get transactionHistory => 'የግብይት ታሪክ';
 
   @override
-  String get welcome => 'መልካም ቀን';
+  String welcome(Object name) {
+    return 'መልካም ቀን';
+  }
 
   @override
   String companyWelcome(Object name) {

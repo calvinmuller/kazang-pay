@@ -116,7 +116,7 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             children: actions.map((action) => Expanded(child: action)).toList()
           ),
         ),
-        const KeyboardPadding(),
+        const KeyboardPadding()
       ],
     );
     // show the dialog

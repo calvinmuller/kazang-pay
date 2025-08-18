@@ -19,7 +19,8 @@ import 'package:flutter/material.dart'
         RoundedRectangleBorder,
         ButtonStyle,
         SizedBox,
-        Container;
+        Container,
+        Theme;
 
 import '../../core/constants.dart' show CustomColours;
 
@@ -84,9 +85,9 @@ class Button extends StatelessWidget {
       VoidCallback? onPressed,
       VoidCallback? onLongPress,
       required Widget child,
-      Color? colour = CustomColours.greenish,
-      Color? textColour = Colors.black,
-      Color? borderColour = CustomColours.greenish,
+      Color? colour = CustomColours.prismBlue,
+      Color? textColour = CustomColours.white,
+      Color? borderColour = CustomColours.prismBlue,
       double? width = double.infinity,
       double? elevation = 0,
       Widget? icon,
@@ -155,6 +156,12 @@ class Button extends StatelessWidget {
           icon: icon,
           onPressed: onPressed,
           style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all<Color?>(
+              textColour,
+            ),
+            backgroundColor: WidgetStateProperty.all<Color?>(
+              colour,
+            ),
             shape: (rounded || borderColour != null)
                 ? WidgetStateProperty.all<OutlinedBorder>(
                     RoundedRectangleBorder(
@@ -170,20 +177,6 @@ class Button extends StatelessWidget {
                     ),
                   )
                 : null,
-            shadowColor: WidgetStateProperty.all<Color>(Colors.black38),
-            elevation: WidgetStateProperty.all<double>(elevation ?? 5),
-            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            ),
-            foregroundColor: WidgetStateProperty.all<Color?>(textColour),
-            iconColor: WidgetStateProperty.all<Color?>(textColour),
-            backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-                (Set<WidgetState> states) {
-              if (states.contains(WidgetState.disabled)) {
-                return CustomColours.grayscale;
-              }
-              return colour; // Use the component's default.
-            }),
           ),
           label: child,
         ),

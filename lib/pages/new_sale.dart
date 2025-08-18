@@ -45,7 +45,6 @@ class NewSalePage extends StatelessWidget {
                 return Button(
                   height: context.dynamicSize(90, 72),
                   width: double.infinity,
-                  colour: CustomColours.greenish,
                   onPressed: (payment.hasAmount)
                       ? () {
                           ref

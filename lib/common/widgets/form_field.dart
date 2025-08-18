@@ -37,20 +37,6 @@ class FormField extends StatelessWidget {
       textInputAction: textInputAction,
       initialValue: initialValue,
       style: Theme.of(context).textTheme.bodySmall,
-      decoration: const InputDecoration(
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: CustomColours.gold,
-          ),
-          borderRadius: borderRadiusSmall,
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: CustomColours.black,
-          ),
-          borderRadius: borderRadiusSmall,
-        ),
-      ),
       maxLength: maxLength,
       validator: validator,
       onSaved: onSaved,

@@ -144,7 +144,7 @@ class _KeyPadState extends ConsumerState<KeyPad> {
                           color: CustomColours.shark,
                         ),
                         onTap: clear,
-                        backgroundColor: CustomColours.clay,
+                        backgroundColor: CustomColours.primaryNeutral,
                         onLongPress: clearAll,
                         border: false,
                       )
@@ -225,7 +225,7 @@ class CalculatorButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor ?? Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: border! ? CustomColours.shark : Colors.transparent,
             width: 1,

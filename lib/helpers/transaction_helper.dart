@@ -67,6 +67,7 @@ class TransactionHelper {
     final deviceInfo =
         (await _instance.methodChannel.invokeMethod('getDeviceInfo') as Map)
             .cast<String, dynamic>();
+    deviceInfo['serial'] = 'P30224BCJ0696';
     return DeviceInfo.fromJson(deviceInfo);
   }
 
@@ -163,7 +164,8 @@ class TransactionHelper {
     return;
   }
 
-  static Future<void> connect({TerminalProfile? config, bool proxy = true}) async {
+  static Future<void> connect(
+      {TerminalProfile? config, bool proxy = true}) async {
     return await _instance.methodChannel.invokeMethod('connect', {
       "config": config!.toJson(),
       "proxy": proxy,

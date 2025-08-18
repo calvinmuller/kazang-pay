@@ -124,13 +124,13 @@ abstract class AppLocalizations {
   /// No description provided for @welcome.
   ///
   /// In en, this message translates to:
-  /// **'Good Day'**
-  String get welcome;
+  /// **'Hello, {name}'**
+  String welcome(Object name);
 
   /// No description provided for @companyWelcome.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to {name}'**
+  /// **'Ready to make a sale?'**
   String companyWelcome(Object name);
 
   /// No description provided for @newSale.

@@ -1,43 +1,33 @@
 import 'package:flutter/material.dart'
-    show
-        StatelessWidget,
-        AnimationController,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        BoxFit,
-        Padding,
-        FractionallySizedBox,
-        MediaQuery,
-        SizedBox,
-        FocusNode,
-        KeyEvent,
-        debugPrint,
-        Navigator,
-        KeyboardListener;
+    show StatelessWidget, AnimationController, BuildContext, Widget, EdgeInsets, BoxFit, Padding, FractionallySizedBox, MediaQuery, SizedBox, FocusNode, KeyEvent, debugPrint, Navigator, KeyboardListener, Colors, ColorFilter, BlendMode;
 import 'package:flutter/services.dart' show KeyDownEvent, LogicalKeyboardKey;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
+import 'package:flutter/material.dart' show Image;
 import 'package:lottie/lottie.dart' show Lottie, LottieComposition;
 
 import '../common/providers/device_info.dart';
 import '../common/utils/responsive.dart' show Responsive;
 
 class LogoWidget extends StatelessWidget {
-  const LogoWidget({super.key, this.widthFactor = 0.7});
+  const LogoWidget({super.key, this.widthFactor = 0.7, this.heightFactor, this.colourFilter});
 
   final double? widthFactor;
+  final double? heightFactor;
+  final ColorFilter? colourFilter;
 
   @override
   Widget build(BuildContext context) {
-    const assetName = 'assets/logo-app.svg';
+    const assetName = 'assets/app-logo.svg';
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: FractionallySizedBox(
         widthFactor: widthFactor,
+        heightFactor: heightFactor,
         child: SvgPicture.asset(
           assetName,
-          semanticsLabel: 'KazangPay Logo',
+          semanticsLabel: 'Logo',
           fit: BoxFit.scaleDown,
+          colorFilter: colourFilter,
         ),
       ),
     );

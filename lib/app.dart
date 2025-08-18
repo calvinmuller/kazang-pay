@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart' show BuildContext, Widget, MaterialApp;
+import 'package:flutter/material.dart' show BuildContext, Widget, MaterialApp, ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 import 'package:intl/intl.dart';
@@ -24,11 +24,11 @@ class MyApp extends ConsumerWidget {
     Intl.defaultLocale = appLocale;
 
     return MaterialApp.router(
+      themeMode: ThemeMode.dark,
       locale: Locale(appLocale),
       routerConfig: routerConfig,
-      title: 'Kazang Pay',
       theme: CustomTheme.lightThemeData(context),
-      darkTheme: CustomTheme.darkThemeData(),
+      darkTheme: CustomTheme.darkThemeData(context),
       localizationsDelegates: [...AppLocalizations.localizationsDelegates, NnMaterialLocalizations.delegate],
       supportedLocales: AppLocalizations.supportedLocales
     );

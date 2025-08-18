@@ -1,37 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        AutomaticKeepAliveClientMixin,
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        Icon,
-        TextStyle,
-        MainAxisSize,
-        Text,
-        showDialog,
-        Padding,
-        BorderRadius,
-        BoxDecoration,
-        Theme,
-        FontWeight,
-        BoxFit,
-        Column,
-        DefaultTextStyle,
-        Container,
-        TickerProviderStateMixin,
-        AnimationController,
-        Transform,
-        Offset,
-        AnimatedBuilder,
-        Animation,
-        Tween,
-        Colors,
-        AnimationStatus,
-        SingleChildScrollView,
-        Curves,
-        CurvedAnimation,
-        Interval,
-        SlideTransition;
+    show AutomaticKeepAliveClientMixin, BuildContext, Widget, EdgeInsets, Icon, TextStyle, MainAxisSize, Text, showDialog, Padding, BorderRadius, BoxDecoration, Theme, FontWeight, BoxFit, Column, DefaultTextStyle, Container, TickerProviderStateMixin, AnimationController, Transform, Offset, AnimatedBuilder, Animation, Tween, Colors, AnimationStatus, SingleChildScrollView, Curves, CurvedAnimation, Interval, SlideTransition, ColorFilter, BlendMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -41,6 +9,7 @@ import '../../core/core.dart';
 import '../../helpers/currency_helpers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/printer.dart';
+import '../../ui/widgets.dart';
 import '../dialogs/print_dialog.dart';
 import '../providers/app.provider.dart';
 import '../providers/receipt.provider.dart' show receiptParametersProvider;
@@ -186,10 +155,11 @@ class ReceiptState extends ConsumerState<Receipt>
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            SvgPicture.asset(
-                              'assets/receipt.svg',
-                              fit: BoxFit.contain,
-                              height: 75,
+                            const LogoWidget(
+                              colourFilter: ColorFilter.mode(
+                                Colors.black87,
+                                BlendMode.srcIn,
+                              ),
                             ),
                             KeyValueWidget(
                               title: l10n.merchantId,

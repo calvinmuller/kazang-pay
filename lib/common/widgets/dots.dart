@@ -18,7 +18,7 @@ class Dots extends ConsumerWidget {
         4,
         (index) => CircleAvatar(
           radius: context.dynamicSize(20, 18),
-          backgroundColor: (index < step) ? CustomColours.greenish : Colors.black,
+          backgroundColor: (index < step) ? CustomColours.prismBlue : Colors.black,
         ),
       ),
     );

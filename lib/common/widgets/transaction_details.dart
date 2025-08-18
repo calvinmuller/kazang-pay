@@ -68,7 +68,7 @@ class TransactionDetailsWidget extends ConsumerWidget {
                 return Button(
                   height: 68,
                   width: double.infinity,
-                  colour: CustomColours.greenish,
+                  colour: CustomColours.prismBlue,
                   onPressed: (payment.hasAmount)
                       ? () {
                           ref

@@ -155,13 +155,13 @@ class TransactionDetails extends ConsumerWidget {
                         child: TabBar(
                           labelStyle:
                               Theme.of(context).textTheme.bodySmall!.copyWith(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                           dividerHeight: 0,
                           indicatorSize: TabBarIndicatorSize.tab,
                           indicator: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: CustomColours.orange,
+                            color: CustomColours.prismBlue,
                           ),
                           tabs: [
                             Tab(text: l10n.merchantReceipt),

@@ -46,7 +46,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
     final l10n = AppLocalizations.of(context)!;
 
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: ResponsiveScaffold(
         appBar: AppBar(
           title: Text(l10n.transactionHistoryTitle),
@@ -62,23 +62,21 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                 child: Card(
                   elevation: 0,
                   borderOnForeground: false,
-                  color: CustomColours.greenish,
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: TabBar(
                       labelStyle:
                           Theme.of(context).textTheme.bodySmall!.copyWith(
-                                color: Colors.black,
-                              ),
+                            color: Colors.white,
+                          ),
                       dividerHeight: 0,
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: CustomColours.white,
+                        color: CustomColours.prismBlue,
                       ),
                       tabs: [
                         Tab(text: l10n.transactionHistory),
-                        Tab(text: l10n.settlements),
                       ],
                     ),
                   ),
@@ -111,7 +109,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                                 date;
                           }
                         },
-                        colour: CustomColours.purple,
                         textColour: Colors.white,
                         child: Text(l10n.dateFilter,
                             style: Theme.of(context)
@@ -126,7 +123,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
             ];
           },
           body: const TabBarView(
-            children: [TransactionsList(), SettlementsList()],
+            children: [TransactionsList()],
           ),
         ),
       ),

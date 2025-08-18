@@ -56,15 +56,15 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            onTap: _currentRoute == null || !_isRouteActive('proxy')
-                ? () => context.pushNamed('proxy')
-                : null,
-            title: Text(l10n.proxySettings),
-            trailing: const Icon(Icons.chevron_right),
-            enabled: _currentRoute == null || !_isRouteActive('proxy'),
-          ),
-          const Divider(),
+          // ListTile(
+          //   onTap: _currentRoute == null || !_isRouteActive('proxy')
+          //       ? () => context.pushNamed('proxy')
+          //       : null,
+          //   title: Text(l10n.proxySettings),
+          //   trailing: const Icon(Icons.chevron_right),
+          //   enabled: _currentRoute == null || !_isRouteActive('proxy'),
+          // ),
+          // const Divider(),
           ListTile(
             onTap: _currentRoute == null || !_isRouteActive('pin')
                 ? () => context.pushNamed('pin')

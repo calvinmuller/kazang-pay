@@ -18,11 +18,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionHistory => 'Transaction History';
 
   @override
-  String get welcome => 'Good Day';
+  String welcome(Object name) {
+    return 'Hello, $name';
+  }
 
   @override
   String companyWelcome(Object name) {
-    return 'Welcome to $name';
+    return 'Ready to make a sale?';
   }
 
   @override
@@ -477,7 +479,7 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   AppLocalizationsEnZa() : super('en_ZA');
 
   @override
-  String get app => 'Kazang Pay';
+  String get app => 'Prism';
 
   @override
   String get settings => 'Settings';
@@ -486,11 +488,13 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   String get transactionHistory => 'Transaction History';
 
   @override
-  String get welcome => 'Good Day';
+  String welcome(Object name) {
+    return 'Hello, Nalika 👋';
+  }
 
   @override
   String companyWelcome(Object name) {
-    return 'Welcome to $name';
+    return 'Ready to make a sale?';
   }
 
   @override
@@ -530,8 +534,7 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   String get checkBalance => 'Check Balance';
 
   @override
-  String get enterPin =>
-      'Enter Pin To Access Transaction History & Settlements';
+  String get enterPin => 'Enter Pin To Access Transaction History';
 
   @override
   String get supervisorPin => 'Please provide your supervisor pin';
@@ -543,7 +546,7 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   String get back => 'Back';
 
   @override
-  String get transactionHistoryTitle => 'Transaction History & Settlements';
+  String get transactionHistoryTitle => 'Transaction History';
 
   @override
   String get ok => 'Ok';
@@ -662,15 +665,15 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
   String get settled => 'Settled';
 
   @override
-  String get onboardingWelcome => 'Welcome to Kazang Pay!';
+  String get onboardingWelcome => 'Welcome to Prism!';
 
   @override
   String get onboardingRegister =>
-      'Congratulations, you are at the final step of setting up your Kazang Pay Card Reader.';
+      'Congratulations, you are at the final step of setting up your card reader.';
 
   @override
   String get onboardRegisterHelp =>
-      'Please allow the Kazang Sales Agent to assist you with the final step.';
+      'Please allow the Sales Agent to assist you with the final step.';
 
   @override
   String get signIn => 'Please provide your login credentials to continue:';
@@ -680,15 +683,15 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get onboard1 =>
-      'You can now accept card payments for any sales on your Kazang device using your very own Kazang Pay device.';
+      'You can now accept card payments for any sales on your device using your very own pay device.';
 
   @override
   String get onboard2 =>
-      'You can now top up your Kazang Wallet using your Kazang Pay device, no more trips to the banks and less risk for your business.';
+      'You can now top up your wallet using your pay device, no more trips to the banks and less risk for your business.';
 
   @override
   String get onboard3 =>
-      'Your card payments will be transferred directly into your Kazang Wallet.';
+      'Your card payments will be transferred directly into your wallet.';
 
   @override
   String get registerDevice => 'Register Device';
@@ -903,7 +906,7 @@ class AppLocalizationsEnZa extends AppLocalizationsEn {
 
   @override
   String get transactionCompletedPrompt =>
-      'Select \"Yes\" to return to the Kazang App.\nSelect \"No\" to Exit.';
+      'Select \"Yes\" to return to the Previous App.\nSelect \"No\" to Exit.';
 
   @override
   String get yes => 'Yes';

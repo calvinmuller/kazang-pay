@@ -184,7 +184,9 @@ class TransactionInformation extends ConsumerWidget {
             maxLines: 2,
             transactionStatus,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: CustomColours.black,
+            ),
           );
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget);

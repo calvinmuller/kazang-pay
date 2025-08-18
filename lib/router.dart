@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart'
 
 import 'common/common.dart';
 import 'common/providers/app.provider.dart' show appNotifierProvider;
+import 'common/widgets/animated_logo.dart';
 import 'common/widgets/widgets.dart';
 import 'core/constants.dart' show navigatorKey;
 import 'pages/pages.dart';
@@ -51,7 +52,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       name: 'home',
       builder: (BuildContext context, GoRouterState state) {
         return const MyHomePage(
-          title: 'Home',
+          title: '',
         );
       },
       routes: <RouteBase>[

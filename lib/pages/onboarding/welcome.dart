@@ -22,6 +22,7 @@ import 'package:go_router/go_router.dart';
 import '../../common/widgets/widgets.dart' show Button, ResponsiveScaffold;
 import '../../core/constants.dart';
 import '../../l10n/app_localizations.dart';
+import '../../ui/widgets.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -34,11 +35,11 @@ class WelcomePage extends StatelessWidget {
       maxWidthFactor: 0.5,
       body: Column(
         children: [
-          Hero(
+          const Hero(
             tag: 'logo',
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 53),
-              child: SvgPicture.asset("assets/kazang.svg"),
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 53),
+              child: LogoWidget(),
             ),
           ),
           Expanded(
@@ -116,7 +117,7 @@ class WelcomePage extends StatelessWidget {
               elevation: 0,
               height: 60,
               width: double.infinity,
-              colour: CustomColours.greenish,
+              colour: CustomColours.prismBlue,
               onPressed: () {
                 context.pushNamed('register');
               },

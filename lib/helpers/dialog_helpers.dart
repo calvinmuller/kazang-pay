@@ -78,8 +78,8 @@ showListDialog(mainContext, List<dynamic> items,
   return showDialog(
     context: mainContext,
     barrierDismissible: false,
-    barrierColor: CustomColours.beige,
     useRootNavigator: true,
+    barrierColor: Colors.transparent,
     builder: (context) => ListDialog(
       items: items,
       mainContext: context,
@@ -165,8 +165,8 @@ Future<bool?> showTransactionCompletedSheet(BuildContext context) {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: CustomColours.greenish,
+                  foregroundColor: CustomColours.white,
+                  backgroundColor: CustomColours.prismBlue,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

@@ -8,23 +8,19 @@ import 'package:flutter/material.dart'
         BoxShadow,
         BoxDecoration,
         NavigatorState,
-        GlobalKey,
-        Border;
+        GlobalKey;
 
-const headerGradient = LinearGradient(
+final headerGradient = LinearGradient(
   colors: <Color>[
-    CustomColours.greenish,
-    CustomColours.yellow,
+    CustomColours.prismBlue.withOpacity(0.8),
+    CustomColours.prismBlue.withOpacity(0.6),
   ],
-  stops: [0.3416, 1.2339], // These are normalized stops; 123.39% is beyond 1.0
+  // These are normalized stops; 123.39% is beyond 1.0
 );
 
-final homeDecoration = BoxDecoration(
-    border: Border.all(
-      color: CustomColours.primaryNeutral,
-      width: 1,
-    ),
-    borderRadius: borderRadius);
+const homeDecoration = BoxDecoration(
+  borderRadius: borderRadius,
+);
 
 const borderGradient = {
   'error': [
@@ -34,15 +30,16 @@ const borderGradient = {
     Color(0XFFFF9A14),
   ],
   'success': [
-    Color(0XFF24AA4A),
-    Color(0XFFBEC430),
-    Color(0XFF24AA4A),
-    Color(0XFFBEC430),
+    Color(0xFF2E86C1), // Rich blue
+    Color(0xFF48C9B0), // Complementary teal
+    Color(0xFF2E86C1), // Rich blue
+    Color(0xFF48C9B0), // Complementary teal
   ]
 };
 
-const borderRadius = BorderRadius.all(
-  Radius.circular(20),
+const borderRadius = BorderRadius.only(
+  bottomLeft: Radius.circular(20),
+  bottomRight: Radius.circular(20),
 );
 
 const borderRadiusSmall = BorderRadius.all(
@@ -52,7 +49,9 @@ const borderRadiusSmall = BorderRadius.all(
 class CustomColours {
   static const black = Color(0xFF040000);
   static const white = Color(0xFFF9FBFD);
-  static const greenish = Color(0xFFBEC430);
+  static const prismNavy = Color(0xFF2C3E50);
+  static const prismBlue = Color(0xFF3498DB);
+  static const greenish = Color(0xFF3498DB);
   static const green = Color(0xFF24AA4A);
   static const lightYellow = Color(0xFFDCE272);
   static const yellow = Color(0xFFFFCD1C);
@@ -65,8 +64,8 @@ class CustomColours {
   static const red = Color(0xFFE12727);
   static const lime = Color(0xFFF0F2C2);
   static const grayscale = Color(0xFFE8E8E7);
-  static const darkBlue = Color(0xFF1A1F71);
-  static const grey = Color(0xFFC6C6C5);
+  static const darkBlue = Color(0xFF2C3E50);
+  static const grey = Color(0xFF7b7b7b);
   static const lightGray = Color(0xFFF7F7F5);
   static const gold = Color(0xFFFF9A14);
   static const softButter = Color(0xFFFFEDB2);

@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart'
-    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card, FractionallySizedBox, BorderSide, BoxDecoration, Container, ListView, Expanded, Radius;
+    show
+        BorderRadius,
+        BuildContext,
+        Colors,
+        Column,
+        CrossAxisAlignment,
+        EdgeInsets,
+        ListTile,
+        Padding,
+        Radio,
+        RoundedRectangleBorder,
+        State,
+        StatefulWidget,
+        Text,
+        TextAlign,
+        Theme,
+        Widget,
+        MainAxisSize,
+        Card,
+        FractionallySizedBox,
+        BorderSide,
+        BoxDecoration,
+        Container,
+        ListView,
+        Expanded,
+        Radius;
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,22 +96,17 @@ class _ListDialogState extends State<ListDialog> {
                     final isActive = selectedAccount['index'] == i;
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 4,
+                      ),
                       child: ListTile(
-                        dense: true,
-                        tileColor: Colors.white,
-                        selectedTileColor: CustomColours.lightYellow,
                         contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 10,
+                          vertical: 5,
+                          horizontal: 5,
                         ),
+                        dense: true,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(
-                            color: isActive
-                                ? Colors.transparent
-                                : CustomColours.black,
-                          ),
                         ),
                         selected: isActive,
                         onTap: () {

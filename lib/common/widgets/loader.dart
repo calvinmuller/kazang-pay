@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Colors, BorderRadius, BoxDecoration, MainAxisSize, CircularProgressIndicator, Theme, Text, Row, Container, Center;
+import 'package:flutter/material.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, SizedBox, Colors, BorderRadius, BoxDecoration, MainAxisSize, CircularProgressIndicator, Theme, Text, Row, Container, Center, AlwaysStoppedAnimation, Color;
 import '../../l10n/app_localizations.dart';
+import '../../core/constants.dart';
 
 class Loader extends StatelessWidget {
   const Loader({super.key, this.message, this.transparent = false, this.padding = const EdgeInsets.symmetric(vertical: 25, horizontal: 32), this.showLoader = true});
@@ -25,11 +26,18 @@ class Loader extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (showLoader)
-              const SizedBox.square(
+              SizedBox.square(
                 dimension: 25,
-                child: CircularProgressIndicator(strokeWidth: 1.5),
+                child: CircularProgressIndicator(
+                  strokeWidth: 1.5,
+                  valueColor: transparent 
+                    ? const AlwaysStoppedAnimation<Color>(CustomColours.white)
+                    : null,
+                ),
               ),
-            Text((message != null) ? message!: l10n.loading, style: Theme.of(context).textTheme.titleSmall),
+            Text((message != null) ? message!: l10n.loading, style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: transparent ? CustomColours.white : null,
+            )),
           ],
         ),
       ),

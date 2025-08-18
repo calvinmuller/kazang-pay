@@ -27,7 +27,6 @@ import 'package:flutter/material.dart'
         showDialog;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, AsyncError, AsyncData;
-import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants.dart';
@@ -38,8 +37,8 @@ import '../interfaces/factory.events.dart';
 import '../mixins/transaction_handlers.dart' show TransactionHandlersMixin;
 import '../providers/api.provider.dart';
 import '../providers/app.provider.dart';
-import '../providers/payment.provider.dart'
-    show paymentNotifierProvider;
+import '../providers/payment.provider.dart' show paymentNotifierProvider;
+import 'animated_logo.dart';
 import 'loader.dart';
 import 'phoenix.dart';
 
@@ -95,8 +94,8 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: const [
-                  CustomColours.greenish,
-                  CustomColours.yellow,
+                  CustomColours.prismBlue,
+                  CustomColours.prismNavy,
                 ],
                 stops: [0, _controller.value * 1],
               ),
@@ -109,9 +108,6 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
           fit: StackFit.expand,
           children: [
             const Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 32.0),
                 child: LogoWidget(
@@ -120,53 +116,52 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
               ),
             ),
             Positioned(
-              right: 0,
+              bottom: 16,
               left: 0,
-              bottom: 0,
-              top: 0,
-              child: SvgPicture.asset(
-                "assets/k.svg",
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 10,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: switch (profile) {
-                  AsyncError(:final error) => [
-                      Column(
-                        spacing: 10,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            error.toString(),
-                            textAlign: TextAlign.center,
-                          ),
-                          FilledButton(
-                            onPressed: () {
-                              Phoenix.rebirth(context);
-                            },
-                            child: Text(l10n.retry),
-                          )
-                        ],
-                      ),
-                    ],
-                  AsyncData() => [
-                      Text(
-                        l10n.initialized,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      )
-                    ],
-                  _ => [
-                      Loader(
-                        transparent: true,
-                        message: l10n.loading,
-                      )
-                    ],
-                },
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: switch (profile) {
+                    AsyncError(:final error) => [
+                        Column(
+                          spacing: 10,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              error.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                            FilledButton(
+                              onPressed: () {
+                                Phoenix.rebirth(context);
+                              },
+                              child: Text(l10n.retry),
+                            )
+                          ],
+                        ),
+                      ],
+                    AsyncData() => [
+                        Text(
+                          l10n.initialized,
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: CustomColours.white,
+                                  ),
+                        )
+                      ],
+                    _ => [
+                        Loader(
+                          transparent: true,
+                          message: l10n.loading,
+                        )
+                      ],
+                  },
+                ),
               ),
             )
           ],
@@ -177,13 +172,17 @@ class _LoadingWidgetState extends ConsumerState<LoadingWidget>
 
   @override
   void onFactoryInitialized() {
-    final intentInfo = ref.read(appNotifierProvider).intentInfo!;
-    if (intentInfo.isIntentTransaction) {
-      ref.read(paymentNotifierProvider.notifier).setFromIntentInfo(intentInfo);
-      context.pushReplacementNamed('payment');
-    } else {
-      context.pushReplacementNamed('home');
-    }
+    Future.delayed(const Duration(seconds: 1)).then((_) {
+      final intentInfo = ref.read(appNotifierProvider).intentInfo!;
+      if (intentInfo.isIntentTransaction) {
+        ref
+            .read(paymentNotifierProvider.notifier)
+            .setFromIntentInfo(intentInfo);
+        context.pushReplacementNamed('payment');
+      } else {
+        context.pushReplacementNamed('home');
+      }
+    });
   }
 
   @override

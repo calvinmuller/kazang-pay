@@ -1,27 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        TextStyle,
-        FontWeight,
-        BuildContext,
-        ThemeData,
-        CardThemeData,
-        AppBarTheme,
-        Color,
-        OutlinedBorder,
-        BorderSide,
-        TextTheme,
-        EdgeInsets,
-        BorderRadius,
-        Radius,
-        RoundedRectangleBorder,
-        kToolbarHeight,
-        WidgetStateProperty,
-        Theme,
-        Colors,
-        ButtonStyle,
-        ElevatedButtonThemeData,
-        TextButtonThemeData,
-        IconThemeData;
+    show TextStyle, FontWeight, BuildContext, ThemeData, CardThemeData, AppBarTheme, Color, OutlinedBorder, BorderSide, TextTheme, EdgeInsets, BorderRadius, Radius, RoundedRectangleBorder, kToolbarHeight, WidgetStateProperty, WidgetState, Theme, Colors, ButtonStyle, ElevatedButtonThemeData, TextButtonThemeData, IconThemeData, VisualDensity, ButtonThemeData, ButtonTextTheme, TextDecoration, InputDecorationTheme, OutlineInputBorder, ListTileThemeData, RadioThemeData, MaterialStatePropertyAll, WidgetStatePropertyAll, DatePickerThemeData;
 import 'common/utils/utils.dart' show Responsive;
 import 'core/constants.dart';
 
@@ -76,8 +54,25 @@ class CustomTheme {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          backgroundColor:
-              WidgetStateProperty.all<Color>(CustomColours.greenish),
+          backgroundColor: WidgetStateProperty.resolveWith<Color>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.disabled)) {
+                return CustomColours.greenish
+                    .withValues(alpha: 0.5); // Disabled color
+              }
+              return CustomColours.greenish; // Enabled color
+            },
+          ),
+        ),
+      ),
+      listTileTheme: ListTileThemeData(
+        iconColor: CustomColours.black,
+        textColor: CustomColours.black,
+        selectedTileColor: CustomColours.greenish.withValues(alpha: 0.2),
+        selectedColor: CustomColours.white,
+        enableFeedback: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -99,10 +94,128 @@ class CustomTheme {
     );
   }
 
-  static ThemeData darkThemeData() {
-    return ThemeData(
-      useMaterial3: true,
-      colorSchemeSeed: Colors.yellow,
+  static const Color primaryBlue = Color(0xFF2196F3);
+  static const Color backgroundDark = Color(0xFF182D42);
+  static const Color textWhite = Color(0xFFFFFFFF);
+  static const Color textGray = Color(0xFF9E9E9E);
+  static const Color buttonGray = Color(0xFFE0E0E0);
+  static const Color textDark = Color(0xFF424242);
+  static const Color accentBlue = Color(0xFF2196F3);
+  static const Color successGreen = Color(0xFF4CAF50);
+  static const Color warningOrange = Color(0xFFFF9800);
+  static const Color errorRed = Color(0xFFF44336);
+  static const Color lightBlue = Color(0xFF43A2D9);
+
+  static ThemeData darkThemeData(BuildContext context) {
+    final theme = lightThemeData(context);
+    return theme.copyWith(
+      appBarTheme: const AppBarTheme(
+        backgroundColor: backgroundDark,
+        titleTextStyle: TextStyle(
+          fontFamily: 'Graphik',
+          color: textWhite,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
+        iconTheme: IconThemeData(color: textWhite),
+      ),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      scaffoldBackgroundColor: backgroundDark,
+      textTheme: createTextTheme(context).copyWith(
+        headlineLarge: createTextTheme(context)
+            .headlineLarge!
+            .copyWith(color: textWhite, fontSize: 23),
+        bodyLarge: createTextTheme(context).bodyLarge!.copyWith(
+              color: buttonGray,
+              fontSize: 16,
+            ),
+        titleSmall: createTextTheme(context).titleSmall!.copyWith(
+              fontSize: 16,
+            ),
+      ),
+      listTileTheme: ListTileThemeData(
+        iconColor: textWhite,
+        // textColor: textWhite,
+        selectedTileColor: lightBlue.withValues(alpha: 0.2),
+        selectedColor: lightBlue,
+        enableFeedback: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: textGray),
+        ),
+        titleTextStyle: const TextStyle(
+          color: CustomColours.black,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      radioTheme: const RadioThemeData(
+        fillColor: WidgetStatePropertyAll<Color>(textDark),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          elevation: WidgetStateProperty.all<double>(1),
+          enableFeedback: true,
+          foregroundColor: WidgetStateProperty.all<Color>(textWhite),
+          textStyle: WidgetStateProperty.all<TextStyle>(
+            Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          shadowColor: WidgetStateProperty.all<Color>(Colors.black.withAlpha(90)),
+          shape: WidgetStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+          ),
+          backgroundColor: WidgetStateProperty.resolveWith<Color>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.disabled)) {
+                return lightBlue.withValues(alpha: 0.5); // Disabled color
+              }
+              return lightBlue; // Enabled color
+            },
+          ),
+        ),
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: CustomColours.darkBlue, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: CustomColours.darkBlue, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: CustomColours.red, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: CustomColours.red, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        ),
+      ),
+      datePickerTheme: const DatePickerThemeData(
+        rangePickerElevation: 10,
+        confirmButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll<Color>(CustomColours.white),
+          backgroundColor: WidgetStatePropertyAll<Color>(CustomColours.darkBlue),
+        ),
+        cancelButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll<Color>(CustomColours.white),
+          backgroundColor: WidgetStatePropertyAll<Color>(CustomColours.red),
+        ),
+        rangePickerBackgroundColor: CustomColours.white,
+        dayStyle: TextStyle(
+          color: CustomColours.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        headerBackgroundColor: CustomColours.darkBlue,
+        headerForegroundColor: CustomColours.white,
+      ),
     );
   }
 }

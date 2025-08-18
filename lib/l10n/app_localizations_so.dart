@@ -18,7 +18,9 @@ class AppLocalizationsSo extends AppLocalizations {
   String get transactionHistory => 'Taariikhda Qaddarka';
 
   @override
-  String get welcome => 'Maalin Wanaagsan';
+  String welcome(Object name) {
+    return 'Maalin Wanaagsan';
+  }
 
   @override
   String companyWelcome(Object name) {

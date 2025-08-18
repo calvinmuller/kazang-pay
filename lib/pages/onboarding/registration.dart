@@ -41,6 +41,7 @@ import '../../helpers/dialog_helpers.dart' show showErrorDialog;
 import '../../l10n/app_localizations.dart';
 import '../../models/crm.dart';
 import '../../models/kazang.dart';
+import '../../ui/widgets.dart';
 
 class RegistrationPage extends ConsumerStatefulWidget {
   const RegistrationPage({super.key});
@@ -75,11 +76,11 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
     return ResponsiveScaffold(
       maxWidthFactor: 0.5,
       body: ListView(children: [
-        Hero(
+        const Hero(
           tag: 'logo',
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 53),
-            child: SvgPicture.asset("assets/kazang.svg"),
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 53),
+            child: LogoWidget(),
           ),
         ),
         Container(
@@ -90,11 +91,15 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
             children: [
               Text(
                 l10n.onboardingRegister,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: CustomColours.white,
+                    ),
               ),
               Text(
                 l10n.onboardRegisterHelp,
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      color: CustomColours.white,
+                    ),
               ),
             ],
           ),
@@ -212,7 +217,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
             elevation: 0,
             height: 60,
             width: double.infinity,
-            colour: CustomColours.greenish,
+            colour: CustomColours.prismBlue,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
