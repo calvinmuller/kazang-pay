@@ -50,7 +50,7 @@ class TransactionItem extends ConsumerWidget {
         ? panelDecoration.copyWith(
             color: CustomColours.primaryNeutral,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            border: Border.all(color: CustomColours.prismBlue, width: 2),
+            // border: Border.all(color: CustomColours.prismBlue, width: 2),
             boxShadow: [],
           )
         : panelDecoration;

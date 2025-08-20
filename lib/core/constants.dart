@@ -69,7 +69,7 @@ class CustomColours {
   static const lightGray = Color(0xFFF7F7F5);
   static const gold = Color(0xFFFF9A14);
   static const softButter = Color(0xFFFFEDB2);
-  static const primaryNeutral = Color(0xFFFCFFD6);
+  static const primaryNeutral = Color(0xFFE2F4FB);
 }
 
 const shadow = [

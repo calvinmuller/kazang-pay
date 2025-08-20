@@ -38,13 +38,13 @@ class _PinDialogState extends ConsumerState<PinDialog> {
     final title = hasPin
         ? pinConfig.title ?? l10n.enterPinAccessSettings
         : !pinConfig.reset
-            ? l10n.noPinSet
-            : l10n.resetPin;
+        ? l10n.noPinSet
+        : l10n.resetPin;
     final message = hasPin
         ? pinConfig.message ?? l10n.pleaseProvideSupervisorPin
         : !pinConfig.reset
-            ? l10n.setPinToProceed
-            : l10n.setPinToProceed;
+        ? l10n.setPinToProceed
+        : l10n.setPinToProceed;
 
     final buttonSize = context.dynamicSize(60, 50);
 
@@ -54,9 +54,9 @@ class _PinDialogState extends ConsumerState<PinDialog> {
         colour: pinConfig.actionButtonColour,
         borderColour: pinConfig.actionButtonColour,
         textColour:
-            (pinConfig.actionButtonColour != null) ? Colors.white : null,
+        (pinConfig.actionButtonColour != null) ? Colors.white : null,
         onPressed:
-            (hasPin) ? onContinuePressed : () => onSetPinPressed(pinConfig),
+        (hasPin) ? onContinuePressed : () => onSetPinPressed(pinConfig),
         elevation: 0,
         child: Text(l10n.continueButton),
       ),
@@ -65,8 +65,9 @@ class _PinDialogState extends ConsumerState<PinDialog> {
           height: buttonSize,
           onPressed: () => Navigator.of(context).pop(false),
           elevation: 0,
-          borderColour: Colors.black,
+          rounded: true,
           inverse: true,
+          borderColour: Colors.black,
           child: Text(l10n.back),
         ),
       ),
@@ -112,8 +113,10 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             children: actions,
           ),
           lg: Row(
-            spacing: 10,
-            children: actions.map((action) => Expanded(child: action)).toList()
+              spacing: 10,
+              children: actions
+                  .map((action) => Expanded(child: action))
+                  .toList()
           ),
         ),
         const KeyboardPadding()
@@ -161,11 +164,11 @@ showPinDialog({
   IconData iconData = CustomIcons.attention,
 }) async {
   ref.read(pinDialogNotifierProvider.notifier).setState(
-        title: title,
-        actionButtonColour: actionButtonColour,
-        reset: reset,
-        iconData: iconData,
-      );
+    title: title,
+    actionButtonColour: actionButtonColour,
+    reset: reset,
+    iconData: iconData,
+  );
   final result = await showBottomSheet(
     isScrollControlled: true,
     showDragHandle: true,

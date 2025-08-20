@@ -119,6 +119,7 @@ class ReceiptState extends ConsumerState<Receipt>
                     context.pop();
                   }
                 },
+                rounded: true,
                 child: Text(l10n.printReceipt),
               ),
             ),

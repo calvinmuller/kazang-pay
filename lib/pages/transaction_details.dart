@@ -124,7 +124,7 @@ class TransactionDetails extends ConsumerWidget {
                             ),
                             if (transaction.canVoid)
                               Button.secondary(
-                                radius: 5,
+                                radius: 50,
                                 child: Text(l10n.voidTransaction),
                                 onPressed: () async {
                                   showPinDialog(

@@ -93,6 +93,7 @@ class Button extends StatelessWidget {
       Widget? icon,
       EdgeInsets? margin,
       bool inverse = false,
+      bool rounded = false,
       double? height}) {
     return Button(
       elevation: 0,
@@ -101,7 +102,7 @@ class Button extends StatelessWidget {
       textColour: (inverse) ? Colors.white : textColour,
       colour: (inverse) ? Colors.black : colour,
       width: width,
-      rounded: false,
+      rounded: rounded,
       onPressed: onPressed,
       icon: icon,
       onLongPress: onLongPress,

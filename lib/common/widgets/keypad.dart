@@ -131,6 +131,7 @@ class _KeyPadState extends ConsumerState<KeyPad> {
                       _getButton(
                         text: '00',
                         onTap: () => numberPressed('00'),
+                        rounded: true
                       ),
                       _getButton(
                         text: '0',
@@ -147,6 +148,7 @@ class _KeyPadState extends ConsumerState<KeyPad> {
                         backgroundColor: CustomColours.primaryNeutral,
                         onLongPress: clearAll,
                         border: false,
+                        rounded: true
                       )
                     ],
                   ),
@@ -166,6 +168,7 @@ class _KeyPadState extends ConsumerState<KeyPad> {
     double fontSize = 22,
     Widget? icon,
     bool? border = true,
+    bool rounded = false,
   }) {
     return Expanded(
       child: CalculatorButton(
@@ -177,6 +180,7 @@ class _KeyPadState extends ConsumerState<KeyPad> {
         labelColor: textColor,
         fontSize: fontSize,
         border: border,
+        rounded: rounded,
       ),
     );
   }
@@ -203,6 +207,7 @@ class CalculatorButton extends StatelessWidget {
     this.labelColor = CustomColours.shark,
     this.icon,
     this.border,
+    this.rounded = false
   });
 
   final String? label;
@@ -212,6 +217,7 @@ class CalculatorButton extends StatelessWidget {
   final Color? labelColor;
   final double fontSize;
   final bool? border;
+  final bool rounded;
   final Widget? icon;
 
   @override
@@ -225,7 +231,7 @@ class CalculatorButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor ?? Colors.white,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: rounded ? BorderRadius.circular(50): BorderRadius.circular(5),
           border: Border.all(
             color: border! ? CustomColours.shark : Colors.transparent,
             width: 1,
