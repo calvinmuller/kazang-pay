@@ -70,7 +70,7 @@ class MainActivity : FlutterActivity() {
                 val proxy = call.argument<Boolean>("proxy")!!
                 val json = gson.toJson(config)
                 val terminalConfig = gson.fromJson(json, TerminalConfig::class.java)
-                if (android.os.Build.MANUFACTURER.contains("sunmi", ignoreCase = true)) {
+                if (!android.os.Build.MANUFACTURER.contains("sunmi", ignoreCase = true)) {
                     transactionHandler.initialize(context, terminalConfig, proxy)
                 } else {
                     thread {
