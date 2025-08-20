@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../common/utils/utils.dart'; // Responsive
+import '../common/widgets/responsive_scaffold.dart';
 import '../core/constants.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart';
@@ -98,7 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (isLargeDevice) {
       return content;
     } else {
-      return Scaffold(
+      return ResponsiveScaffold(
         appBar: AppBar(
           leading: BackButton(
             onPressed: () => context.pop(),

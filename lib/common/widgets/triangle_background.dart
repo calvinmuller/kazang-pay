@@ -11,7 +11,7 @@ class TriangleBackground extends StatelessWidget {
   const TriangleBackground({
     super.key,
     required this.child,
-    this.triangleColor = const Color(0x04E8E8E7), // Light gray from CustomColours.grayscale
+    this.triangleColor = const Color(0xFF43A2D9), // Light gray from CustomColours.grayscale
     this.decoration,
   });
 

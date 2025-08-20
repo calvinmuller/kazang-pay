@@ -72,135 +72,132 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     final merchantInfo = ref.watch(
       appNotifierProvider.select((state) => state.profile!.merchantConfig),
     );
-    return TriangleBackground(
-      child: ResponsiveScaffold(
+    return ResponsiveScaffold(
+      appBar: AppBar(
+        clipBehavior: Clip.none,
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          clipBehavior: Clip.none,
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            iconSize: Responsive.responsive(
-              context,
-              xs: 24,
-              sm: 28,
-              lg: 36,
-            ),
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => context.goNamed('settings'),
+        leading: IconButton(
+          iconSize: Responsive.responsive(
+            context,
+            xs: 24,
+            sm: 28,
+            lg: 36,
           ),
+          icon: const Icon(Icons.settings_outlined),
+          onPressed: () => context.goNamed('settings'),
         ),
-        resizeToAvoidBottomInset: false,
-        body: PopOnEnter(
-          focusNode: _focusNode,
-          onEnterPressed: () => context.pushNamed('new-sale'),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                margin: Responsive.responsive(
-                  context,
-                  xs: EdgeInsets.zero,
-                  lg: const EdgeInsets.only(top: 15),
-                ),
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                alignment: Alignment.center,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 10,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const LogoWidget(widthFactor: 0.7),
-                      FractionallySizedBox(
-                        widthFactor: 0.95,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 15,
-                          ),
-                          decoration: homeDecoration,
-                          child: Column(
-                            spacing: 8,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              HiddenOnMobile(
-                                child: Text(
-                                  l10n.welcome(merchantInfo.tradingName),
-                                  style: theme.textTheme.headlineLarge,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Text(
-                                l10n.companyWelcome(merchantInfo.tradingName),
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: PopOnEnter(
+        focusNode: _focusNode,
+        onEnterPressed: () => context.pushNamed('new-sale'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              margin: Responsive.responsive(
+                context,
+                xs: EdgeInsets.zero,
+                lg: const EdgeInsets.only(top: 15),
+              ),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              alignment: Alignment.center,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 10,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const LogoWidget(widthFactor: 0.7),
+                    FractionallySizedBox(
+                      widthFactor: 0.95,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 15,
+                        ),
+                        decoration: homeDecoration,
+                        child: Column(
+                          spacing: 8,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            HiddenOnMobile(
+                              child: Text(
+                                l10n.welcome(merchantInfo.tradingName),
+                                style: theme.textTheme.headlineLarge,
                                 textAlign: TextAlign.center,
                               ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              l10n.companyWelcome(merchantInfo.tradingName),
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Button(
+                    height: context.dynamicSize(90, 72),
+                    onPressed: () => context.pushNamed('new-sale'),
+                    icon: const Icon(
+                      CustomIcons.card,
+                      size: 37,
+                    ),
+                    child: Text(l10n.newSale),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: responsive(context, xs: 12, sm: 14, lg: 16),
+                    horizontal: responsive(context, xs: 8, sm: 10, lg: 12),
+                  ),
+                  child: Row(
+                    spacing: 2,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Button(
+                        textColour: Colors.black,
+                        height: 54,
+                        colour: CustomColours.white,
+                        icon: const Icon(
+                          CustomIcons.document,
+                          size: 24,
+                        ),
+                        onPressed: () {
+                          showPinDialog(
+                            iconData: CustomIcons.lock,
+                            title: l10n.enterPin,
+                            ref: ref,
+                            callback: () =>
+                                context.goNamed('transaction-history'),
+                          );
+                        },
+                        child: Text(
+                          l10n.transactionHistory,
+                          style: const TextStyle(letterSpacing: 0.1),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Button(
-                      height: context.dynamicSize(90, 72),
-                      onPressed: () => context.pushNamed('new-sale'),
-                      icon: const Icon(
-                        CustomIcons.card,
-                        size: 37,
-                      ),
-                      child: Text(l10n.newSale),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: responsive(context, xs: 12, sm: 14, lg: 16),
-                      horizontal: responsive(context, xs: 8, sm: 10, lg: 12),
-                    ),
-                    child: Row(
-                      spacing: 2,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Button(
-                          textColour: Colors.black,
-                          height: 54,
-                          colour: CustomColours.white,
-                          icon: const Icon(
-                            CustomIcons.document,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            showPinDialog(
-                              iconData: CustomIcons.lock,
-                              title: l10n.enterPin,
-                              ref: ref,
-                              callback: () =>
-                                  context.goNamed('transaction-history'),
-                            );
-                          },
-                          child: Text(
-                            l10n.transactionHistory,
-                            style: const TextStyle(letterSpacing: 0.1),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

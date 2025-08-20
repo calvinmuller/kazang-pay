@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants.dart' show CustomColours;
+import 'triangle_background.dart' show TriangleBackground;
+
 /// A responsive Scaffold that automatically limits content width to 70% on large devices
 /// while maintaining full width on smaller devices like phones.
 /// On large devices, can optionally show a split view with a side widget.
@@ -80,13 +83,16 @@ class ResponsiveScaffold extends StatelessWidget {
       }
     }
 
-    return Scaffold(
-      appBar: appBar,
-      body: scaffoldBody,
-      backgroundColor: backgroundColor,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      extendBody: extendBody,
-      extendBodyBehindAppBar: extendBodyBehindAppBar,
+    return TriangleBackground(
+      triangleColor: CustomColours.prismBlue,
+      child: Scaffold(
+        appBar: appBar,
+        body: scaffoldBody,
+        backgroundColor: backgroundColor ?? Colors.transparent,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+        extendBody: extendBody,
+        extendBodyBehindAppBar: extendBodyBehindAppBar,
+      ),
     );
   }
 }

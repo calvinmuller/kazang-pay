@@ -40,7 +40,7 @@ class CustomTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          foregroundColor: WidgetStateProperty.all<Color>(CustomColours.black),
+          foregroundColor: WidgetStateProperty.all<Color>(CustomColours.white),
           textStyle: WidgetStateProperty.all<TextStyle>(
             Theme.of(context)
                 .textTheme
@@ -57,10 +57,10 @@ class CustomTheme {
           backgroundColor: WidgetStateProperty.resolveWith<Color>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.disabled)) {
-                return CustomColours.greenish
+                return CustomColours.prismBlue
                     .withValues(alpha: 0.5); // Disabled color
               }
-              return CustomColours.greenish; // Enabled color
+              return CustomColours.prismBlue; // Enabled color
             },
           ),
         ),
