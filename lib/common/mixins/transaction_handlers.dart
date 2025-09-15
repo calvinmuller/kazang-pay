@@ -37,8 +37,12 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       UserApplicationSelectionRequired event) async {
     final l10n = AppLocalizations.of(context)!;
     ref.read(transactionStepProvider.notifier).state = 3;
-    final result = await showListDialog(context, event.value,
-        title: l10n.selectAccount, inverted: true);
+    final result = await showListDialog(
+      context,
+      event.value,
+      title: l10n.selectAccount,
+      inverted: true
+    );
     if (result != null) {
       TransactionHelper.continueTransaction(result['index'], result['value']);
     } else {
@@ -51,8 +55,7 @@ mixin TransactionHandlersMixin<T extends ConsumerStatefulWidget>
       UserBudgetSelectionRequiredEvent event) async {
     final l10n = AppLocalizations.of(context)!;
     ref.read(transactionStepProvider.notifier).state = 2;
-    final result =
-        await showListDialog(context, event.value, title: l10n.budgetTerm);
+    final result = await showListDialog(context, event.value, title: l10n.budgetTerm);
 
     if (result != null) {
       await TransactionHelper.continueTransactionBudget(result['index']);

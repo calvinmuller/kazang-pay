@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card, FractionallySizedBox, BorderSide, BoxDecoration, Container, ListView, Expanded, Radius;
+    show BorderRadius, BuildContext, Colors, Column, CrossAxisAlignment, EdgeInsets, ListTile, Padding, Radio, RoundedRectangleBorder, State, StatefulWidget, Text, TextAlign, Theme, Widget, MainAxisSize, Card, Expanded, ListView, FractionallySizedBox, Radius, BorderSide, BoxDecoration, Container;
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,14 +29,10 @@ class ListDialog extends StatefulWidget {
 class _ListDialogState extends State<ListDialog> {
   Map selectedAccount = {};
 
-  leadingWidget(i) => Radio<num>(
+  leadingWidget(int i) => Radio<int>(
         groupValue: selectedAccount['index'],
         value: i,
-        onChanged: (newValue) {
-          setState(() {
-            selectedAccount = {'index': i, 'value': newValue};
-          });
-        },
+        enabled: false,
       );
 
   @override
