@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart'
-    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, Scaffold, CrossAxisAlignment, MainAxisAlignment;
+    show StatelessWidget, BuildContext, Widget, EdgeInsets, Expanded, Text, AppBar, MainAxisSize, Padding, Column, CrossAxisAlignment, MainAxisAlignment, SizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../common/providers/payment.controller.dart';
 import '../common/providers/payment.provider.dart';
+import '../common/utils/utils.dart' show Responsive;
 import '../common/widgets/widgets.dart';
 import '../core/core.dart';
 import '../l10n/app_localizations.dart' show AppLocalizations;
@@ -16,12 +17,14 @@ class NewSalePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasPinPad = context.hasPinPad();
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
+    return ResponsiveScaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(l10n.newSale),
+        centerTitle: Responsive.responsive(context, xs: true, lg: false),
       ),
+      sideWidget: const TransactionDetailsWidget(),
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 8),
         child: Column(
@@ -35,7 +38,7 @@ class NewSalePage extends StatelessWidget {
               flex: hasPinPad ? 0 : 1,
               child: const KeyPad(),
             ),
-            Consumer(
+            if (!Responsive.isLg(context)) Consumer(
               builder: (context, ref, child) {
                 final payment = ref.watch(paymentNotifierProvider);
 
@@ -55,7 +58,7 @@ class NewSalePage extends StatelessWidget {
                   child: Text(l10n.pay),
                 );
               },
-            ),
+            ) else const SizedBox(),
           ],
         ),
       ),

@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Scaffold, Widget, EdgeInsets, Text, AppBar, MainAxisSize, CrossAxisAlignment, Column, Container, Switch, Row, MainAxisAlignment;
+    show
+        BuildContext,
+        Widget,
+        EdgeInsets,
+        Text,
+        MainAxisSize,
+        CrossAxisAlignment,
+        Column,
+        Container,
+        Switch,
+        Row,
+        MainAxisAlignment;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
 import '../../common/providers/app.provider.dart';
+import '../../common/widgets/responsive_page_wrapper.dart';
 import '../../common/widgets/widgets.dart' show Label;
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
@@ -20,13 +32,10 @@ class _SettingsProxyState extends ConsumerState<SettingsProxy> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final proxy = ref.watch(appNotifierProvider.select((state) => state.proxy));
-
-    return Scaffold(
+    return ResponsivePageWrapper(
+      title: l10n.proxySettings,
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: Text(l10n.proxySettings),
-      ),
-      body: Container(
+      builder: (context) => Container(
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(12),
         decoration: panelDecoration,

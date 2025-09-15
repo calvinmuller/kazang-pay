@@ -11,7 +11,6 @@ import 'package:flutter/material.dart'
         Theme,
         Text,
         Column,
-        Scaffold,
         TextAlign,
         PopScope;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
@@ -70,7 +69,8 @@ class PaymentPageState extends ConsumerState<PaymentPage>
       onEnterPressed: () => null,
       child: PopScope(
         canPop: false,
-        child: Scaffold(
+        child: ResponsiveScaffold(
+          maxWidthFactor: 0.5,
           resizeToAvoidBottomInset: false,
           extendBody: true,
           body: Panel(
@@ -96,6 +96,7 @@ class PaymentPageState extends ConsumerState<PaymentPage>
                 ),
                 const TransactionInformation(),
                 HiddenOnMobile(
+                  hideOnTablet: true,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: (context.isUrovo)
