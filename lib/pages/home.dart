@@ -1,5 +1,33 @@
 import 'package:flutter/material.dart'
-    show BuildContext, Widget, BoxDecoration, Icon, EdgeInsets, TextStyle, Theme, Colors, Icons, IconButton, AppBar, MainAxisSize, TextAlign, Text, Container, FontWeight, Column, CrossAxisAlignment, Padding, MainAxisAlignment, Row, Expanded, FractionallySizedBox, Alignment, Center, Clip;
+    show
+        BuildContext,
+        Widget,
+        BoxDecoration,
+        Icon,
+        EdgeInsets,
+        TextStyle,
+        Theme,
+        Colors,
+        Icons,
+        IconButton,
+        AppBar,
+        MainAxisSize,
+        TextAlign,
+        Text,
+        Container,
+        FontWeight,
+        Column,
+        CrossAxisAlignment,
+        Padding,
+        MainAxisAlignment,
+        Row,
+        Expanded,
+        FractionallySizedBox,
+        Alignment,
+        Center,
+        Clip,
+        BorderRadius,
+        Radius;
 import 'package:flutter/widgets.dart' show FocusNode;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
@@ -60,10 +88,23 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 xs: EdgeInsets.zero,
                 lg: const EdgeInsets.only(top: 15),
               ),
-              height: Responsive.responsive(context, xs: 200, sm: 320, lg: 360, p3: 400),
-              decoration: const BoxDecoration(
+              height: Responsive.responsive(
+                context,
+                xs: 200,
+                sm: 320,
+                lg: 360,
+                p3: 400,
+              ),
+              decoration: BoxDecoration(
                 gradient: headerGradient,
-                borderRadius: borderRadius
+                borderRadius: Responsive.responsive(
+                  context,
+                  lg: borderRadius,
+                  xs: const BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                  ),
+                ),
               ),
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               alignment: Alignment.center,
@@ -75,6 +116,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   children: [
                     AppBar(
                       clipBehavior: Clip.none,
+                      titleSpacing: 0,
+                      elevation: 0,
+                      actionsPadding: EdgeInsets.zero,
                       backgroundColor: Colors.transparent,
                       leading: IconButton(
                         color: Colors.white,
@@ -146,8 +190,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: responsive(context, xs: 12, sm: 14, lg: 16),
-                        horizontal:
-                            responsive(context, xs: 8, sm: 10, lg: 12),
+                        horizontal: responsive(context, xs: 8, sm: 10, lg: 12),
                       ),
                       child: Row(
                         spacing: 2,
