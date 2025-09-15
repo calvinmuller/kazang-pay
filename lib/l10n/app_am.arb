@@ -1,193 +1,611 @@
 {
   "@@locale": "am",
   "accountBalance": "የሂሳብ ቀሪ",
-  "@accountBalance": {},
+  "@accountBalance": {
+    "description": "EN: Account Balance"
+  },
   "accountName": "የሂሳብ ስም: {name}",
-  "@accountName": {},
-  "addCashback": "ካሽባክ ያክሉ",
-  "@addCashback": {},
+  "@accountName": {
+    "description": "EN: Account Name: {name}"
+  },
+  "addCashback": "ጥሬ ገንዘብ መልሶ ይጨምሩ",
+  "@addCashback": {
+    "description": "EN: Add Cashback"
+  },
   "aid": "AID",
-  "@aid": {},
-  "amountDue": "የሚከፈል መጠን",
-  "@amountDue": {},
+  "@aid": {
+    "description": "EN: AID"
+  },
+  "amountDue": "የሚገባው መጠን",
+  "@amountDue": {
+    "description": "EN: Amount Due"
+  },
   "app": "ካዛንግ ፔይ",
-  "@app": {},
+  "@app": {
+    "description": "EN: Kazang Pay"
+  },
   "approved": "ተፈቅዷል",
-  "@approved": {},
-  "appType": "APP",
-  "@appType": {},
-  "back": "ተመለስ",
-  "@back": {},
+  "@approved": {
+    "description": "EN: Approved"
+  },
+  "appType": "የአፕሊኬሽን ዓይነት",
+  "@appType": {
+    "description": "EN: APP"
+  },
+  "back": "ወደ ኋላ",
+  "@back": {
+    "description": "EN: Back"
+  },
   "budgetTerm": "የትእዛዝ ጊዜ ይምረጡ",
-  "@budgetTerm": {},
-  "cancel": "ግብይቱን ሰርዝ",
-  "@cancel": {},
+  "@budgetTerm": {
+    "description": "EN: Select a budget term to continue"
+  },
+  "cancel": "ንግድ ይሰረዝ",
+  "@cancel": {
+    "description": "EN: Cancel Transaction"
+  },
   "cancelled": "ተሰርዟል",
-  "@cancelled": {},
-  "cancelMessage": "አሁን የሚደረገው ግብይት ይተወዋል",
-  "@cancelMessage": {},
-  "cancelTitle": "ይህን ግብይት ለመሰረዝ ነዎት",
-  "@cancelTitle": {},
+  "@cancelled": {
+    "description": "EN: Cancelled"
+  },
+  "cancelMessage": "የእርስዎ የአሁኑ ልውውጥ ይሰረዛል",
+  "@cancelMessage": {
+    "description": "EN: Your current transaction will be cancelled"
+  },
+  "cancelTitle": "የእርስዎ ይህን ልውውጥ ሊሰርዝ ነው",
+  "@cancelTitle": {
+    "description": "EN: You are about to cancel this transaction"
+  },
   "cashbackAmount": "የካሽባክ መጠን",
-  "@cashbackAmount": {},
-  "checkAnother": "ሌላ ሂሳብ ይፈትሹ",
-  "@checkAnother": {},
-  "checkBalance": "ሂሳብ ይመልከቱ",
-  "@checkBalance": {},
+  "@cashbackAmount": {
+    "description": "EN: Cashback Amount"
+  },
+  "checkAnother": "ሌላ አካውንት ይመልከቱ",
+  "@checkAnother": {
+    "description": "EN: Check Another Account"
+  },
+  "checkBalance": "ቀሪ ገንዘብን ፍትሹ",
+  "@checkBalance": {
+    "description": "EN: Check Balance"
+  },
   "companyWelcome": "እንኳን ወደ {name} በደህና መጡ",
-  "@companyWelcome": {},
+  "@companyWelcome": {
+    "description": "EN: Welcome to {name}"
+  },
   "continueButton": "ቀጥል",
-  "@continueButton": {},
+  "@continueButton": {
+    "description": "EN: Continue"
+  },
   "customerReceipt": "የደንበኛ ደረሰኝ",
-  "@customerReceipt": {},
+  "@customerReceipt": {
+    "description": "EN: Customer Receipt"
+  },
   "date": "ቀን",
-  "@date": {},
+  "@date": {
+    "description": "EN: DATE"
+  },
   "dateFilter": "ቀን",
-  "@dateFilter": {},
+  "@dateFilter": {
+    "description": "EN: Date"
+  },
   "declined": "ተቀባይነት አላገኘም",
-  "@declined": {},
+  "@declined": {
+    "description": "EN: Declined"
+  },
   "done": "ተጠናቋል",
-  "@done": {},
-  "enterPin": "የግብይት ታሪክ እና ስተልመንት ለማየት ፒን ያስገቡ",
-  "@enterPin": {},
+  "@done": {
+    "description": "EN: Done"
+  },
+  "enterPin": "የግብይት ታሪክና ክፍያዎችን ለማግኘት ፒን ኮድዎን ያስገቡ።",
+  "@enterPin": {
+    "description": "EN: Enter Pin To Access Transaction History & Settlements"
+  },
   "error": "ስህተት",
-  "@error": {},
+  "@error": {
+    "description": "EN: Error"
+  },
   "insertOrTap": "ካርዱን ያስገቡ ወይም ይንኩ",
-  "@insertOrTap": {},
+  "@insertOrTap": {
+    "description": "EN: Insert Or Tap Card"
+  },
   "language": "ቋንቋ",
-  "@language": {},
+  "@language": {
+    "description": "EN: Language"
+  },
   "merchantId": "የነጋዴ መታወቂያ",
-  "@merchantId": {},
+  "@merchantId": {
+    "description": "EN: Merchant ID"
+  },
   "merchantName": "የነጋዴ ስም",
-  "@merchantName": {},
+  "@merchantName": {
+    "description": "EN: Merchant Name"
+  },
   "merchantReceipt": "የነጋዴ ደረሰኝ",
-  "@merchantReceipt": {},
+  "@merchantReceipt": {
+    "description": "EN: Merchant Receipt"
+  },
   "newSale": "አዲስ ሽያጭ",
-  "@newSale": {},
+  "@newSale": {
+    "description": "EN: New Sale"
+  },
   "ok": "እሺ",
-  "@ok": {},
+  "@ok": {
+    "description": "EN: Ok"
+  },
   "onboardingRegister": "እንኳን ደስ አላችሁ፣ የካዛንግ ፔይ ካርድ አንቀሳቃሽዎን ለማቀናበር የመጨረሻውን ደረጃ ደርሳችኋል።",
-  "@onboardingRegister": {},
+  "@onboardingRegister": {
+    "description": "EN: Congratulations, you are at the final step of setting up your Kazang Pay Card Reader."
+  },
   "onboardingWelcome": "እንኳን ወደ ካዛንግ ፔይ በደህና መጡ!",
-  "@onboardingWelcome": {},
+  "@onboardingWelcome": {
+    "description": "EN: Welcome to Kazang Pay!"
+  },
   "pan": "PAN",
-  "@pan": {},
+  "@pan": {
+    "description": "EN: PAN"
+  },
   "password": "የይለፍ ቃል ያስገቡ",
-  "@password": {},
+  "@password": {
+    "description": "EN: Enter Password:"
+  },
   "pay": "ክፍያ ይፈጽሙ",
-  "@pay": {},
+  "@pay": {
+    "description": "EN: Pay"
+  },
   "pending": "በመጠባበቅ ላይ",
-  "@pending": {},
-  "print": "ማተም",
-  "@print": {},
+  "@pending": {
+    "description": "EN: Pending"
+  },
+  "print": "አትም ያድርጉ",
+  "@print": {
+    "description": "EN: Print"
+  },
   "profile": "መገለጫ",
-  "@profile": {},
+  "@profile": {
+    "description": "EN: Profile"
+  },
   "purchase": "ግዢ",
-  "@purchase": {},
+  "@purchase": {
+    "description": "EN: PURCHASE"
+  },
   "purchaseAmount": "የግዢ መጠን",
-  "@purchaseAmount": {},
+  "@purchaseAmount": {
+    "description": "EN: Purchase Amount"
+  },
   "reason": "ምክንያት",
-  "@reason": {},
+  "@reason": {
+    "description": "EN: REASON"
+  },
   "refunded": "ተመላሽ",
-  "@refunded": {},
+  "@refunded": {
+    "description": "EN: Refunded"
+  },
   "registerDevice": "መሳሪያን ይመዝግቡ",
-  "@registerDevice": {},
-  "removeCard": "ካርዱን ያስወግዱ",
-  "@removeCard": {},
-  "resetPin": "ፒን ዳግም ይስቀሉ",
-  "@resetPin": {},
+  "@registerDevice": {
+    "description": "EN: Register Device"
+  },
+  "removeCard": "ካርዱን ከውስጥ ያውጡ።",
+  "@removeCard": {
+    "description": "EN: Remove Card"
+  },
+  "resetPin": "ፒን ኮድ ዳግም ያስተካክሉ",
+  "@resetPin": {
+    "description": "EN: Reset PIN"
+  },
   "retry": "እንደገና ይሞክሩ",
-  "@retry": {},
+  "@retry": {
+    "description": "EN: Retry"
+  },
   "returnTo": "ወደ ግብይት ተመለስ",
-  "@returnTo": {},
+  "@returnTo": {
+    "description": "EN: Return To Transaction"
+  },
   "rrn": "RRN",
-  "@rrn": {},
+  "@rrn": {
+    "description": "EN: RRN"
+  },
   "saleTransaction": "የሽያጭ ግብይት",
-  "@saleTransaction": {},
+  "@saleTransaction": {
+    "description": "EN: Sale Transaction"
+  },
   "selectAccount": "ሂሳብ ይምረጡ",
-  "@selectAccount": {},
+  "@selectAccount": {
+    "description": "EN: Select an account to continue"
+  },
   "settings": "ቅንብሮች",
-  "@settings": {},
+  "@settings": {
+    "description": "EN: Settings"
+  },
   "settled": "ተከፍሏል",
-  "@settled": {},
-  "settlementStatus": "ሁኔታ:",
-  "@settlementStatus": {},
+  "@settled": {
+    "description": "EN: Settled"
+  },
+  "settlementStatus": "የክፍያ ሁኔታ",
+  "@settlementStatus": {
+    "description": "EN: Status:"
+  },
   "sortBy": "ቅደም ተከተል",
-  "@sortBy": {},
+  "@sortBy": {
+    "description": "EN: Sort By"
+  },
   "supervisorPin": "እባኮትን የአስተዳደር ፒን ያስገቡ",
-  "@supervisorPin": {},
-  "switchTitle": "ማስተላለፍ",
-  "@switchTitle": {},
+  "@supervisorPin": {
+    "description": "EN: Please provide your supervisor pin"
+  },
+  "switchTitle": "ርዕስ ቀይር",
+  "@switchTitle": {
+    "description": "EN: Switch"
+  },
   "switchType": "SWITCH",
-  "@switchType": {},
-  "terminalId": "የመሳሪያ መታወቂያ",
-  "@terminalId": {},
+  "@switchType": {
+    "description": "EN: SWITCH"
+  },
+  "terminalId": "ተርሚናል መታወቂያ",
+  "@terminalId": {
+    "description": "EN: TERMINAL ID"
+  },
   "time": "ሰዓት",
-  "@time": {},
+  "@time": {
+    "description": "EN: TIME"
+  },
   "total": "ድምር:",
-  "@total": {},
+  "@total": {
+    "description": "EN: TOTAL:"
+  },
   "transactionHistory": "የግብይት ታሪክ",
-  "@transactionHistory": {},
-  "transactionHistoryTitle": "የግብይት ታሪክ እና ስተልመንት",
-  "@transactionHistoryTitle": {},
+  "@transactionHistory": {
+    "description": "EN: Transaction History"
+  },
+  "transactionHistoryTitle": "የንግድ ታሪክ እና ሰፈሮች",
+  "@transactionHistoryTitle": {
+    "description": "EN: Transaction History & Settlements"
+  },
   "transseqNo": "TRANSSEQNO",
-  "@transseqNo": {},
+  "@transseqNo": {
+    "description": "EN: TRANSSEQNO"
+  },
   "unexpectedError": "ያልተጠበቀ ስህተት ተፈጥሯል፣ እባኮትን እንደገና ይሞክሩ።",
-  "@unexpectedError": {},
+  "@unexpectedError": {
+    "description": "EN: Unexpected error occurred, please try again."
+  },
   "view": "ይመልከቱ",
-  "@view": {},
-  "welcome": "እንደምን አሰናዳችሁ",
-  "@welcome": {},
-  "settlementDetails": "የስተልመንት ዝርዝር",
-  "@settlementDetails": {},
-  "settlementHistoryFor": "የስተልመንት ታሪክ ለ {date}",
-  "@settlementHistoryFor": {},
-  "settlementSummaryFor": "የስተልመንት አጠቃላይ ለ {date}",
-  "@settlementSummaryFor": {},
-  "settlements": "ስተልመንት",
-  "@settlements": {},
-  "standalone": "የራስ አንደኛ ሁኔታ ተገኝቷል።",
-  "@standalone": {},
-  "required": "ይህ መስክ አስፈላጊ ነው።",
-  "@required": {},
-  "serialNumberLengthMax": "እባኮትን ይህ መስክ 14 ቁጥር ያህል ብቻ ይዟል።",
-  "@serialNumberLengthMax": {},
-  "serialNumberLengthMin": "እባኮትን ይህ መስክ 13 ቁጥር ያነሱ ብቻ ይዟል።",
-  "@serialNumberLengthMin": {},
-  "setPinToProceed": "እባኮትን ለመቀጠል ፒን ያስቀምጡ",
-  "@setPinToProceed": {},
+  "@view": {
+    "description": "EN: View"
+  },
+  "welcome": "መልካም ቀን",
+  "@welcome": {
+    "description": "EN: Good Day"
+  },
+  "settlementDetails": "የክፍያ ዝርዝሮች",
+  "@settlementDetails": {
+    "description": "EN: Settlement Details"
+  },
+  "settlementHistoryFor": "ለ {date} የክፍያ ዝርዝሮች",
+  "@settlementHistoryFor": {
+    "description": "EN: Settlement History for {date}"
+  },
+  "settlementSummaryFor": "ለ {date} የክፍያ ማጠቃለያ",
+  "@settlementSummaryFor": {
+    "description": "EN: Settlement Summary for {date}"
+  },
+  "settlements": "ክፍያ",
+  "@settlements": {
+    "description": "EN: Settlements"
+  },
+  "standalone": "ብቻ ሞድ ተገኝቷል",
+  "@standalone": {
+    "description": "EN: Stand-Alone mode detected. "
+  },
+  "required": "ይህ መስክ ያስፈልጋል።",
+  "@required": {
+    "description": "EN: This field is required."
+  },
+  "serialNumberLengthMax": "እንደገና ያረጋግጡ ይህ መስክ ከ14 ፊደላት በላይ አይኖርም።",
+  "@serialNumberLengthMax": {
+    "description": "EN: Ensure this field has no more than 14 characters."
+  },
+  "serialNumberLengthMin": "እንደገና ያረጋግጡ ይህ መስክ ከ13 ፊደላት በላይ አይኖርም።",
+  "@serialNumberLengthMin": {
+    "description": "EN: Ensure this field has at least 13 characters."
+  },
+  "setPinToProceed": "ለመቀጠል እባክዎ ፒን ኮድ ያዘጋጁ።",
+  "@setPinToProceed": {
+    "description": "EN: Please set a pin to proceed"
+  },
   "sendDeviceLogs": "የመሳሪያ ሎጎችን ላክ",
-  "@sendDeviceLogs": {},
+  "@sendDeviceLogs": {
+    "description": "EN: Send Device Logs"
+  },
   "signIn": "እባኮትን ለመቀጠል የመግቢያ መረጃዎን ያስገቡ:",
-  "@signIn": {},
+  "@signIn": {
+    "description": "EN: Please provide your login credentials to continue:"
+  },
   "supervisorPinTitle": "የአስተዳደር ፒን",
-  "@supervisorPinTitle": {},
-  "terminalIdTitle": "የመሳሪያ መታወቂያ:",
-  "@terminalIdTitle": {},
-  "timeColumn": "ሰዓት:",
-  "@timeColumn": {},
-  "timeFilter": "ሰዓት",
-  "@timeFilter": {},
+  "@supervisorPinTitle": {
+    "description": "EN: Supervisor PIN"
+  },
+  "terminalIdTitle": "የቴርሚናል መለያ",
+  "@terminalIdTitle": {
+    "description": "EN: Terminal ID:"
+  },
+  "timeColumn": "የጊዜ አምድ",
+  "@timeColumn": {
+    "description": "EN: Time:"
+  },
+  "timeFilter": "የጊዜ ማጣሪያ",
+  "@timeFilter": {
+    "description": "EN: Time"
+  },
   "retryLater": "እባኮትን በኋላ ይሞክሩ",
-  "@retryLater": {},
+  "@retryLater": {
+    "description": "EN: Retry Later"
+  },
   "resetPinTitle": "ፒን ዳግም ይስቀሉ",
-  "@resetPinTitle": {},
+  "@resetPinTitle": {
+    "description": "EN: Reset PIN"
+  },
   "pinTooShort": "ፒን ቢያንስ 4 ቁጥር መሆን አለበት",
-  "@pinTooShort": {},
+  "@pinTooShort": {
+    "description": "EN: PIN must be at least 4 digits long"
+  },
   "manufacturer": "አምራች:",
-  "@manufacturer": {},
+  "@manufacturer": {
+    "description": "EN: Manufacturer:"
+  },
   "model": "ሞዴል:",
-  "@model": {},
-  "loadingSettlements": "ስተልመንት በማገናኘት ላይ",
-  "@loadingSettlements": {},
+  "@model": {
+    "description": "EN: Model:"
+  },
+  "loadingSettlements": "ክፍያ በመጫን ላይ ነው",
+  "@loadingSettlements": {
+    "description": "EN: Loading Settlements"
+  },
   "profileInformation": "የመገለጫ መረጃ",
-  "@profileInformation": {},
+  "@profileInformation": {
+    "description": "EN: Profile Information"
+  },
   "serialNumberLengthError": "የመሳሪያ ስሪት ቁጥር 13 እስከ 14 ቁጥር መሆን አለበት",
-  "@serialNumberLengthError": {},
-  "loading": "በማገናኘት ላይ እባኮትን ይጠብቁ",
-  "@loading": {},
+  "@serialNumberLengthError": {
+    "description": "EN: Device Serial Number must be 13-14 characters"
+  },
+  "loading": "በመጫን ላይ",
+  "@loading": {
+    "description": "EN: Loading please wait"
+  },
   "transactionCompleted": "ግብይቱ ተጠናቋል",
+  "@transactionCompleted": {
+    "description": "EN: Transaction Completed"
+  },
   "transactionCompletedPrompt": "ግብይቱ ተጠናቋል፣ የግብይት መረጃዎን ይመልከቱ።",
-  "yes": "Yes",
-  "no": "No"
+  "@transactionCompletedPrompt": {
+    "description": "EN: 'Select \"Yes\" to return to the Kazang App.\\nSelect \"No\" to Exit.'"
+  },
+  "yes": "አዎ",
+  "@yes": {
+    "description": "EN: Yes"
+  },
+  "no": "አይደለም",
+  "@no": {
+    "description": "EN: No"
+  },
+  "updateKeys": "ቁልፎችን ማሻሻል",
+  "@updateKeys": {
+    "description": "EN: Updating Keys..."
+  },
+  "osUpdateRequired": "ኦኤስ ማሻሻያ ያስፈልጋል",
+  "@osUpdateRequired": {
+    "description": "EN: OS Update Required"
+  },
+  "transactionDetails": "የግብይት ዝርዝሮች",
+  "@transactionDetails": {
+    "description": "EN: Transaction Details:"
+  },
+  "cashback": "የገንዘብ መልሶ ክፈላ",
+  "@cashback": {
+    "description": "EN: Cashback:"
+  },
+  "type": "ዓይነት",
+  "@type": {
+    "description": "EN: Type"
+  },
+  "selectSettingToConfig": "ለማዋቀር ከግራ ወደ ቀኝ ክፍያን ይምረጡ",
+  "@selectSettingToConfig": {
+    "description": "EN: Select a setting from the left to configure"
+  },
+  "accountNumber": "የሂሳብ ቁጥር ያስገቡ:",
+  "@accountNumber": {
+    "description": "EN: Enter account number:"
+  },
+  "amount": "መጠን:",
+  "@amount": {
+    "description": "EN: Amount:"
+  },
+  "batteryLow": "ባትሪው ለደህንነት ግብይት በጣም ዝቅተኛ ነው። እባኮትን መሳሪያዎን ይሙሉ። {percentage}%",
+  "@batteryLow": {
+    "description": "EN: Battery is too low to transact safely. Please charge your device. {percentage}%"
+  },
+  "connectPos": "ፒኦኤስ ያገናኙ",
+  "@connectPos": {
+    "description": "EN: Connect POS"
+  },
+  "connectionError": "የግንኙነት ስህተት ተፈጥሯል፣ እባኮትን እንደገና ይሞክሩ።",
+  "@connectionError": {
+    "description": "EN: Connection error occurred, please try again."
+  },
+  "deviceSerial": "የመሳሪያ ስሪት:",
+  "@deviceSerial": {
+    "description": "EN: Device Serial:"
+  },
+  "enterPinAccessSettings": "ቅንብሮችን ለማግኘት ፒን ያስገቡ",
+  "@enterPinAccessSettings": {
+    "description": "EN: Enter PIN To Access Settings"
+  },
+  "enterSerialNumber": "የመሳሪያ ስሪት ቁጥር ያስገቡ:",
+  "@enterSerialNumber": {
+    "description": "EN: Enter Device Serial Number:"
+  },
+  "incorrectPin": "የተሳሳተ ፒን",
+  "@incorrectPin": {
+    "description": "EN: Invalid PIN"
+  },
+  "initialized": "ተጀምሯል",
+  "@initialized": {
+    "description": "EN: Initialized"
+  },
+  "manageReceipts": "ደረሰኞችን ያስተዳድሩ",
+  "@manageReceipts": {
+    "description": "EN: Manage Receipts"
+  },
+  "noOfSettlements": "ክፍያ ቁጥር",
+  "@noOfSettlements": {
+    "description": "EN: Number of Settlements"
+  },
+  "noOfTransaction": "የግብይት ቁጥር",
+  "@noOfTransaction": {
+    "description": "EN: Number of Transactions"
+  },
+  "noPinSet": "ምንም ፒን አልተቀመጠም",
+  "@noPinSet": {
+    "description": "EN: No PIN has been set"
+  },
+  "noSettlementsFound": "ምንም ክፍያ አልተገኘም",
+  "@noSettlementsFound": {
+    "description": "EN: No settlements found"
+  },
+  "noTransactionsFound": "ምንም ግብይት አልተገኘም",
+  "@noTransactionsFound": {
+    "description": "EN: No transactions found"
+  },
+  "onboard1": "አሁን በሚወዷት ካዛንግ ፔይ መሳሪያ በመጠቀም በካዛንግ መሳሪያዎ ላይ ላሉ ማንኛውም ሽያጭ የካርድ ክፍያ መቀበል ይችላሉ።",
+  "@onboard1": {
+    "description": "EN: You can now accept card payments for any sales on your Kazang device using your very own Kazang Pay device."
+  },
+  "onboard2": "አሁን ከካዛንግ ፔይ መሳሪያዎ በመጠቀም ወደ ካዛንግ ዋሌትዎን መሙላት ይችላሉ። ባንክ መሄድ አያስፈልግም፤ ለንግድዎም አደጋ ዝቅ ያለ ይሆናል።",
+  "@onboard2": {
+    "description": "EN: You can now top up your Kazang Wallet using your Kazang Pay device, no more trips to the banks and less risk for your business."
+  },
+  "onboard3": "የካርድ ክፍያዎችዎ በቀጥታ ወደ ካዛንግ ዋሌትዎ ይተላለፋሉ።",
+  "@onboard3": {
+    "description": "EN: Your card payments will be transferred directly into your Kazang Wallet."
+  },
+  "onboardRegisterHelp": "እባኮትን የካዛንግ ሽያጭ ወኪሉ በመጨረሻው ደረጃ እንዲረዳዎት ይፍቀዱ።",
+  "@onboardRegisterHelp": {
+    "description": "EN: Please allow the Kazang Sales Agent to assist you with the final step."
+  },
+  "passwordError": "እባኮትን የይለፍ ቃል ያስገቡ።",
+  "@passwordError": {
+    "description": "EN: Please enter a password."
+  },
+  "pinLengthError": "ፒን 4 ቁጥር መሆን አለበት",
+  "@pinLengthError": {
+    "description": "EN: PIN must be 4 digits long"
+  },
+  "pinResetSuccess": "የአስተዳደር ፒን በተሳካ ሁኔታ ዳግም ተቀምጧል",
+  "@pinResetSuccess": {
+    "description": "EN: Supervisor PIN reset successfully"
+  },
+  "pleaseProvideSupervisorPin": "እባኮትን የአስተዳደር ፒንዎን ያስገቡ",
+  "@pleaseProvideSupervisorPin": {
+    "description": "EN: Please provide your supervisor pin"
+  },
+  "printReceipt": "ደረሰኝ ማተም",
+  "@printReceipt": {
+    "description": "EN: Print Receipt"
+  },
+  "printerError": "የማተሚያ ስህተት ተፈጥሯል፣ እባኮትን ወረቀት ይፈትሹ እና እንደገና ይሞክሩ።",
+  "@printerError": {
+    "description": "EN: Printer error occurred, please check paper and try again."
+  },
+  "printing": "በማተም ላይ",
+  "@printing": {
+    "description": "EN: Printing"
+  },
+  "proxySettings": "የፕሮክሲ ቅንብሮች",
+  "@proxySettings": {
+    "description": "EN: Proxy Settings"
+  },
+  "saleAmount": "የሽያጭ መጠን:",
+  "@saleAmount": {
+    "description": "EN: Sale Amount:"
+  },
+  "selectToView": "ለማየት ይምረጡ",
+  "@selectToView": {
+    "description": "EN: Select To View"
+  },
+  "submit": "ላክ",
+  "@submit": {
+    "description": "EN: Submit"
+  },
+  "totalAmount": "ድምር:",
+  "@totalAmount": {
+    "description": "EN: Total:"
+  },
+  "totalAmountProcessed": "የተሰራ አጠቃላይ መጠን:",
+  "@totalAmountProcessed": {
+    "description": "EN: Total Amount Processed:"
+  },
+  "totalCashbackAmount": "አጠቃላይ ካሽባክ መጠን:",
+  "@totalCashbackAmount": {
+    "description": "EN: Total Cashback Amount:"
+  },
+  "totalCashbackFees": "አጠቃላይ ካሽባክ ክፍያዎች:",
+  "@totalCashbackFees": {
+    "description": "EN: Total Cashback Fees:"
+  },
+  "totalFees": "አጠቃላይ ክፍያዎች:",
+  "@totalFees": {
+    "description": "EN: Total Fees:"
+  },
+  "totalPurchaseAmount": "አጠቃላይ ግዢ መጠን:",
+  "@totalPurchaseAmount": {
+    "description": "EN: Total Purchase Amount:"
+  },
+  "totalPurchaseFees": "አጠቃላይ ግዢ ክፍያዎች:",
+  "@totalPurchaseFees": {
+    "description": "EN: Total Purchase Fees:"
+  },
+  "totalSettlementAmount": "አጠቃላይ ክፍያ መጠን",
+  "@totalSettlementAmount": {
+    "description": "EN: Total Settlement Amount"
+  },
+  "totalSettlementAmountCalc": "* አጠቃላይ ክፍያ መጠን = አጠቃላይ የተሰራ መጠን - አጠቃላይ የተጠናቀቁ ክፍያ - ክፍያዎች",
+  "@totalSettlementAmountCalc": {
+    "description": "EN: * Total Settlement Amount = Total Amount Processed - Total Settlements completed - Fees"
+  },
+  "transType": "TRANTYPE:",
+  "@transType": {
+    "description": "EN: TRANTYPE:"
+  },
+  "username": "የተጠቃሚ ስም:",
+  "@username": {
+    "description": "EN: Username:"
+  },
+  "usernameError": "እባኮትን የተጠቃሚ ስም ያስገቡ።",
+  "@usernameError": {
+    "description": "EN: Please enter a username."
+  },
+  "usernameMax": "እባኮትን ይህ መስክ ከ10 ቁምፊዎች (ፊደላት) በላይ እንዳይሆን ያረጋግጡ።",
+  "@usernameMax": {
+    "description": "EN: Ensure this field has no more than 10 characters."
+  },
+  "usernameMin": "እባኮትን ይህ መስክ ቢያንስ 10 ቁምፊዎች (ፊደላት) እንዲኖረው ያረጋግጡ።",
+  "@usernameMin": {
+    "description": "EN: Ensure this field has at least 10 characters."
+  },
+  "version": "ስሪት:",
+  "@version": {
+    "description": "EN: Version:"
+  },
+  "viewMore": "ተጨማሪ ይመልከቱ",
+  "@viewMore": {
+    "description": "EN: View More"
+  },
+  "voidConfirm": "ይህንን ግብይት ለመሰረዝ ነዎት",
+  "@voidConfirm": {
+    "description": "EN: You are about to Void this transaction"
+  },
+  "voidTransaction": "ግብይት ሰርዝ",
+  "@voidTransaction": {
+    "description": "EN: Void Transaction"
+  }
 }

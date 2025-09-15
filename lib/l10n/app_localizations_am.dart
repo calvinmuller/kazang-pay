@@ -18,7 +18,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get transactionHistory => 'የግብይት ታሪክ';
 
   @override
-  String get welcome => 'እንደምን አሰናዳችሁ';
+  String get welcome => 'መልካም ቀን';
 
   @override
   String companyWelcome(Object name) {
@@ -35,7 +35,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get cashbackAmount => 'የካሽባክ መጠን';
 
   @override
-  String get addCashback => 'ካሽባክ ያክሉ';
+  String get addCashback => 'ጥሬ ገንዘብ መልሶ ይጨምሩ';
 
   @override
   String get pay => 'ክፍያ ይፈጽሙ';
@@ -44,25 +44,25 @@ class AppLocalizationsAm extends AppLocalizations {
   String get insertOrTap => 'ካርዱን ያስገቡ ወይም ይንኩ';
 
   @override
-  String get amountDue => 'የሚከፈል መጠን';
+  String get amountDue => 'የሚገባው መጠን';
 
   @override
   String get returnTo => 'ወደ ግብይት ተመለስ';
 
   @override
-  String get cancel => 'ግብይቱን ሰርዝ';
+  String get cancel => 'ንግድ ይሰረዝ';
 
   @override
-  String get cancelTitle => 'ይህን ግብይት ለመሰረዝ ነዎት';
+  String get cancelTitle => 'የእርስዎ ይህን ልውውጥ ሊሰርዝ ነው';
 
   @override
-  String get cancelMessage => 'አሁን የሚደረገው ግብይት ይተወዋል';
+  String get cancelMessage => 'የእርስዎ የአሁኑ ልውውጥ ይሰረዛል';
 
   @override
-  String get checkBalance => 'ሂሳብ ይመልከቱ';
+  String get checkBalance => 'ቀሪ ገንዘብን ፍትሹ';
 
   @override
-  String get enterPin => 'የግብይት ታሪክ እና ስተልመንት ለማየት ፒን ያስገቡ';
+  String get enterPin => 'የግብይት ታሪክና ክፍያዎችን ለማግኘት ፒን ኮድዎን ያስገቡ።';
 
   @override
   String get supervisorPin => 'እባኮትን የአስተዳደር ፒን ያስገቡ';
@@ -71,10 +71,10 @@ class AppLocalizationsAm extends AppLocalizations {
   String get continueButton => 'ቀጥል';
 
   @override
-  String get back => 'ተመለስ';
+  String get back => 'ወደ ኋላ';
 
   @override
-  String get transactionHistoryTitle => 'የግብይት ታሪክ እና ስተልመንት';
+  String get transactionHistoryTitle => 'የንግድ ታሪክ እና ሰፈሮች';
 
   @override
   String get ok => 'እሺ';
@@ -86,7 +86,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get unexpectedError => 'ያልተጠበቀ ስህተት ተፈጥሯል፣ እባኮትን እንደገና ይሞክሩ።';
 
   @override
-  String get removeCard => 'ካርዱን ያስወግዱ';
+  String get removeCard => 'ካርዱን ከውስጥ ያውጡ።';
 
   @override
   String get merchantReceipt => 'የነጋዴ ደረሰኝ';
@@ -98,7 +98,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get view => 'ይመልከቱ';
 
   @override
-  String get print => 'ማተም';
+  String get print => 'አትም ያድርጉ';
 
   @override
   String get merchantId => 'የነጋዴ መታወቂያ';
@@ -107,7 +107,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get merchantName => 'የነጋዴ ስም';
 
   @override
-  String get terminalId => 'የመሳሪያ መታወቂያ';
+  String get terminalId => 'ተርሚናል መታወቂያ';
 
   @override
   String get date => 'ቀን';
@@ -125,7 +125,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get rrn => 'RRN';
 
   @override
-  String get appType => 'APP';
+  String get appType => 'የአፕሊኬሽን ዓይነት';
 
   @override
   String get switchType => 'SWITCH';
@@ -157,7 +157,7 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get checkAnother => 'ሌላ ሂሳብ ይፈትሹ';
+  String get checkAnother => 'ሌላ አካውንት ይመልከቱ';
 
   @override
   String get done => 'ተጠናቋል';
@@ -187,7 +187,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get refunded => 'ተመላሽ';
 
   @override
-  String get settlementStatus => 'ሁኔታ:';
+  String get settlementStatus => 'የክፍያ ሁኔታ';
 
   @override
   String get settled => 'ተከፍሏል';
@@ -201,129 +201,128 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get onboardRegisterHelp =>
-      'Please allow the Kazang Sales Agent to assist you with the final step.';
+      'እባኮትን የካዛንግ ሽያጭ ወኪሉ በመጨረሻው ደረጃ እንዲረዳዎት ይፍቀዱ።';
 
   @override
   String get signIn => 'እባኮትን ለመቀጠል የመግቢያ መረጃዎን ያስገቡ:';
 
   @override
-  String get standalone => 'የራስ አንደኛ ሁኔታ ተገኝቷል።';
+  String get standalone => 'ብቻ ሞድ ተገኝቷል';
 
   @override
   String get onboard1 =>
-      'You can now accept card payments for any sales on your Kazang device using your very own Kazang Pay device.';
+      'አሁን በሚወዷት ካዛንግ ፔይ መሳሪያ በመጠቀም በካዛንግ መሳሪያዎ ላይ ላሉ ማንኛውም ሽያጭ የካርድ ክፍያ መቀበል ይችላሉ።';
 
   @override
   String get onboard2 =>
-      'You can now top up your Kazang Wallet using your Kazang Pay device, no more trips to the banks and less risk for your business.';
+      'አሁን ከካዛንግ ፔይ መሳሪያዎ በመጠቀም ወደ ካዛንግ ዋሌትዎን መሙላት ይችላሉ። ባንክ መሄድ አያስፈልግም፤ ለንግድዎም አደጋ ዝቅ ያለ ይሆናል።';
 
   @override
-  String get onboard3 =>
-      'Your card payments will be transferred directly into your Kazang Wallet.';
+  String get onboard3 => 'የካርድ ክፍያዎችዎ በቀጥታ ወደ ካዛንግ ዋሌትዎ ይተላለፋሉ።';
 
   @override
   String get registerDevice => 'መሳሪያን ይመዝግቡ';
 
   @override
-  String get accountNumber => 'Enter account number:';
+  String get accountNumber => 'የሂሳብ ቁጥር ያስገቡ:';
 
   @override
   String get password => 'የይለፍ ቃል ያስገቡ';
 
   @override
-  String get enterSerialNumber => 'Enter Device Serial Number:';
+  String get enterSerialNumber => 'የመሳሪያ ስሪት ቁጥር ያስገቡ:';
 
   @override
-  String get usernameError => 'Please enter a username.';
+  String get usernameError => 'እባኮትን የተጠቃሚ ስም ያስገቡ።';
 
   @override
-  String get passwordError => 'Please enter a password.';
+  String get passwordError => 'እባኮትን የይለፍ ቃል ያስገቡ።';
 
   @override
-  String get submit => 'Submit';
+  String get submit => 'ላክ';
 
   @override
-  String get loading => 'በማገናኘት ላይ እባኮትን ይጠብቁ';
+  String get loading => 'በመጫን ላይ';
 
   @override
-  String get initialized => 'Initialized';
+  String get initialized => 'ተጀምሯል';
 
   @override
-  String get enterPinAccessSettings => 'Enter PIN To Access Settings';
+  String get enterPinAccessSettings => 'ቅንብሮችን ለማግኘት ፒን ያስገቡ';
 
   @override
-  String get pleaseProvideSupervisorPin => 'Please provide your supervisor pin';
+  String get pleaseProvideSupervisorPin => 'እባኮትን የአስተዳደር ፒንዎን ያስገቡ';
 
   @override
-  String get noPinSet => 'No PIN has been set';
+  String get noPinSet => 'ምንም ፒን አልተቀመጠም';
 
   @override
-  String get setPinToProceed => 'እባኮትን ለመቀጠል ፒን ያስቀምጡ';
+  String get setPinToProceed => 'ለመቀጠል እባክዎ ፒን ኮድ ያዘጋጁ።';
 
   @override
-  String get pinLengthError => 'PIN must be 4 digits long';
+  String get pinLengthError => 'ፒን 4 ቁጥር መሆን አለበት';
 
   @override
-  String get incorrectPin => 'Invalid PIN';
+  String get incorrectPin => 'የተሳሳተ ፒን';
 
   @override
-  String get voidTransaction => 'Void Transaction';
+  String get voidTransaction => 'ግብይት ሰርዝ';
 
   @override
-  String get settlements => 'ስተልመንት';
+  String get settlements => 'ክፍያ';
 
   @override
-  String get totalSettlementAmount => 'Total Settlement Amount';
+  String get totalSettlementAmount => 'አጠቃላይ ክፍያ መጠን';
 
   @override
-  String get viewMore => 'View More';
+  String get viewMore => 'ተጨማሪ ይመልከቱ';
 
   @override
-  String get noOfTransaction => 'Number of Transactions';
+  String get noOfTransaction => 'የግብይት ቁጥር';
 
   @override
-  String get noOfSettlements => 'Number of Settlements';
+  String get noOfSettlements => 'ክፍያ ቁጥር';
 
   @override
   String settlementSummaryFor(Object date) {
-    return 'የስተልመንት አጠቃላይ ለ $date';
+    return 'ለ $date የክፍያ ማጠቃለያ';
   }
 
   @override
-  String get totalPurchaseFees => 'Total Purchase Fees:';
+  String get totalPurchaseFees => 'አጠቃላይ ግዢ ክፍያዎች:';
 
   @override
-  String get totalPurchaseAmount => 'Total Purchase Amount:';
+  String get totalPurchaseAmount => 'አጠቃላይ ግዢ መጠን:';
 
   @override
-  String get totalCashbackAmount => 'Total Cashback Amount:';
+  String get totalCashbackAmount => 'አጠቃላይ ካሽባክ መጠን:';
 
   @override
-  String get totalAmountProcessed => 'Total Amount Processed:';
+  String get totalAmountProcessed => 'የተሰራ አጠቃላይ መጠን:';
 
   @override
-  String get totalCashbackFees => 'Total Cashback Fees:';
+  String get totalCashbackFees => 'አጠቃላይ ካሽባክ ክፍያዎች:';
 
   @override
-  String get totalFees => 'Total Fees:';
+  String get totalFees => 'አጠቃላይ ክፍያዎች:';
 
   @override
   String settlementHistoryFor(Object date) {
-    return 'የስተልመንት ታሪክ ለ $date';
+    return 'ለ $date የክፍያ ዝርዝሮች';
   }
 
   @override
   String get totalSettlementAmountCalc =>
-      '* Total Settlement Amount = Total Amount Processed - Total Settlements completed - Fees';
+      '* አጠቃላይ ክፍያ መጠን = አጠቃላይ የተሰራ መጠን - አጠቃላይ የተጠናቀቁ ክፍያ - ክፍያዎች';
 
   @override
-  String get proxySettings => 'Proxy Settings';
+  String get proxySettings => 'የፕሮክሲ ቅንብሮች';
 
   @override
   String get sendDeviceLogs => 'የመሳሪያ ሎጎችን ላክ';
 
   @override
-  String get connectPos => 'Connect POS';
+  String get connectPos => 'ፒኦኤስ ያገናኙ';
 
   @override
   String get supervisorPinTitle => 'የአስተዳደር ፒን';
@@ -335,46 +334,46 @@ class AppLocalizationsAm extends AppLocalizations {
   String get language => 'ቋንቋ';
 
   @override
-  String get settlementDetails => 'የስተልመንት ዝርዝር';
+  String get settlementDetails => 'የክፍያ ዝርዝሮች';
 
   @override
-  String get timeColumn => 'ሰዓት:';
+  String get timeColumn => 'የጊዜ አምድ';
 
   @override
-  String get amount => 'Amount:';
+  String get amount => 'መጠን:';
 
   @override
-  String get printReceipt => 'Print Receipt';
+  String get printReceipt => 'ደረሰኝ ማተም';
 
   @override
-  String get printing => 'Printing';
+  String get printing => 'በማተም ላይ';
 
   @override
-  String get username => 'Username:';
+  String get username => 'የተጠቃሚ ስም:';
 
   @override
-  String get deviceSerial => 'Device Serial:';
+  String get deviceSerial => 'የመሳሪያ ስሪት:';
 
   @override
-  String get version => 'Version:';
+  String get version => 'ስሪት:';
 
   @override
-  String get terminalIdTitle => 'የመሳሪያ መታወቂያ:';
+  String get terminalIdTitle => 'የቴርሚናል መለያ';
 
   @override
-  String get loadingSettlements => 'ስተልመንት በማገናኘት ላይ';
+  String get loadingSettlements => 'ክፍያ በመጫን ላይ ነው';
 
   @override
   String get profileInformation => 'የመገለጫ መረጃ';
 
   @override
-  String get serialNumberLengthMax => 'እባኮትን ይህ መስክ 14 ቁጥር ያህል ብቻ ይዟል።';
+  String get serialNumberLengthMax => 'እንደገና ያረጋግጡ ይህ መስክ ከ14 ፊደላት በላይ አይኖርም።';
 
   @override
-  String get serialNumberLengthMin => 'እባኮትን ይህ መስክ 13 ቁጥር ያነሱ ብቻ ይዟል።';
+  String get serialNumberLengthMin => 'እንደገና ያረጋግጡ ይህ መስክ ከ13 ፊደላት በላይ አይኖርም።';
 
   @override
-  String get required => 'ይህ መስክ አስፈላጊ ነው።';
+  String get required => 'ይህ መስክ ያስፈልጋል።';
 
   @override
   String get pinTooShort => 'ፒን ቢያንስ 4 ቁጥር መሆን አለበት';
@@ -386,46 +385,45 @@ class AppLocalizationsAm extends AppLocalizations {
   String get model => 'ሞዴል:';
 
   @override
-  String get voidConfirm => 'You are about to Void this transaction';
+  String get voidConfirm => 'ይህንን ግብይት ለመሰረዝ ነዎት';
 
   @override
   String batteryLow(Object percentage) {
-    return 'Battery is too low to transact safely. Please charge your device. $percentage%';
+    return 'ባትሪው ለደህንነት ግብይት በጣም ዝቅተኛ ነው። እባኮትን መሳሪያዎን ይሙሉ። $percentage%';
   }
 
   @override
-  String get printerError =>
-      'Printer error occurred, please check paper and try again.';
+  String get printerError => 'የማተሚያ ስህተት ተፈጥሯል፣ እባኮትን ወረቀት ይፈትሹ እና እንደገና ይሞክሩ።';
 
   @override
-  String get usernameMin => 'Ensure this field has at least 10 characters.';
+  String get usernameMin => 'እባኮትን ይህ መስክ ቢያንስ 10 ቁምፊዎች (ፊደላት) እንዲኖረው ያረጋግጡ።';
 
   @override
-  String get usernameMax => 'Ensure this field has no more than 10 characters.';
+  String get usernameMax => 'እባኮትን ይህ መስክ ከ10 ቁምፊዎች (ፊደላት) በላይ እንዳይሆን ያረጋግጡ።';
 
   @override
-  String get connectionError => 'Connection error occurred, please try again.';
+  String get connectionError => 'የግንኙነት ስህተት ተፈጥሯል፣ እባኮትን እንደገና ይሞክሩ።';
 
   @override
   String get transType => 'TRANTYPE:';
 
   @override
-  String get noTransactionsFound => 'No transactions found';
+  String get noTransactionsFound => 'ምንም ግብይት አልተገኘም';
 
   @override
-  String get noSettlementsFound => 'No settlements found';
+  String get noSettlementsFound => 'ምንም ክፍያ አልተገኘም';
 
   @override
-  String get resetPin => 'ፒን ዳግም ይስቀሉ';
+  String get resetPin => 'ፒን ኮድ ዳግም ያስተካክሉ';
 
   @override
-  String get pinResetSuccess => 'Supervisor PIN reset successfully';
+  String get pinResetSuccess => 'የአስተዳደር ፒን በተሳካ ሁኔታ ዳግም ተቀምጧል';
 
   @override
   String get retry => 'እንደገና ይሞክሩ';
 
   @override
-  String get switchTitle => 'ማስተላለፍ';
+  String get switchTitle => 'ርዕስ ቀይር';
 
   @override
   String get transactionCompleted => 'ግብይቱ ተጠናቋል';
@@ -434,14 +432,35 @@ class AppLocalizationsAm extends AppLocalizations {
   String get transactionCompletedPrompt => 'ግብይቱ ተጠናቋል፣ የግብይት መረጃዎን ይመልከቱ።';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'አዎ';
 
   @override
-  String get no => 'No';
+  String get no => 'አይደለም';
 
   @override
-  String get updateKeys => 'Updating Keys...';
+  String get updateKeys => 'ቁልፎችን ማሻሻል';
 
   @override
-  String get osUpdateRequired => 'OS Update Required';
+  String get osUpdateRequired => 'ኦኤስ ማሻሻያ ያስፈልጋል';
+
+  @override
+  String get transactionDetails => 'የግብይት ዝርዝሮች';
+
+  @override
+  String get cashback => 'የገንዘብ መልሶ ክፈላ';
+
+  @override
+  String get saleAmount => 'የሽያጭ መጠን:';
+
+  @override
+  String get totalAmount => 'ድምር:';
+
+  @override
+  String get selectSettingToConfig => 'ለማዋቀር ከግራ ወደ ቀኝ ክፍያን ይምረጡ';
+
+  @override
+  String get manageReceipts => 'ደረሰኞችን ያስተዳድሩ';
+
+  @override
+  String get selectToView => 'ለማየት ይምረጡ';
 }

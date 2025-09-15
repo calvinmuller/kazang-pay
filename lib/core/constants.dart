@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart'
-    show LinearGradient, Color, Alignment, BorderRadius, Radius, Colors, Offset, BoxShadow, BoxDecoration, NavigatorState, GlobalKey, Border;
+    show
+        LinearGradient,
+        Color,
+        BorderRadius,
+        Radius,
+        Offset,
+        BoxShadow,
+        BoxDecoration,
+        NavigatorState,
+        GlobalKey,
+        Border;
 
 const headerGradient = LinearGradient(
   colors: <Color>[
     CustomColours.greenish,
     CustomColours.yellow,
   ],
-  begin: Alignment.topLeft,
-  end: Alignment.center,
+  stops: [0.3416, 1.2339], // These are normalized stops; 123.39% is beyond 1.0
 );
 
 final homeDecoration = BoxDecoration(
-  border: Border.all(
-    color: Colors.white,
-    width: 1.5,
-  ),
-  borderRadius: const BorderRadius.only(
-    topLeft: Radius.circular(25),
-    bottomRight: Radius.circular(25),
-  ),
-);
+    border: Border.all(
+      color: CustomColours.primaryNeutral,
+      width: 1,
+    ),
+    borderRadius: borderRadius);
 
 const borderGradient = {
   'error': [
@@ -65,28 +70,22 @@ class CustomColours {
   static const lightGray = Color(0xFFF7F7F5);
   static const gold = Color(0xFFFF9A14);
   static const softButter = Color(0xFFFFEDB2);
+  static const primaryNeutral = Color(0xFFFCFFD6);
 }
 
 const shadow = [
   BoxShadow(
-    color: Colors.black12,
-    blurRadius: 3,
-    spreadRadius: 1,
-    offset: Offset(0, 0.5),
-  )
+    color: Color.fromRGBO(0, 0, 0, 0.09),
+    offset: Offset(0, 1),
+    blurRadius: 6,
+    spreadRadius: 2,
+  ),
 ];
 
 const panelDecoration = BoxDecoration(
   color: CustomColours.white,
   borderRadius: borderRadiusSmall,
-  boxShadow: [
-    BoxShadow(
-      color: Colors.black12,
-      blurRadius: 3,
-      spreadRadius: 1,
-      offset: Offset(0, 1),
-    )
-  ],
+  boxShadow: shadow,
 );
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

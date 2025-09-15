@@ -440,7 +440,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get transactionCompletedPrompt =>
-      '\'Dooro “Haa” si aad ugu laabato App-ka Kazang.\nDooro “Maya” si aad uga baxdo.\'';
+      '\'Dooro \"Haa\" si aad ugu laabato App-ka Kazang.\nDooro \"Maya\" si aad uga baxdo.\'';
 
   @override
   String get yes => 'Haa';
@@ -449,8 +449,30 @@ class AppLocalizationsSo extends AppLocalizations {
   String get no => 'Maya';
 
   @override
-  String get updateKeys => 'Updating Keys...';
+  String get updateKeys => 'Cusboonaysiintu furayaasha...';
 
   @override
-  String get osUpdateRequired => 'OS Update Required';
+  String get osUpdateRequired => 'Waxaa loo baahan yahay cusboonaysiinta OS';
+
+  @override
+  String get transactionDetails => 'Faahfaahinta Macaamilka';
+
+  @override
+  String get cashback => 'Lacag Dib u Celin';
+
+  @override
+  String get saleAmount => 'Sale Amount:';
+
+  @override
+  String get totalAmount => 'Total:';
+
+  @override
+  String get selectSettingToConfig =>
+      'Select a setting from the left to configure';
+
+  @override
+  String get manageReceipts => 'Manage Receipts';
+
+  @override
+  String get selectToView => 'Select To View';
 }

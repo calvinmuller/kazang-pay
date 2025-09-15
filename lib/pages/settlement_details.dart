@@ -34,13 +34,15 @@ import '../l10n/app_localizations.dart' show AppLocalizations;
 import '../models/kazang.dart' show Settlement;
 
 class SettlementDetails extends ConsumerWidget {
-  const SettlementDetails({super.key});
+  const SettlementDetails({super.key, this.settlement});
+
+  final Settlement? settlement;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final df = DateFormat('dd/MM/yyyy');
     final l10n = AppLocalizations.of(context)!;
-    Settlement settlement = GoRouterState.of(context).extra as Settlement;
+    Settlement settlement = this.settlement ?? GoRouterState.of(context).extra as Settlement;
     final settlementDetails =
         ref.watch(settlementDetailsProvider(settlement.date));
 
