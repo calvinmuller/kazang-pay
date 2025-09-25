@@ -59,6 +59,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'lib/arm64-v8a/**'
+        exclude 'lib/x86/**'
+        exclude 'lib/x86_64/**'
+    }
     flavorDimensions "brand", "env"
 
     productFlavors {
@@ -85,6 +91,7 @@ android {
 
 flutter {
     source = "../.."
+    target = "lib/main.dart"
 }
 
 dependencies {
