@@ -34,6 +34,7 @@ private val Context.sharedPreferencesDataStore: DataStore<Preferences> by prefer
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "kazangpay"
     private val PRINT_CHANNEL = "kazangpay_print"
+    private val DEVICE_CHANNEL = "kazangpay_device"
     private var mediaPlayer: MediaPlayer? = null
     private val eventChannel = "factoryEventHandler"
     private lateinit var transactionHandler: TransactionInterface
@@ -57,6 +58,13 @@ class MainActivity : FlutterActivity() {
                 )
             )
         }
+
+        // Register device management channel
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger, DEVICE_CHANNEL
+        ).setMethodCallHandler(
+            DeviceHandler(context)
+        )
 
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel).setStreamHandler(
             transactionHandler

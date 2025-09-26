@@ -1,23 +1,5 @@
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Widget,
-        EdgeInsets,
-        Text,
-        MainAxisSize,
-        CrossAxisAlignment,
-        Column,
-        Container,
-        TextInputType,
-        TextInputAction,
-        Form,
-        Colors,
-        Padding,
-        GlobalKey,
-        FormState,
-        TextEditingController,
-        ScaffoldMessenger,
-        SnackBar;
+    show BuildContext, Widget, EdgeInsets, Text, MainAxisSize, CrossAxisAlignment, Column, Container, TextInputType, TextInputAction, Form, Colors, Padding, GlobalKey, FormState, TextEditingController, ScaffoldMessenger, SnackBar, SingleChildScrollView;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:go_router/go_router.dart';
@@ -29,6 +11,7 @@ import '../../common/widgets/responsive_page_wrapper.dart';
 import '../../common/widgets/form_field.dart';
 import '../../common/widgets/widgets.dart' show Label, Button;
 import '../../core/core.dart';
+import '../../helpers/device_helper.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/kazang.dart';
 
@@ -45,6 +28,12 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
   final passwordController = TextEditingController(text: '');
 
   @override
+  void initState() {
+    super.initState();
+    DeviceHelper.setKeyboardToNumeric();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final deviceInfo =
@@ -57,12 +46,8 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(12),
         decoration: panelDecoration,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          children: [
-            Form(
+        child: SingleChildScrollView(
+          child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +131,6 @@ class _SettingsPinState extends ConsumerState<SettingsPin> {
                 ],
               ),
             ),
-          ],
         ),
       ),
     );

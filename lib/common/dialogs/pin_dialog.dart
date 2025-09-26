@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart'
-    show FormState, BuildContext, Widget, VoidCallback, GlobalKey, TextEditingController, Text, TextInputType, Column, Form, Navigator, MaterialPageRoute, Colors, IconData, Color, AnimationStyle, Row, Expanded, MainAxisSize;
+    show
+        FormState,
+        BuildContext,
+        Widget,
+        VoidCallback,
+        GlobalKey,
+        TextEditingController,
+        Text,
+        TextInputType,
+        Column,
+        Form,
+        Navigator,
+        MaterialPageRoute,
+        Colors,
+        IconData,
+        Color,
+        AnimationStyle,
+        Row,
+        Expanded,
+        MainAxisSize;
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerState, ConsumerStatefulWidget, WidgetRef;
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
+import '../../helpers/device_helper.dart';
 import '../../helpers/dialog_helpers.dart' show showBottomSheet;
 import '../../l10n/app_localizations.dart';
 import '../../models/pin.dart' show PinDialogConfig;
@@ -27,6 +47,12 @@ class PinDialog extends ConsumerStatefulWidget {
 class _PinDialogState extends ConsumerState<PinDialog> {
   final _formKey = GlobalKey<FormState>();
   final pinController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    DeviceHelper.setKeyboardToNumeric();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +138,9 @@ class _PinDialogState extends ConsumerState<PinDialog> {
             children: actions,
           ),
           lg: Row(
-            spacing: 10,
-            children: actions.map((action) => Expanded(child: action)).toList()
-          ),
+              spacing: 10,
+              children:
+                  actions.map((action) => Expanded(child: action)).toList()),
         ),
         const KeyboardPadding(),
       ],

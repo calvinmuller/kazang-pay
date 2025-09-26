@@ -61,10 +61,14 @@ android {
     }
 
     packagingOptions {
-        exclude 'lib/arm64-v8a/**'
-        exclude 'lib/x86/**'
-        exclude 'lib/x86_64/**'
+        // Allow all architectures in debug builds
+        if (gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') }) {
+            exclude 'lib/arm64-v8a/**'
+            exclude 'lib/x86/**'
+            exclude 'lib/x86_64/**'
+        }
     }
+
     flavorDimensions "brand", "env"
 
     productFlavors {
