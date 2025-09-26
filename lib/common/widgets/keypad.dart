@@ -24,7 +24,6 @@ import 'package:flutter/material.dart'
         InkWell,
         KeyboardListener,
         FocusNode,
-        debugPrint,
         SizedBox;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
@@ -32,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
+import '../../helpers/device_helper.dart';
 import '../../theme.dart';
 import '../providers/payment.controller.dart' show paymentControllerProvider;
 import '../providers/payment.provider.dart';
@@ -51,6 +51,7 @@ class _KeyPadState extends ConsumerState<KeyPad> {
   void initState() {
     super.initState();
     _focusNode.requestFocus();
+    DeviceHelper.setKeyboardToNumeric();
   }
 
   @override
@@ -66,7 +67,6 @@ class _KeyPadState extends ConsumerState<KeyPad> {
       autofocus: hasPinPad,
       focusNode: _focusNode,
       onKeyEvent: (event) {
-        debugPrint('Keypad Key Pressed: ${event.logicalKey.keyLabel}');
         if (event is KeyDownEvent) {
           final key = event.logicalKey;
           if (key.keyLabel.length == 1 && key.keyLabel.contains(RegExp(r'^\d$'))) {
@@ -81,6 +81,8 @@ class _KeyPadState extends ConsumerState<KeyPad> {
               ref.read(paymentControllerProvider.notifier).setPayment(payment);
               context.goNamed('payment');
             }
+          } else if (key == LogicalKeyboardKey.f2) {
+            DeviceHelper.setKeyboardToNumeric();
           }
         }
       },

@@ -34,6 +34,8 @@ import '../../common/exceptions.dart' show AddDeviceException;
 import '../../common/providers/api.provider.dart';
 import '../../common/providers/app.provider.dart';
 import '../../common/providers/device_info.dart';
+import '../../core/core.dart';
+import '../../helpers/device_helper.dart';
 import '../../common/widgets/widgets.dart'
     show Button, Label, FormField, ResponsiveScaffold;
 import '../../core/constants.dart';
@@ -65,6 +67,12 @@ class RegistrationPage extends ConsumerStatefulWidget {
 class RegistrationPageState extends ConsumerState<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   final loginRequest = LoginRequest();
+
+  @override
+  void initState() {
+    super.initState();
+    DeviceHelper.setKeyboardToNumericQuiet();
+  }
 
   @override
   Widget build(BuildContext context) {
